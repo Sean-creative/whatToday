@@ -9,5 +9,4 @@
 
 
 
-<img src =  <img src="/wilson.jpg">>  
-
+<img src="/wilson.jpg">
