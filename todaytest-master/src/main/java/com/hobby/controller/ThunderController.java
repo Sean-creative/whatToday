@@ -129,4 +129,6 @@ public class ThunderController {
 	}
 	
 	//push 해봄 11/18 13:00
+	//push 해봄2  11/18 14:09
+
 }
