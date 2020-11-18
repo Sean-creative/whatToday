@@ -12,8 +12,6 @@
     <title>Document</title>
 </head>
 <body>
-
-
         <ul>
         	<a href="">${usrName} 님</a>
             <a href="/login/logout">로그아웃</a>
@@ -22,19 +20,6 @@
         </ul>
 
 <!-- Navigation-->
-        <nav id="nav">
-            <ul>
-                <a href="">三</a>
-                <a href="">정기</a>
-                <a href="">번개</a>
-                <a href="">베스트</a>
-                <a href="">추천</a>
-                <a href="/regular/add">모임개설</a>
-
-            </ul>
-        </nav>
-      </header>
-
 
 
 <div id="wrap">

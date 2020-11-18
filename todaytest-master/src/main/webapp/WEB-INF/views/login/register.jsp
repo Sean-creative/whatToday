@@ -44,7 +44,7 @@
 
 		<div class="input-container">
 			<label>성별 </label> <input type="radio" id="male" name="usrGender"
-				value="m"> <label for="male">남자</label> <input type="radio"
+				value="m" checked="checked"> <label for="male">남자</label> <input type="radio"
 				id="female" name="usrGender" value="f"> <label for="female">여자</label><br>
 		</div>
 		
@@ -249,6 +249,7 @@
 	</script>
 
 	<script type="text/javascript">
+	
 		function check() {
 			id = $("#id").val();
 
@@ -262,12 +263,12 @@
 				success : function(data) {
 					if (data == -1) {
 						alert("사용하실 수 있는 아이디입니다.");
+						
 					} else {
 						alert("중복된 아이디가 존재합니다.");
 					}
 				},
 				error : function() {
-
 				}
 			});
 		}
