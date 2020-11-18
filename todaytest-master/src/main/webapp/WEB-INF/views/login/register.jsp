@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../includes/header.jsp"%>
 <!-- 작성자: 김지영 -->
 <!DOCTYPE html>
 <html>
@@ -46,7 +47,6 @@
 				value="m"> <label for="male">남자</label> <input type="radio"
 				id="female" name="usrGender" value="f"> <label for="female">여자</label><br>
 		</div>
-		
 		
  		<!--text -> Date(DB타입)으로 변환-->
 		<div class="input-container">
@@ -179,6 +179,13 @@
 	        alert("성별을 선택하세요.");
 	        return false;
 	    }
+	    
+	    if(!usrBirth.value){
+	    	alert("생년월일을 입력해주세요");
+	    	return false;
+	    }
+	    
+	    
 	}
 	</script>
 		<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
@@ -266,4 +273,4 @@
 </body>
 </html>
 
-<%@ include file="../includes/footer.jsp"%>
+<%@include file="../includes/footer.jsp" %>
