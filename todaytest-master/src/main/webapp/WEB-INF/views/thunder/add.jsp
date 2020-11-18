@@ -3,41 +3,8 @@
     
  <!-- 작성자 : 김선우 -->
 
-
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/resources/style.css">
-    <title>Document</title>
-</head>
-<body>
-<header id=header>    
-         <a href="index.html">
-        <img src="/resources/img/logo.png" alt="logo">
-      	</a>
-        <input type="text"placeholder="관심취미를 입력해주세요.">
-        <ul>
-            <a href="">로그인</a>
-            <a href="">고객센터</a>
-        </ul>
-        
-        <!-- Navigation-->
-        <nav id="nav">
-            <ul>
-                <a href="">三</a>
-                <a href="">정기</a>
-                <a href="/thunder/list">번개</a>
-                <a href="">베스트</a>
-                <a href="">추천</a>
-                <a href="/thunder/add">모임개설</a>
-
-            </ul>
-   	 </nav>
-    </header>
-    
-
+<%@include file="../includes/header.jsp"%>
+ 
 
     <!--  번개 모임 개설 -->
     <section id="wrap">

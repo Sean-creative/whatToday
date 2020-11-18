@@ -4,13 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- 작성자 : 김선우 -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="../resources/style.css">
+<%@include file="../includes/header.jsp"%>
 <style>
 a:link {
 	color: white;
@@ -27,40 +21,6 @@ a:hover {
 	text-decoration: none;
 }
 </style>
-<title>Document</title>
-</head>
-<body>
-
-	<script>
-		console.log("<c:out value="${clubVO}" />")
-	</script>
-
-	<!-- Masthead-->
-	<header id=header>
-
-		<a href="index.html"> <img src="../resources/logo.png" alt="logo">
-		</a> <input type="text" placeholder="관심취미를 입력해주세요.">
-		<ul>
-			<a href="">로그인</a>
-			<a href="">고객센터</a>
-		</ul>
-
-		<!-- Navigation-->
-		<nav id="nav">
-			<ul>
-				<a href="">三</a>
-				<a href="">정기</a>
-				<a href="">번개</a>
-				<a href="">베스트</a>
-				<a href="">추천</a>
-				<a href="">모임개설</a>
-
-			</ul>
-		</nav>
-	</header>
-
-
-
 
 
 	<!--  번개 모임 개설 -->
@@ -153,11 +113,9 @@ a:hover {
 
 		<button  data-oper='list' class="btn btn-info">List</button>
 </div>
-
-
-			<button id="sign" type="button" onclick="signUp()"
-				style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;">신청하기</button>
 		</form>
+
+			<input id="sign" type="button" onclick="signUp()" style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" value="신청하기"/>
 		
 		
 		<form id ='operForm' action="/thunder/modify" method="get">
@@ -187,12 +145,12 @@ a:hover {
 				<div style="display: flex; margin-bottom: 30px; margin: 0px;">
 					<div
 						style="text-align: center; margin: 0px; width: 50%; padding: 15px; font-size: 30px;">
-						<img src="../resources/human.png"
+						<img src="../resources/img/thunderHuman.png"
 							style="width: 80px; height: 80px;"> 김지영 모임장
 					</div>
 					<div
 						style="text-align: center; margin: 0px; width: 50%; padding: 15px; font-size: 30px;">
-						<img src="../resources/human.png"
+						<img src="../resources/img/thunderHuman.png"
 							style="width: 80px; height: 80px;"> 김영지 회원
 					</div>
 				</div>
@@ -200,12 +158,12 @@ a:hover {
 				<div style="display: flex; margin-bottom: 30px; margin: 0px;">
 					<div
 						style="text-align: center; margin: 0px; width: 50%; padding: 15px; font-size: 30px;">
-						<img src="../resources/human.png"
+						<img src="../resources/img/thunderHuman.png"
 							style="width: 80px; height: 80px;"> 김선우 회원
 					</div>
 					<div
 						style="text-align: center; margin: 0px; width: 50%; padding: 15px; font-size: 30px;">
-						<img src="../resources/human.png"
+						<img src="../resources/img/thunderHuman.png"
 							style="width: 80px; height: 80px;"> 김우선 회원
 					</div>
 				</div>
@@ -222,6 +180,7 @@ a:hover {
 				.ready(
 						function() {
 
+							console.log("<c:out value="${clubVO}" />")
 							var operForm = $("#operForm");
 
 							$("button[data-oper='modify']").on(
@@ -246,35 +205,39 @@ a:hover {
 
 												operForm.submit();
 											});
-
-							function signUp() {
-
-								if (document.getElementById("sign").innerHTML == '신청하기') {
-									document.getElementById("sign").innerHTML = '취소하기';
-									alert('번개모임이 신청되었습니다.');
-
-									document.getElementById("plusDiv").style.display = "block";
-								} else if (document.getElementById("sign").innerHTML == '취소하기') {
-									document.getElementById("sign").innerHTML = '신청하기';
-									alert('번개모임이 취소되었습니다.');
-
-									document.getElementById("plusDiv").style.display = "none";
-									document.getElementById("plus").style.display = 'none';
-									document.getElementById("pulsButton").innerHTML = "🐵";
-								}
-							}
-
-							function viewPlus() {
-
-								if (document.getElementById("plus").style.display == 'none') {
-									document.getElementById("plus").style.display = 'block';
-									document.getElementById("pulsButton").innerHTML = "🙊";
-								} else {
-									document.getElementById("plus").style.display = 'none';
-									document.getElementById("pulsButton").innerHTML = "🐵";
-								}
-							}
+						
+							
+							
 						});
+		
+		function signUp() {
+
+			if (document.getElementById("sign").innerHTML == '신청하기') {
+				document.getElementById("sign").innerHTML = '취소하기';
+				alert('번개모임이 신청되었습니다.');
+				document.getElementById("plusDiv").style.display = "block";									
+			} 
+			else if (document.getElementById("sign").innerHTML == '취소하기') {
+				document.getElementById("sign").innerHTML = '신청하기';
+				alert('번개모임이 취소되었습니다.');
+				document.getElementById("plusDiv").style.display = "none";
+				document.getElementById("plus").style.display = 'none';
+				document.getElementById("pulsButton").innerHTML = "🐵";
+			}
+		}
+
+		function viewPlus() {
+
+			if (document.getElementById("plus").style.display == 'none') {
+				document.getElementById("plus").style.display = 'block';
+				document.getElementById("pulsButton").innerHTML = "🙊";
+			} else {
+				document.getElementById("plus").style.display = 'none';
+				document.getElementById("pulsButton").innerHTML = "🐵";
+			}
+		}
+		
+		
 	</script>
 
 
