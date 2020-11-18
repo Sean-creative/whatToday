@@ -1,0 +1,151 @@
+*{
+    margin:0;
+    padding:0;
+}
+#wrap{
+    width:1020px;
+    margin:0 auto;
+}
+#header{
+   width:1020px;
+    height:100px;
+    /* background:pink;  */
+    margin:0 auto;
+}
+#header img{
+    width:80px;
+    float:left;
+}
+#header>input{
+    border:1px solid #000;
+    width:20%;
+    height:30px;
+    margin-left:10px;
+    margin-top:10px;
+}
+
+#header>ul{
+    float:right;
+}
+
+#header>ul>a{
+    margin-right:10px;
+    text-decoration: none;
+    color:#000;
+    font-size:12px;
+}
+#header ul a:last-child{
+    margin-right:10px;
+}
+
+#nav{
+    clear:both;
+    padding-top:10px;
+}
+#nav>ul>a{
+    margin-right:10px;
+    padding-top:20px;
+    text-decoration: none;
+    color:#000;
+    font-size:14px;
+}
+#nav>ul>a:first-child{
+    font-weight:bold;
+}
+
+/* main */
+#mainpic{
+    width:1020px;
+    height:500px;
+    background:beige;
+    margin-bottom: 50px;
+}
+.foto{
+    width:700px;
+    height:400px;
+    background:orange;
+    float:right;
+    margin-top:50px;
+    margin-right:40px;
+}
+
+/* main 글씨 */
+#mainpic h1{
+    padding-top:200px;
+    padding-left:100px;
+}
+#mainpic h3{
+    padding-left:100px;
+}
+/* 취미테스트 */
+.hobbytest{
+    width:80px;
+    height:30px;
+    border:1px solid #666;
+    line-height:30px;
+    text-align:center;
+    margin-left:100px;
+    margin-top:20px;
+    text-decoration: none;
+    display: inline-block;
+}
+.hobbytest a{
+    text-decoration: none;
+    color:#333;
+    font-size:13px;
+}
+ .hbtn{margin-left:0;}
+input[type=submit]{
+    padding:5px;
+    background:#fff;
+    border:1px solid #000;
+}
+/* 박스 */
+#regular>h3{float:left;}
+.more{float:right;}
+.boxlist>li{
+    list-style:none;
+    width:310px;
+    height:200px;
+    background:#fff;
+    border:1px solid #666;
+    float:left;
+    margin-right:40px;
+    margin-bottom:40px;
+    border-radius: 20px;
+}
+.boxlist>li:nth-child(3n){
+    margin-right:0;
+}
+/* ------------ */
+#sub{
+    width:900px;
+    height:940px;
+    background:burlywood;
+    clear:both;
+    margin:0 auto;
+}
+#sub{
+    
+}
+.hhh{text-align:center;padding-top:20px;}
+#sub>ul>li{
+    width:200px;
+    height:200px;
+    background:#fff;
+    list-style: none;
+    margin-left:20px;
+    margin-top:20px;
+    float:left;
+}
+
+
+#footer{
+    width:100%;
+    height:60px;
+    background:#999;
+    text-align: center;
+    line-height:60px;
+    clear:both;
+    margin-top:20px;
+}

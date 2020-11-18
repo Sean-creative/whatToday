@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+#banner {
+    	background-color: orange;
+    	display: flex; 
+    	width: 1000px;
+    	align-items: center;
+    	margin: auto;
+	}
+#banner ul {
+    	list-style-type: none;
+    	flex: 1;
+    	display: flex; 
+    	justify-content: center;
+	}
+#banner li > a {
+    	padding: 10px;
+    	color:beige;
+    	display: flex; 
+    	margin: 0 100px;
+    	text-decoration: none;
+	}
+#banner li > a:hover {
+    	color: orangered;
+	}
+#body {
+ 		border-style: groove;
+    	width: 1000px;
+    	height: 400px;
+   		margin: auto;
+	}
+#up {
+    	width: 100%;
+    	height: 100px;
+    	text-align: right;	
+	}
+#mid {
+    	width: 100%;
+    	height: 50px;
+	}
+#dow {
+    	width: 100%;
+    	height: 250px;
+	}
+#dow img {
+		width: 30%;
+    	height: 200px;
+	}

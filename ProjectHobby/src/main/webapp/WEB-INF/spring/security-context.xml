@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="customLoginSuccess" class="com.hobby.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customPasswordEncoder" class="com.hobby.security.CustomNoOpPasswordEncoder"></bean>
+	<bean id="customUserDetailsService" class="com.hobby.security.CustomUserDetailsService"></bean>
+	<security:http>		
+		<!--  authentication-success-handler-ref="customLoginSuccess"  -->
+		<security:form-login login-page ="/login/login" authentication-success-handler-ref="customLoginSuccess"/>
+		 	
+		<!--<security:form-login login-page ="/account/login" />-->
+		<security:logout logout-url="/login/logout" invalidate-session="true" />
+
+		<security:csrf disabled = "true"/>
+		
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider
+			user-service-ref="customUserDetailsService">
+		<security:password-encoder ref="customPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
