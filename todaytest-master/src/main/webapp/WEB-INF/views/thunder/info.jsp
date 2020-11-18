@@ -133,7 +133,7 @@ a:hover {
 				개설자 정보<br> <br>
 
 				<div style="border: 1px solid; float: left">
-					<img src="../resources/human.png">
+					<img src="../resources/img/thunderHuman.png">
 				</div>
 
 				<div>
