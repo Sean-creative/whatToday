@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
+import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
 
@@ -84,10 +85,12 @@ public class ClubController {
       
       log.info("register: ");
       CustomUser customUser = (CustomUser) auth.getPrincipal();
-      Long usrNum = customUser.getUser().getUsrNum();
-      log.info("##/add 회원번호" + usrNum);
+      UserVO userVO = customUser.getUser();
       
-      model.addAttribute("usrNum", usrNum);
+      log.info("##/add 회원번호" + userVO.getUsrNum());
+      
+      model.addAttribute("usrName", userVO.getUsrName());
+      model.addAttribute("usrNum", userVO.getUsrNum());
    }
    
    //정기모임 상세정보
