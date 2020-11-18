@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +17,21 @@
       <a href="/index/main">
         <img src="/resources/img/logo.png" alt="logo">
       </a>
-        <input type="text"placeholder="관심취미를 입력해주세요.">
+        <input type="text" placeholder="관심취미를 입력해주세요.">
         <ul>
-            <a href="/account/login">로그인</a>
+            <a href="/login/login">로그인</a>
             <a href="">고객센터</a>
         </ul>
-
+        <!-- 로그인되면 보여지는 페이지 -->
+        <sec:authorize access="isAuthenticated()">			
+			<ul>
+        		<a href ="/"><sec:authentication property="principal.user.usrNum"/>님</a>
+            	<a href="/login/logout">로그아웃</a>
+            	<a href="/account/main">마이페이지</a>
+           		<a href="">고객센터</a>
+       	 	</ul>
+		</sec:authorize>
+		
 <!-- Navigation-->
         <nav id="nav">
             <ul>
