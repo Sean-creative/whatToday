@@ -11,7 +11,6 @@
         <li>
             <form action="/account/main" method="post">
                 <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
-                <input type="hidden" name = "usrId" value=${userVO.usrId }>
             </form>
         </li>
             <li>
@@ -66,11 +65,11 @@
 <p>개설한 모임</p><br>
 <c:forEach var="clubVO" items="${clubVO}">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <form name="modifyForm" method="post">
+   <form name="#" method="post">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
    <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
    <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
-   <button name="modifyClub" type="submit">수정</button>  <!-- 이거 아직 못씀 이거 띵킹하면 진도안나감 아마 -->
+   <button name="modifyClub" type="submit">수정누르면 그 모임 상세페이지로 가게만들거임</button> 
    </form>
 </c:forEach>
 </div>

@@ -11,7 +11,6 @@
         <li>
             <form action="/account/main" method="post">
                 <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
-                <input type="hidden" name = "usrId" value=${userVO.usrId }>
             </form>
         </li>
             <li>

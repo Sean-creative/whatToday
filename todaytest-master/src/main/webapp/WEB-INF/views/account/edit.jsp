@@ -10,8 +10,7 @@
     <ul>
         <li>
             <form action="/account/main" method="post">
-                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
-                <input type="hidden" name = "usrId" value=${userVO.usrId }>
+                <button class="btn1" type="submit" >마이페이지</button>
             </form>
         </li>
             <li>
@@ -42,7 +41,7 @@
         </li>
     <li>
         <form action="/account/auth_edit" method="post">
-            <button type="submit">회원정보수정</button>
+            <button type="submit" style="color: yellow">회원정보수정</button>
         </form>
     </li>
     <li>
@@ -72,6 +71,7 @@
             <span>비밀번호 </span><input type="password" readonly="readonly" value="<c:out value="${userVO.usrPwd }"/>"><br>
             <span>이름 </span><input type="text" name="usrName" value="<c:out value="${userVO.usrName }"/>"><br>
             <span>휴대전화번호 </span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
+            <input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
         </div>
     
     </div>
@@ -97,7 +97,6 @@
              </li>
              <li>
                 <select name="usrCategory1">
-
                 </select>
                 <select name="usrCategory2">
                 </select>
@@ -115,33 +114,41 @@
     </div>
     </form>
 </section>
-<script type="text/javascript" src="/resources/js/category.js"></script>
+<script type="text/javascript" src="/resources/js/select.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	var usrCat1 = $("select[name=usrCategory1]");
-	var usrCat2 = $("select[name=usrCategory2]");
-	var cat = 'C001';
+	let usrCat1 = $("select[name=usrCategory1]");
+	let usrCat2 = $("select[name=usrCategory2]");
+	const cat = 'C001';
 	
 	categoryService.getCategorylist({catClassificationCode:cat},function(list){
-			console.log(list);
-			var str='<option name="usrCategory1" value="<c:out value="${userVO.usrCategory1 }"/>">${userVO.usrCategory1 }</option>';
-			for(var i = 0, len = list.length || 0; i< len; i++){
-				if(list[i].catName == "${userVO.usrCategory1 }"){
-					console.log(list[i].catName);
-					continue;
-				}
+		console.log(list);
+		let str = "";
+		if("<c:out value="${userVO.usrCategory1 }"/>" == ""){
+			str += '<option name = "usrCategory1" value="">카테고리/분야</option>';
+		}else
+			str += '<option name = "usrCategory1" value="<c:out value="${userVO.usrCategory1 }"/>">${userVO.usrCategory1 }</option>';
+		
+		for(let i = 0, len = list.length || 0; i< len; i++){
+			if(list[i].catName == "${userVO.usrCategory1 }"){
 				console.log(list[i].catName);
-				str += '<option name="usrCategory1" value="'+list[i].catName+'">'+list[i].catName+'</option>';
+				continue;
 			}
-			usrCat1.html(str);
-
-		});
-
+			str += '<option name="usrCategory1" value="'+list[i].catName+'">'+list[i].catName+'</option>';
+		}
+		usrCat1.html(str);
+	
+	});
 
 	categoryService.getCategorylist({catClassificationCode:cat},function(list){
 		console.log(list);
-		var str='<option name = "usrCategory2"value="<c:out value="${userVO.usrCategory2 }"/>">${userVO.usrCategory2 }</option>';
-		for(var i = 0, len = list.length || 0; i< len; i++){
+		let str = "";
+		if("<c:out value="${userVO.usrCategory2 }"/>" == ""){
+			str += '<option name = "usrCategory2" value="">카테고리/분야</option>';
+		}else
+			str += '<option name = "usrCategory2"value="<c:out value="${userVO.usrCategory2 }"/>">${userVO.usrCategory2 }</option>';
+		
+		for(let i = 0, len = list.length || 0; i< len; i++){
 			if(list[i].catName == "${userVO.usrCategory2 }"){
 				console.log(list[i].catName);
 				continue;

@@ -11,8 +11,8 @@
     <ul>
         <li>
             <form action="/account/main" method="post">
-                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
-                <input type="hidden" name = "usrId" value=${userVO.usrId }>
+                <button class="btn1" type="submit" >마이페이지</button>
+
             </form>
         </li>
             <li>
@@ -43,7 +43,7 @@
         </li>
     <li>
         <form action="/account/auth_edit" method="post">
-            <button type="submit">회원정보수정</button>
+            <button type="submit" style="color: yellow">회원정보수정</button>
         </form>
     </li>
     <li>

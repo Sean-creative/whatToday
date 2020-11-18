@@ -1,7 +1,10 @@
 package com.hobby.controller;
 
 
-
+import java.security.Principal;
+/**
+ * 작성자 : 국민성
+ */
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,21 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.MypageService;
 
 
@@ -53,27 +55,31 @@ public class MypageController {
 	
 	
 	@RequestMapping("/main")
-	public void main(UserVO userVO, Model model,HttpSession session,String usrId) {
+	public void main(Model model,Authentication auth) {
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@\n\n\n\n\n\n"+usrId+"\n\n\n\n\n");
-
-		Long usrNum = service.getUser(usrId).getUsrNum();
-		model.addAttribute("userVO",service.getUser(userVO.getUsrId()));
-
+		log.info("##/main");
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		Long usrNum = customUser.getUser().getUsrNum();
+		model.addAttribute("userVO",service.getUser(customUser.getUser().getUsrId()));
 		model.addAttribute("myClub",service.getMyClubList(usrNum));
 		model.addAttribute("waitClub",service.getWaitClubList(usrNum));
 		model.addAttribute("prevClub",service.getPrevClubList(usrNum));
+		
 	} 
 	
 	@RequestMapping("/auth_edit") 
-	public void auth_edit(@SessionAttribute("userVO") UserVO userVO) {
+	public void auth_edit(Principal principal) {
+		
 	}
 	
 	@PostMapping("/authAction")
-	public String authAction(@SessionAttribute("userVO")UserVO userVO, @RequestParam("password")String password, Model model) {
+	public String authAction(Authentication auth, @RequestParam("password")String password, Model model) {
 		
 		String url = "redirect:/account/auth_edit";
 		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		System.out.println(userVO);
 		if(service.isPwdValid(password) && 
 				service.findPwdInDB(password, userVO.getUsrPwd())) {
 			url = "forward:/account/edit";
@@ -85,7 +91,7 @@ public class MypageController {
 			produces = { MediaType.TEXT_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<CategoryVO>>getCategorylist(@PathVariable("catClassificationCode") String catClassificationCode,
-			@SessionAttribute("userVO")UserVO userVO) {
+			Principal principal) {
 		log.info("get...........: " + catClassificationCode);
 		
 		return new ResponseEntity<>(service.getCategoryList(catClassificationCode),HttpStatus.OK);
@@ -93,43 +99,49 @@ public class MypageController {
 	
 	
 	@PostMapping("/edit")
-	public void edit(@SessionAttribute("userVO")UserVO userVO){
-		
+	public void edit(Authentication auth, Model model){
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		System.out.println(userVO);
+		model.addAttribute("userVO",userVO);
 	}
 	
 	@PostMapping("/editAction")
-	public String editAction(UserVO userVO, Model model) {
+	public String editAction(Authentication auth, Model model, UserVO updateUser) {
+		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		
+		
 
-		System.out.println(userVO);
-		System.out.println(userVO.getUsrCategory1());
-		System.out.println(userVO.getUsrCategory2());
+		service.updateClubFounderName(updateUser);
+		service.updateUserInfo(updateUser);
+		service.updateClubMemberUpdate(updateUser);
+		service.updateNameUserHistory(updateUser);
+		service.updateMeetingMemberName(updateUser);
+		service.updateUserDetail(updateUser);
 		
-		service.updateClubFounderName(userVO);
-		service.updateUserInfo(userVO);
-		service.updateClubMemberUpdate(userVO);
-		service.updateNameUserHistory(userVO);
-		service.updateMeetingMemberName(userVO);
-		service.updateUserDetail(userVO);
-
-		
-		model.addAttribute("id",userVO.getUsrId());
-		
-		return "/account/main";
+		return "redirect:/account/main";
 		}
 	@RequestMapping("/password")
-	public void password(@SessionAttribute("userVO")UserVO userVO) {
-
+	public void password(Authentication auth) {
+		log.info("##/password");
+		
 	}
 	@PostMapping("/passwordAction")
-	public String passwordAction(@SessionAttribute("userVO")UserVO userVO,
+	public String passwordAction(Authentication auth,
 			@RequestParam("newPassword") String newPassword,@RequestParam("currentPassword") String currentPassword) {
-		
+		log.info("##/passwordAction");
 		String url = "/account/password";
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		String usrId = customUser.getUser().getUsrId();
+		UserVO userVO = service.getUser(usrId);
 		if(service.isPwdValid(newPassword) &&
 				service.isPwdValid(currentPassword)
 				&& service.findPwdInDB(currentPassword, userVO.getUsrPwd())) {
 			userVO.setUsrPwd(newPassword);
 			service.updateUserInfo(userVO);
+			
 			url = "/account/main";
 		}	
 		
@@ -137,29 +149,30 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/auth_leave") 
-	public void auth_leave(@SessionAttribute("userVO") UserVO userVO, Model model) {
+	public void auth_leave(Authentication auth) {
 	}
 	
 	@PostMapping("/leaveAction")
-	public String leaveAction(@SessionAttribute("userVO")UserVO userVO, @RequestParam("password")String password, 
-			SessionStatus sessionStatusion, Model model) {
-		
+	public String leaveAction(Authentication auth, @RequestParam("password")String password, 
+			 Model model) {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		String url = "/account/auth_leave";
 		
 		if(service.isPwdValid(password) && 
 				service.findPwdInDB(password, userVO.getUsrPwd())) {
-			userVO.setUsrState("�궗�씠�듃�깉�눜");
+			userVO.setUsrState("사이트탈퇴");
 			service.updateUserInfo(userVO);
 			service.insertUserHistory(userVO);
-			sessionStatusion.setComplete();
-			url = "redirect:/account/list";
+			url = "redirect:/login/login";
 		}
 
 		return url;
 	}
 	@PostMapping("/myclub/main")
-	public void myclubMain(@SessionAttribute("userVO")UserVO userVO, Model model) {
-		
+	public void myclubMain(Authentication auth, Model model) {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		model.addAttribute("clubVO",service.getMyCreateClubList(userVO.getUsrNum()));
 	
 	}
@@ -167,18 +180,19 @@ public class MypageController {
 			produces = { MediaType.TEXT_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<ClubVO>>getlist(@PathVariable("cbLeaderNum") Long cbLeaderNum,
-			@SessionAttribute("userVO")UserVO userVO) {
+			Authentication auth) {
 		log.info("get...........: " + cbLeaderNum);
-		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()),HttpStatus.OK);
 	}
 	
-	@PostMapping("/myclub/regularEdit")
-	public void regularEdit(ClubVO clubVO, Model model) {
-
-	}
-	@PostMapping("/myclub/thunderEdit")
-	public void thunderEdit(ClubVO clubVO, Model model) {
-
-	}
+//	@PostMapping("/myclub/regularEdit")
+//	public void regularEdit(ClubVO clubVO, Model model) {
+//
+//	}
+//	@PostMapping("/myclub/thunderEdit")
+//	public void thunderEdit(ClubVO clubVO, Model model) {
+//
+//	}
 }
