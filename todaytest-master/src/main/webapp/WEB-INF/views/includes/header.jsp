@@ -18,7 +18,7 @@
       </a>
         <input type="text"placeholder="관심취미를 입력해주세요.">
         <ul>
-            <a href="/account/login">로그인</a>
+            <a href="/login/login">로그인</a>
             <a href="">고객센터</a>
         </ul>
 
