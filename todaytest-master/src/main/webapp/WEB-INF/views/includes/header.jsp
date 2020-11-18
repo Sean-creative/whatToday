@@ -49,15 +49,10 @@
       					<a href="/thunder/add">번개모임</a>
   					</div>
 				</div>
-
             </ul>
         </nav>
       </header>
-
-
-
 <div id="wrap">
-   
     <section id="#thunder_add">
     </section>
 
