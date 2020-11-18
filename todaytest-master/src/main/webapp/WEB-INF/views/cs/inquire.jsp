@@ -11,13 +11,15 @@
             <a href="/cs/inquire">1:1문의사항</a>
         </ul>
     </div>
-    <form role="form" action="/cs/faq" method="post">
+    <form role="form" action="/cs/faq" method="post" name="inquire" onsubmit="return inputCheck()">
     <div class="cs_all">
         <h3>1:1 문의하기 </h3>
         
         <div class="cs_text">
+        <input type='hidden' name='usrNum' value="${usrNum}">
+        
             <label>이름 : </label>
-            <input type="text" name='qsName' class="name">
+            <input type="text" name='qsName' class="name" value="${usrName}" readonly>
 
             <label>연락처 :</label>
             <input type="text" name='qsPhone' class="phone">
@@ -42,6 +44,44 @@
         <input type="submit" value="보내기">       
     </div>
 </form>
+<script>
+function inputCheck(){
+	var phoneNumber = document.inquire.qsPhone;
+	var email = document.inquire.qsEmail;
+	var title = document.inquire.qsTitle;
+	var content = document.inquire.qsContent;
+	
+	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	
+	if(!phoneNumber.value){
+		alert("번호를 입력해주세요.");
+		return false;
+	}
+	
+	if(phonePattern.test(phoneNumber.value) == false){
+    	alert("핸드폰 번호 : 01012341234");
+    	return false;
+    	
+    }
+	
+	if(!email.value){
+		alert("이메일을 입력해주세요.");
+		return false;
+	}
+	
+	
+	if(!title.value){
+		alert("제목을  입력해주세요.");
+		return false;
+	}
+	
+	if(!content.value){
+		alert("내용 입력해주세요.");
+		return false;
+	}
+	
+}
+</script>
 <%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

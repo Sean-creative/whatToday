@@ -124,5 +124,11 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.updateUserDetail(userVO);
 	}
 
+	@Override
+	public int leaveSite(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return mapper.leaveSite(userVO);
+	}
+
 
 }

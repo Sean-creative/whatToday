@@ -36,6 +36,12 @@
 		]]>
 	</select>
 	
+	<update id="leaveSite">
+		update userauth
+		set  auth = 'ROLE MEMBEROUT'
+		where  USRNUM = #{usrNum}
+	</update>
+	
 	<update id="updateUserInfo">
 		update TBLUSER
 		set  USRNAME= #{usrName},
