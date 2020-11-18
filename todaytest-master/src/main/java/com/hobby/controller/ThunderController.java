@@ -59,6 +59,7 @@ public class ThunderController {
 								
 //				clubVO.setCl_current_number(11);
 				model.addAttribute("clubVO", clubVO);
+				
 	}
 	
 	
@@ -126,4 +127,6 @@ public class ThunderController {
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
+	
+	//push 해봄 11/18 13:00
 }
