@@ -56,7 +56,7 @@
 </div>
 </nav>
 <section id="wrap">
-<form action="/account/editAction" method="post">
+<form name="register" action="/account/editAction" method="post" onsubmit="return inputCheck();">
     <div class ="info"> <!-- 일단 하나하나씩 보내고 나중에 객체로 보내는거 공부해서 바꾸자 -->
         <div class="pic">
             <img src="${userVO.usrImg }" alt="My Image">
@@ -121,7 +121,41 @@
 </section>
 <script type="text/javascript" src="/resources/js/select.js"></script>
 <script type="text/javascript">
+function inputCheck() {
+
+	let name = document.register.usrName;
+	let phone = document.register.usrPhone;
+
+	// 이름 : 한글만 2~4글자
+	const namePattern = /^[가-힣]{2,4}$/;
+	// 핸드폰 번호 : 010-1234-1234
+	const phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+
+    if(!name.value){
+        alert("이름을 입력하세요.");
+        return false;
+    }
+    if(namePattern.test(name.value) == false){
+        alert("한글만 2~4글자");
+        return false;
+    }
+    
+    if(!phone.value){
+        alert("핸드폰번호를 입력하세요.");
+        return false;
+    }
+ 
+    if(phonePattern.test(phone.value) == false){
+    	alert("핸드폰 번호 : 01012341234");
+    	return false;
+    	
+    }
+    
+    
+}
+
 $(document).ready(function() {
+	
 	
 	$(function() {
 		$('#city1').change(function() {
@@ -136,18 +170,18 @@ $(document).ready(function() {
 	});
 
 	function region(o, d) {
-		var city = [ "서울특별시", "경기도" ];
+		let city = [ "서울특별시", "경기도" ];
 
-		var seoul = [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
+		let seoul = [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
 				"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
 				"성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구",
 				"중구", "중랑구" ];
 
-		var gyeonggi = [ "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시",
+		let gyeonggi = [ "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시",
 				"남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시",
 				"안양시", "양주시", "여주시", "오산시", "용인시", "의왕시", "의정부시", "이천시",
 				"파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "연천군" ];
-		var district;
+		let district;
 		// change(function(){$( ':selected', o).val() => this }
 		if ($(':selected', o).val() == "서울특별시") {
 			district = seoul;
@@ -157,8 +191,8 @@ $(document).ready(function() {
 
 		d.empty();
 
-		for (var i = 0; i < district.length; i++) {
-			var option = $("<option value=" + district[i] +">"
+		for (let i = 0; i < district.length; i++) {
+			let option = $("<option value=" + district[i] +">"
 					+ district[i] + "</option>");
 			d.append(option);
 		}
