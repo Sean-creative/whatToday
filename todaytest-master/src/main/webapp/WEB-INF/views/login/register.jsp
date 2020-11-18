@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- 작성자: 김지영 -->
 <!DOCTYPE html>
 <html>
@@ -15,29 +16,29 @@
 		<div class="input-container">
 			<label>이메일(아이디) </label>
 			<!--type="email" 나중에 바꾸기  -->
-			<input class="input-field" type="text" placeholder="Email"
+			<input class="input-field" type="email" placeholder="이메일(아이디)를 입력해주세요"
 				id="id" name="usrId">
 			<button id="idDuplicateCheck" type="button" onclick="check();">중복체크</button>
 		</div>
 
 		<div class="input-container">
 			<label>비밀번호 </label> <input class="input-field" type="password"
-				placeholder="Password" name="usrPwd">
+				placeholder="영어+특수문자+숫자를 섞어서 (8~16)자리" name="usrPwd">
 		</div>
 
 		<div class="input-container">
 			<label>비밀번호 확인 </label> <input class="input-field" type="password"
-				placeholder="Password" name="usrPwdRe">
+				placeholder="비밀번호를 다시 입력해주세요" name="usrPwdRe">
 		</div>
 
 		<div class="input-container">
 			<label>이름 </label> <input class="input-field" type="text"
-				placeholder="Username" name="usrName">
+				placeholder="이름을 입력해주세요" name="usrName">
 		</div>
 
 		<div class="input-container">
 			<label>휴대전화 번호 </label> <input class="input-field" type="text"
-				placeholder="Phonenumber" name="usrPhone">
+				placeholder="010-1234-5678" name="usrPhone">
 		</div>
 
 		<div class="input-container">
@@ -45,13 +46,14 @@
 				value="m"> <label for="male">남자</label> <input type="radio"
 				id="female" name="usrGender" value="f"> <label for="female">여자</label><br>
 		</div>
- 	
- 		<!-- 생년월일 나중에  수정 / DB에 type이 DATE여서 변환작업 필요 
+		
+		
+ 		<!--text -> Date(DB타입)으로 변환-->
 		<div class="input-container">
 			<label>생년월일 </label> <input class="input-field" type="date"
-				placeholder="Birthday" name="usrBirth">
+				placeholder="Birthday" name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
 		</div>
-		-->
+		
 
 		<div class="input-container">
 			<label>지역1 </label> <select class="input-field" name="usrCity1"
@@ -91,14 +93,15 @@
 
 		<div class="input-container">이용약관 / 개인정보 수집 및 이용 동의</div>
 		<div class="input-container">
-			<label>이용약 동의</label> <input type="radio" name="usrTerm"
-				value="Y"> <label for="agree">동의</label> <input type="radio"
-				name="usrTerm" value="N"> <label for="disagree">비동의</label>
+			<label>이용약관 동의</label> 
+			<input type="radio" name="usrTerm"
+				value="Y" checked="checked"> <label for="agree">동의</label> <input type="radio"
+				name="usrTerm" value="N"> <label for="disagree">비동의</label></input>
 		</div>
 
 		<div class="input-container">
 			<label>개인정보 수집 동의</label> <input type="radio"
-				name="usrPersonalTerm" value="Y"> <label for="agree">동의</label>
+				name="usrPersonalTerm" value="Y" checked="checked"> <label for="agree">동의</label>
 			<input type="radio" name="usrPersonalTerm" value="N">
 			<label for="disagree">비동의</label>
 		</div>
@@ -106,9 +109,8 @@
 		<div class="input-container">
 			<label>이메일 수신</label> <input type="radio" name="usrEmailTerm"
 				value="Y"> <label for="agree">동의</label> <input type="radio"
-				name="usrEmailTerm" value="N"> <label for="disagree">비동의</label>
+				name="usrEmailTerm" value="N" checked="checked"> <label for="disagree">비동의</label>
 		</div>
-
 
 
 		<button type="submit" class="btn">Register</button>
@@ -118,32 +120,62 @@
 	
 	<script type="text/javascript">
 	function inputCheck() {
-	    if(!document.register.usrId.value){
+		var id = document.register.usrId;
+		var pw = document.register.usrPwd;
+		var pwRe = document.register.usrPwdRe;
+		var name = document.register.usrName;
+		var phone = document.register.usrPhone;
+		var gender = document.register.usrGender;
+		
+		// 정규식 
+		// 비밀번호 : 영어+특수문자+숫자를 섞어서 (8~16)자리
+		var pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+		// 이름 : 한글만 2~4글자
+		var namePattern = /^[가-힣]{2,4}$/;
+		// 핸드폰 번호 : 010-1234-1234
+		var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+		
+	    if(!id.value){
 	        alert("아이디를 입력하세요.");
 	        return false;
 	    }
-	    if(!document.register.usrPwd.value){
+	    
+	    if(!pw.value){
 	        alert("비밀번호를 입력하세요.");
 	        return false;
 	    }
-	    if(!document.register.usrPwdRe.value){
-	        alert("비밀번호를 입력하세요.");
+	    if(pwPattern.test(pw.value) == false){
+	    	alert("영어+특수문자+숫자를 섞어서 (8~16)자리");
 	        return false;
 	    }
-	    if(document.register.usrPwd.value != document.register.usrPwdRe.value){
-	        alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요");
+	    if(!pwRe.value){
+	        alert("비밀번호를 다시 입력해주세요.");
 	        return false;
 	    }
-	    if(!document.register.usrName.value){
-	        alert("이름을 입력하세요.");
+	    if(pw.value != pwRe.value){
+	        alert("비밀번호가 일치하지 않습니다.다시 입력해주세요");
 	        return false;
 	    }
 	    
-	    if(!document.register.usrPhone.value){
+	    if(!name.value){
+	        alert("이름을 입력하세요.");
+	        return false;
+	    }
+	    if(namePattern.test(name.value) == false){
+	        alert("한글만 2~4글자");
+	        return false;
+	    }
+	    
+	    if(!phone.value){
 	        alert("핸드폰번호를 입력하세요.");
 	        return false;
 	    }
-	    if(!document.register.usrGender.value){
+	 
+	    if(phonePattern.test(phone.value) == false){
+	    	alert("핸드폰 번호 : 010-1234-1234");
+	    }
+	    
+	    if(!gender.value){
 	        alert("성별을 선택하세요.");
 	        return false;
 	    }
