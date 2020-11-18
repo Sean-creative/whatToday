@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hobby.mapper.MypageMapper">
+
+	<select id="getUser" resultType="com.hobby.domain.UserVO">
+		select * from USERDETAIL,TBLUSER where USRID = #{id} AND TBLUSER.usrNum = USERDETAIL.usrNum
+	</select>
+	
+	<select id="getUserList" resultType="com.hobby.domain.UserVO">
+		<![CDATA[
+		select * from TBLUSER
+		]]>
+	</select>
+	
+	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
+		<![CDATA[
+		select * from CLUB 
+		where CBNAME in 
+		(select CBNAME from CLUBMEMBER where CBLEADERNUM = #{usrNum} and CBMBSTRESULT = '승인')
+		]]>
+	</select>
+	
+	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
+		<![CDATA[
+		select * from CLUB 
+		where CBNAME in 
+		(select CBNAME from CLUBMEMBER where CBLEADERNUM = #{usrNum} and CBMBSTRESULT = '승인대기')
+		]]>
+	</select>
+	
+	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
+		<![CDATA[
+		select * from CLUBJOINHISTORY 
+		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '탈퇴'
+		]]>
+	</select>
+	
+	<update id="updateUserInfo">
+		update TBLUSER
+		set  USRNAME= #{usrName},
+		USRPHONE = #{usrPhone},
+		USRPWD = #{usrPwd},
+		USRSTATE = #{usrState}
+		where USRID = #{usrId} 
+	</update>
+	
+	<update id="updateClubFounderName">
+		update CLUB
+		set  CBLEADERNAME= #{usrName} 
+		where CBLEADERNUM = #{usrNum}
+	</update>
+
+	<update id="updateClubMemberNameUpdate">
+		update CLUBMEMBER
+		set  USRNAME = #{usrName}
+		where  USRNUM = #{usrNum}
+	</update>
+	
+	<insert id="insertUserHistory">
+		insert into USERHISTORY(USRNUM,USRNAME,USRSTATE)
+		values (#{usrNum}, #{usrName}, #{usrState}) 
+	</insert>
+	
+	<update id="updateNameUserHistory">
+		update USERHISTORY
+		set  USRNAME = #{usrName}
+		where  USRNUM = #{usrNum}
+	</update>
+	
+	<select id="getMyCreateClubList" resultType="com.hobby.domain.ClubVO">
+		select * from CLUB,THUNDERDETAIL  
+		where 
+		CLUB.CBNUM = THUNDERDETAIL.CBNUM and CBLEADERNUM = #{usrNum}
+	</select>
+	
+	<select id="getClub" resultType="com.hobby.domain.ClubVO">
+		select * from CLUB,THUNDERDETAIL  
+		where 
+		CLUB.CBNUM = #{cbNum} and
+		CLUB.CBNUM = THUNDERDETAIL.CBNUM and CBNAME = #{cbName}
+	</select>
+	
+	<update id="updateMeetingMemberName">
+		update MEETINGMEMBER
+		set USRNAME = #{usrName}
+		where USRNUM = #{usrNum}
+	</update>
+	
+	<select id="getCategoryList" resultType="com.hobby.domain.CategoryVO">
+		select * from CATEGORY 
+		WHERE CATCLASSIFICATIONCODE = #{catClassificationCode}
+	</select>
+	
+	<update id="updateUserDetail">
+		update USERDETAIL
+		set  USRCITY1 = #{usrCity1},
+		USRDISTRICT1 = #{usrDistrict1},
+		USRCITY2 = #{usrCity2},
+		USRDISTRICT2 = #{usrDistrict2},
+		USRCATEGORY1 = #{usrCategory1},
+		USRCATEGORY2 = #{usrCategory2}
+		where  USRNUM = #{usrNum}
+	</update>
+
+	
+
+</mapper>

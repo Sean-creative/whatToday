@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hobby.mapper.AccountMapper">
+<resultMap type="com.hobby.domain.UserVO" id="userMap">
+    <result property="usrNum" column="usrNum"/>
+    <result property="usrId" column="usrId"/>
+    <result property="usrPwd" column="usrPwd"/>
+    <result property="usrName" column="usrName"/>
+    <collection property="authList" resultMap="authMap">
+    </collection> 
+</resultMap>
+  
+<resultMap type="com.hobby.domain.AuthVO" id="authMap">
+    <result property="usrNum" column="usrNum"/>
+    <result property="auth" column="auth"/>
+</resultMap>
+<insert id="insert">
+	insert into tbluser(usrNum, usrClassification, usrId, usrPwd, usrName, usrPhone, usrGender, usrBirth, usrJoinDate, usrType, usrState, usrLoginDate, usrImg, usrChangePwdDate)  
+	values(tbluser_seq.nextval, '회원', #{usrId}, #{usrPwd},#{usrName}, #{usrPhone}, #{usrGender}, sysdate, sysdate, '일반회원가입', '회원', sysdate, '이미지', sysdate)
+</insert>   
+
+<insert id="insertUserInfo">
+	insert into userdetail(usrNum, usrCity1, usrDistrict1, usrCity2, usrDistrict2, usrCategory1, usrCategory2) 
+	values(tbluser_seq.currval, #{usrCity1}, #{usrDistrict1}, #{usrCity2}, #{usrDistrict2}, #{usrCategory1}, #{usrCategory2})	
+</insert>
+
+<insert id="insertUserTerms">
+	insert into userterms(usrNum, usrTerm, usrPersonalTerm, usrEmailTerm)  
+	values(tbluser_seq.currval, #{usrTerm}, #{usrPersonalTerm}, #{usrEmailTerm})	
+</insert>
+
+<insert id="insertUserHistory">
+	insert into userhistory(usrNum, usrName, usrState, usrStateUpdateDate)  
+	values(tbluser_seq.currval, #{usrName}, '회원', sysdate)	
+</insert>
+
+<insert id ="insertAuth">
+	insert into userAuth(usrNum, auth)
+	values(tbluser_seq.currval, 'ROLE_MEMBER')
+</insert>
+
+<select id="read" resultMap="userMap">
+SELECT 
+    usr.usrNum, usrId, usrPwd, usrName, auth
+FROM 
+  tbluser usr LEFT OUTER JOIN userAuth auth on usr.usrNum = auth.usrNum
+WHERE usr.usrId = #{usrId} 
+</select>
+
+<select id="idDuplicateCheck" resultType="string">
+	SELECT usrId FROM tbluser where usrId = #{usrId}
+</select>
+
+<select id="findId" resultType="string">
+	SELECT usrId FROM tbluser
+	where usrName = #{usrName} and  usrPhone = #{usrPhone}
+	
+</select>
+
+<select id="findPwd" resultType="string">
+select usrPwd
+from tbluser
+where usrId = #{usrId}
+</select>
+
+</mapper>
+
+
