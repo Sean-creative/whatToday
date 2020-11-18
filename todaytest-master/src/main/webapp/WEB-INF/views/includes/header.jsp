@@ -18,14 +18,16 @@
         <img src="/resources/img/logo.png" alt="logo">
       </a>
         <input type="text" placeholder="관심취미를 입력해주세요.">
-        <ul>
+        
+        <ul class = "main">
             <a href="/login/login">로그인</a>
             <a href="/cs/faq">고객센터</a>
         </ul>
+        
         <!-- 로그인되면 보여지는 페이지 -->
         <sec:authorize access="isAuthenticated()">			
 			<ul>
-        		<a href ="/"><sec:authentication property="principal.user.usrNum"/>님</a>
+        		<a href ="/" id="user"><sec:authentication property="principal.user.usrName"/>님</a>
             	<a href="/login/logout">로그아웃</a>
             	<a href="/account/main">마이페이지</a>
            		<a href="">고객센터</a>
@@ -55,13 +57,20 @@
 
 
 <div id="wrap">
-
-
    
     <section id="#thunder_add">
     </section>
 
-
 </div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+		var id = document.getElementById("user");
+		console.log("userId: " +id);
+		
+		if(id != null){
+			$(".main").css("display","none");
+		}
+	
+</script>

@@ -14,12 +14,12 @@
   <p>아이디 찾기</p>
   <div class="input-container">
   	<label> 이름 </label>
-    <input class="input-field" type="text" placeholder="Username" id="name" name="usrName">
+    <input class="input-field" type="text" placeholder="이름을 입력해주세요" id="name" name="usrName">
   </div>
 
   <div class="input-container">
     <label>휴대전화 번호  </label>
-    <input class="input-field" type="text" placeholder="Phonenumber"  id="phone" name="usrPhone">
+    <input class="input-field" type="text" placeholder="01012345678"  id="phone" name="usrPhone">
   </div>
 
   <p id="resultId"></p>
@@ -32,7 +32,7 @@
   <p>비밀번호 찾기</p>
   <div class="input-container">
   	<label>이메일(아이디) </label>
-    <input class="input-field" type="text" placeholder="Email" id="email" name="usrId">
+    <input class="input-field" type="email" placeholder="이메일을 입력해주세요" id="email" name="usrId">
   </div>
 
   <p id="resultPwd"></p>
@@ -46,6 +46,33 @@
 function checkId(){
 	name = $("#name").val();
 	phone = $("#phone").val();
+	
+	
+	// 이름 : 한글만 2~4글자
+	var namePattern = /^[가-힣]{2,4}$/;
+	// 핸드폰 번호 : 010-1234-1234
+	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	
+	if(!name){
+        alert("이름을 입력하세요.");
+        return false;
+    }
+	
+	if(namePattern.test(name) == false){
+		alert("한글만 2~4글자");
+		return false;
+	}
+	
+	if(!phone){
+        alert("핸드폰번호를 입력하세요.");
+        return false;
+    }
+	
+	if(phonePattern.test(phone) == false){
+	    	alert("핸드폰 번호 : 01012341234");
+	    	return false;
+	}
+	
 	
 	var send = {"name" : name , "phone": phone};
 	
@@ -73,6 +100,11 @@ function checkId(){
 <script type="text/javascript">
 function checkPwd(){
 	email = $("#email").val();
+	
+	if(!email){
+        alert("이메일을 입력하세요.");
+        return false;
+    }
 	
 	$.ajax({
 	    url: 'find_pwd',

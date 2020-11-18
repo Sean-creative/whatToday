@@ -16,8 +16,10 @@
         <h3>1:1 문의하기 </h3>
         
         <div class="cs_text">
+        <input type='hidden' name='usrNum' value="${usrNum}">
+        
             <label>이름 : </label>
-            <input type="text" name='qsName' class="name">
+            <input type="text" name='qsName' class="name" value="${usrName}">
 
             <label>연락처 :</label>
             <input type="text" name='qsPhone' class="phone">
@@ -42,6 +44,7 @@
         <input type="submit" value="보내기">       
     </div>
 </form>
+
 <%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

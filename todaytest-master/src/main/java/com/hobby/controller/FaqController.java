@@ -1,5 +1,6 @@
 package com.hobby.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import com.hobby.domain.InquireVO;
+import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.FaqService;
 
 import lombok.AllArgsConstructor;
@@ -34,13 +36,22 @@ public class FaqController {
 	}
 	
 	@GetMapping("/inquire")
-	public void register2() {
+	public void register2(Authentication auth,Model model) {
 		log.info("register.....!!!!!\n\n\n" );
+		CustomUser customUser = (CustomUser)auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		
+		log.info("##/add 회원번호 "+ userVO.getUsrNum());
+		
+		model.addAttribute("usrName",userVO.getUsrName());
+		model.addAttribute("usrNum",userVO.getUsrNum());
+		
+		
 	}
 	
 	@PostMapping("/faq")
 	public String register2(InquireVO inquire, RedirectAttributes rttr) {
-		log.info("register2: " + inquire);
+		log.info("register2: n\n\n\n" + inquire);
 		service.register2(inquire);
 		rttr.addFlashAttribute("result", inquire.getQsNum());
 		
