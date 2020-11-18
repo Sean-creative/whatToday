@@ -133,7 +133,7 @@
 		// 이름 : 한글만 2~4글자
 		var namePattern = /^[가-힣]{2,4}$/;
 		// 핸드폰 번호 : 010-1234-1234
-		var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+		var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 		
 	    if(!id.value){
 	        alert("아이디를 입력하세요.");
@@ -172,7 +172,9 @@
 	    }
 	 
 	    if(phonePattern.test(phone.value) == false){
-	    	alert("핸드폰 번호 : 010-1234-1234");
+	    	alert("핸드폰 번호 : 01012341234");
+	    	return false;
+	    	
 	    }
 	    
 	    if(!gender.value){
