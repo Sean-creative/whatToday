@@ -6,17 +6,17 @@
 <!-- 작성자 : 김선우 -->
 <%@include file="../includes/header.jsp"%>
 <style>
-a:link {
+section a:link {
 	color: white;
 	text-decoration: none;
 }
 
-a:visited {
+section a:visited {
 	color: white;
 	text-decoration: none;
 }
 
-a:hover {
+section a:hover {
 	color: red;
 	text-decoration: none;
 }
@@ -30,11 +30,11 @@ a:hover {
 			<div style="display: flex; margin-bottom: 30px">
 				<div
 					style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-					<a href="#">정보</a><br>
+					<a class="info" href="#">정보</a><br>
 				</div>
 				<div
 					style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-					<a href="#">채팅</a><br>
+					<a class="info" href="#">채팅</a><br>
 				</div>
 			</div>
 
@@ -73,7 +73,7 @@ a:hover {
 						value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
 				</div>
 				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 10px;">
-					모집인원 :
+					모임인원 :
 					<c:out
 						value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />
 				</div>

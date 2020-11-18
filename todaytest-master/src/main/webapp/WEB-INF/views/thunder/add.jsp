@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
  <!-- 작성자 : 김선우 -->
 
 <%@include file="../includes/header.jsp"%>
@@ -8,7 +9,7 @@
 
     <!--  번개 모임 개설 -->
     <section id="wrap">
-          <form action="/thunder/add" method="post">
+          <form action="/thunder/add" method="post" name="add" onsubmit="return inputCheck()">
 
           <div>
                 <div>
@@ -36,7 +37,7 @@
           <div>
                 <div>
                   모임 날짜<br>
-                  <input type="datetime-local" name='thunderDetailVO.cbDate'>
+                  <input type="datetime-local" name='thunderDetailVO.cbDate' id=cbDate>
                 </div>
                 <div>
                   카테고리/분야<br>
@@ -62,13 +63,13 @@
 
           <div>
                 <div>
-                  모집 인원<br>
+                  모임 인원<br>
                   <input type="number" name='cbMbnum'>
                 </div>
               
                 <div>
-                  모집 신청기간<br>
-                <input type="datetime-local" name='thunderDetailVO.cbAppPeriod'>
+                  모임 신청기간<br>
+                <input type="datetime-local" name='thunderDetailVO.cbAppPeriod' id=cbAppPeriod>
                 </div>
 
                 <div>
@@ -100,23 +101,113 @@
           <div>
                 <div>
                   모임 장소 <br>
-                  <input type="text"  name='thunderDetailVO.cbPlace'>
+                  <input type="text"  name='thunderDetailVO.cbPlace' id=cbPlace>
                 </div>
 
                 <div>
                   모임 준비물<br>
-                  <input type="text"  name='thunderDetailVO.cbSupplies'>
+                  <input type="text"  name='thunderDetailVO.cbSupplies' id=cbSupplies>
                 </div>
           </div>
           <div style="margin-left: 470px">
-                <button type="submit" onclick="alert('번개모임이 개설되었습니다.')">
-                    번개 만들기 </button>
+                  <button type="submit" >번개만들기</button>     
                 <button type="reset" onclick="alert('리셋되었습니다.')">
 		      리셋 하기 </button>
 		  </div>
 	
                 </form>
+                
+                                
     </section>
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+    
+    function inputCheck(){
+    	var clubname = document.add.cbName;
+    	var intro = document.add.cbIntro;
+    	
+    	var date = $('#cbDate').val();
+    	
+    	var category = document.add.cbCategory;
+    	var subcat = document.add.cbSubcat;
+    	var mbnum = document.add.cbMbnum;
+    	var appPeriod = $('#cbAppPeriod').val();  
+    	var hashtag = document.add.cbHashtag;
+    	var city = document.add.cbCity;
+    	var district = document.add.cbDistrict;
+    	var place = $('#cbPlace').val(); 
+    	var supplies = $('#cbSupplies').val();  
+    	
+  		console.log(mbnum.value);
+    	
+    	if(!clubname.value || clubname.value.length>30){
+    		alert("모임명을 다시 입력해주세요.");
+    		return false;
+    	}
+    	    	
+    	if(!intro.value || intro.value.length>30){
+    		alert("모임소개를 다시 입력해주세요.");
+    		return false;
+    	}
+    	if(!date ){
+    		alert("모임날짜를 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!category.value ){
+    		alert("카테고리를 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!subcat.value ){
+    		alert("모임을 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!mbnum.value || mbnum.value < 0){
+    		alert("모임인원을 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!appPeriod){
+    		alert("모임 신청기간 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!hashtag.value || hashtag.value.length>30){
+    		alert("해시태그를 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!city.value){
+    		alert("지역을  입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!district.value){
+    		alert("세부지역을  입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!place || place.length>30){
+    		alert("모임장소를 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+    	if(!supplies || supplies.length>30){
+    		alert("모임 준비물을 다시 입력해주세요.");
+    		return false;
+    	}
+    	
+ 
+    	alert('개설되었습니다.');
+    	
+    	
+    }
+    
+                                  
+    </script>
+    
 
 <%@include file="../includes/footer.jsp"%>
 
