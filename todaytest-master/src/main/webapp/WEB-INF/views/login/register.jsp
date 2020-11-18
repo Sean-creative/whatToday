@@ -39,12 +39,12 @@
 
 		<div class="input-container">
 			<label>휴대전화 번호 </label> <input class="input-field" type="text"
-				placeholder="010-1234-5678" name="usrPhone">
+				placeholder="01012345678" name="usrPhone">
 		</div>
 
 		<div class="input-container">
 			<label>성별 </label> <input type="radio" id="male" name="usrGender"
-				value="m"> <label for="male">남자</label> <input type="radio"
+				value="m" checked="checked"> <label for="male">남자</label> <input type="radio"
 				id="female" name="usrGender" value="f"> <label for="female">여자</label><br>
 		</div>
 		
@@ -133,7 +133,7 @@
 		// 이름 : 한글만 2~4글자
 		var namePattern = /^[가-힣]{2,4}$/;
 		// 핸드폰 번호 : 010-1234-1234
-		var phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+		var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 		
 	    if(!id.value){
 	        alert("아이디를 입력하세요.");
@@ -172,7 +172,9 @@
 	    }
 	 
 	    if(phonePattern.test(phone.value) == false){
-	    	alert("핸드폰 번호 : 010-1234-1234");
+	    	alert("핸드폰 번호 : 01012341234");
+	    	return false;
+	    	
 	    }
 	    
 	    if(!gender.value){
@@ -247,6 +249,7 @@
 	</script>
 
 	<script type="text/javascript">
+	
 		function check() {
 			id = $("#id").val();
 
@@ -260,12 +263,12 @@
 				success : function(data) {
 					if (data == -1) {
 						alert("사용하실 수 있는 아이디입니다.");
+						
 					} else {
 						alert("중복된 아이디가 존재합니다.");
 					}
 				},
 				error : function() {
-
 				}
 			});
 		}
