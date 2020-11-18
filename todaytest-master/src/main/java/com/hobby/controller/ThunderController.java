@@ -1,4 +1,5 @@
 package com.hobby.controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import com.hobby.domain.ThunderVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
 import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ThunderService;
 import com.hobby.service.UserService;
 
@@ -99,8 +101,13 @@ public class ThunderController {
 	
 
 	@PostMapping("/add")
-	public String add(ThunderVO clubVO, RedirectAttributes rttr) {
-		
+	public String add(Authentication auth, ThunderVO clubVO, RedirectAttributes rttr) {
+
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+	    Long usrNum = customUser.getUser().getUsrNum();
+	    log.info("POST-add 회원번호" + usrNum);
+	    clubVO.setCbLeaderNum(usrNum);
+	      
 		log.info("add : " + clubVO);
 		
 		service.register(clubVO);
@@ -110,6 +117,7 @@ public class ThunderController {
 		return "redirect:/thunder/list";
 	}
 
+	
 	
 	@GetMapping("/add")
 	public void add() {
