@@ -18,7 +18,7 @@
     <!--  정기모임 -->
    <div id="toregular">
         <span>정기모임</span>
-        <span class="more">더보기+</span>
+        <span class="more"><a href="/regular/list">더보기+</a></span>
         <ul class="boxlist">
 					 <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="5">
 						<li>
@@ -42,16 +42,6 @@
 								<p>유형  : <c:out value="${club.cbType}" /></p>
 							</li>	
 				</c:forEach>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
         </ul>
     </div>
 
