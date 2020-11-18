@@ -29,8 +29,8 @@
                 <a href="/regular/list">정기</a>
                 <a href="/thunder/list">번개</a>
                 <a href="/thunder/add">번개개설</a>
-                <a href="#">베스트</a>
-                <a href="#">추천</a>
+                <a href="">베스트</a>
+                <a href="">추천</a>
                 <div class="dropdown">모임개설
   					<div class="dropdown-content">
   						<a href="/regular/add">정기모임</a>
