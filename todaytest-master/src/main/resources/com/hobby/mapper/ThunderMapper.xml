@@ -57,9 +57,10 @@ select * from club where cbNum > 0
 		CALL
 			begin
 				insert into club
-(cbNum, cbIntro, cbName, cbCategory, cbMbnum, cbSubcat, cbHashtag ,cbCity, cbDistrict, cbType)
+(cbNum, cbIntro, cbName, cbCategory, cbMbnum, cbSubcat, cbHashtag ,cbCity, cbDistrict, cbType, cbLeaderNum
+,cbLeaderName)
 values(#{cbNum}, #{cbIntro}, #{cbName}, #{cbCategory}, #{cbMbnum},
-#{cbSubcat}, #{cbHashtag}, #{cbCity}, #{cbDistrict}, '번개모임');
+#{cbSubcat}, #{cbHashtag}, #{cbCity}, #{cbDistrict}, '번개모임', #{cbLeaderNum}, #{cbLeaderName});
 					
 
 				insert into thunderDetail
