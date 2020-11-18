@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ include file="../includes/header.jsp"%>
+
 <!-- 작성자: 김지영 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +13,7 @@
 </head>
 <body>
 
-<!-- Masthead-->
-    <header id=header>
 
-      <a href="index.html">
-        <img src="/resources/img/logo.png" alt="logo">
-      </a>
-        <input type="text"placeholder="관심취미를 입력해주세요.">
         <ul>
         	<a href="">${usrName} 님</a>
             <a href="/login/logout">로그아웃</a>
