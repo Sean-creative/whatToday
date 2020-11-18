@@ -88,4 +88,8 @@ public class AccountController {
 
 		return pwd == null ? "-1" : pwd;
 	}
+	
+	public void test() {
+		System.out.println("accountTest");
+	}
 }
