@@ -42,7 +42,7 @@ public class UserVO {
     private String usrEmailTerm;
     
     //userhistory
-    private Long usrHistroyNum;
+    private Long usrHistoryNum;
     private Date usrStateUpdateDate;
     
     

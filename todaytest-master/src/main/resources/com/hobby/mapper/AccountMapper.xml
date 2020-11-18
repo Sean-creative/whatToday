@@ -32,8 +32,9 @@
 </insert>
 
 <insert id="insertUserHistory">
-	insert into userhistory(usrNum, usrName, usrState, usrStateUpdateDate)  
-	values(tbluser_seq.currval, #{usrName}, '회원', sysdate)	
+	insert into userhistory(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
+	values(userhistory_seq.nextval, tbluser_seq.currval, #{usrName}, '회원', sysdate)
+	
 </insert>
 
 <insert id ="insertAuth">
