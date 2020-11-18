@@ -31,5 +31,7 @@ public interface MypageService {
 
 	public boolean isPwdValid(String password);
 	public boolean findPwdInDB(String password,String password2);
+	
+	public int leaveSite(UserVO userVO);
 
 }

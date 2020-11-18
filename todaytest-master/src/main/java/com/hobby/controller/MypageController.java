@@ -173,7 +173,8 @@ public class MypageController {
 			userVO.setUsrState("사이트탈퇴");
 			service.updateUserInfo(userVO);
 			service.insertUserHistory(userVO);
-			url = "redirect:/login/login";
+			service.leaveSite(userVO);
+			url = "redirect:/login/logout";
 		}
 
 		return url;
