@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hobby.mapper.FaqMapper">
+
+<!--faq질문   -->
+<select id="faqList" resultType="com.hobby.domain.FaqVO">
+	<![CDATA[
+		select * from faq
+	]]>
+</select>
+
+<!-- faq 내용   -->
+<select id="faqContent" resultType="com.hobby.domain.FaqVO">
+	<![CDATA[
+		select * from faqcontent,faq where faq.faqNum=faqContent.faqNum
+	]]>
+</select>
+
+<!-- 일대일 문의 정보   --> 
+<insert id="insertSelectKey2">
+	<selectKey  order="BEFORE" keyProperty="qsNum" resultType="long">
+		select question_seq.nextval from dual 
+	</selectKey>
+	insert into question (qsNum,qsEmail,qsName,qsPhone,qsTitle)
+	values (#{qsNum}, #{qsEmail},#{qsName},#{qsPhone},#{qsTitle}) 
+</insert> 
+
+
+<!-- 문의사항selectkey와 한쌍   -->
+<insert id="insertqs">
+	insert into questionContent (qsNum,qsContent,qsFile)
+	values (#{qsNum},#{qsContent}, #{qsFile}) 
+</insert>
+
+<!-- 메인 정기  -->
+<select id="getListRegular" resultType="com.hobby.domain.MainVO">
+	<![CDATA[
+		select * from club where cbType ='정기'
+	]]>
+</select>
+
+<!-- 메인 번개  -->
+<select id="getListThunder" resultType="com.hobby.domain.MainVO">
+	<![CDATA[
+		select * from club where cbType ='번개'
+	]]>
+</select>
+</mapper>

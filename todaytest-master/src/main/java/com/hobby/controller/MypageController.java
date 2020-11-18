@@ -46,14 +46,8 @@ public class MypageController {
 	private MypageService service;
 
 	
-	@RequestMapping("list")
-	public void list(Model model,SessionStatus sessionStatus,HttpSession session) {
-		
-		model.addAttribute("list", service.getUserList());
-
-	}
-	
-	
+	//메인페이지
+	//가입한 모임 누르면 탈퇴/상세 보이게 구현해야함 -> 아직안했어요
 	@RequestMapping("/main")
 	public void main(Model model,Authentication auth) {
 		
@@ -67,11 +61,14 @@ public class MypageController {
 		
 	} 
 	
+	//회원정보수정하게되면 비밀번호를 재입력받는 페이지
+	//auth_leave 페이지랑 통합하는 방법을 생각해볼것
 	@RequestMapping("/auth_edit") 
 	public void auth_edit(Principal principal) {
 		
 	}
 	
+	//대략적인 비밀번호 유효성 검사
 	@PostMapping("/authAction")
 	public String authAction(Authentication auth, @RequestParam("password")String password, Model model) {
 		
@@ -87,6 +84,8 @@ public class MypageController {
 
 		return url;
 	}
+	
+	//ajax로 카테고리 db 가져옴
 	@RequestMapping(value = "/{catClassificationCode}",
 			produces = { MediaType.TEXT_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE})
@@ -97,7 +96,8 @@ public class MypageController {
 		return new ResponseEntity<>(service.getCategoryList(catClassificationCode),HttpStatus.OK);
 	}
 	
-	
+	//회원정보 수정페이지
+	//도시정보를 가져와서 처음부터 박게 만들것
 	@PostMapping("/edit")
 	public void edit(Authentication auth, Model model){
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
@@ -106,6 +106,9 @@ public class MypageController {
 		model.addAttribute("userVO",userVO);
 	}
 	
+	
+	//수정한다으 업데이트
+	//서비스들 통합 -> 트랜잭션?
 	@PostMapping("/editAction")
 	public String editAction(Authentication auth, Model model, UserVO updateUser) {
 		
@@ -123,11 +126,15 @@ public class MypageController {
 		
 		return "redirect:/account/main";
 		}
+	
+	//비밀번호 변경 페이지
 	@RequestMapping("/password")
 	public void password(Authentication auth) {
 		log.info("##/password");
 		
 	}
+	
+	//변경 유효성 검사
 	@PostMapping("/passwordAction")
 	public String passwordAction(Authentication auth,
 			@RequestParam("newPassword") String newPassword,@RequestParam("currentPassword") String currentPassword) {
@@ -148,10 +155,12 @@ public class MypageController {
 		return url;
 	}
 	
+	//회원탈퇴 비밀번호 입력페이지
 	@RequestMapping("/auth_leave") 
 	public void auth_leave(Authentication auth) {
 	}
 	
+	//탈퇴하면 유저 상태를 사이트탈퇴로 바꾸고 main이나 login 페이지로 이동하게
 	@PostMapping("/leaveAction")
 	public String leaveAction(Authentication auth, @RequestParam("password")String password, 
 			 Model model) {
@@ -169,6 +178,11 @@ public class MypageController {
 
 		return url;
 	}
+	
+	//모임관리 메인페이지
+	//모임 수정버튼누르면 -> 모임페이지에서 수정하도록
+	//모임 탈퇴누르면 -> 탈퇴하도록 구현해야함
+	//아직 버튼 이동경로 몰라서 안함
 	@PostMapping("/myclub/main")
 	public void myclubMain(Authentication auth, Model model) {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
@@ -176,6 +190,8 @@ public class MypageController {
 		model.addAttribute("clubVO",service.getMyCreateClubList(userVO.getUsrNum()));
 	
 	}
+	
+	//ajax로 내가 만든 모임을 가져옴
 	@RequestMapping(value = "/myclub/{cbLeaderNum}",
 			produces = { MediaType.TEXT_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE})

@@ -38,7 +38,7 @@ var cityService = (function(){
 	}
 	
 	return{
-		getCategorylist : getCategorylist
+		getCitylist : getCitylist
 	};
 	
 })();
