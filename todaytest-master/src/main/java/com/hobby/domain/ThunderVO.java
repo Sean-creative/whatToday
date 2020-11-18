@@ -44,6 +44,7 @@ public class ThunderVO {
 
 		
 	// 개설자 번호
+	
 	private long cbLeaderNum;
 	// 현재인원
 	private long cbCurMbnum;

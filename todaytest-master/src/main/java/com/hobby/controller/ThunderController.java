@@ -107,6 +107,7 @@ public class ThunderController {
 	    Long usrNum = customUser.getUser().getUsrNum();
 	    log.info("POST-add 회원번호" + usrNum);
 	    clubVO.setCbLeaderNum(usrNum);
+	    clubVO.setCbLeaderName(customUser.getUser().getUsrName());
 	      
 		log.info("add : " + clubVO);
 		
