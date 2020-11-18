@@ -1,0 +1,62 @@
+.cs_nav{
+    width:1020px;
+    height:60px;
+    background:#eeb560;
+    margin:0 auto;
+   
+}
+
+.cs_nav a{
+    float:left;
+    text-decoration: none;
+    text-align:center;
+    line-height:60px;
+    margin:0 auto;
+    color:#fff;
+    margin-right:20px;
+}
+
+.cs_nav ul{
+    width:200px;
+    margin:0 auto;
+    text-align:center;}
+
+.cs_nav a:last-child{
+    color:yellow;
+}
+
+.cs_all{
+    width:500px;
+    height:400px;
+    margin:0 auto;
+    margin-top:40px;
+    
+}
+.cs_all span,input{
+    margin-right:10px;
+}
+.cs_text{
+    width:500px;
+    margin:0 auto;
+    padding-left:40px;
+    padding-top:20px;
+    padding-bottom:20px;
+    border:1px solid #999;
+}
+.cs_all input{
+    margin-right:30px; 
+}
+
+.mgtop{
+    margin-top:15px;
+}
+.spec{
+    font-size: 12px;
+    color:#ab1111;
+}
+input[type=submit]{
+    margin:0 auto;
+    text-align:center;
+    padding:4px;
+    margin-top:20px;
+}

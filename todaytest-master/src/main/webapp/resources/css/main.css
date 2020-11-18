@@ -1,0 +1,107 @@
+
+/* main */
+#banner{
+    width:1020px;
+    height:500px;
+    background:#f1f1f1;
+    margin:0 auto;
+    margin-bottom:30px;
+}
+
+.foto{
+    width:700px;
+    height:400px;
+    background:orange;
+    float:right;
+    margin-top:50px;
+    margin-right:40px;
+}
+
+/* main 글씨 */
+#banner h1{
+    padding-top:180px;
+    padding-left:100px;
+}
+#banner h3{
+    padding-left:100px;
+}
+/* 취미테스트 */
+.hobbytest{
+    width:80px;
+    height:30px;
+    border:1px solid #666;
+    line-height:30px;
+    text-align:center;
+    margin-left:100px;
+    margin-top:20px;
+    text-decoration: none;
+    display: inline-block;
+}
+.hobbytest a{
+    text-decoration: none;
+    color:#333;
+    font-size:13px;
+}
+.hbtn{margin-left:0;}
+
+input[type=submit]{
+    padding:5px;
+    background:#fff;
+    border:1px solid #000;
+}
+/* 박스 */
+#toregular{
+	width:1020px;
+	margin:0 auto;
+}
+#toregular>h3{float:left;}
+.more{float:right;}
+.boxlist>li{
+    list-style:none;
+    width:310px;
+    height:200px;
+    background:#fff;
+    border:1px solid #666;
+    float:left;
+    margin-right:40px;
+    margin-bottom:40px;
+    border-radius: 20px;
+}
+.boxlist>li:nth-child(3n){
+    margin-right:0;
+}
+
+.regm{
+	width:inherit;
+	height:80px;
+	/* background:pink; */
+	margin-top:50px;
+}
+.regm p{
+	text-align:right
+}
+.regm p:first-child{
+	text-align:left;
+}
+
+/* ------------ */
+
+#sub{
+    width:900px;
+    height:940px;
+    background:burlywood;
+    clear:both;
+    margin:0 auto;
+}
+
+.hhh{text-align:center;padding-top:20px;}
+
+#sub>ul>li{
+    width:200px;
+    height:200px;
+    background:#fff;
+    list-style: none;
+    margin-left:20px;
+    margin-top:20px;
+    float:left;
+}
