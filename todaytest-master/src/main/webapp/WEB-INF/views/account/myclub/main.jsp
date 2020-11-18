@@ -65,11 +65,12 @@
 <p>개설한 모임</p><br>
 <c:forEach var="clubVO" items="${clubVO}">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <form name="#" method="post">
+   <form name="manageClub" method="post">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
    <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
    <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
-   <button name="modifyClub" type="submit">수정누르면 그 모임 상세페이지로 가게만들거임</button> 
+   <button name="modifyClub" type="submit">수정임누르면 그 모임 상세페이지로 가게만들거임</button> 
+   <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
    </form>
 </c:forEach>
 </div>
@@ -80,18 +81,16 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	var number = '<c:out value="${clubVO[0].cbLeaderNum }"/>'
-	var clubInfoSmall = $(".clubInfoSmall")
+	let number = '<c:out value="${clubVO[0].cbLeaderNum }"/>'
+	let clubInfoSmall = $(".clubInfoSmall")
 	if(number == ""){
 		clubInfoSmall.html('<p>개설한 모임이 없어요</p>')
 	}
-	
-	
 	$("button[name=modifyClub]").click(function(){
-		var index = $("button[name=modifyClub]").index(this);
-		var type = $("input[name=cbType]").eq(index).val();
-		var form = $("form[name=modifyForm]").eq(index);
-		var url;
+		let index = $("button[name=modifyClub]").index(this);
+		let type = $("input[name=cbType]").eq(index).val();
+		let form = $("form[name=manageClub]").eq(index);
+		let url;
 		if(type == "정기모임"){
 			console.log("정기요");
 			url = "/account/myclub/regularEdit";
@@ -101,6 +100,11 @@ $(document).ready(function() {
 		}
 		form.attr("action",url);
 	})
+	$("button[name=closeClub]").click(function(){
+		let index = $("button[name=modifyClub]").index(this);
+		let type = $("input[name=cbType]").eq(index).val();
+		let form = $("form[name=manageClub]").eq(index);
+	}
 	});
 </script>
 
