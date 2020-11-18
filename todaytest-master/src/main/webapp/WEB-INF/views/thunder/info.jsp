@@ -115,7 +115,7 @@ a:hover {
 </div>
 		</form>
 
-			<input id="sign" type="button" onclick="signUp()" style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" value="신청하기"/>
+			<input id="sign" type="button" style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" value="신청하기"/>
 		
 		
 		<form id ='operForm' action="/thunder/modify" method="get">
@@ -172,8 +172,7 @@ a:hover {
 
 
 	</section>
-<!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<script type="text/javascript">
 	
 		$(document)
@@ -210,21 +209,6 @@ a:hover {
 							
 						});
 		
-		function signUp() {
-
-			if (document.getElementById("sign").innerHTML == '신청하기') {
-				document.getElementById("sign").innerHTML = '취소하기';
-				alert('번개모임이 신청되었습니다.');
-				document.getElementById("plusDiv").style.display = "block";									
-			} 
-			else if (document.getElementById("sign").innerHTML == '취소하기') {
-				document.getElementById("sign").innerHTML = '신청하기';
-				alert('번개모임이 취소되었습니다.');
-				document.getElementById("plusDiv").style.display = "none";
-				document.getElementById("plus").style.display = 'none';
-				document.getElementById("pulsButton").innerHTML = "🐵";
-			}
-		}
 
 		function viewPlus() {
 
@@ -236,6 +220,21 @@ a:hover {
 				document.getElementById("pulsButton").innerHTML = "🐵";
 			}
 		}
+		$("#sign").click(function() {
+
+			if (document.getElementById("sign").value == '신청하기') {
+				document.getElementById("sign").value = '취소하기';
+				alert('번개모임이 신청되었습니다.');
+				document.getElementById("plusDiv").style.display = "block";									
+			} 
+			else if (document.getElementById("sign").value == '취소하기') {
+				document.getElementById("sign").value = '신청하기';
+				alert('번개모임이 취소되었습니다.');
+				document.getElementById("plusDiv").style.display = "none";
+				document.getElementById("plus").style.display = 'none';
+				document.getElementById("pulsButton").value = "🐵";
+			}
+		});
 		
 		
 	</script>
