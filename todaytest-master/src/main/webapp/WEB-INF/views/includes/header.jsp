@@ -30,7 +30,7 @@
         		<a href ="/" id="user"><sec:authentication property="principal.user.usrName"/>님</a>
             	<a href="/login/logout">로그아웃</a>
             	<a href="/account/main">마이페이지</a>
-           		<a href="">고객센터</a>
+           		<a href="/cs/faq">고객센터</a>
        	 	</ul>
 		</sec:authorize>
 		
@@ -40,7 +40,6 @@
                 <a href="">三</a>
                 <a href="/regular/list">정기</a>
                 <a href="/thunder/list">번개</a>
-                <a href="/thunder/add">번개개설</a>
                 <a href="">베스트</a>
                 <a href="">추천</a>
                 <div class="dropdown">모임개설
