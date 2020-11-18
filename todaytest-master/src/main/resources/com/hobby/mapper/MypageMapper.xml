@@ -69,9 +69,9 @@
 	</update>
 	
 	<select id="getMyCreateClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB,THUNDERDETAIL  
+		select * from CLUB
 		where 
-		CLUB.CBNUM = THUNDERDETAIL.CBNUM and CBLEADERNUM = #{usrNum}
+		CBLEADERNUM = #{usrNum}
 	</select>
 	
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">
