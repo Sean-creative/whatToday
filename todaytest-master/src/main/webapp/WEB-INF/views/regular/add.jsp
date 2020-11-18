@@ -9,6 +9,8 @@
 <form id="register" action="/regular/add" method="post">
 
     <input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value ="${usrNum}"/>
+    <input type="hidden" id="cbType" name="cbType" value ="정기"/>
+    <input type="hidden" id="cbLeaderName" name="cbLeaderName" value ="${usrName}"/>
 	<label for="cbCategory">카테고리/분야</label>
 		<select id="cbCategory" name="cbCategory">
 			<option>아웃도어/여행</option>
