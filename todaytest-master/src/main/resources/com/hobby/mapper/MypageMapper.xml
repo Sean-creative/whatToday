@@ -58,8 +58,8 @@
 	</update>
 	
 	<insert id="insertUserHistory">
-		insert into USERHISTORY(USRNUM,USRNAME,USRSTATE)
-		values (#{usrNum}, #{usrName}, #{usrState}) 
+	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, '사이트탈퇴', sysdate)
 	</insert>
 	
 	<update id="updateNameUserHistory">
