@@ -34,7 +34,7 @@
                 <a href="">번개</a>
                 <a href="">베스트</a>
                 <a href="">추천</a>
-                <a href="">모임개설</a>
+                <a href="/regular/add">모임개설</a>
 
             </ul>
         </nav>

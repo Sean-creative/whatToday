@@ -6,12 +6,12 @@
 <mapper namespace="com.hobby.mapper.ClubMapper">
 
 <insert id="clubinsertSelectKey">
-	<selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
-		select club_seq.nextval from dual
-	</selectKey>
-	
-	insert into club (cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
-	values (#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},#{cbMakeDate},#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
+   <selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
+      select club_seq.nextval from dual
+   </selectKey>
+   
+   insert into club (cbLeaderNum, cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
+   values (#{cbLeaderNum}, #{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},#{cbMakeDate},#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
 </insert>
 
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">

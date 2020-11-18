@@ -8,6 +8,7 @@
 <h3 style="text-align:center"> 기본정보(필수)</h3>
 <form id="register" action="/regular/add" method="post">
 
+    <input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value ="${usrNum}"/>
 	<label for="cbCategory">카테고리/분야</label>
 		<select id="cbCategory" name="cbCategory">
 			<option>아웃도어/여행</option>
