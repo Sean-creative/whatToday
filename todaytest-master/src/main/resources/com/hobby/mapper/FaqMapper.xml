@@ -23,8 +23,8 @@
 	<selectKey  order="BEFORE" keyProperty="qsNum" resultType="long">
 		select question_seq.nextval from dual 
 	</selectKey>
-	insert into question (qsNum,qsEmail,qsName,qsPhone,qsTitle)
-	values (#{qsNum}, #{qsEmail},#{qsName},#{qsPhone},#{qsTitle}) 
+	insert into question (qsNum,usrNum,qsEmail,qsName,qsPhone,qsTitle)
+	values (#{qsNum},#{usrNum}, #{qsEmail},#{qsName},#{qsPhone},#{qsTitle}) 
 </insert> 
 
 
