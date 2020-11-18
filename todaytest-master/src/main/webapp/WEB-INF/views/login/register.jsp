@@ -39,7 +39,7 @@
 
 		<div class="input-container">
 			<label>휴대전화 번호 </label> <input class="input-field" type="text"
-				placeholder="010-1234-5678" name="usrPhone">
+				placeholder="01012345678" name="usrPhone">
 		</div>
 
 		<div class="input-container">
