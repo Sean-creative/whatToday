@@ -29,12 +29,8 @@
                 <li>                <form action="/account/myclub/main" method="post">
             	<button type="submit">회원관리</button>
         		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
-            	<button type="submit">모임수정</button>
-        		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
-            	<button type="submit">모임폐쇄</button>
-        		</form></li>
+
+                
             </ul>
             </div>
         </div>
@@ -99,12 +95,12 @@ $(document).ready(function() {
 			url = "/account/myclub/thunderEdit";
 		}
 		form.attr("action",url);
-	})
+	});
 	$("button[name=closeClub]").click(function(){
 		let index = $("button[name=modifyClub]").index(this);
 		let type = $("input[name=cbType]").eq(index).val();
 		let form = $("form[name=manageClub]").eq(index);
-	}
+	});
 	});
 </script>
 

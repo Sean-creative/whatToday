@@ -30,12 +30,8 @@
                 <li>                <form action="/account/myclub/main" method="post">
             	<button type="submit">회원관리</button>
         		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
-            	<button type="submit">모임수정</button>
-        		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
-            	<button type="submit">모임폐쇄</button>
-        		</form></li>
+                
+                
             </ul>
             </div>
         </div>

@@ -7,7 +7,7 @@ import java.security.Principal;
  */
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
+
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
