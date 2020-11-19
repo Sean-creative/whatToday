@@ -61,11 +61,12 @@
 <p>개설한 모임</p><br>
 <c:forEach var="clubVO" items="${clubVO}">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <form name="manageClub" method="post">
+   <form name="manageClub" method="get">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
    <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
    <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
-   <button name="modifyClub" type="submit">수정임누르면 그 모임 상세페이지로 가게만들거임</button> 
+   <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
+   <button name="modifyClub" type="submit">수정</button> 
    <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
    </form>
 </c:forEach>
@@ -86,13 +87,14 @@ $(document).ready(function() {
 		let index = $("button[name=modifyClub]").index(this);
 		let type = $("input[name=cbType]").eq(index).val();
 		let form = $("form[name=manageClub]").eq(index);
+		let cbNum = $("input[name=cbNum]").eq(index).val();
 		let url;
-		if(type == "정기모임"){
+		if(type == "정기모임" || type == "정기"){
 			console.log("정기요");
-			url = "/account/myclub/regularEdit";
+			url = "/regular/info?cbNum="+cbNum;
 		}else{
 			console.log("번개요");
-			url = "/account/myclub/thunderEdit";
+			url = "/thunder/info/?cbNum="+cbNum;
 		}
 		form.attr("action",url);
 	});

@@ -100,6 +100,8 @@ a:hover { color: orange; text-decoration: none;}
     display: inline-block;
   }
   
+  
+  
   .dropdown-content {
     border: 2px dotted black;
     display: none;
@@ -275,4 +277,22 @@ a:hover { color: orange; text-decoration: none;}
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+.imgSelect {
+	cursor: pointer;
+}
+
+.popupLayer {
+	position: absolute;
+	display: none;
+	background-color: #ffffff;
+	border: solid 2px #d0d0d0;
+	width: 350px;
+	height: 150px;
+	padding: 10px;
+}
+.popupLayer div {
+	position: absolute;
+	top: 5px;
+	right: 5px
 }
