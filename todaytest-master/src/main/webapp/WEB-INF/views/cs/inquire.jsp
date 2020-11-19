@@ -30,11 +30,11 @@
             <br>
             
             <label>제목</label>
-            <input type="text" name='qsTitle' class="mgtop">
+            <input type="text" name='qsTitle' class="mgtop" id="title">
             <br>
             
             <label>내용</label>
-            <textarea class="mgtop" name='qsContent'></textarea>
+            <textarea class="mgtop" name='qsContent' id="content"></textarea>
             <br>
 
             <label>첨부파일</label>
@@ -44,6 +44,7 @@
         <input type="submit" value="보내기">       
     </div>
 </form>
+
 <script>
 function inputCheck(){
 	var phoneNumber = document.inquire.qsPhone;
@@ -51,7 +52,9 @@ function inputCheck(){
 	var title = document.inquire.qsTitle;
 	var content = document.inquire.qsContent;
 	
+	//핸드폰 번호 제한 
 	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	
 	
 	if(!phoneNumber.value){
 		alert("번호를 입력해주세요.");
@@ -70,13 +73,13 @@ function inputCheck(){
 	}
 	
 	
-	if(!title.value){
-		alert("제목을  입력해주세요.");
+	if(!title.value || title.value.length>30){
+		alert("제목을 입주세요.");
 		return false;
 	}
 	
-	if(!content.value){
-		alert("내용 입력해주세요.");
+	if(!content.value || content.value.length>30){
+		alert("내용을 30자이내로 입력해주세요.");
 		return false;
 	}
 	

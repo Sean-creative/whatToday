@@ -70,7 +70,7 @@
 <span class="pwWord">현재 비밀번호 입력</span><input type="password" class="inputPwd" name="currentPassword"><br>
 <span class="pwWord">새로운 비밀번호 입력</span><input type="password" class="inputPwd" name="newPassword"><br>
 <span class="pwWord">새로운 비밀번호 확인</span><input type="password" class="inputPwd" name="newPassword"><br>
-<form action="/account/passwordAction" onsubmit="return check();" method="post">
+<form name="register" action="/account/passwordAction" onsubmit="return check() && inputCheck();" method="post">
 <input type="hidden" name="currentPassword" value="">
 <input type="hidden" name="newPassword" value="">
 <button>변경완료</button>
@@ -81,8 +81,32 @@
 </section>
 <script type="text/javascript">
 
-    var currentPassword = document.getElementsByName("currentPassword");
-    var newPassword = document.getElementsByName("newPassword");
+function inputCheck() {
+	
+	let cpw = document.register.currentPassword;
+	let npw = document.getElementsByName("newPassword")[0];
+	let npwRe = document.getElementsByName("newPassword")[1];
+
+
+	const pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+
+    if(pwPattern.test(cpw.value) == false){
+    	alert("현재 비밀번호 확인");
+        return false;
+    }
+    if(pwPattern.test(npw.value) == false || pwPattern.test(npwRe.value) == false){
+    	alert("새로운 비밀번호 확인");
+        return false;
+    }
+
+    return true;
+
+  
+    
+}
+
+    let currentPassword = document.getElementsByName("currentPassword");
+    let newPassword = document.getElementsByName("newPassword");
     
 function check(){
 	if(blankCheck() &&
@@ -91,7 +115,7 @@ function check(){
         newPassword[2].setAttribute("value", newPassword[0].value);
 		return true;
 	}
-	alert("빈칸을 입력해주세요")
+	
 	return false;
 }
     
@@ -100,14 +124,16 @@ function blankCheck(){
     if(currentPassword[0].value.length == 0 ||
     		newPassword[0].value.length == 0 ||
     		newPassword[1].value.length == 0){
+    	alert("빈칸을 입력해주세요")
         return false;
     }
     return true;
 }
 function passwordEqualCheck(){
-	if(newPassword[0].value === newPassword[1].value){
+	if(newPassword[0].value == newPassword[1].value){
 		return true;
 	}
+	alert("새 비밀번호를 체크해주세요");
 	return false
 }
 </script>
