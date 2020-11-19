@@ -82,14 +82,14 @@
           <div>
                 <div>
                   지역 <br>
-                  <select name="cbCity">
+                  <select name="cbCity" id="city">
                     <option value="서울특별시" selected> 서울특별시
                     <option value="경기도"> 경기도
                   </select>
                 </div>
                 <div>
                   세부지역<br>
-                  <select name="cbDistrict">
+                  <select name="cbDistrict" id="district">
                     <option value="종로구" selected> 종로구
                     <option value="중구"> 중구
                     <option value="용산구"> 용산구
