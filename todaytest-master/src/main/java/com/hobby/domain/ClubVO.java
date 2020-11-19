@@ -20,7 +20,7 @@ public class ClubVO {
 	private Long cbCurMbNum;
 	private String cbHashtag;
 	private String cbIntro;
-	private Date cbMakeDate;
+	private String cbMakeDate;
 	private Date cbShutDate;
 	private String cbFinalState;
 	private String cbDetailContent;

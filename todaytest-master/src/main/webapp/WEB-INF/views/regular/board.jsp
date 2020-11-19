@@ -78,10 +78,10 @@
 							actionForm.submit();
 						});
 						
-						$("#createBtn").on("click", function() {
+						/* $("#createBtn").on("click", function() {
 							
 							self.location = "/regular/boardadd";
-						});						
+						});	 */					
 				});
 </script>
 

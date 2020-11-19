@@ -16,7 +16,7 @@
 
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
-	select * from club where cbNum > 0
+	select * from club where cbNum > 0 and cbType ='정기모임'
 	]]>
 </select>
 

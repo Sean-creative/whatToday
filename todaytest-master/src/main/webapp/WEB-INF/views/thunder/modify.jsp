@@ -9,7 +9,8 @@
 
     <!--  번개 모임 개설 -->
     <section id="wrap">
-          <form role="form" action="/thunder/modify" method="post">
+          <form role="form" action="/thunder/modify" method="post"
+          name="modify" onsubmit="return inputCheck()">
 
           <div>
                 <div>
@@ -37,7 +38,7 @@
           <div>
                 <div>
                   모임 날짜<br>
-                  <input type="datetime-local" name='thunderDetailVO.cbDate'
+                  <input type="datetime-local" name='thunderDetailVO.cbDate' id=cbDate
                   value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'>
                 </div>
                 <div>
@@ -65,14 +66,14 @@
 
           <div>
                 <div>
-                  모집 인원<br>
+                  모임 인원<br>
                   <input type="number" name='cbMbnum'
                   value='<c:out value="${clubVO.cbMbnum}"/>'>
                 </div>
               
                 <div>
-                  모집 신청기간<br>
-                <input type="datetime-local" name='thunderDetailVO.cbAppPeriod'
+                  모임 신청기간<br>
+                <input type="datetime-local" name='thunderDetailVO.cbAppPeriod' id=cbAppPeriod
                 value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />'>
                 </div>
 
@@ -106,14 +107,14 @@
           <div>
                 <div>
                   모임 장소 <br>
-                  <input type="text"  name='thunderDetailVO.cbPlace'
+                  <input type="text"  name='thunderDetailVO.cbPlace' id=cbPlace
                   value='<c:out
 						value="${clubVO.thunderDetailVO.cbPlace}" />'>
                 </div>
 
                 <div>
                   모임 준비물<br>
-                  <input type="text"  name='thunderDetailVO.cbSupplies'
+                  <input type="text"  name='thunderDetailVO.cbSupplies' id=cbSupplies
                   value='<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />'>
                 </div>
           </div>
@@ -157,6 +158,7 @@
                         
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript">
             
                $(document).ready(function() {
@@ -200,6 +202,96 @@
             			formObj.submit();            			        		
             			});
             		});
+               
+               
+               
+               
+               
+               
+               function inputCheck(){
+               	var clubname = document.modify.cbName;
+               	var intro = document.modify.cbIntro;
+               	
+               	var date = $('#cbDate').val();
+               	
+               	var category = document.modify.cbCategory;
+               	var subcat = document.modify.cbSubcat;
+               	var mbnum = document.modify.cbMbnum;
+               	var appPeriod = $('#cbAppPeriod').val();  
+               	var hashtag = document.modify.cbHashtag;
+               	var city = document.modify.cbCity;
+               	var district = document.modify.cbDistrict;
+               	var place = $('#cbPlace').val(); 
+               	var supplies = $('#cbSupplies').val();  
+               	
+             	
+               	
+               	if(!clubname.value || clubname.value.length>30){
+               		alert("모임명을 다시 입력해주세요.");
+               		return false;
+               	}
+               	    	
+               	if(!intro.value || intro.value.length>30){
+               		alert("모임소개를 다시 입력해주세요.");
+               		return false;
+               	}
+               	if(!date ){
+               		alert("모임날짜를 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!category.value ){
+               		alert("카테고리를 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!subcat.value ){
+               		alert("모임을 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!mbnum.value || mbnum.value < 0){
+               		alert("모임인원을 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!appPeriod){
+               		alert("모임 신청기간 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!hashtag.value || hashtag.value.length>30){
+               		alert("해시태그를 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!city.value){
+               		alert("지역을  입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!district.value){
+               		alert("세부지역을  입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!place || place.length>30){
+               		alert("모임장소를 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+               	if(!supplies || supplies.length>30){
+               		alert("모임 준비물을 다시 입력해주세요.");
+               		return false;
+               	}
+               	
+            
+               	alert('수정되었습니다.');
+               	
+               	
+               }
+               
+                                                            
      </script>               
 
        
