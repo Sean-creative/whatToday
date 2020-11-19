@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hobby.domain.ThunderVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
+import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ThunderService;
 import com.hobby.service.UserService;
 
-import lombok.AllArgsConstructor;	
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -37,9 +37,16 @@ public class ThunderController {
 
 	
 	@GetMapping({"/info", "/modify"})
-	public void info(@RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
+	public void info(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		
-		//url에 pk값이 붙는게 싫지만, 우선 해결방법은 못찾음
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+	      UserVO userVO2 = customUser.getUser();	      
+	      log.info("##/add 회원번호" + userVO2.getUsrNum());
+	      //B. 로그인한 사람의 번호도 뿌려줘서, jsp단에서 로그인 되어있는 사람들에게만 modify 버튼 보여주기 -- 개선사항
+	      	model.addAttribute("usrNum", userVO2.getUsrNum());
+	      
+	      
+	      		//url에 pk값이 붙는게 싫지만, 우선 해결방법은 못찾음
 				//REDIRECT로 받아서 POST로 받는 방법은?
 				log.info("/info or modify");
 				log.info(" cri : \n\n" + cri);
@@ -61,6 +68,8 @@ public class ThunderController {
 								
 //				clubVO.setCl_current_number(11);
 				model.addAttribute("clubVO", clubVO);
+				
+				
 				
 	}
 	
@@ -121,8 +130,15 @@ public class ThunderController {
 	
 	
 	@GetMapping("/add")
-	public void add() {
+	//로그인 안한상태에서, 개설 누르면 그냥 튕김 -- 수정 사항 -> 튕기지 않고, 경고문으로 해결하도록
+	public void add(Authentication auth, Model model) {
 		log.info("add GetMapping!!");
+		
+		  CustomUser customUser = (CustomUser) auth.getPrincipal();
+	      UserVO userVO = customUser.getUser();	      
+	      log.info("##/add 회원번호" + userVO.getUsrNum());
+	      model.addAttribute("usrNum", userVO.getUsrNum());
+	      
 	}
 
 	

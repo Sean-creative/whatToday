@@ -108,8 +108,12 @@ section a:hover {
 				</div>
 			</div>
 
-<div style="float:right"> 
+<div style="float:right"> 	
+	<c:if test="${usrNum eq clubVO.cbLeaderNum}">
 		<button  data-oper='modify' class="btn btn-default">Modify</button>
+	</c:if>
+
+		
 
 		<button  data-oper='list' class="btn btn-info">List</button>
 </div>
@@ -178,6 +182,14 @@ section a:hover {
 		$(document)
 				.ready(
 						function() {
+							
+							
+							
+							
+							
+							
+							
+							
 
 							console.log("<c:out value="${clubVO}" />")
 							var operForm = $("#operForm");
