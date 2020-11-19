@@ -26,7 +26,7 @@ public class HomeController {
 	public String home() {
 		logger.info("Welcome home!");
 		
-		return "/index/main";
+		return "redirect:/index/main";
 	}
 	
 }
