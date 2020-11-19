@@ -57,16 +57,15 @@
 </nav>
 <section id="wrap">
 <form name="register" action="/account/editAction" method="post" onsubmit="return inputCheck();">
-    <div class ="info"> <!-- 일단 하나하나씩 보내고 나중에 객체로 보내는거 공부해서 바꾸자 -->
+    <div class ="info"> 
         <div class="pic">
-            <img src="${userVO.usrImg }" alt="My Image">
+            <img src="${userVO.usrImg }" alt="일단 사진은 이미지 주소로 넣는걸로">
         <button>사진변경</button>
         </div>
         <div class="userInfo">
-            <span>id </span><input type="text" readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br> 
-            <span>비밀번호 </span><input type="password" readonly="readonly" value="<c:out value="${userVO.usrPwd }"/>"><br>
-            <span>이름 </span><input type="text" name="usrName" value="<c:out value="${userVO.usrName }"/>"><br>
-            <span>휴대전화번호 </span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
+            <span>ID </span><input type="text" readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br> 
+            <span>NAME </span><input type="text" name="usrName" value="<c:out value="${userVO.usrName }"/>"><br>
+            <span>PHONE </span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
             <input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
         </div>
     
@@ -74,7 +73,7 @@
     
     <div class ="info"> 
         <div class="userInfo" style="margin-left: 18.5%;">
-             <h1>관심정보<span style="font-size: 15px; margin-left: 20px">개인별 맞춤정보 제공</span></h1>
+             <h1>관심정보<span style="font-size: 15px; margin-left: 20px">개인별 맞춤정보 제공 - 수정은 이름, 폰번, 지역, 관심카테고리</span></h1>
              
              <ul style = "list-style: none;">
              <li>
@@ -155,7 +154,7 @@ function inputCheck() {
 }
 
 $(document).ready(function() {
-	
+	<!-- 도시고르는거는 하드코딩, 카테고리는 ajax 뭐로할지 정할것-->
 	
 	$(function() {
 		$('#city1').change(function() {

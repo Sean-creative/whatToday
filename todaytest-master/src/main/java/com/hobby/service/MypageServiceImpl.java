@@ -130,5 +130,11 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.leaveSite(userVO);
 	}
 
+	@Override
+	public ClubVO getMyClublist(Long cbNum) {
+		// TODO Auto-generated method stub
+		return mapper.getMyClublist(cbNum);
+	}
+
 
 }

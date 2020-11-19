@@ -84,19 +84,22 @@
 function inputCheck() {
 	
 	let cpw = document.register.currentPassword;
+	let npw = document.getElementsByName("newPassword")[0];
+	let npwRe = document.getElementsByName("newPassword")[1];
 
 
 	const pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
-
-	
-
-
     if(pwPattern.test(cpw.value) == false){
-    	alert("영어+특수문자+숫자를 섞어서 (8~16)자리");
+    	alert("현재 비밀번호 확인");
         return false;
     }
-    
+    if(pwPattern.test(npw.value) == false || pwPattern.test(npwRe.value) == false){
+    	alert("새로운 비밀번호 확인");
+        return false;
+    }
+
+    return true;
 
   
     
@@ -127,7 +130,7 @@ function blankCheck(){
     return true;
 }
 function passwordEqualCheck(){
-	if(newPassword[0].value === newPassword[1].value){
+	if(newPassword[0].value == newPassword[1].value){
 		return true;
 	}
 	alert("새 비밀번호를 체크해주세요");

@@ -17,7 +17,7 @@
 		<![CDATA[
 		select * from CLUB 
 		where CBNAME in 
-		(select CBNAME from CLUBMEMBER where CBLEADERNUM = #{usrNum} and CBMBSTRESULT = '승인')
+		(select CBNAME from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '승인')
 		]]>
 	</select>
 	
@@ -78,6 +78,12 @@
 		select * from CLUB
 		where 
 		CBLEADERNUM = #{usrNum}
+	</select>
+	
+	<select id="getMyClublist" resultType="com.hobby.domain.ClubVO">
+		select * from CLUB
+		where 
+		CBNUM = #{cbNum}
 	</select>
 	
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">

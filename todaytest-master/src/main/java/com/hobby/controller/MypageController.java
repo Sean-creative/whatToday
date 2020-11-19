@@ -204,6 +204,17 @@ public class MypageController {
 		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()),HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/myclub/club/{cbNum}",
+			produces = { MediaType.TEXT_XML_VALUE,
+					MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ClubVO>getMyClublist(@PathVariable("cbNum") Long cbNum,
+			Authentication auth) {
+		log.info("get...........: " + cbNum);
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		return new ResponseEntity<>(service.getMyClublist(cbNum),HttpStatus.OK);
+	}
+	
 //	@PostMapping("/myclub/regularEdit")
 //	public void regularEdit(ClubVO clubVO, Model model) {
 //
