@@ -57,7 +57,7 @@
 		where CBLEADERNUM = #{usrNum}
 	</update>
 
-	<update id="updateClubMemberNameUpdate">
+	<update id="updateClubMemberName">
 		update CLUBMEMBER
 		set  USRNAME = #{usrName}
 		where  USRNUM = #{usrNum}

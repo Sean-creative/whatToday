@@ -9,7 +9,7 @@
 <div class ="menu">
     <ul>
         <li>
-            <form action="/account/main" method="post">
+            <form action="/account/main" method="get">
                 <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
             </form>
         </li>
@@ -36,17 +36,17 @@
         </div>
         </li>
     <li>
-        <form action="/account/auth_edit" method="post">
+        <form action="/account/auth_edit" method="get">
             <button type="submit">회원정보수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/password" method="post" >
+        <form action="/account/password" method="get" >
             <button type="submit">비밀번호수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/auth_leave" method="post">
+        <form action="/account/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
         

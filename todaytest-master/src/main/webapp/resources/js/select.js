@@ -4,7 +4,7 @@ var categoryService = (function(){
 	function getCategorylist(param, callback, error){
 		var catClassificationCode = param.catClassificationCode;
 		
-		$.getJSON("/account/"+catClassificationCode,function(data){
+		$.getJSON("/account/categorylist/"+catClassificationCode,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -26,7 +26,7 @@ var cityService = (function(){
 	function getCitylist(param, callback, error){
 		var catClassificationCode = param.catClassificationCode;
 		
-		$.getJSON("/account/"+catClassificationCode,function(data){
+		$.getJSON("/account/citylist/"+catClassificationCode,function(data){
 			if(callback){
 				callback(data);
 			}
