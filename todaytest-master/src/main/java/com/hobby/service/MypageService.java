@@ -23,7 +23,7 @@ public interface MypageService {
 	
 	public int updateUserInfo(UserVO userVO);
 	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberUpdate(UserVO userVO);
+	public int updateClubMemberName(UserVO userVO);
 	public int updateNameUserHistory(UserVO userVO);
 	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
@@ -33,5 +33,7 @@ public interface MypageService {
 	public boolean findPwdInDB(String password,String password2);
 	
 	public int leaveSite(UserVO userVO);
+	
+	public void updateUserInfoAndName(UserVO userVO);
 
 }

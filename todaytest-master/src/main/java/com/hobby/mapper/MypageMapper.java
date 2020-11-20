@@ -26,7 +26,7 @@ public interface MypageMapper {
 	
 	public int updateNameUserHistory(UserVO userVO);
 	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberNameUpdate(UserVO userVO);
+	public int updateClubMemberName(UserVO userVO);
 	public int updateUserInfo(UserVO userVO);
 	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);

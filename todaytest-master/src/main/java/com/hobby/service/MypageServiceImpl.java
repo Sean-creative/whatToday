@@ -65,15 +65,15 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int updateClubMemberUpdate(UserVO userVO) {
+	public int updateClubMemberName(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.updateClubMemberNameUpdate(userVO);
+		return mapper.updateClubMemberName(userVO);
 	}
 
 	@Override
 	public boolean isPwdValid(String str1) {
 		// TODO Auto-generated method stub
-		return (str1.length() != 0 && str1 != null);
+		return (str1.length() != 0 && str1 != null && str1.length() >= 8);
 	}
 	
 	@Override
@@ -109,7 +109,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int updateMeetingMemberName(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.updateClubMemberNameUpdate(userVO);
+		return mapper.updateMeetingMemberName(userVO);
 	}
 
 	@Override
@@ -134,6 +134,17 @@ public class MypageServiceImpl implements MypageService {
 	public ClubVO getMyClublist(Long cbNum) {
 		// TODO Auto-generated method stub
 		return mapper.getMyClublist(cbNum);
+	}
+
+	@Override
+	public void updateUserInfoAndName(UserVO userVO) {
+		// TODO Auto-generated method stub
+		mapper.updateUserInfo(userVO);
+		mapper.updateClubFounderName(userVO);
+		mapper.updateClubMemberName(userVO);
+		mapper.updateNameUserHistory(userVO);
+		mapper.updateMeetingMemberName(userVO);
+		mapper.updateUserDetail(userVO);
 	}
 
 
