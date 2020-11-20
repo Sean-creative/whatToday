@@ -11,7 +11,7 @@
    </selectKey>
    
    insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
-   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},#{cbMakeDate},#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
+   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
 </insert>
 
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">

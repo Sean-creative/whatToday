@@ -54,12 +54,11 @@
 		</div>
 	<label for="cbMbNum">정원</label>
 		<input type="number" id="num" name="cbMbNum"><br>
-	<label for="cbMakeDate">개설일</label>
-		<input type="date" name="cbMakeDate">
+	<input type="hidden" name="cbMakeDate"> <!--개설일자 : sysdate로 기본설정 -->
 	<label for="cbHashtag">해시태그</label>
 		<input type="text" id="hash" name="cbHashtag" value="#"><br>
 	<label for="cbIntro">한줄소개</label>
-		<input type="text" id="info" name="cbIntro"> <br>
+		<input type="text" id="info" name="cbIntro" onfocus="this.value=''; return true" value="30자이내로만 작성하세요"><br>
 	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
 		<textarea name="cbDetailContent" rows="10" cols="100"></textarea><br>
 	<input type="file" name="cbFile"> 
@@ -75,16 +74,16 @@
 		var info = document.register.cbIntro;
 		var infodetail = document.register.cbDetailContent;
 		
-		if(!club.value || club.value.length>30) {
+		if(!club.value || club.value.length>30) {		
 			alert("모임명을 입력해주세요.");
 			return false;
 		}
-		if(!number.value) {
-			alert("모임정원을 입력해주세요.");
+		if(club.search(/\s/) != -1) {
+			alert("유효하지 않습니다.")
 			return false;
 		}
-		if(!date.value){
-			alert("개설일자를 입력해주세요.");
+		if(!number.value || number.value<0 || number.value>201) {
+			alert("모임정원을 입력해주세요.(최대정원:200명)");
 			return false;
 		}
 		if(!info.value || info.value.length>30) {
