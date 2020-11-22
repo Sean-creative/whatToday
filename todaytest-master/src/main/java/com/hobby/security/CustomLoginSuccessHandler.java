@@ -40,12 +40,17 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 //		return;
 //	}
 	
+	// 회원 권한이 있으면(ROLE_MEMBER) 로그인 성공 -> 메인 페이지로  
 	if(roleNames.contains("ROLE_MEMBER")) {
 		response.sendRedirect("/index/main");
 		return;
 	}
 	
-	response.sendRedirect("/");
+	// 회원이 탈퇴되어 있으면 일단 로그아웃 페이지로 
+	if(roleNames.contains("ROLE_MEMBEROUT")) {
+		response.sendRedirect("/login/logout");
+		return;
+	}
 	
 	}
 
