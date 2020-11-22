@@ -72,9 +72,25 @@
 <div class ="clubInfoSmall">
 <p>가입한 모임</p><br>
 <ul style="list-style-type: none;">
-<c:forEach var="myClub" items="${myClub}">
-   <li class="cb" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/></li><br>
+
+
+
+<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="0" end ="1">
+    <li class="cb" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/>
+    </li><br>
 </c:forEach>
+
+<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="2">
+        <c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
+<li class="cb hideList" style ="display: none" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/></li><br>
+<c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
+</c:forEach>
+
+
+
+
+
+
 </ul>
 </div>
 <div class ="clubInfoSmall">
@@ -91,9 +107,11 @@
 </div>
 </div>
 <div class="popupLayer">
-	<div>
-		<span onClick="closeLayer(this)" style="cursor:pointer;font-size:1.5em" title="닫기">X</span>
-	</div>
+<div class="popupLayer2">
+
+</div>
+<span class="closeWin" style="cursor:pointer;font-size:2em;" title="닫기">X</span>
+
 	
 </div>
 
@@ -101,17 +119,27 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
-	
 
+	$(".moreList").click(function(){
+		$(".hideList").show();
+		$(".moreList").hide();
+		$(".closeList").show();
+	})
 	
-	function closeLayer( obj ) {
-		$(obj).parent().parent().hide();
-	}
-
+	$(".closeList").click(function(){
+		$(".hideList").hide();
+		$(".moreList").show();
+		$(".closeList").hide();
+	})
 	
 	$(function(){
+
+		$(".closeWin").click(function(e)
+		{
+			$(".popupLayer").hide()
+		});
+
+		
 
 		/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
 		$('.cb').click(function(e)
@@ -125,16 +153,18 @@ $(document).ready(function() {
 			
 			var str = "";
 			var type= "";
-			clubService.getMyClublist({cbNum:number},function(list){
+			clubService.getJoinClub({cbNum:number},function(list){
 				if(list.cbType == '정기'|| list.cbType == '정기모임'){
 					type = "regular"
 				}else{
 					type = "thunder";
 				}
+				console.log(list.cbType);
 				str += '<form action="/'+type+'/info" method="get">';
 				str += '<input type="hidden" name="cbNum" value="'+number+'">';
-				str += '<button>수정하기->모임상세페이지로가서 수정</button>';
+				str += '<button>상세보기</button>';
 				str += '</form>';
+				str += '<button>탈퇴하기-아직구현X</button>'
 
 				let sWidth = window.innerWidth;
 				let sHeight = window.innerHeight;
@@ -155,7 +185,7 @@ $(document).ready(function() {
 				if( divTop < 0 ) divTop = 0;
 				
 				
-				$(".popupLayer").html(str);
+				$(".popupLayer2").html(str);
 
 				$('.popupLayer').css({
 					"top": divTop,
@@ -171,6 +201,8 @@ $(document).ready(function() {
 		});
 	
 });
+	
+
 });
 
 

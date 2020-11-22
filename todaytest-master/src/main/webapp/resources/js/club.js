@@ -15,10 +15,10 @@ var clubService = (function(){
 		});
 	}
 	
-	function getMyClublist(param, callback, error){
+	function getJoinClub(param, callback, error){
 		var cbNum = param.cbNum; 
 	
-	$.getJSON("/account/myclub/club/"+cbNum,function(data){
+	$.getJSON("/account/myclub/joinclub/"+cbNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -32,7 +32,7 @@ var clubService = (function(){
 			
 	return{
 		getMyCreateClubList : getMyCreateClubList,
-		getMyClublist : getMyClublist
+		getJoinClub : getJoinClub
 	};
 	
 

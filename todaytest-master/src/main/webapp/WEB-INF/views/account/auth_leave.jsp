@@ -62,7 +62,7 @@
         <h1 style="text-align: center;">비밀번호재입력</h1><br>
         <p style="text-align: center;">본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</p>
         <br><br>
-        <form action="/account/leaveAction"  method="post">
+        <form action="/account/leaveAction"  method="get">
         <input type="password" class="inputPwd" name="password"><br>
         <button type="button" id="myBtn">확인</button><!-- 클릭시 blank 체크한다 -->
 		<div id="myModal" class="modal">
@@ -82,18 +82,22 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-var modal = document.getElementById("myModal");
+
+if("${msg}" != ""){
+	alert("${msg}");
+}
+let modal = document.getElementById("myModal");
 
 //Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+let btn = document.getElementById("myBtn");
 
 //Get the <span> element that closes the modal
-var close = document.getElementsByClassName("close")[0];
+let close = document.getElementsByClassName("close")[0];
 
 
 //When the user clicks the button, open the modal 
 btn.onclick = function () {
-	var password = document.getElementsByName("password");
+	let password = document.getElementsByName("password");
 	 if(password[0].value.length == 0){
 		 alert("비밀번호를 입력해주세요");
 		 return;

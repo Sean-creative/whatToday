@@ -114,7 +114,17 @@
 		USRCATEGORY2 = #{usrCategory2}
 		where  USRNUM = #{usrNum}
 	</update>
-
 	
+	<select id="getJoinClub" resultType="com.hobby.domain.ClubVO">
+		select * from club where CBNUM = #{cbNum}
+	</select>
+	
+	<select id="getCityList" resultType="com.hobby.domain.RegionVO">
+	select * from REGION where RGCLASSIFICATIONCODE is null
+	</select>
 
+	<select id="getDistrictList" resultType="com.hobby.domain.RegionVO">
+	select * from REGION where RGCLASSIFICATIONCODE = (select RGCODE from region where RGNAME = #{rgName})
+	</select>
+	
 </mapper>

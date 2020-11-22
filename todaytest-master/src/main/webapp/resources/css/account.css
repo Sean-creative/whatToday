@@ -287,8 +287,8 @@ a:hover { color: orange; text-decoration: none;}
 	display: none;
 	background-color: #ffffff;
 	border: solid 2px #d0d0d0;
-	width: 350px;
-	height: 150px;
+	width: 200px;
+	height: 50px;
 	padding: 10px;
 }
 .popupLayer div {

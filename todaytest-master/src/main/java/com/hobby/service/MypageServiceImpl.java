@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
+import com.hobby.domain.RegionVO;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.MypageMapper;
 
@@ -131,9 +132,9 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public ClubVO getMyClublist(Long cbNum) {
+	public ClubVO getJoinClub(Long cbNum) {
 		// TODO Auto-generated method stub
-		return mapper.getMyClublist(cbNum);
+		return mapper.getJoinClub(cbNum);
 	}
 
 	@Override
@@ -145,6 +146,18 @@ public class MypageServiceImpl implements MypageService {
 		mapper.updateNameUserHistory(userVO);
 		mapper.updateMeetingMemberName(userVO);
 		mapper.updateUserDetail(userVO);
+	}
+
+	@Override
+	public List<RegionVO> getCityList() {
+		// TODO Auto-generated method stub
+		return mapper.getCityList();
+	}
+
+	@Override
+	public List<RegionVO> getDistrictList(String rgName) {
+		// TODO Auto-generated method stub
+		return mapper.getDistrictList(rgName);
 	}
 
 
