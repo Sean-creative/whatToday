@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
+import com.hobby.domain.RegionVO;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.MypageMapper;
 
@@ -65,15 +66,15 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int updateClubMemberUpdate(UserVO userVO) {
+	public int updateClubMemberName(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.updateClubMemberNameUpdate(userVO);
+		return mapper.updateClubMemberName(userVO);
 	}
 
 	@Override
 	public boolean isPwdValid(String str1) {
 		// TODO Auto-generated method stub
-		return (str1.length() != 0 && str1 != null);
+		return (str1.length() != 0 && str1 != null && str1.length() >= 8);
 	}
 	
 	@Override
@@ -109,7 +110,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int updateMeetingMemberName(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.updateClubMemberNameUpdate(userVO);
+		return mapper.updateMeetingMemberName(userVO);
 	}
 
 	@Override
@@ -131,9 +132,32 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public ClubVO getMyClublist(Long cbNum) {
+	public ClubVO getJoinClub(Long cbNum) {
 		// TODO Auto-generated method stub
-		return mapper.getMyClublist(cbNum);
+		return mapper.getJoinClub(cbNum);
+	}
+
+	@Override
+	public void updateUserInfoAndName(UserVO userVO) {
+		// TODO Auto-generated method stub
+		mapper.updateUserInfo(userVO);
+		mapper.updateClubFounderName(userVO);
+		mapper.updateClubMemberName(userVO);
+		mapper.updateNameUserHistory(userVO);
+		mapper.updateMeetingMemberName(userVO);
+		mapper.updateUserDetail(userVO);
+	}
+
+	@Override
+	public List<RegionVO> getCityList() {
+		// TODO Auto-generated method stub
+		return mapper.getCityList();
+	}
+
+	@Override
+	public List<RegionVO> getDistrictList(String rgName) {
+		// TODO Auto-generated method stub
+		return mapper.getDistrictList(rgName);
 	}
 
 

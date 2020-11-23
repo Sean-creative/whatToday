@@ -8,7 +8,7 @@
 <div class ="menu">
     <ul>
         <li>
-            <form action="/account/main" method="post">
+            <form action="/account/main" method="get">
                 <button class="btn1" type="submit">마이페이지</button>
             </form>
         </li>
@@ -34,17 +34,17 @@
         </div>
         </li>
     <li>
-        <form action="/account/auth_edit" method="post">
+        <form action="/account/auth_edit" method="get">
             <button type="submit">회원정보수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/password" method="post"  >
+        <form action="/account/password" method="get">
             <button type="submit" style="color: yellow">비밀번호수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/auth_leave" method="post">
+        <form action="/account/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
         
@@ -70,7 +70,7 @@
 <span class="pwWord">현재 비밀번호 입력</span><input type="password" class="inputPwd" name="currentPassword"><br>
 <span class="pwWord">새로운 비밀번호 입력</span><input type="password" class="inputPwd" name="newPassword"><br>
 <span class="pwWord">새로운 비밀번호 확인</span><input type="password" class="inputPwd" name="newPassword"><br>
-<form name="register" action="/account/passwordAction" onsubmit="return check() && inputCheck();" method="post">
+<form name="register" action="/account/passwordAction" onsubmit="return check();" method="post">
 <input type="hidden" name="currentPassword" value="">
 <input type="hidden" name="newPassword" value="">
 <button>변경완료</button>
@@ -80,37 +80,18 @@
 
 </section>
 <script type="text/javascript">
-
-function inputCheck() {
-	
-	let cpw = document.register.currentPassword;
-	let npw = document.getElementsByName("newPassword")[0];
-	let npwRe = document.getElementsByName("newPassword")[1];
-
-
-	const pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-
-    if(pwPattern.test(cpw.value) == false){
-    	alert("현재 비밀번호 확인");
-        return false;
-    }
-    if(pwPattern.test(npw.value) == false || pwPattern.test(npwRe.value) == false){
-    	alert("새로운 비밀번호 확인");
-        return false;
-    }
-
-    return true;
-
-  
-    
+if("${msg}" != ""){
+	alert("${msg}");
 }
+
+
 
     let currentPassword = document.getElementsByName("currentPassword");
     let newPassword = document.getElementsByName("newPassword");
-    
+    /* 유효성검사, 빈칸검사, 새 비밀번호 맞는지 확인검사 */
 function check(){
 	if(blankCheck() &&
-			passwordEqualCheck()){
+			passwordEqualCheck() && validCheck()){
         currentPassword[1].setAttribute("value", currentPassword[0].value);
         newPassword[2].setAttribute("value", newPassword[0].value);
 		return true;
@@ -130,11 +111,34 @@ function blankCheck(){
     return true;
 }
 function passwordEqualCheck(){
+	if(currentPassword[0].value == newPassword[0].value){
+		alert("현재 비밀번호와 새로운 비밀번호를 다르게 입력해주세요");
+		return false
+	}
 	if(newPassword[0].value == newPassword[1].value){
 		return true;
 	}
-	alert("새 비밀번호를 체크해주세요");
+	alert("새비밀번호와 새비밀번호확인이 맞지 않음");
 	return false
+}
+function validCheck() {
+	
+	let cpw = document.register.currentPassword;
+	let npw = document.getElementsByName("newPassword")[0];
+	let npwRe = document.getElementsByName("newPassword")[1];
+
+	
+	const pwPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+
+    if(pwPattern.test(npw.value) == false || pwPattern.test(npwRe.value) == false){
+    	alert("새로운 비밀번호는 숫자+영어+특문 포함 8자 이상");
+        return false;
+    }
+
+    return true;
+
+  
+    
 }
 </script>
 

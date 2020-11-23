@@ -10,7 +10,7 @@
 <div class ="menu">
     <ul>
         <li>
-            <form action="/account/main" method="post">
+            <form action="/account/main" method="get">
                 <button class="btn1" type="submit" >마이페이지</button>
 
             </form>
@@ -38,17 +38,17 @@
         </div>
         </li>
     <li>
-        <form action="/account/auth_edit" method="post">
+        <form action="/account/auth_edit" method="get">
             <button type="submit" style="color: yellow">회원정보수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/password" method="post" >
+        <form action="/account/password" method="get" >
             <button type="submit">비밀번호수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/auth_leave" method="post">
+        <form action="/account/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
         
@@ -72,10 +72,12 @@
 </section>
 
 <script type="text/javascript">
-
+if("${msg}" != ""){
+	alert("${msg}");
+}
 
 function blankCheck(){
-    var password = document.getElementsByName("password");
+    let password = document.getElementsByName("password");
     if(password[0].value.length == 0){
     	alert("비밀번호를 입력해주세요.") 
         return false;

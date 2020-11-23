@@ -1,8 +1,8 @@
 console.log("club module...");
 
 var clubService = (function(){
-	function getList(param, callback, error){
-		var cbLeaderNum = param.cbLeaderNum; getMyClublist
+	function getMyCreateClubList(param, callback, error){
+		var cbLeaderNum = param.cbLeaderNum;
 		
 		$.getJSON("/account/myclub/"+cbLeaderNum,function(data){
 			if(callback){
@@ -15,10 +15,10 @@ var clubService = (function(){
 		});
 	}
 	
-	function getMyClublist(param, callback, error){
+	function getJoinClub(param, callback, error){
 		var cbNum = param.cbNum; 
 	
-	$.getJSON("/account/myclub/club/"+cbNum,function(data){
+	$.getJSON("/account/myclub/joinclub/"+cbNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -31,8 +31,8 @@ var clubService = (function(){
 	}
 			
 	return{
-		getList : getList,
-		getMyClublist : getMyClublist
+		getMyCreateClubList : getMyCreateClubList,
+		getJoinClub : getJoinClub
 	};
 	
 

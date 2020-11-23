@@ -4,7 +4,7 @@ var categoryService = (function(){
 	function getCategorylist(param, callback, error){
 		var catClassificationCode = param.catClassificationCode;
 		
-		$.getJSON("/account/"+catClassificationCode,function(data){
+		$.getJSON("/account/categorylist/"+catClassificationCode,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -23,10 +23,22 @@ var categoryService = (function(){
 
 
 var cityService = (function(){
-	function getCitylist(param, callback, error){
-		var catClassificationCode = param.catClassificationCode;
+	function getCitylist(callback, error){
 		
-		$.getJSON("/account/"+catClassificationCode,function(data){
+		$.getJSON("/account/citylist/",function(data){
+			if(callback){
+				callback(data);
+			}
+		}).fail(function(xhr,status,err){
+			if(error){
+				error();
+			}
+		});
+	}
+	function getDistrictlist(param, callback, error){
+		var rgName = param.rgName;
+		
+		$.getJSON("/account/districtlist/"+rgName,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -38,7 +50,8 @@ var cityService = (function(){
 	}
 	
 	return{
-		getCitylist : getCitylist
+		getCitylist : getCitylist,
+		getDistrictlist : getDistrictlist
 	};
 	
 })();

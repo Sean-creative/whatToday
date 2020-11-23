@@ -41,12 +41,7 @@
                 </div>
                 <div>
                   카테고리/분야<br>
-                  <select name="cbCategory">
-                    <option value="운동/스포츠" selected> 운동/스포츠
-                    <option value="음악/악기"> 음악/악기
-                    <option value="문화/공연/축제"> 문화/공연/축제
-                    <option value="아웃도어/여행"> 아웃도어/여행
-                  </select>
+                  <select name="cbCategory" id=category></select>
                 </div>
 
                 <div>
@@ -82,19 +77,14 @@
           <div>
                 <div>
                   지역 <br>
-                  <select name="cbCity">
-                    <option value="서울특별시" selected> 서울특별시
-                    <option value="경기도"> 경기도
+                  <select name="cbCity" id="city">
+                  <option value="지역 선택" >지역 선택</option>                  
                   </select>
                 </div>
                 <div>
                   세부지역<br>
-                  <select name="cbDistrict">
-                    <option value="종로구" selected> 종로구
-                    <option value="중구"> 중구
-                    <option value="용산구"> 용산구
-                    <option value="성동구"> 성동구
-                  </select>
+                  <select name="cbDistrict" id="district">
+                  <option value="세부지역 선택">세부지역 선택</option> </select>
                 </div>
           </div>
 
@@ -120,94 +110,8 @@
                                 
     </section>
     <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
-    <script>
-    
-    function inputCheck(){
-    	var clubname = document.add.cbName;
-    	var intro = document.add.cbIntro;
-    	
-    	var date = $('#cbDate').val();
-    	
-    	var category = document.add.cbCategory;
-    	var subcat = document.add.cbSubcat;
-    	var mbnum = document.add.cbMbnum;
-    	var appPeriod = $('#cbAppPeriod').val();  
-    	var hashtag = document.add.cbHashtag;
-    	var city = document.add.cbCity;
-    	var district = document.add.cbDistrict;
-    	var place = $('#cbPlace').val(); 
-    	var supplies = $('#cbSupplies').val();  
-    	
-  		console.log(mbnum.value);
-    	
-    	if(!clubname.value || clubname.value.length>30){
-    		alert("모임명을 다시 입력해주세요.");
-    		return false;
-    	}
-    	    	
-    	if(!intro.value || intro.value.length>30){
-    		alert("모임소개를 다시 입력해주세요.");
-    		return false;
-    	}
-    	if(!date ){
-    		alert("모임날짜를 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!category.value ){
-    		alert("카테고리를 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!subcat.value ){
-    		alert("모임을 다시 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!mbnum.value || mbnum.value < 0){
-    		alert("모임인원을 다시 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!appPeriod){
-    		alert("모임 신청기간 다시 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!hashtag.value || hashtag.value.length>30){
-    		alert("해시태그를 다시 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!city.value){
-    		alert("지역을  입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!district.value){
-    		alert("세부지역을  입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!place || place.length>30){
-    		alert("모임장소를 다시 입력해주세요.");
-    		return false;
-    	}
-    	
-    	if(!supplies || supplies.length>30){
-    		alert("모임 준비물을 다시 입력해주세요.");
-    		return false;
-    	}
-    	
- 
-    	alert('개설되었습니다.');
-    	
-    	
-    }
-    
-                                  
-    </script>
-    
+    <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
+    <script type="text/javascript" src="/resources/js/thunderAdd.js"></script>
+
 
 <%@include file="../includes/footer.jsp"%>
-
