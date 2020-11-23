@@ -25,6 +25,8 @@ public interface AccountMapper {
 	public String findId(@Param("usrName")String usrName, @Param("usrPhone")String usrPhone);
 
 	public String findPwd(String usrId);
+
+	public String phoneDuplicateCheck(String us_phone);
 	
 	
 	

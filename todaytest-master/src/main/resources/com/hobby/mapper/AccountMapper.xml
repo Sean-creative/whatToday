@@ -51,7 +51,12 @@ WHERE usr.usrId = #{usrId}
 </select>
 
 <select id="idDuplicateCheck" resultType="string">
-	SELECT usrId FROM tbluser where usrId = #{usrId}
+	<!-- rownum = 1 : 이미 중복해서 들어간 값들이 있어서 쿼리 결과 값을  한개로 만들어 주기위해-->
+	SELECT usrId FROM tbluser where usrId = #{usrId} and rownum = 1
+</select>
+
+<select id="phoneDuplicateCheck" resultType="string">
+	SELECT usrPhone FROM tbluser where usrPhone = #{usrPhone} and rownum = 1
 </select>
 
 <select id="findId" resultType="string">

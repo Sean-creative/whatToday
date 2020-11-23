@@ -38,7 +38,7 @@
 	
 	<update id="leaveSite">
 		update userauth
-		set  auth = 'ROLE MEMBEROUT'
+		set  auth = 'ROLE_MEMBEROUT'
 		where  USRNUM = #{usrNum}
 	</update>
 	
