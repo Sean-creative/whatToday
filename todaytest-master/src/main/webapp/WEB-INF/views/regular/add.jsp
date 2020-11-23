@@ -54,14 +54,14 @@
 	//유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
 	function inputCheck(){
 		
-		var club = document.register.cbName;
-		var number = document.register.cbMbNum;
-		var date = document.register.cbMakeDate;
-		var info = document.register.cbIntro;
-		var infodetail = document.register.cbDetailContent;
+		let club = document.register.cbName;
+		let number = document.register.cbMbNum;
+		let date = document.register.cbMakeDate;
+		let info = document.register.cbIntro;
+		let infodetail = document.register.cbDetailContent;
 		
 		//모임명의 앞뒤 공백 체크 
-		var inputValue = club.value.replace(/^(\s|\.)*|(\s|\.)*$/g, ""); //replace:공백을 ""(제거)해준다.
+		let inputValue = club.value.replace(/^(\s|\.)*|(\s|\.)*$/g, ""); //replace:공백을 ""(제거)해준다.
 		
 		//모임명 빈문자열 체크 
 		if(inputValue.length <= 0) {		
@@ -102,13 +102,13 @@
 				selectCity(e.target.value); //e.target.value = 경기도
 				
 		});
-			$('#cbCategory').change(function(e) {
-				selectHobby(e.target.value);
+			$('#cbCategory').change(function(e) { //cbCategory 변경 시, e(event)발생
+				selectHobby(e.target.value); //e.target.value = 문화/공연/축제
 				
 		});
 		});
 		
-		var hobbyCategory = {
+		let hobbyCategory = {
 				
 				"아웃도어/여행" : ["등산","산책/트래킹","캠핑/백패킹","낚시","기타"],
 				"문화/공연/축제" : ["뮤지컬/오페라", "공연/연극", "전시회", "파티/페스티벌", "기타"],
@@ -121,17 +121,17 @@
 		
 		function selectHobby(targetVal) {
 			
-			Object.keys(hobbyCategory).filter(item1 => { //hobbycategory에 있는 
-				if (targetVal === item1) {
-					$("#cbSubcat").empty(); //모임 초기화 
-					hobbyCategory[item1].forEach(item2 => {
-						var option = $("<option value=" + item2 + ">" + item2 + "</option>");
+			Object.keys(hobbyCategory).filter(item1 => { //hobbycategory에 있는 name 순으로 반복 
+				if (targetVal === item1) { //선택한 값과 hobbycategory에 있는 값이 일치하면, 
+					$("#cbSubcat").empty(); //기존모임 목록 초기화 
+					hobbyCategory[item1].forEach(item2 => { //item2에 있는 option을 보여준다. 
+						let option = $("<option value=" + item2 + ">" + item2 + "</option>");
 						$("#cbSubcat").append(option);
 					})
 				} 
 			})
 		}
-		var city = {
+		let city = {
 				
 				"서울특별시" : [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
 					"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
@@ -145,11 +145,11 @@
 			
 		function selectCity(targetValCity) {
 			
-				Object.keys(city).filter(item1 => {
-					if (targetValCity === item1) {
-						$("#cbDistrict").empty(); //세부지역 초기화
-						city[item1].forEach(item2 => {
-							var option = $("<option value=" + item2 + ">" + item2 + "</option>");
+				Object.keys(city).filter(item1 => { //city에 있는 name 순으로 반복 
+					if (targetValCity === item1) { //선택한 값과 city에 있는 값이 일치하면, 
+						$("#cbDistrict").empty(); //세부지역 목록 초기화
+						city[item1].forEach(item2 => { //item2에 있는 option을 보여준다.
+							let option = $("<option value=" + item2 + ">" + item2 + "</option>");
 							$("#cbDistrict").append(option);
 						})
 					}
