@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
@@ -137,16 +138,6 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getJoinClub(cbNum);
 	}
 
-	@Override
-	public void updateUserInfoAndName(UserVO userVO) {
-		// TODO Auto-generated method stub
-		mapper.updateUserInfo(userVO);
-		mapper.updateClubFounderName(userVO);
-		mapper.updateClubMemberName(userVO);
-		mapper.updateNameUserHistory(userVO);
-		mapper.updateMeetingMemberName(userVO);
-		mapper.updateUserDetail(userVO);
-	}
 
 	@Override
 	public List<RegionVO> getCityList() {

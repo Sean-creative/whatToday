@@ -100,22 +100,18 @@ public class MypageController {
 		if(auth == null) {
 			url = "redirect:/login/login";
 		}
-		if(password == null) {
-			rtts.addFlashAttribute("msg","비밀번호가 맞지 않아요");
-			url = "redirect:/auth_edit";
-		}
+
 		//1. DB에 있는 비밀번호와 사용자가 입력한 비밀번호를 비교하기위해 회원 정보를 가져온다.
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		System.out.println(userVO);
 		
 		//2. 비밀번호 유효성검사, DB와 비교해서 맞는지 Check하고 수정페이지로 보냄
-		if(service.isPwdValid(password) && 
+		if(password != null && service.isPwdValid(password) && 
 				service.findPwdInDB(password, userVO.getUsrPwd())) {
 			
-			model.addAttribute("password",password);
 			url = "/account/edit";
-		}else {
+		}else{
 			rtts.addFlashAttribute("msg","비밀번호가 맞지 않아요");
 			url = "redirect:/account/auth_edit";
 		}
@@ -125,7 +121,7 @@ public class MypageController {
 	
 	//회원정보 수정페이지
 	@PostMapping("/edit")
-	public String edit(Authentication auth, Model model,@RequestParam("password")String password){
+	public String edit(Authentication auth, Model model){
 		
 		String url = "/account/edit";
 		
@@ -159,9 +155,14 @@ public class MypageController {
 		if(auth == null) {
 			url = "redirect:/login/login";
 		}
+		
+		if(userVO.getUsrPhone() == null) {
+			
+			url = "redirect:/auth_edit/";
+		}
 
 		//1. edit에서 UserVO의 정보들을 보낸것을 통하여 업데이트가 필요한 테이블들을 업데이트
-		service.updateUserInfoAndName(userVO);
+		service.updateUserInfo(userVO);
 		
 		return url;
 		}

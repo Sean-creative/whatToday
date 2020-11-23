@@ -61,10 +61,8 @@
 <p>개설한 모임</p><br>
 <c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <form name="manageClub" method="get">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
-   <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
-   <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
+   <form name="manageClub" method="get">
    <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
    <button name="modifyClub" type="submit">수정</button> 
    <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
@@ -75,10 +73,8 @@
 <c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
 <div class = "hideList" style ="display: none">
 <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <form name="manageClub" method="get">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
-   <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
-   <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
+   <form name="manageClub" method="get">
    <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
    <button name="modifyClub" type="submit">수정</button> 
    <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
@@ -123,13 +119,15 @@ $(document).ready(function() {
 		let url;
 		if(type == "정기모임" || type == "정기"){
 			console.log("정기요");
-			url = "/regular/info?cbNum="+cbNum;
+			url = "/regular/info";
 		}else{
 			console.log("번개요");
-			url = "/thunder/info/?cbNum="+cbNum;
+			url = "/thunder/info";
 		}
 		form.attr("action",url);
 	});
+	
+	/* 아직 구현 X */
 	$("button[name=closeClub]").click(function(){
 		let index = $("button[name=modifyClub]").index(this);
 		let type = $("input[name=cbType]").eq(index).val();

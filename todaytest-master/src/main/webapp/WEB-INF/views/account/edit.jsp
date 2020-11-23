@@ -64,7 +64,7 @@
         </div>
         <div class="userInfo">
             <span>ID </span><input type="text" readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br> 
-            <span>NAME </span><input type="text" name="usrName" value="<c:out value="${userVO.usrName }"/>"><br>
+            <span>NAME </span><input type="text" name="usrName"  readonly="readonly" value="<c:out value="${userVO.usrName }"/>"><br>
             <span>PHONE </span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
             <input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
         </div>
@@ -73,7 +73,7 @@
     
     <div class ="info"> 
         <div class="userInfo" style="margin-left: 18.5%;">
-             <h1>관심정보<span style="font-size: 15px; margin-left: 20px">개인별 맞춤정보 제공 - 수정은 이름, 폰번, 지역, 관심카테고리</span></h1>
+             <h1>관심정보<span style="font-size: 15px; margin-left: 20px">개인별 맞춤정보 제공 - 수정은 폰번, 지역, 관심카테고리</span></h1>
              
              <ul style = "list-style: none;">
              <li>
