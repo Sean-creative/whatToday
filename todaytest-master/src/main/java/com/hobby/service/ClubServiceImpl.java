@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@Service
+@Service //비즈니스 영역을 담당하는 객체임을 표시
 @AllArgsConstructor
 public class ClubServiceImpl implements ClubService {
 

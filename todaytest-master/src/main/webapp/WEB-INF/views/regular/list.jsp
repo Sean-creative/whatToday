@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="../resources/css/clubListStyle.css">
 
 <div id="body">
-	<c:forEach items="${clublist}" var="club" varStatus="status" begin="0" end="19">
+	<c:forEach items="${clublist}" var="club" varStatus="status" begin="0" end="19"> <!--20개 목록만 보여주기-->
 		<div class="box">
 			<ul class="demo">
-				<li>모임명:<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
+				<li>모임명:<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'> <!--cbNum(모임번호)을 가지고 모임상세 페이지이동-->
 						<c:out value="${club.cbName}" /></a></li>
 				<li>지역:<c:out value="${club.cbDistrict}" /></li>
 				<li>현재인원:<c:out value="${club.cbCurMbNum}" /></li>

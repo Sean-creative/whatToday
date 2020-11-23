@@ -19,7 +19,7 @@ public interface ClubMapper {
 	//정기모임 게시판 - 목록list
 	public List<ClubVO> getList(Long cbNum);
 		
-	//정기모임 게시판 - 페이징
+	//정기모임 게시판 - 목록list (페이징)
 	public List<ClubVO> getListWithPaging(Criteria cri);
 		
 	//정기모임 게시판 - 조회

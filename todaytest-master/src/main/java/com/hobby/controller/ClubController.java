@@ -71,6 +71,8 @@ public class ClubController {
       
       log.info("registerClub: " + club);
       
+      club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", ""));
+      
       service.registerClub(club);
       
       rttr.addFlashAttribute("result", club.getCbNum());

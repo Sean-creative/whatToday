@@ -16,14 +16,14 @@ public interface ClubService {
 	//정기모임 상세정보
 	public ClubVO getClub(Long cbNum);
 	
-	//정기모임 게시판 - 조회
-	public ClubVO get(Long cbBno);	
-		
-	//정기모임 게시판 - 목록list (페이징)
-	public List<ClubVO> getList(Criteria cri);
-		
 	//정기모임 게시판 - 목록list
 	public List<ClubVO> getList(Long cbNum);
+	
+	//정기모임 게시판 - 목록list (페이징)
+	public List<ClubVO> getList(Criteria cri);
+	
+	//정기모임 게시판 - 조회
+	public ClubVO get(Long cbBno);	
 		
 	//정기모임 게시판 - 조회수
 	public int boardViews(Long cbBno);

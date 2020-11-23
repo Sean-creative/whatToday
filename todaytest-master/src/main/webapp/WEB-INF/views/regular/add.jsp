@@ -8,8 +8,7 @@
 
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-	<form id="register" name="register" action="/regular/add" method="post"
-		onsubmit="return inputCheck();">
+	<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheck();">
 
 		<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" /> 
 		<input type="hidden" id="cbType" name="cbType" value="정기모임" /> 
@@ -62,7 +61,7 @@
 		var infodetail = document.register.cbDetailContent;
 		
 		//모임명의 앞뒤 공백 체크 
-		var inputValue = club.value.replace(/(^\s*)|(\s*$)/g, ""); //replace:공백을 ""(제거)해준다.
+		var inputValue = club.value.replace(/^(\s|\.)*|(\s|\.)*$/g, ""); //replace:공백을 ""(제거)해준다.
 		
 		//모임명 빈문자열 체크 
 		if(inputValue.length <= 0) {		
@@ -94,13 +93,14 @@
 		//카테고리/분야 선택, 지역 선택 
 		$(function() {
 			
-			//초기 설정값
+			//초기 세팅값
  			selectHobby("아웃도어/여행");
 			selectCity("서울특별시");
 			
-			$('#cbCity').change(function(e) { //cbCity 값이 변경 시, selectCity의 target value
-				selectCity(e.target.value);
-			
+			$('#cbCity').change(function(e) { //cbCity변경 시, e(event)발생 
+				
+				selectCity(e.target.value); //e.target.value = 경기도
+				
 		});
 			$('#cbCategory').change(function(e) {
 				selectHobby(e.target.value);
