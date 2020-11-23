@@ -17,11 +17,10 @@ public interface FaqMapper {
 	
 	//////문//////의//////
 	//문의
-	//public void insert2(InquireVO inquire);
 	public void insertSelectKey2(InquireVO inquire);
 	//문의내용 
 	public void insertqs(InquireVO inquire);
-	//public void insertSelectKeyqs(InquireVO inquire);
+	
 	
 	
 
