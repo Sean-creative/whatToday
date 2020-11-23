@@ -12,4 +12,6 @@ public interface AccountService {
 	public String findUserId(String us_name, String us_phone);
 
 	public String findUserPwd(String us_id);
+
+	public String phoneDuplicateCheck(String us_phone);
 }

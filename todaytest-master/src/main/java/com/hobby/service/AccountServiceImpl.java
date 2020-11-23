@@ -4,6 +4,7 @@ package com.hobby.service;
  */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.AccountMapper;
@@ -20,8 +21,10 @@ public class AccountServiceImpl implements AccountService{
 	@Setter(onMethod_ = @Autowired)
 	private AccountMapper mapper;
 
+	@Transactional
 	@Override
 	public void register(UserVO user) {
+		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 처리 
 		log.info("##Service : register");
 		mapper.insert(user);
 		mapper.insertUserInfo(user);
@@ -47,6 +50,12 @@ public class AccountServiceImpl implements AccountService{
 	public String findUserPwd(String usrId) {
 		log.info("##Service: findUserPwd");
 		return mapper.findPwd(usrId);
+	}
+
+	@Override
+	public String phoneDuplicateCheck(String us_phone) {
+		log.info("##Service: phoneDuplicateCheck");
+		return mapper.phoneDuplicateCheck(us_phone);
 	}
 
 }
