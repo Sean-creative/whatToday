@@ -23,5 +23,4 @@ public interface ThunderMapper {
 	
 	public int update(ThunderVO clubVO);
 	
-//	public void insertSelectKey(UserVO board);
 }

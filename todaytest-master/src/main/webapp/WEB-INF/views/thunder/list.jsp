@@ -13,7 +13,7 @@
 
   <!--  번개 모임 개설 -->
   <section id="wrap" style="border:1px solid; margin-top : 30px; padding:30px;">
-    <form action="/thunder/list" method="get">
+    <form action="/thunder/list" method="get" onsubmit="return inputCheck()">
 
 
       <div style="font-size:30px; margin-bottom:20px;"> <b>전체모임</b> </div>
@@ -115,7 +115,7 @@
             <input type="text" name='keyword' style="width:600px; height:30px; font-size:20px;"
 			value='<c:out value="${pageMaker.cri.keyword}"/>'/>
                     
-            <button style="width:100px; height:35px;"> 검색 </button>
+            <button style="width:100px; height:35px;" > 검색 </button>
           </div>
         </div>      
       </div>
@@ -132,11 +132,13 @@
         <c:forEach items="${list}" var="thunderItem">						
 						<div style="border:1px solid black; width:170px; height:140px; cursor: pointer;" 
 						
-						class='move' onclick='move2(${thunderItem.cbNum})'> 						
+						class='move' onclick='move2(${thunderItem.cbNum})'> 																
+							
+							${thunderItem.thunderDetailVO}
 							
 							[모임명] : <c:out value="${thunderItem.cbName}" /> <br>
 							
-							[일 정] : <c:out value="${thunderItem.cbMakeDate}" /> <br>
+							[일 정] : <c:out value="${thunderItem.thunderDetailVO.cbDate}" /> <br>
 							  														  
 							[장 소] : <c:out value="${thunderItem.cbDistrict}" /> <br>
 							
@@ -145,6 +147,7 @@
 							</div>
 		</c:forEach>										        
         </div>
+       </div>
     </form>
     
         <div class='pull-right'>
@@ -188,32 +191,6 @@
 					function() {
 						/* JS BODY */
 						
-						/* var result = '<c:out value="${result}"/>';
-						checkModal(result);
-
-						history.replaceState({}, null, null);
-
-						function checkModal(result) {
-							if (result === '' || history.state) {
-								return;
-							}
-
-							if (parseInt(result) > 0) {
-								$(".modal-body").html(
-										"게시글 " + parseInt(result)
-												+ " 번이 등록되었습니다.");
-							}
-
-							$("#myModal").modal("show");
-						} */
-
-						
-						//버튼을 눌렀을 때 동작 정의
-						/* $("#regBtn").on("click", function() {
-							self.location = "/thunder/register";
-						});*/
-
-						
 						actionForm = $("#actionForm"); 
 						
 						$(".paginate_button a").on(
@@ -226,40 +203,30 @@
 									actionForm.submit(); 
 								});
 
-									
-						
-										
-				/* 	var searchForm = $("#searchForm");
-						$("#searchForm button").on("click", function(e){ 
-							if(!searchForm.find("option:selected").val()){
-								alert("검색종류를 선택하세요");
-								return false;
-							}
-							
-							if(!searchForm.find("input[name='keyword']").val()){
-								alert("키워드를 입력하세요");
-								return false;
-							}
-							
-							searchForm.find("input[name='pageNum']").val("1");
-							e.preventDefault();
-							
-							searchForm.submit();							
-						}); */
 					});
 	
 	
-	// onclick 속성을 가져올 수 없어서, 꼼수로 함수를 사용.
-	function move2(cbNum) {		
-		actionForm
-		.append("<input type='hidden' name='cbNum' value='"
-				+ cbNum + "'>");		
-		actionForm.attr("action",
-				"/thunder/info");
-		actionForm.submit();										
-	}
-	
-	
+					// onclick 속성을 가져올 수 없어서,함수를 사용.
+					function move2(cbNum) {		
+						actionForm
+						.append("<input type='hidden' name='cbNum' value='"
+								+ cbNum + "'>");		
+						actionForm.attr("action",
+								"/thunder/info");
+						actionForm.submit();										
+					}
+					
+					
+					function inputCheck(){										
+									
+						let keyword = $("[name=keyword]").val();
+						
+						console.log(keyword.length);
+						if (keyword.length > 30) {
+							alert("키워드가 너무 깁니다 (30자 이하)");
+							return false;
+							}					    
+					    }
 	
 </script>
 
