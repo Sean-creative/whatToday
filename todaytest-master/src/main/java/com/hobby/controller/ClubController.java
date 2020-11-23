@@ -27,7 +27,7 @@ public class ClubController {
 
    private ClubService service;
    
-   //정기모임 게시판 - 목록list
+   //정기모임 게시판 - 목록list (페이징)
 //   @GetMapping("/board")
 //   public void list(Criteria cri, Model model) {
 //      
@@ -39,6 +39,7 @@ public class ClubController {
 //      model.addAttribute("pageMaker", new PageDTO(cri, 123));
 //   }
    
+   //정기모임 게시판 - 목록list 
    @GetMapping("/board")
    public void list(Model model, @RequestParam("cbNum") Long cbNum) {
       
@@ -68,10 +69,9 @@ public class ClubController {
    @PostMapping("/add")
    public String registerClub(Authentication auth, ClubVO club, RedirectAttributes rttr) {
       
-//      CustomUser customUser = (CustomUser) auth.getPrincipal();
-//      Long cbLeaderNum = customUser.getUser().getUsrNum();
-      // cbLeaderNum = usrNum
       log.info("registerClub: " + club);
+      
+      club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", ""));
       
       service.registerClub(club);
       

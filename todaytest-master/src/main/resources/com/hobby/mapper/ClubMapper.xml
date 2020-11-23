@@ -5,26 +5,30 @@
 	
 <mapper namespace="com.hobby.mapper.ClubMapper">
 
+<!-- 정기모임 개설  -->
 <insert id="clubinsertSelectKey">
    <selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
       select club_seq.nextval from dual
    </selectKey>
    
    insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
-   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},#{cbMakeDate},#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
+   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
 </insert>
 
+<!-- 정기모임 목록  -->
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
-	select * from club where cbNum > 0 and cbType ='정기모임'
+	select * from club where cbType ='정기모임' order by cbNum desc
 	]]>
 </select>
 
+<!-- 정기모임 상세정보  -->
 <select id="readclub" resultType="com.hobby.domain.ClubVO">
 	select cbNum,cbName,cbHashtag,cbIntro,cbDetailContent from club 
 	where cbNum = #{cbNum}
 </select>
 
+<!-- 정기모임 게시판 - 목록 -->
 <select id="getList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select * from clubboard
@@ -32,6 +36,7 @@
 	]]>
 </select>
 
+<!-- 정기모임 게시판 - 목록(페이징) -->
 <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
@@ -42,10 +47,12 @@
 	]]>
 </select>
 
+<!-- 정기모임 게시판 - 조회 -->
 <select id="read" resultType="com.hobby.domain.ClubVO">
 	select * from clubboard where cbBno = #{cbBno}
 </select>
 
+<!-- 정기모임 게시판 - 조회수 -->
 <update id="boardViews">
 	update clubboard set cbBdView = cbBdView + 1 
 	where cbBno = #{cbBno}

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+#body {
+	overflow-y:auto;
+	height: 500px;	
+}
 .box{
 		width: 250px;
 		height: 200px;
