@@ -23,9 +23,11 @@
 					 <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="5">
 						<li>
 							<div class="regm">
+								<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
 								<p>위치 : <c:out value="${club.cbCity}" /></p>
 								<p>현재정원 : <c:out value="${club.cbCurMbNum}" /></p>
 								<p>모임이름 : <c:out value="${club.cbName}" /></p>
+								</a>
 							</div>
 						</li>	
 					</c:forEach> 
@@ -36,10 +38,12 @@
         <ul>
 	          <c:forEach items="${main2}" var="club" varStatus="status" begin="1" end="16">
 							<li>
+							    <a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'>
 								<p>위치 : <c:out value="${club.cbCity}" /></p>
 								<p>현재정원 : <c:out value="${club.cbCurMbNum}" /></p>
 								<p>모임이름 : <c:out value="${club.cbName}" /></p>
 								<p>유형  : <c:out value="${club.cbType}" /></p>
+								</a>
 							</li>	
 				</c:forEach>
         </ul>
