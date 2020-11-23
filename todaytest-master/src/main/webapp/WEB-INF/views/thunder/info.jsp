@@ -45,47 +45,47 @@ section a:hover {
 			</div>
 
 			<div style="margin-left: 30px;">
-				<div style="float: left; margin-right: 50px">
-					<div style="margin: 2px 0px">
+			<!-- 사진 왼쪽에 붙어있게 -->
+				<div style="float: left; padding-bottom:200px; margin:0px;">					
 						<img src="/resources/img/thunderImg.png" width="170" height="170"
-							alt="번개대표사진">
-					</div>
-					<br>
+							alt="번개대표사진">										
 				</div>
 
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 20px;">
+
+			<!-- 사진 기준 오른쪽에 붙어 있게 끔 -->
+			<div style="right;  width:70%; margin:0px; margin-left: 10%; " >
+				<div style="font-size: 20px; margin-bottom: 20px; word-break:break-all;word-wrap:break-word;">
 					<c:out value="${clubVO.cbIntro}" />
 				</div>
 
-
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 20px;">
+				<div style="font-size: 20px;  margin-bottom: 20px;">
 					<b> <c:out value="${clubVO.cbHashtag}" />
 					</b>
 				</div>
 
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 10px;">
-					모임일정 :
-					<c:out value="${clubVO.thunderDetailVO.cbDate}" />
+				<!-- 지정된 포맷으로 보내기 위해, JS단에서 값을 넣어준다. -->
+				<div style="font-size: 20px;  margin-bottom: 20px;" id="date">										
 				</div>
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 10px;">
+				
+				<div style="font-size: 20px;  margin-bottom: 20px;">
 					모임장소 :
 					<c:out
 						value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
 				</div>
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 10px;">
+				<div style="font-size: 20px;  margin-bottom: 20px;">
 					모임인원 :
 					<c:out
 						value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />
 				</div>
 				<br>
 
-				<div style="font-size: 20px; margin-left: 15%; margin-bottom: 10px;">
+				<div style="font-size: 20px; margin-bottom: 20px;">
 					준비물 :
 					<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />
 				</div>
 
-
 			</div>
+		</div>
 
 
 
@@ -103,8 +103,7 @@ section a:hover {
 				</div>
 
 				<div
-					style="width: 500px; height: 50px; border: 1px solid; text-align: center;">
-					<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />
+					style="width: 500px; height: 50px; border: 1px solid; text-align: center;" id="period">					
 				</div>
 			</div>
 
@@ -176,23 +175,15 @@ section a:hover {
 
 
 	</section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
 	<script type="text/javascript">
 	
 		$(document)
 				.ready(
 						function() {
-							
-							
-							
-							
-							
-							
-							
-							
-
+																												
 							console.log("<c:out value="${clubVO}" />")
-							var operForm = $("#operForm");
+							let operForm = $("#operForm");
 
 							$("button[data-oper='modify']").on(
 									"click",
@@ -206,22 +197,30 @@ section a:hover {
 									.on(
 											"click",
 											function(e) {
-												e.preventDefault();
-												console.log("??????");
-												console.log('click');
+												e.preventDefault();												
+												console.log('button - list click');
 												/* operForm.find("#cbNum").remove(); */
 												operForm.attr("action",
 														"/thunder/list")
 												console.log("operForm.attr");
 
 												operForm.submit();
-											});
-						
-							
-							
+											});																			
 						});
+										
+		
+						let nowDate = '${clubVO.thunderDetailVO.cbDate}';						
+						nowDate = moment(nowDate).format("YYYY년 MM월 DD일 A hh시 mm분 ");
+						$("#date").html('모임일정 :  ' + nowDate);
+						
+						let deadDate = '${clubVO.thunderDetailVO.cbAppPeriod}';						
+						deadDate = moment(deadDate).format("YYYY년 MM월 DD일 A hh시 mm분 ");
+						$("#period").html("<b>" + deadDate +"</b>" + "  까지 신청");
 		
 
+		
+		
+		/* 2차 구현 예정........... */
 		function viewPlus() {
 
 			if (document.getElementById("plus").style.display == 'none') {
@@ -245,8 +244,9 @@ section a:hover {
 				document.getElementById("plusDiv").style.display = "none";
 				document.getElementById("plus").style.display = 'none';
 				document.getElementById("pulsButton").value = "🐵";
-			}
-		});
+				}
+			}						
+		);
 		
 		
 	</script>

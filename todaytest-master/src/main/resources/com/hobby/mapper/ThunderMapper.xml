@@ -7,12 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hobby.mapper.ThunderMapper">
 
-	<select id="getList" resultType="com.hobby.domain.ThunderVO">
-<![CDATA[ 
-select * from club where cbNum > 0
-]]>
-	</select>
-
 	<resultMap type="com.hobby.domain.ThunderDetailVO" id="ThunderDetailVO">
 		<result column="cbNum" property="cbNum" />
 		<result column="cbDate" property="cbDate" />
@@ -40,6 +34,14 @@ select * from club where cbNum > 0
 			resultMap="ThunderDetailVO"></collection>
 	</resultMap>
 	
+	
+	<select id="getList" resultMap="ThunderVO">
+<![CDATA[ 
+select * from club where cbNum > 0
+]]>
+	</select>
+	
+		
 	<select id="read" resultMap="ThunderVO">
 		select * from club c, thunderDetail td
 		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum}

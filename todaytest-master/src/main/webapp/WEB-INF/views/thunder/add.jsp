@@ -14,12 +14,10 @@
           <div>
                 <div>
                   모임명<br>
-                  <input type="text" name='cbName'>
+                  <!-- 30자 제한 -->
+                  <input type="text" name='cbName' size="50">
                 </div>
-                <div>
-                  모임소개<br>
-                  <input type="text" name='cbIntro'>                                    
-                </div>
+       
           </div>
 
 
@@ -37,7 +35,11 @@
           <div>
                 <div>
                   모임 날짜<br>
-                  <input type="datetime-local" name='thunderDetailVO.cbDate' id=cbDate>
+                  <!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
+					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
+					<!-- JS로 MIN과 MAX를 찍어주자 -->
+                  <input type="datetime-local" name='thunderDetailVO.cbDate' id=cbDate
+                  >
                 </div>
                 <div>
                   카테고리/분야<br>
@@ -46,11 +48,8 @@
 
                 <div>
                   모임<br>
-                  <select name="cbSubcat">
-                    <option value="농구" selected> 농구
-                      <option value="축구" > 축구
-                    <option value="야구" > 야구
-                    <option value="테니스"> 테니스
+                  <select name="cbSubcat" id="subcat">
+                    <option value="모임 선택" selected> 모임 선택                   
                   </select>
                 </div>
           </div>
@@ -59,11 +58,11 @@
           <div>
                 <div>
                   모임 인원<br>
-                  <input type="number" name='cbMbnum'>
+                  <input type="number" name='cbMbnum' min="1" max="1000000">
                 </div>
               
                 <div>
-                  모임 신청기간<br>
+                  모임 마감기간<br>
                 <input type="datetime-local" name='thunderDetailVO.cbAppPeriod' id=cbAppPeriod>
                 </div>
 
@@ -79,12 +78,15 @@
                   지역 <br>
                   <select name="cbCity" id="city">
                   <option value="지역 선택" >지역 선택</option>                  
+                  <option value="서울특별시" >서울특별시</option>                  
+                  <option value="경기도" >경기도</option>                  
                   </select>
                 </div>
                 <div>
                   세부지역<br>
                   <select name="cbDistrict" id="district">
-                  <option value="세부지역 선택">세부지역 선택</option> </select>
+                  <option value="세부지역 선택">세부지역 선택</option> 
+                  </select>
                 </div>
           </div>
 
@@ -96,9 +98,16 @@
 
                 <div>
                   모임 준비물<br>
-                  <input type="text"  name='thunderDetailVO.cbSupplies' id=cbSupplies>
+                  <input type="text"  name='thunderDetailVO.cbSupplies' id=cbSupplies size="50">
                 </div>
           </div>
+          
+                   <div>
+                  모임소개<br>
+                  <!-- 300자 제한 -->
+                  <textarea  name='cbIntro' cols="100" rows="7" maxlength="300"></textarea>                                 
+                </div>
+                
           <div style="margin-left: 470px">
                   <button type="submit" >번개만들기</button>     
                 <button type="reset" onclick="alert('리셋되었습니다.')">
@@ -106,10 +115,11 @@
 		  </div>
 	
                 </form>
-                <!-- 랜더링을 하는중! -->
+                
                                 
     </section>
-    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>    
+    
     <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
     <script type="text/javascript" src="/resources/js/thunderAdd.js"></script>
 
