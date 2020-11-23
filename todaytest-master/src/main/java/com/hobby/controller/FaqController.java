@@ -41,11 +41,10 @@ public class FaqController {
 		CustomUser customUser = (CustomUser)auth.getPrincipal();
 		UserVO userVO = customUser.getUser();
 		
-		log.info("##/add 회원번호 "+ userVO.getUsrNum());
+		log.info("##/add 회원번호 \n\\n\\n"+ userVO.getUsrNum());
 		
 		model.addAttribute("usrName",userVO.getUsrName());
 		model.addAttribute("usrNum",userVO.getUsrNum());
-		
 		
 	}
 	

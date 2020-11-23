@@ -78,6 +78,11 @@ input[type=submit]{
 	/* background:pink; */
 	margin-top:50px;
 }
+.regm a{
+	list-style:none;
+	color:#000;
+	text-decoration:none;
+}
 .regm p{
 	text-align:right
 }
@@ -105,4 +110,11 @@ input[type=submit]{
     margin-left:20px;
     margin-top:20px;
     float:left;
+}
+
+#sub>ul>li>a{
+	list-style:none;
+	color:#000;
+	text-decoration:none;
+	
 }

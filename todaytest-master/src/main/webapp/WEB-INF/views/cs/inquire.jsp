@@ -22,10 +22,10 @@
             <input type="text" name='qsName' class="name" value="${usrName}" readonly>
 
             <label>연락처 :</label>
-            <input type="text" name='qsPhone' class="phone">
+            <input type="text" name='qsPhone' class="phone" placeholder="- 뺴고 입력해주세">
             <br>
             <label>이메일 : </label>
-            <input type="email" name='qsEmail' class="mgtop">
+            <input type="email" name='qsEmail' class="mgtop" id="email">
             <span class="spec">*답변받을 이메일 주소를 입력해주세요.</span>
             <br>
             
@@ -47,13 +47,10 @@
 
 <script>
 function inputCheck(){
-	var phoneNumber = document.inquire.qsPhone;
-	var email = document.inquire.qsEmail;
-	var title = document.inquire.qsTitle;
-	var content = document.inquire.qsContent;
-	
-	//핸드폰 번호 제한 
-	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	let phoneNumber = document.inquire.qsPhone;
+	let mail = document.inquire.qsEmail;
+	let title = document.inquire.qsTitle;
+	let content = document.inquire.qsContent;
 	
 	
 	if(!phoneNumber.value){
@@ -61,14 +58,16 @@ function inputCheck(){
 		return false;
 	}
 	
+	//핸드폰 번호 제한 
+	let phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	
 	if(phonePattern.test(phoneNumber.value) == false){
-    	alert("핸드폰 번호 : 01012341234");
+    	alert(" - 빼고 입력주세요. ex: 01012341234");
     	return false;
-    	
     }
 	
-	if(!email.value){
-		alert("이메일을 입력해주세요.");
+	if(!mailCheck.testvalue){
+		alert("이메일을 입력해주세요.....");
 		return false;
 	}
 	
@@ -82,6 +81,8 @@ function inputCheck(){
 		alert("내용을 30자이내로 입력해주세요.");
 		return false;
 	}
+	
+	
 	
 }
 </script>

@@ -16,7 +16,7 @@
 <p>FAQ</p>
 
 	<c:forEach items="${faqContent}" var="faq">
-	<script>console.log(faq)</script>
+	
 	<button class="collapsible">
 		<span class="cleft"><c:out value="${faq.faqNum}" /></span>
 		<c:out value="${faq.faqTitle}" />

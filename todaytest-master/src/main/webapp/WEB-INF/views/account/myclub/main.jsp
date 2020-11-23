@@ -59,7 +59,7 @@
 <div class ="info">
 <div class ="clubInfoSmall">
 <p>개설한 모임</p><br>
-<c:forEach var="clubVO" items="${clubVO}">
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
    <form name="manageClub" method="get">
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
@@ -70,6 +70,23 @@
    <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
    </form>
 </c:forEach>
+
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="2">
+<c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
+<div class = "hideList" style ="display: none">
+<c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
+   <form name="manageClub" method="get">
+   <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
+   <input type="hidden" name="cbName" value="<c:out value="${clubVO.cbName}"/>">
+   <input type="hidden" name="cbLeaderNum" value="<c:out value="${clubVO.cbLeaderNum}"/>">
+   <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
+   <button name="modifyClub" type="submit">수정</button> 
+   <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
+   </form>
+<c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
+</div>
+</c:forEach>
+
 </div>
 
 </div>
@@ -78,6 +95,21 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$(".moreList").click(function(){
+		$(".hideList").show();
+		$(".moreList").hide();
+		$(".closeList").show();
+	})
+	
+	$(".closeList").click(function(){
+		$(".hideList").hide();
+		$(".moreList").show();
+		$(".closeList").hide();
+	})
+	
+	
+	
 	let number = '<c:out value="${clubVO[0].cbLeaderNum }"/>'
 	let clubInfoSmall = $(".clubInfoSmall")
 	if(number == ""){
