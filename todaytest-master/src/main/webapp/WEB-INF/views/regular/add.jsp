@@ -46,7 +46,7 @@
 		<textarea name="cbDetailContent" rows="10" cols="100"
 			placeholder="30자이내로 작성하세요"></textarea><br> 
 		<input type="file" name="cbFile"> 
-		<input type="submit" value="개설하기">
+		<button type="submit" onclick="alert('모임이 개설되었습니다.')">개설하기</button>
 	</form>
 
 <script type="text/javascript">
