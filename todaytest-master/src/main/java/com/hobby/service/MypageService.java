@@ -34,9 +34,12 @@ public interface MypageService {
 	public int insertUserHistory(UserVO userVO);
 
 	public boolean isPwdValid(String password);
-	public boolean findPwdInDB(String password,String password2);
+	public boolean comparePwdDB(String password,String password2);
 	
-	public int leaveSite(UserVO userVO);
+	public int updateUserAuth(UserVO userVO);
+	
+	public int updateUserTotalInfo(UserVO userVO);
+	public int leaveUser(UserVO userVO);
 
 
 }
