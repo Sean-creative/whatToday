@@ -13,13 +13,7 @@
 
 	<form method="post" action="/login"
 		style="max-width: 500px; margin: auto">
-		<h2>LOG IN</h2>
-		<h2>
-			<c:out value="${error }" />
-		</h2>
-		<h2>
-			<c:out value="${logout }" />
-		</h2>
+		<h2>회원 로그인</h2>
 		<div class="input-container">
 			<label>이메일(아이디) </label>
 			<!-- type="email" test하고  바꾸기 -->
@@ -30,6 +24,11 @@
 		<div class="input-container">
 			<label>비밀번호 </label> <input class="input-field" type="password"
 				placeholder="Password" name="password">
+		</div>
+		
+		<div>
+			<!-- security-context.xml에서 태그security:remember-me로 쿠키 생성  // 데이터 베이스 이용 -->
+			<input type='checkbox' name='remember-me'>로그인 유지 
 		</div>
 	
 		<a href="/login/register">회원가입</a>

@@ -31,9 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		log.warn("mapperuser: " + user);
 		
-		
-		
 		if(user == null) {
+			// DB에서 아이디로 찾은 유저가 없으면 null을 반환한다.
 			return null;
 		}else {
 			CustomUser customUser = new CustomUser(user);

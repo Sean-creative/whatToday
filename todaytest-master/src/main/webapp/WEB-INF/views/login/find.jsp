@@ -44,14 +44,14 @@
 
 <script type="text/javascript">
 function checkId(){
-	name = $("#name").val();
-	phone = $("#phone").val();
+	let name = $("#name").val();
+	let phone = $("#phone").val();
 	
 	
 	// 이름 : 한글만 2~4글자
-	var namePattern = /^[가-힣]{2,4}$/;
+	const namePattern = /^[가-힣]{2,4}$/;
 	// 핸드폰 번호 : 010-1234-1234
-	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	const phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 	
 	if(!name){
         alert("이름을 입력하세요.");
@@ -74,7 +74,7 @@ function checkId(){
 	}
 	
 	
-	var send = {"name" : name , "phone": phone};
+	let send = {"name" : name , "phone": phone};
 	
 	$.ajax({
 	    url: 'find_id',

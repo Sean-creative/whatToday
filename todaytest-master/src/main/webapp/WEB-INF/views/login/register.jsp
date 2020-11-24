@@ -18,7 +18,7 @@
 <body>
 	<form name ="register" method="post" action="/login/registerAction" onsubmit="return inputCheck()"
 		style="max-width: 500px; margin: auto" >
-        <h2>Register Form</h2>
+        <h2>회원가입</h2>
         
 		<div class="input-container">
 			<label>이메일(아이디) </label>
@@ -67,9 +67,10 @@
 				placeholder="Birthday" name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
 		</div>
 		
-		<p>선택사항</p>
+		<p>관심정보</p>
+		<p>관심정보는 선택사항이며 선택하지 않아도 회원가입이 가능합니다.</p>
 		<div class="input-container">
-			<label>지역1 </label> <select class="input-field" name="usrCity1"
+			<label>관심 지역1 </label> <select class="input-field" name="usrCity1"
 				id="city1">
 				<option value="시/도 선택">시/도 선택</option>
 				<option value="서울특별시">서울특별시</option>
@@ -80,7 +81,7 @@
 		</div>
 
 		<div class="input-container">
-			<label>지역2 </label> <select class="input-field" name="usrCity2"
+			<label>관심 지역2 </label> <select class="input-field" name="usrCity2"
 				id="city2">
 				<option value="시/도 선택">시/도 선택</option>
 				<option value="서울특별시">서울특별시</option>
@@ -135,7 +136,7 @@
 		// 이메일 유효성 검사 
 		let emailInput = document.getElementById("email");
 		let emailResult = document.getElementById("emailResult")
-		let emailPattern = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+		const emailPattern = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 	
 		function emailCheck() {
 			if (emailInput.value.length === 0) {
@@ -153,7 +154,7 @@
 		// 비밀번호 유효성 검사
 		let pwdInput = document.getElementById("pwd");
 		let pwdResult = document.getElementById("pwdResult");
-		let pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
 
 		function pwdCheck() {
 			if (pwdInput.value.length === 0) {
@@ -189,7 +190,7 @@
 		// 이름 유효성 검사.
 		let nameInput = document.getElementById("name");
 		let nameResult = document.getElementById("nameResult")
-		let namePattern = /^[가-힣]{2,4}$/;
+		const namePattern = /^[가-힣]{2,4}$/;
 
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
@@ -208,7 +209,7 @@
 		let phoneInput = document.getElementById("phone");
 		let phoneResult = document.getElementById("phoneResult")
 		//01012341234
-		let phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+		const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
 		function phoneCheck() {
 			if (phoneInput.value.length === 0) {

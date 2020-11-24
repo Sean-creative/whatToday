@@ -39,4 +39,24 @@
 	<context:component-scan base-package="com.hobby.service" />
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+  <!-- Gmail -->
+  
+  <!-- gmail -->
+    <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="dnwntjs1531@gmail.com" />
+        <property name="password" value="hzkkbghkrliwndnq" />
+       
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+               	<prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+
 </beans>
