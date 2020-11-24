@@ -254,7 +254,7 @@ public class MypageController {
 		if(service.isPwdValid(password) && 
 				service.comparePwdDB(password, userVO.getUsrPwd())) {
 			userVO.setUsrState("사이트탈퇴");
-			service.leaveUser(userVO);
+			int cnt = service.leaveUser(userVO);
 			url = "redirect:/login/logout";
 		}else {
 			rtts.addFlashAttribute("msg","비밀번호가 맞지 않아요");
