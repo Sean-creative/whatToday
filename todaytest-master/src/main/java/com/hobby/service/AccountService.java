@@ -14,4 +14,6 @@ public interface AccountService {
 	public String findUserPwd(String us_id);
 
 	public String phoneDuplicateCheck(String us_phone);
+	
+	public boolean sendPassword(String email, String pwd);
 }

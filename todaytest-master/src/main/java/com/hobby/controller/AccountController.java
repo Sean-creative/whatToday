@@ -1,9 +1,7 @@
 package com.hobby.controller;
 import java.util.Map;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hobby.domain.UserVO;
-import com.hobby.security.domain.CustomUser;
 import com.hobby.service.AccountService;
 
 import lombok.AllArgsConstructor;
@@ -93,14 +90,29 @@ public class AccountController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/find_pwd", produces="text/plane")
-	public String find_pwd(@RequestBody String paramData) {
+	public String find_pwd(@RequestBody String email) {
+		String result = "";
 		// 비밀번호 찾기
 		log.info("##/find_pwd");
-
-	    String pwd = service.findUserPwd(paramData);
-		log.info("##find pwd:  " + pwd);
-
-		return pwd == null ? "-1" : pwd;
+		
+		// 비밀번호를 찾는다.
+	    String pwd = service.findUserPwd(email);
+	    log.info("##find pwd:  " + pwd);
+	    // 1. 비밀번호가 있으면
+	    if(pwd!= null) {
+	    	// 1-1. 비밀번호를 입력한 사용자 이메일로 보낸다.
+	    	if(service.sendPassword(email, pwd)) {
+	    		result = "1";
+	    	}// 1-2. 메일 보내기에 실패면 "0"을 반환한다.
+	    	else {
+	    		result = "0";
+	    	}
+	    // 2. 비밀번호가 없으면  "-1"을 반환한다.
+	    }else {
+	    	result = "-1";
+	    }
+	    
+		return result;
 	}
 	
 
