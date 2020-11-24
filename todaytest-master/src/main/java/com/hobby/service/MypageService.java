@@ -37,7 +37,6 @@ public interface MypageService {
 	public boolean findPwdInDB(String password,String password2);
 	
 	public int leaveSite(UserVO userVO);
-	
-	public void updateUserInfoAndName(UserVO userVO);
+
 
 }
