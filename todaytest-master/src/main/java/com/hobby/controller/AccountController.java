@@ -1,4 +1,8 @@
 package com.hobby.controller;
+/**
+ * 회원가입 / 로그인 / 아이디/비밀번호 찾기 페이지 관리
+ * @author jiyeong
+ */
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -90,29 +94,14 @@ public class AccountController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/find_pwd", produces="text/plane")
-	public String find_pwd(@RequestBody String email) {
-		String result = "";
+	public String find_pwd(@RequestBody String paramData) {
 		// 비밀번호 찾기
 		log.info("##/find_pwd");
-		
-		// 비밀번호를 찾는다.
-	    String pwd = service.findUserPwd(email);
-	    log.info("##find pwd:  " + pwd);
-	    // 1. 비밀번호가 있으면
-	    if(pwd!= null) {
-	    	// 1-1. 비밀번호를 입력한 사용자 이메일로 보낸다.
-	    	if(service.sendPassword(email, pwd)) {
-	    		result = "1";
-	    	}// 1-2. 메일 보내기에 실패면 "0"을 반환한다.
-	    	else {
-	    		result = "0";
-	    	}
-	    // 2. 비밀번호가 없으면  "-1"을 반환한다.
-	    }else {
-	    	result = "-1";
-	    }
-	    
-		return result;
+
+	    String pwd = service.findUserPwd(paramData);
+		log.info("##find pwd:  " + pwd);
+
+		return pwd == null ? "-1" : pwd;
 	}
 	
 
