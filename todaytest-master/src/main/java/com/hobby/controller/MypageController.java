@@ -68,9 +68,10 @@ public class MypageController {
 		model.addAttribute("userVO",service.getUser(customUser.getUser().getUsrId()));
 		
 		//2. 회원정보를 통해서 현재가입모임/가입대기모임/이전에가입한모임을 가져오고 view에 쏴줌
-		model.addAttribute("myClub",service.getMyClubList(usrNum));
-		model.addAttribute("waitClub",service.getWaitClubList(usrNum));
-		model.addAttribute("prevClub",service.getPrevClubList(usrNum));
+		model.addAttribute("clubVO",service.getMyClubList(usrNum));
+		//여기는 모임가입이 구현되면 테스트할것
+//		model.addAttribute("waitClub",service.getWaitClubList(usrNum));
+//		model.addAttribute("prevClub",service.getPrevClubList(usrNum));
 		
 		return url;
 	} 
@@ -91,6 +92,7 @@ public class MypageController {
 	}
 	
 	//비밀번호 유효성 검사
+	//if else 들을 삼항연산자로 변환??
 	@PostMapping("/authAction")
 	public String authAction(Authentication auth, @RequestParam("password")String password, Model model,RedirectAttributes rtts) {
 		String url = "";
@@ -108,7 +110,7 @@ public class MypageController {
 		
 		//2. 비밀번호 유효성검사, DB와 비교해서 맞는지 Check하고 수정페이지로 보냄
 		if(password != null && service.isPwdValid(password) && 
-				service.findPwdInDB(password, userVO.getUsrPwd())) {
+				service.comparePwdDB(password, userVO.getUsrPwd())) {
 			
 			url = "/account/edit";
 		}else{
@@ -144,9 +146,9 @@ public class MypageController {
 	}
 	
 	//edit에서 전해준것들 유효성 검사, 업데이트
-	//주말중에 들어오는 정보들 유효성검사를 추가할것
+	//if else 들을 삼항연산자로 변환??
 	@PostMapping("/editAction")
-	public String editAction(Authentication auth, Model model,  UserVO userVO) {
+	public String editAction(Authentication auth, Model model,  UserVO userVO,RedirectAttributes rtts) {
 		
 		String url = "redirect:/account/main";
 		//0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
@@ -155,15 +157,19 @@ public class MypageController {
 		if(auth == null) {
 			url = "redirect:/login/login";
 		}
-		
+		//일단 수정되면서 null이 아니어야하는것은 phone밖에없으니까 null check
 		if(userVO.getUsrPhone() == null) {
+			rtts.addFlashAttribute("msg","핸드폰 번호가 입력되지 않았어요!");
+			url = "redirect:/account/auth_edit/";
 			
-			url = "redirect:/auth_edit/";
 		}
 
 		//1. edit에서 UserVO의 정보들을 보낸것을 통하여 업데이트가 필요한 테이블들을 업데이트
-		service.updateUserInfo(userVO);
-		
+		if(service.updateUserTotalInfo(userVO) != 2) {
+			rtts.addFlashAttribute("msg","회원정보가 업데이트 되지 않았습니다!");
+			url = "redirect:/account/auth_edit/";
+		}else
+			rtts.addFlashAttribute("msg","회원정보가 업데이트 되었습니다.");
 		return url;
 		}
 	
@@ -181,6 +187,7 @@ public class MypageController {
 	}
 	
 	//비밀번호 변경 유효성검사
+	//if else 들을 삼항연산자로 변환??
 	@PostMapping("/passwordAction")
 	public String passwordAction(Authentication auth,
 			@RequestParam("newPassword") String newPassword,
@@ -202,10 +209,10 @@ public class MypageController {
 		//2-1 맞으면 유저정보에 비밀번호를 업데이트하고 마이페이지 메인으로 보냄
 		if(service.isPwdValid(newPassword) &&
 				service.isPwdValid(currentPassword)
-				&& service.findPwdInDB(currentPassword, userVO.getUsrPwd())) {
+				&& service.comparePwdDB(currentPassword, userVO.getUsrPwd())) {
 			userVO.setUsrPwd(newPassword);
 			service.updateUserInfo(userVO);
-			
+			rtts.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
 			url = "redirect:/account/main";
 		}else {
 		//2-2 만일 유효성검사에 실패하면 password변경페이지로 보내버림
@@ -229,6 +236,7 @@ public class MypageController {
 	}
 	
 	//탈퇴하면 유저 상태를 사이트탈퇴로 바꾸고 main이나 login 페이지로 이동하게
+	//if else 들을 삼항연산자로 변환??
 	@GetMapping("/leaveAction")
 	public String leaveAction(Authentication auth, @RequestParam("password")String password, 
 			 Model model,RedirectAttributes rtts) {
@@ -244,11 +252,9 @@ public class MypageController {
 		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		
 		if(service.isPwdValid(password) && 
-				service.findPwdInDB(password, userVO.getUsrPwd())) {
+				service.comparePwdDB(password, userVO.getUsrPwd())) {
 			userVO.setUsrState("사이트탈퇴");
-			service.updateUserInfo(userVO);
-			service.insertUserHistory(userVO);
-			service.leaveSite(userVO);
+			service.leaveUser(userVO);
 			url = "redirect:/login/logout";
 		}else {
 			rtts.addFlashAttribute("msg","비밀번호가 맞지 않아요");
@@ -276,6 +282,8 @@ public class MypageController {
 	
 	}
 	
+	
+	
 	//ajax로 내가 만든 모임을 가져옴
 	@RequestMapping(value = "/myclub/createclub/{cbLeaderNum}",
 			produces = { MediaType.TEXT_XML_VALUE,
@@ -288,6 +296,9 @@ public class MypageController {
 		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()),HttpStatus.OK);
 	}
 	
+	
+	//굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
+	//굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
 	
 	//ajax로 내가 가입한 클럽 리스트 db 가져옴
 	@RequestMapping(value = "/myclub/joinclub/{cbNum}",

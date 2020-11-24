@@ -218,6 +218,10 @@ $(document).ready(function() {
 	 
 	
 	
+	/*ajax 안쓰고 하기. 나중에 바꾸기*/
+	/*ajax 안쓰고 하기. 나중에 바꾸기*/
+	/*ajax 안쓰고 하기. 나중에 바꾸기*/
+	/*ajax 안쓰고 하기. 나중에 바꾸기*/
 	
 	let usrCat1 = $("select[name=usrCategory1]");
 	let usrCat2 = $("select[name=usrCategory2]");

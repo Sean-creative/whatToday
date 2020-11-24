@@ -79,7 +79,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 	
 	@Override
-	public boolean findPwdInDB(String password, String password2) {
+	public boolean comparePwdDB(String password, String password2) {
 		// TODO Auto-generated method stub
 		return password.equals(password2);
 	}
@@ -127,9 +127,9 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int leaveSite(UserVO userVO) {
+	public int updateUserAuth(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.leaveSite(userVO);
+		return mapper.updateUserAuth(userVO);
 	}
 
 	@Override
@@ -149,6 +149,29 @@ public class MypageServiceImpl implements MypageService {
 	public List<RegionVO> getDistrictList(String rgName) {
 		// TODO Auto-generated method stub
 		return mapper.getDistrictList(rgName);
+	}
+
+	@Override
+	@Transactional
+	public int updateUserTotalInfo(UserVO userVO) {
+		// TODO Auto-generated method stub
+		int cnt = 0;
+		
+		cnt += mapper.updateUserInfo(userVO);
+		cnt += mapper.updateUserDetail(userVO);
+		
+		return cnt;
+	}
+
+	@Override
+	@Transactional
+	public int leaveUser(UserVO userVO) {
+		// TODO Auto-generated method stub
+		int cnt = 0;
+		cnt += mapper.updateUserInfo(userVO);
+		cnt += mapper.insertUserHistory(userVO);
+		cnt += mapper.updateUserAuth(userVO);
+		return cnt;
 	}
 
 
