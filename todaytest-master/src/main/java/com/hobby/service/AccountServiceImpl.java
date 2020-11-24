@@ -30,14 +30,25 @@ public class AccountServiceImpl implements AccountService{
 
 	@Transactional
 	@Override
-	public void register(UserVO user) {
-		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 처리 
+	public int register(UserVO user) {
+		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
+		// 테이블에 insert가 잘되면 행(1)을 반환
+		// 5개 테이블에 잘 들어갔는 지 확인 // 질문: 트랜잭션처리 했는데 또 확인 해야 하나?
+		// mapper.inser(user);
+		int resultCount = 0;
 		log.info("##Service : register");
-		mapper.insert(user);
-		mapper.insertUserInfo(user);
-		mapper.insertUserTerms(user);
-		mapper.insertUserHistory(user);
-		mapper.insertAuth();
+		if(mapper.insert(user) == 1) {
+			resultCount++;
+		}if(mapper.insertUserInfo(user) == 1){
+			resultCount++;
+		}if(mapper.insertUserTerms(user) == 1){
+			resultCount++;
+		}if(mapper.insertUserHistory(user) == 1){
+			resultCount++;
+		}if(mapper.insertAuth() == 1){
+			resultCount++;
+		}
+		return resultCount;
 	}
 
 	@Override

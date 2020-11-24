@@ -5,7 +5,7 @@ package com.hobby.service;
 import com.hobby.domain.UserVO;
 
 public interface AccountService {
-	public void register(UserVO user);
+	public int register(UserVO user);
 	
 	public String idDuplicateCheck(String us_id);
 

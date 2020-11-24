@@ -13,7 +13,7 @@
 
 	<form method="post" action="/login"
 		style="max-width: 500px; margin: auto">
-		<h2>회원 로그인</h2>
+		<h2>회원 로그인 </h2>
 		<div class="input-container">
 			<label>이메일(아이디) </label>
 			<!-- type="email" test하고  바꾸기 -->
@@ -37,6 +37,11 @@
 		<button type="submit" class="btn">LOG IN</button>
 	</form>
 
+<script type="text/javascript">
+	if("${registerSuccess }" != ""){
+		alert("회원가입 성공! ${registerSuccess}님 반갑습니다.");
+	}
+</script>
  
 
 </body>

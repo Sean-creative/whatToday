@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.UserVO;
 import com.hobby.service.AccountService;
@@ -37,12 +38,21 @@ public class AccountController {
 	}
 	
 	@PostMapping("/registerAction")
-	public String register(UserVO user) {
-		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
-		log.info("##/registerAction: " + user);
-		service.register(user);
+	public String registerAction(UserVO user, RedirectAttributes rtts) {
 		
-		return "redirect:/login/login";
+		log.info("##/registerAction: " + user);
+		
+		// 회원가입 정보 - 5개 테이블에 입력 됨.
+		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
+		if(service.register(user) == 5) {
+			// alert로 회원가입 성공 여부 알림
+			rtts.addFlashAttribute("registerSuccess", user.getUsrName());
+			return "redirect:/login/login";
+		// 회원가입이 안되면 다시 회원가입 페이지로 이동
+		}else {
+			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+			return "redirect:/login/register";
+		}
 	}
 	
 	@ResponseBody
