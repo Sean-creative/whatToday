@@ -35,7 +35,7 @@
 			</table>
 			</div> 
 		
-		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
+<%-- 		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
 		
 			<div class='pullright'>
 				<ul class="pagination">
@@ -53,9 +53,9 @@
 						</c:if>						
 					</ul>
 			</div>
-			<!--  end Pagination -->
+			<!--  end Pagination --> --%>
 		</div>
-			<form id='actionForm' action="/regular/board" method='get'>
+			<%-- <form id='actionForm' action="/regular/board" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 			</form>		
@@ -64,9 +64,9 @@
 			
 				$(document).ready(function() {
 
-					var result = '<c:out value="${result}"/>';
+					let result = '<c:out value="${result}"/>';
 					
-						var actionForm = $("#actionForm");
+						let actionForm = $("#actionForm");
 						
 						$(".paginate_button a").on("click", function(e) {
 							
@@ -76,13 +76,13 @@
 							
 							actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 							actionForm.submit();
-						});
+						}); --%>
 						
-						/* $("#createBtn").on("click", function() {
+						<!-- $("#createBtn").on("click", function() {
 							
 							self.location = "/regular/boardadd";
-						});	 */					
+						});				
 				});
-</script>
+</script> -->
 
 <%@include file="../includes/footer.jsp" %>
