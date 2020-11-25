@@ -27,6 +27,12 @@ public class ThunderServiceImpl implements ThunderService {
 		return mapper.getList();		
 	}
 	
+	
+	@Override
+	public List<ThunderVO> getList(Criteria cri) {
+		log.info("get List with criteria: " + cri );
+		return mapper.getListWithPaging(cri);
+	}
 
 	@Override
 	public ThunderVO get(long cbNum) {
@@ -41,12 +47,6 @@ public class ThunderServiceImpl implements ThunderService {
 		mapper.insert(clubVO);
 	}
 	
-
-	@Override
-	public List<ThunderVO> getList(Criteria cri) {
-		log.info("get List with criteria: " + cri );
-		return mapper.getListWithPaging(cri);
-	}
 	
 	
 	@Override

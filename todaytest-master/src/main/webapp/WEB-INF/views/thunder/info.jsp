@@ -107,7 +107,9 @@ section a:hover {
 				</div>
 			</div>
 
-<div style="float:right"> 	
+<div style="float:right"> 
+<!-- 지금 로그인된 유저의 정보와 개설자의 번호가 일치하면(=같은사람 이라면) modify 버튼을 보여준다.
+사용자가 url에 검색해서 들어올수 도 있으니 컨트롤러 - modify에서도 막을 것! --> 	
 	<c:if test="${usrNum eq clubVO.cbLeaderNum}">
 		<button  data-oper='modify' class="btn btn-default">Modify</button>
 	</c:if>
