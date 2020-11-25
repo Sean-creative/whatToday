@@ -46,7 +46,7 @@
 function checkId(){
 	let name = $("#name").val();
 	let phone = $("#phone").val();
-	
+
 	
 	// 이름 : 한글만 2~4글자
 	const namePattern = /^[가-힣]{2,4}$/;
@@ -116,8 +116,10 @@ function checkPwd(){
 	    success: function(data){
 	         if(data==-1){
 	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 찾을 수 없습니다.</p>";
+	         }else if(data==0){
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 받으실 메일 주소를 다시 입력해주세요</p>";
 	         }else{
-	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호는 " + data + "입니다.</p>";
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 메일로 발송하였습니다.</p>";
 	         }
 	    },
 	    error: function (){        

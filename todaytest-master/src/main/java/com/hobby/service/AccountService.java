@@ -5,7 +5,7 @@ package com.hobby.service;
 import com.hobby.domain.UserVO;
 
 public interface AccountService {
-	public void register(UserVO user);
+	public int register(UserVO user);
 	
 	public String idDuplicateCheck(String us_id);
 
@@ -14,4 +14,6 @@ public interface AccountService {
 	public String findUserPwd(String us_id);
 
 	public String phoneDuplicateCheck(String us_phone);
+	
+	public boolean sendPassword(String email, String pwd);
 }

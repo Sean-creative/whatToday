@@ -133,6 +133,10 @@
 
 	<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 	<script>
+		if("${registerFailMsg }" != ""){
+			alert("${registerFailMsg}");
+		}
+	
 		// 이메일 유효성 검사 
 		let emailInput = document.getElementById("email");
 		let emailResult = document.getElementById("emailResult")
