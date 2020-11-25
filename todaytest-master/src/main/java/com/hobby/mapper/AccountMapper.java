@@ -8,15 +8,15 @@ import com.hobby.domain.UserVO;
 
 public interface AccountMapper {
 	
-	public void insert(UserVO user);
+	public int insert(UserVO user);
 	
-	public void insertUserInfo(UserVO user);
+	public int insertUserInfo(UserVO user);
 	
-	public void insertUserTerms(UserVO user);
+	public int insertUserTerms(UserVO user);
 	
-	public void insertUserHistory(UserVO user);
+	public int insertUserHistory(UserVO user);
 	
-	public void insertAuth();
+	public int insertAuth();
 	
 	public UserVO read(String usrId);
 	

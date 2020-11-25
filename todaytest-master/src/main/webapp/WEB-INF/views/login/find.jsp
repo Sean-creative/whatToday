@@ -44,14 +44,14 @@
 
 <script type="text/javascript">
 function checkId(){
-	name = $("#name").val();
-	phone = $("#phone").val();
-	
+	let name = $("#name").val();
+	let phone = $("#phone").val();
+
 	
 	// 이름 : 한글만 2~4글자
-	var namePattern = /^[가-힣]{2,4}$/;
+	const namePattern = /^[가-힣]{2,4}$/;
 	// 핸드폰 번호 : 010-1234-1234
-	var phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+	const phonePattern = /^\d{3}\d{3,4}\d{4}$/;
 	
 	if(!name){
         alert("이름을 입력하세요.");
@@ -74,7 +74,7 @@ function checkId(){
 	}
 	
 	
-	var send = {"name" : name , "phone": phone};
+	let send = {"name" : name , "phone": phone};
 	
 	$.ajax({
 	    url: 'find_id',
@@ -116,8 +116,10 @@ function checkPwd(){
 	    success: function(data){
 	         if(data==-1){
 	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 찾을 수 없습니다.</p>";
+	         }else if(data==0){
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 받으실 메일 주소를 다시 입력해주세요</p>";
 	         }else{
-	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호는 " + data + "입니다.</p>";
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 메일로 발송하였습니다.</p>";
 	         }
 	    },
 	    error: function (){        
