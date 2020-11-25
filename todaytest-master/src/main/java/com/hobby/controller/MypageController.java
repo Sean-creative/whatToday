@@ -1,31 +1,23 @@
 package com.hobby.controller;
 
-import java.security.Principal;
+
 /**
  * 작성자 : 국민성
  */
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.request.RequestAttributes;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hobby.domain.CategoryVO;
-import com.hobby.domain.ClubVO;
-import com.hobby.domain.RegionVO;
+
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.MypageService;
@@ -36,7 +28,6 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/mypage/*")
-@SessionAttributes("userVO")
 @AllArgsConstructor
 @Log4j
 public class MypageController {
@@ -126,9 +117,9 @@ public class MypageController {
 			// 2-1. 비밀번호 유효성검사, 가져온 유저정보와 비교해서 맞는지 Check하고 수정페이지로 보냄
 			if (password != null && service.isPwdValid(password)
 					&& service.comparePwdDB(password, userVO.getUsrPwd())) {
-
+				model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 				url = "/mypage/edit";
-				// 2-2. 비밀번호 유효성 검사를 통과히자 못하였을때
+				// 2-2. 비밀번호 유효성 검사를 통과하지 못하였을때
 			} else {
 				rtts.addFlashAttribute("msg", "비밀번호가 맞지 않아요");
 				url = "redirect:/mypage/auth_edit";
@@ -145,20 +136,9 @@ public class MypageController {
 		String url = "/mypage/edit";
 
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
-		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
 		log.info("##/edit");
 		if (auth == null) {
 			url = "redirect:/login/login";
-		} else {
-
-			// 1. 유저 정보를 가져옴
-			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-			System.out.println(userVO);
-
-			// 2. 유저 정보를 모델에 넣어서 준다
-			model.addAttribute("userVO", userVO);
-			
 		}
 		return url;
 	}
