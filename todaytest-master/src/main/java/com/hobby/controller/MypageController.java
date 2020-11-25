@@ -87,7 +87,7 @@ public class MypageController {
 	}
 
 	// 비밀번호 유효성 검사
-	// if else들을 어떻게 줄일지 생각해보기
+	// if else들을 어떻게 줄일지 생각해보기???
 	@PostMapping("/authAction")
 	public String authAction(Authentication auth, @RequestParam("password") String password, Model model,
 			RedirectAttributes rtts) {
@@ -138,7 +138,6 @@ public class MypageController {
 
 			// 2. 회원정보를 담아서 줌
 			model.addAttribute("userVO", userVO);
-			model.addAttribute("city",service.getCityList());
 			
 		}
 		return url;
@@ -289,63 +288,63 @@ public class MypageController {
 
 	}
 
-	
-	
-	
-	
-	
-	
-	// ajax로 내가 만든 모임을 가져옴
-	@RequestMapping(value = "/myclub/createclub/{cbLeaderNum}", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ClubVO>> getMyCreateClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
-			Authentication auth) {
-		log.info("get...........: " + cbLeaderNum);
-		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()), HttpStatus.OK);
-	}
-
-	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
-	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
-
-	// ajax로 내가 가입한 클럽 리스트 db 가져옴
-	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
-		log.info("get...........: " + cbNum);
-		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
-	}
-
-	// ajax로 카테고리 db 가져옴
-	@RequestMapping(value = "/categorylist/{catClassificationCode}", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<CategoryVO>> getCategorylist(
-			@PathVariable("catClassificationCode") String catClassificationCode, Principal principal) {
-		log.info("get...........: " + catClassificationCode);
-
-		return new ResponseEntity<>(service.getCategoryList(catClassificationCode), HttpStatus.OK);
-	}
-
-	// ajax로 citylist 가져옴
-	@RequestMapping(value = "/citylist/", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<RegionVO>> getCitylist(Authentication auth) {
-		log.info("get...........: ");
-		CustomUser customUser = (CustomUser) auth.getPrincipal();
+////	// ajax로 내가 가입한 클럽 리스트 db 가져옴
+//	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
+//		log.info("get...........: " + cbNum);
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
 //		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getCityList(), HttpStatus.OK);
-	}
-
-	// ajax로 districtlist 가져옴
-	@RequestMapping(value = "/districtlist/{rgName}", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<RegionVO>> getDistrictlist(@PathVariable("rgName") String rgName, Authentication auth) {
-		log.info("get...........: " + rgName);
-		CustomUser customUser = (CustomUser) auth.getPrincipal();
+//		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
+//	}
+//	
+	
+	
+	
+	
+	
+//	// ajax로 내가 만든 모임을 가져옴
+//	@RequestMapping(value = "/myclub/createclub/{cbLeaderNum}",` produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<List<ClubVO>> getMyCreateClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
+//			Authentication auth) {
+//		log.info("get...........: " + cbLeaderNum);
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
 //		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getDistrictList(rgName), HttpStatus.OK);
-	}
+//		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()), HttpStatus.OK);
+//	}
+//
+//	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
+//	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
+//
+//
+//	// ajax로 카테고리 db 가져옴
+//	@RequestMapping(value = "/categorylist/{catClassificationCode}", produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<List<CategoryVO>> getCategorylist(
+//			@PathVariable("catClassificationCode") String catClassificationCode, Principal principal) {
+//		log.info("get...........: " + catClassificationCode);
+//
+//		return new ResponseEntity<>(service.getCategoryList(catClassificationCode), HttpStatus.OK);
+//	}
+//
+//	// ajax로 citylist 가져옴
+//	@RequestMapping(value = "/citylist/", produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<List<RegionVO>> getCitylist(Authentication auth) {
+//		log.info("get...........: ");
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
+////		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+//		return new ResponseEntity<>(service.getCityList(), HttpStatus.OK);
+//	}
+//
+//	// ajax로 districtlist 가져옴
+//	@RequestMapping(value = "/districtlist/{rgName}", produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<List<RegionVO>> getDistrictlist(@PathVariable("rgName") String rgName, Authentication auth) {
+//		log.info("get...........: " + rgName);
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
+////		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+//		return new ResponseEntity<>(service.getDistrictList(rgName), HttpStatus.OK);
+//	}
 }

@@ -77,6 +77,7 @@
 
 <c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
     <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>
+    <input type="hidden" class="cb2" value ="${clubVO.cbType}">
     </li><br>
 </c:forEach>
 
@@ -146,29 +147,32 @@ $(document).ready(function() {
 		
 
 		/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
-		/*ajax 안쓰고 하기. 나중에 바꾸기*/
-		/*ajax 안쓰고 하기. 나중에 바꾸기*/
+		/*ajax 안쓰고 하는걸로 바꾸기*/
+
 		$('.cb').click(function(e)
-		{
+		{ 
 			let index = $(".cb").index(this);
 			let number = $(".cb").eq(index).val();
-			
+			let type = $(".cb").eq(index).children(".cb2").val();
+
 			console.log(index);
 			
 			console.log(number);
 			
+			console.log(type);
+			
 			var str = "";
-			var type= "";
-			clubService.getJoinClub({cbNum:number},function(list){
-				if(list.cbType == '정기'|| list.cbType == '정기모임'){
+			/*var type= "";
+			 clubService.getJoinClub({cbNum:number},function(club){
+				if(club.cbType == '정기'|| club.cbType == '정기모임'){
 					type = "regular"
 				}else{
 					type = "thunder";
-				}
-				console.log(list.cbType);
-				str += '<form action="/'+type+'/info" method="get">';
+				} 
+				console.log(club.cbType);*/
+				str += '<form name="joinClub" method="get">';
 				str += '<input type="hidden" name="cbNum" value="'+number+'">';
-				str += '<button>상세보기</button>';
+				str += '<button name="details">상세보기</button>';
 				str += '</form>';
 				str += '<button>탈퇴하기-아직구현X</button>'
 
@@ -199,12 +203,30 @@ $(document).ready(function() {
 					"position": "absolute"
 				}).show();
 
-			})
+			/* }) */
+			
+				$("button[name=details]").click(function(){
+		
+					let form = $("form[name=joinClub]");
+				
+
+					if(type == "번개모임"){
+						console.log("번개요");
+						url = "/thunder/info";
+					}else{
+						console.log("정기요");
+						url = "/regular/info";
+					}
+					form.attr("action",url);
+				});
 			
 			
 
 			
 		});
+		
+	
+		
 	
 });
 	
