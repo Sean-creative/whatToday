@@ -80,9 +80,9 @@
                		<div class="input-container">
 			<label>지역1 </label> <select name="usrCity1"
 				id="city1">
+
 			</select>
  			<select name="usrDistrict1" id="district1">
-				<option value="<c:out value="${userVO.usrDistrict1 }"/>">${userVO.usrDistrict1 }</option>
 				
 			</select>
 		</div>
@@ -92,10 +92,10 @@
 		
 			<label>지역2 </label> <select name="usrCity2"
 				id="city2">
+
 				</select>
 			<select name="usrDistrict2" id="district2">
-			
-				<option value="<c:out value="${userVO.usrDistrict2 }"/>">${userVO.usrDistrict2 }</option>
+		
 				
 			</select>
 		</div>
@@ -156,9 +156,122 @@ function inputCheck() {
 
 $(document).ready(function() {
 
+	
+	let city = ["시/도 선택", "서울특별시", "경기도"];
+
+	let seoul = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
+			"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
+			"성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구",
+			"중구", "중랑구" ];
+
+	let gyeonggi = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시",
+			"남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시",
+			"안양시", "양주시", "여주시", "오산시", "용인시", "의왕시", "의정부시", "이천시",
+			"파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "연천군" ];
+	
+	let category = ["아웃도어/여행","문화/공연/축제","운동/스포츠","음악/악기","외국/언어","게임/오락","기타"];
 
 	
+	let usrCat1 = $("select[name=usrCategory1]");
+	let usrCat2 = $("select[name=usrCategory2]");
+	
+	let usrCity1 = $("select[name=usrCity1]");
+	let usrCity2 = $("select[name=usrCity2]");
+	
+	let usrDistrict1 = $("select[name=usrDistrict1]");
+	let usrDistrict2 = $("select[name=usrDistrict2]");
+	
 
+
+	
+	$(function (){
+		let str = "";
+		
+		for(let i = 0; i < city.length; i++){
+			str += "<option value='"+city[i]+"'>"+city[i]+"</option>"
+		}
+		usrCity1.append(str);
+
+		str = "";
+		
+		
+		if('<c:out value="${userVO.usrCity1 }"/>' == "서울특별시"){
+			for(let i = 0; i < seoul.length; i++){
+				str += "<option value='"+seoul[i]+"'>"+seoul[i]+"</option>";
+			};
+		};
+		if('<c:out value="${userVO.usrCity1 }"/>' == "경기도"){
+			for(let i = 0; i < gyeonggi.length; i++){
+				str += "<option value='"+gyeonggi[i]+"'>"+gyeonggi[i]+"</option>";
+			};
+		};
+		if('<c:out value="${userVO.usrCity1 }"/>' == "시/도 선택"){
+				str += "<option value='군/구 선택'>군/구 선택</option>";
+		};
+		usrDistrict1.append(str);
+		usrDistrict2.append(str);
+		$("select option[value='<c:out value="${userVO.usrCity1 }"/>']:first").attr("selected", true);
+		$("select option[value='<c:out value="${userVO.usrDistrict1 }"/>']:first").attr("selected", true);
+	
+	});
+	$(function (){
+		let str = "";
+		
+		for(let i = 0; i < city.length; i++){
+			str += "<option value='"+city[i]+"'>"+city[i]+"</option>"
+		}
+		usrCity2.append(str);
+
+		str = "";
+		
+		
+		if('<c:out value="${userVO.usrCity2 }"/>' == "서울특별시"){
+			for(let i = 0; i < seoul.length; i++){
+				str += "<option value='"+seoul[i]+"'>"+seoul[i]+"</option>";
+			};
+		};
+		if('<c:out value="${userVO.usrCity2 }"/>' == "경기도"){
+			for(let i = 0; i < gyeonggi.length; i++){
+				str += "<option value='"+gyeonggi[i]+"'>"+gyeonggi[i]+"</option>";
+			};
+		};
+		if('<c:out value="${userVO.usrCity2 }"/>' == "시/도 선택"){
+				str += "<option value='군/구 선택'>군/구 선택</option>";
+		};
+
+		usrDistrict2.append(str);
+		$("select option[value='<c:out value="${userVO.usrCity2 }"/>']:last").attr("selected", true);
+		$("select option[value='<c:out value="${userVO.usrDistrict2 }"/>']:last").attr("selected", true);
+	
+	});
+	
+	$(function (){
+		let str = "";
+		
+		for(let i = 0; i < category.length; i++){
+			str += "<option value='"+category[i]+"'>"+category[i]+"</option>"
+		}
+		usrCat1.append(str);
+
+		$("select option[value='<c:out value="${userVO.usrCategory1 }"/>']:first").attr("selected", true);
+	
+	});
+	
+	$(function (){
+		let str = "";
+		
+		for(let i = 0; i < category.length; i++){
+			str += "<option value='"+category[i]+"'>"+category[i]+"</option>"
+		}
+		usrCat2.append(str);
+		$("select option[value='<c:out value="${userVO.usrCategory2 }"/>']:last").attr("selected", true);
+	
+	});
+	
+
+	
+	
+	
 
   	$(function() {
   		$('#city1').change(function() {
@@ -171,18 +284,6 @@ $(document).ready(function() {
 	});
 
 	function region(o, d) {
-		let city = [ "서울특별시", "경기도", "시/도"];
-
-		let seoul = [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
-				"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
-				"성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구",
-				"중구", "중랑구" ];
-
-		let gyeonggi = [ "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시",
-				"남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시",
-				"안양시", "양주시", "여주시", "오산시", "용인시", "의왕시", "의정부시", "이천시",
-				"파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "연천군" ];
-		let sido = "군/구";
 		
 		let district;
 		let option;
@@ -208,9 +309,9 @@ $(document).ready(function() {
 				d.append(option);
 			}
 			
-		} else if($(':selected', o).val()=="시/도"){
+		} else if($(':selected', o).val()=="시/도 선택"){
 			d.empty();
-			option = $("<option value='군/구'>군/구</option>");
+			option = $("<option value='군/구 선택'>군/구 선택</option>");
 			d.append(option);
 		}
 } 
@@ -218,140 +319,6 @@ $(document).ready(function() {
 	 
 	
 	
-	
-	let usrCat1 = $("select[name=usrCategory1]");
-	let usrCat2 = $("select[name=usrCategory2]");
-	const cat = 'C001';
-	
-	categoryService.getCategorylist({catClassificationCode:cat},function(list){
-		console.log(list);
-		let str = "";
-		if("<c:out value="${userVO.usrCategory1 }"/>" == ""){
-			str += '<option name = "usrCategory1" value="">선택안함</option>';
-		}else{
-			str += '<option name = "usrCategory1" value="<c:out value="${userVO.usrCategory1 }"/>">${userVO.usrCategory1 }</option>';
-			str += '<option name = "usrCategory1" value="">선택안함</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].catName == "${userVO.usrCategory1 }"){
-				console.log(list[i].catName);
-				continue;
-			}
-			str += '<option name="usrCategory1" value="'+list[i].catName+'">'+list[i].catName+'</option>';
-		}
-		usrCat1.html(str);
-	
-	});	
-
-	categoryService.getCategorylist({catClassificationCode:cat},function(list){
-		console.log(list);
-		let str = "";
-		if("<c:out value="${userVO.usrCategory2 }"/>" == ""){
-			str += '<option value="관심분야">선택안함</option>';
-		}else{
-			str += '<option value="<c:out value="${userVO.usrCategory2 }"/>">${userVO.usrCategory2 }</option>';
-			str += '<option value="관심분야">선택안함</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].catName == "${userVO.usrCategory2 }"){
-				console.log(list[i].catName);
-				continue;
-			}
-			str += '<option value="'+list[i].catName+'">'+list[i].catName+'</option>';
-		}
-		usrCat2.html(str);
-	});
-	let usrCity1 = $("select[name=usrCity1]");
-	let usrCity2 = $("select[name=usrCity2]");
-	
-	
-	
-	cityService.getCitylist(function(list){
-		console.log(list);
-		let str = "";
-		if("<c:out value="${userVO.usrCity1 }"/>" == "시/도"){
-			str += '<option name = "usrCity1" value="시/도">시/도</option>';
-		}else{
-			str += '<option name = "usrCity1" value="<c:out value="${userVO.usrCity1 }"/>">${userVO.usrCity1 }</option>';
-			str += '<option name = "usrCity1" value="시/도">시/도</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].rgName == "${userVO.usrCity1 }"){
-				console.log(list[i].rgName);
-				continue;
-			}
-			str += '<option name="usrCity1" value="'+list[i].rgName+'">'+list[i].rgName+'</option>';
-		}
-		usrCity1.html(str);
-	})
-	
-	cityService.getCitylist(function(list){
-		console.log(list);
-		let str = "";
-		if("<c:out value="${userVO.usrCity2 }"/>" == "시/도"){
-			str += '<option name = "usrCity2" value="시/도">시/도</option>';
-		}else{
-			str += '<option name = "usrCity2" value="<c:out value="${userVO.usrCity2 }"/>">${userVO.usrCity2 }</option>';
-			str += '<option name = "usrCity2" value="시/도">시/도</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].rgName == "${userVO.usrCity2 }"){
-				console.log(list[i].rgName);
-				continue;
-			}
-			str += '<option name="usrCity2" value="'+list[i].rgName+'">'+list[i].rgName+'</option>';
-		}
-		usrCity2.html(str);
-	})
-
-	let usrDistrict1 = $("select[name=usrDistrict1]");
-	let usrDistrict2 = $("select[name=usrDistrict2]");
-	
-	
-	if("<c:out value="${userVO.usrCity1 }"/>" != "시/도"){
-	let dist1 = "<c:out value="${userVO.usrCity1 }"/>"
-  	cityService.getDistrictlist({rgName:dist1},function(list){
-		console.log(list);
-		
-		let str = "";
-		if("<c:out value="${userVO.usrDistrict1 }"/>" == "군/구"){
-			str += '<option name = "usrDistrict1" value="군/구">군/구</option>';
-		}else{
-			str += '<option name = "usrDistrict1" value="<c:out value="${userVO.usrDistrict1 }"/>">${userVO.usrDistrict1 }</option>';
-			str += '<option name = "usrDistrict1" value="군/구">군/구</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].rgName == "${userVO.usrDistrict1 }"){
-				console.log(list[i].rgName);
-				continue;
-			}
-			str += '<option name="usrDistrict1" value="'+list[i].rgName+'">'+list[i].rgName+'</option>';
-		}
-		usrDistrict1.html(str);
-	}) 
-	}
-	if("<c:out value="${userVO.usrCity2 }"/>" != "시/도"){
-	let dist2 = "<c:out value="${userVO.usrCity2 }"/>"
-  	cityService.getDistrictlist({rgName:dist2},function(list){
-		console.log(list);
-		
-		let str = "";
-		if("<c:out value="${userVO.usrDistrict2 }"/>" == "군/구"){
-			str += '<option name = "usrDistrict2" value="군/구">군/구</option>';
-		}else{
-			str += '<option name = "usrDistrict2" value="<c:out value="${userVO.usrDistrict2 }"/>">${userVO.usrDistrict2 }</option>';
-			str += '<option name = "usrDistrict2" value="군/구">군/구</option>';
-		}
-		for(let i = 0, len = list.length || 0; i< len; i++){
-			if(list[i].rgName == "${userVO.usrDistrict2 }"){
-				console.log(list[i].rgName);
-				continue;
-			}
-			str += '<option name="usrDistrict2" value="'+list[i].rgName+'">'+list[i].rgName+'</option>';
-		}
-		usrDistrict2.html(str);
-	}) 
-	}
 	 
 	
 	  

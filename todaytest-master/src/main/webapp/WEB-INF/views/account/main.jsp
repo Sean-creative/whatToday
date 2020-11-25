@@ -75,14 +75,14 @@
 
 
 
-<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="0" end ="1">
-    <li class="cb" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/>
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
+    <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>
     </li><br>
 </c:forEach>
 
-<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="2">
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="2">
         <c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
-<li class="cb hideList" style ="display: none" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/></li><br>
+<li class="cb hideList" style ="display: none" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/></li><br>
 <c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
 </c:forEach>
 
@@ -119,6 +119,10 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	if("${msg}" != ""){
+		alert("${msg}");
+	}
 
 	$(".moreList").click(function(){
 		$(".hideList").show();
@@ -142,6 +146,8 @@ $(document).ready(function() {
 		
 
 		/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
+		/*ajax 안쓰고 하기. 나중에 바꾸기*/
+		/*ajax 안쓰고 하기. 나중에 바꾸기*/
 		$('.cb').click(function(e)
 		{
 			let index = $(".cb").index(this);
@@ -180,7 +186,7 @@ $(document).ready(function() {
 				if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
 				if( divTop + oHeight > sHeight ) divTop -= oHeight;
 
-				// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치하자.
+				// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치.
 				if( divLeft < 0 ) divLeft = 0;
 				if( divTop < 0 ) divTop = 0;
 				
