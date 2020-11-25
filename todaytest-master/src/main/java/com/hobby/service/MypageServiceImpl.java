@@ -25,69 +25,32 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public UserVO getUser(String id) {
-		// TODO Auto-generated method stub
-		UserVO userVO;
-		try{
-			userVO = mapper.getUser(id);
-		}
-		catch(Exception e){
-			userVO = new UserVO();
-		}
-		
-		return userVO;
+		// TODO Auto-generated method stub		
+		return mapper.getUser(id);
 	}
 
 	@Override
 	public List<UserVO> getUserList() {
 		// TODO Auto-generated method stub
-		List<UserVO> userList;
-		try{
-		userList = mapper.getUserList();
-		}
-		catch(Exception e) {
-			userList = new ArrayList();
-		}
-		return userList;
+		return mapper.getUserList();
 	}
 
 	@Override
 	public List<ClubVO> getMyClubList(Long usrNum) {
 		// TODO Auto-generated method stub
-		List<ClubVO> clubList;
-		try{
-			clubList = mapper.getMyClubList(usrNum);
-		}
-		catch(Exception e){
-			clubList = new ArrayList();
-		}
-		return clubList;
+		return mapper.getMyClubList(usrNum);
 	}
 
 	@Override
 	public List<ClubVO> getWaitClubList(Long usrNum) {
 		// TODO Auto-generated method stub
-		List<ClubVO> clubList;
-		try {
-			clubList = mapper.getWaitClubList(usrNum);
-		}
-		catch(Exception e) {
-			clubList = new ArrayList();
-		}
-		return clubList;
+		return mapper.getWaitClubList(usrNum);
 	}
 
 	@Override
 	public List<ClubVO> getPrevClubList(Long usrNum) {
 		// TODO Auto-generated method stub
-		
-		List<ClubVO> clubList;
-		try {
-			clubList = mapper.getPrevClubList(usrNum);
-		}
-		catch(Exception e) {
-			clubList = new ArrayList();
-		}
-		return clubList;
+		return mapper.getPrevClubList(usrNum);
 	}
 
 
@@ -137,48 +100,26 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<ClubVO> getMyCreateClubList(Long usrNum) {
 		// TODO Auto-generated method stub
-		List<ClubVO> clubList;
-		try {
-			clubList = mapper.getMyCreateClubList(usrNum);
-		}
-		catch(Exception e) {
-			clubList = new ArrayList();
-		}
-		return clubList;
+		return mapper.getMyCreateClubList(usrNum);
+
 	}
 
 	@Override
 	public ClubVO getClub(ClubVO clubVO) {
 		// TODO Auto-generated method stub
-		
-		ClubVO club;
-		try {
-			club = mapper.getClub(clubVO);
-		}
-		catch(Exception e) {
-			club = new ClubVO();
-		}
-		return club;
+		return mapper.getClub(clubVO);
 	}
 
 	@Override
 	public int updateMeetingMemberName(UserVO userVO) {
 		// TODO Auto-generated method stub
-		
 		return mapper.updateMeetingMemberName(userVO);
 	}
 
 	@Override
 	public List<CategoryVO> getCategoryList(String catClassificationCode) {
 		// TODO Auto-generated method stub
-		List<CategoryVO> categoryList;
-		try {
-			categoryList = mapper.getCategoryList(catClassificationCode);
-		}
-		catch(Exception e) {
-			categoryList = new ArrayList();
-		}
-		return categoryList;
+		return mapper.getCategoryList(catClassificationCode);
 	}
 
 	@Override
@@ -196,41 +137,21 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public ClubVO getJoinClub(Long cbNum) {
 		// TODO Auto-generated method stub
-		ClubVO club;
-		try {
-			club = mapper.getJoinClub(cbNum);
-		}
-		catch(Exception e) {
-			club = new ClubVO();
-		}
-		return club;
+		return mapper.getJoinClub(cbNum);
 	}
 
 
 	@Override
 	public List<RegionVO> getCityList() {
 		// TODO Auto-generated method stub
-		List<RegionVO> cityList;
-		try {
-			cityList = mapper.getCityList();
-		}
-		catch(Exception e) {
-			cityList = new ArrayList();
-		}
-		return cityList;
+		return mapper.getCityList();
 	}
 
 	@Override
 	public List<RegionVO> getDistrictList(String rgName) {
 		// TODO Auto-generated method stub
-		List<RegionVO> districtList;
-		try {
-			districtList = mapper.getDistrictList(rgName);
-		}
-		catch(Exception e) {
-			districtList = new ArrayList();
-		}
-		return districtList;
+		return mapper.getDistrictList(rgName);	
+		
 	}
 
 	@Override

@@ -35,7 +35,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/account/*")
+@RequestMapping("/mypage/*")
 @SessionAttributes("userVO")
 @AllArgsConstructor
 @Log4j
@@ -48,35 +48,54 @@ public class MypageController {
 	@GetMapping("/main")
 	public String main(Model model, Authentication auth) {
 
-		String url = "/account/main";
+		String url = "/mypage/main";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/main");
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
-			// 기본적인 사용자의 정보를 보여줌 : 회원 ID/이름/전화번호 현재가입모임/가입대기모임/이전에가입한모임
+			// 기본적인 사용자의 정보를 보여줌 : 회원 ID/이름/전화번호 현재가입모임 등등
 			// 1. 회원 정보를 가져온다 -> 로그인을 하면 생기는 Authentication 통하여 회원정보를 가져옴
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			Long usrNum = customUser.getUser().getUsrNum();
-			// 1.1 가져온 회원 정보를 view에 쏴줌
+			
+			// 1.1 회원 정보를 가져와서 모델에 넣음
 			model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 
-			// 2. 회원정보를 통해서 현재가입모임/가입대기모임/이전에가입한모임을 가져오고 view에 쏴줌
+			// 2. 회원정보를 통해서 현재가입모임을 가져와서 모델에 넣음
 			model.addAttribute("clubVO", service.getMyClubList(usrNum));
 
-			// 여기는 모임가입이 구현되면 정보가 나올것같아요
-			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
-			model.addAttribute("prevClub", service.getPrevClubList(usrNum));
+			// 가입대기중인 모임 / 이전에 가입한 모임 => 모임가입이 구현되면써먹을것.
+//			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
+//			model.addAttribute("prevClub", service.getPrevClubList(usrNum));
 		}
 		return url;
 	}
 
+	
+	// 모임관리 메인페이지
+	// 모임 수정버튼누르면 -> 모임페이지에서 수정하도록
+	@GetMapping("/myclub/main")
+	public String myclubMain(Authentication auth, Model model) {
+		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
+		String url = "mypage/myclub/main";
+		if (auth == null) {
+			url = "redirect:/login/login";
+		} else {
+			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴
+			CustomUser customUser = (CustomUser) auth.getPrincipal();
+			model.addAttribute("clubVO", service.getMyCreateClubList(customUser.getUser().getUsrNum()));
+		}
+		return url;
+
+	}
+	
 	// 회원정보수정하게되면 비밀번호를 재입력받는 페이지
 	// auth_leave 페이지랑 통합하는 방법을 생각해볼것
 	@GetMapping("/auth_edit")
 	public String auth_edit(Authentication auth) {
 
-		String url = "/account/auth_edit";
+		String url = "/mypage/auth_edit";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/auth_edit");
 		if (auth == null) {
@@ -93,25 +112,26 @@ public class MypageController {
 			RedirectAttributes rtts) {
 		String url = "";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
-		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
+
 		log.info("##/authAction");
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
 			// 1. DB에 있는 비밀번호와 사용자가 입력한 비밀번호를 비교하기위해 회원 정보를 가져온다.
+			// Authentication에 저장된 usrId(유저 아이디)를 통해서 유저 정보를 가져옴
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 			System.out.println(userVO);
 
-			// 2-1. 비밀번호 유효성검사, DB와 비교해서 맞는지 Check하고 수정페이지로 보냄
+			// 2-1. 비밀번호 유효성검사, 가져온 유저정보와 비교해서 맞는지 Check하고 수정페이지로 보냄
 			if (password != null && service.isPwdValid(password)
 					&& service.comparePwdDB(password, userVO.getUsrPwd())) {
 
-				url = "/account/edit";
+				url = "/mypage/edit";
 				// 2-2. 비밀번호 유효성 검사를 통과히자 못하였을때
 			} else {
 				rtts.addFlashAttribute("msg", "비밀번호가 맞지 않아요");
-				url = "redirect:/account/auth_edit";
+				url = "redirect:/mypage/auth_edit";
 			}
 		}
 
@@ -122,7 +142,7 @@ public class MypageController {
 	@PostMapping("/edit")
 	public String edit(Authentication auth, Model model) {
 
-		String url = "/account/edit";
+		String url = "/mypage/edit";
 
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
@@ -131,12 +151,12 @@ public class MypageController {
 			url = "redirect:/login/login";
 		} else {
 
-			// 1. view에 뿌려줄 회원정보를 가져옴
+			// 1. 유저 정보를 가져옴
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 			System.out.println(userVO);
 
-			// 2. 회원정보를 담아서 줌
+			// 2. 유저 정보를 모델에 넣어서 준다
 			model.addAttribute("userVO", userVO);
 			
 		}
@@ -144,28 +164,25 @@ public class MypageController {
 	}
 
 	// edit에서 전해준것들 유효성 검사, 업데이트
-	// if else 들을 좀 줄이고 싶어요
 	@PostMapping("/editAction")
 	public String editAction(Authentication auth, Model model, UserVO userVO, RedirectAttributes rtts) {
 
-		String url = "redirect:/account/main";
+		String url = "redirect:/mypage/main";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
-		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
 		log.info("##/editAction");
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
-			// 일단 수정되면서 null이 아니어야하는것은 phone밖에없으니까 null check
+			// 부가 정보는 null일시 디폴트값이 정해져있으므로 null값이면 안되는 유저전화번호만 체크한다.
 			if (userVO.getUsrPhone() == null) {
 				rtts.addFlashAttribute("msg", "핸드폰 번호가 입력되지 않았어요!");
-				url = "redirect:/account/auth_edit/";
-
+				url = "redirect:/mypage/auth_edit/";
 			}
 
 			// 1. edit에서 UserVO의 정보들을 보낸것을 통하여 업데이트가 필요한 테이블들을 업데이트
 			if (service.updateUserTotalInfo(userVO) != 2) {
 				rtts.addFlashAttribute("msg", "회원정보가 업데이트 되지 않았습니다!");
-				url = "redirect:/account/auth_edit/";
+				url = "redirect:/mypage/auth_edit/";
 			} else
 				rtts.addFlashAttribute("msg", "회원정보가 업데이트 되었습니다.");
 		}
@@ -175,7 +192,7 @@ public class MypageController {
 	// 비밀번호 변경 페이지
 	@GetMapping("/password")
 	public String password(Authentication auth) {
-		String url = "/account/password";
+		String url = "/mypage/password";
 
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/password");
@@ -186,34 +203,42 @@ public class MypageController {
 	}
 
 	// 비밀번호 변경 유효성검사
-	// if else 어떻게 줄일까 띵킹하기
+	// password페이지에서 현재비밀번호와 새로운 비밀번호를 가져온다.
 	@PostMapping("/passwordAction")
 	public String passwordAction(Authentication auth, @RequestParam("newPassword") String newPassword,
 			@RequestParam("currentPassword") String currentPassword, RedirectAttributes rtts) {
 
 		String url = "";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
-		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
 		log.info("##/passwordAction");
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
-			// 1. DB에 있는 비밀번호와 사용자가 입력한 비밀번호를 비교하기위해 회원 정보를 가져온다.
+			// 1. DB에 있는 비밀번호와 사용자가 입력한 비밀번호를 비교하기위해 Authencication에 저장된 usrId를 이용하여 유저 정보를 가져옴.
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 
-			// 2. 비밀번호 유효성검사, DB와 비교해서 맞는지 Check
+			// 2. 비밀번호 유효성검사, 가져온 유저정보의 비밀번호와 비교하여 유효성검사.
 			// 2-1 맞으면 유저정보에 비밀번호를 업데이트하고 마이페이지 메인으로 보냄
 			if (service.isPwdValid(newPassword) && service.isPwdValid(currentPassword)
 					&& service.comparePwdDB(currentPassword, userVO.getUsrPwd())) {
+				
 				userVO.setUsrPwd(newPassword);
-				service.updateUserInfo(userVO);
-				rtts.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
-				url = "redirect:/account/main";
+				
+				if(service.updateUserInfo(userVO) == 1) {
+					rtts.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
+					url = "redirect:/mypage/main";
+				}else {
+					rtts.addFlashAttribute("msg", "비밀번호 수정에 실패했습니다");
+					userVO.setUsrPwd(currentPassword);
+					url = "redirect:/mypage/main";
+				}
+				
+				
 			} else {
 				// 2-2 만일 유효성검사에 실패하면 password변경페이지로 보내버림
 				rtts.addFlashAttribute("msg", "비밀번호가 틀렸어요.");
-				url = "redirect:/account/password";
+				url = "redirect:/mypage/password";
 			}
 		}
 		return url;
@@ -223,7 +248,7 @@ public class MypageController {
 	@GetMapping("/auth_leave")
 	public String auth_leave(Authentication auth) {
 
-		String url = "/account/auth_leave";
+		String url = "/mypage/auth_leave";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/auth_leave");
 		if (auth == null) {
@@ -240,7 +265,7 @@ public class MypageController {
 
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
-		String url = "/account/auth_leave";
+		String url = "/mypage/auth_leave";
 		log.info("##/leaveAction");
 		if (auth == null) {
 			url = "redirect:/login/login";
@@ -250,43 +275,25 @@ public class MypageController {
 			// 1.비밀번호 유효성검사
 			if (service.isPwdValid(password) && service.comparePwdDB(password, userVO.getUsrPwd())) {
 				userVO.setUsrState("사이트탈퇴");
-				// 비밀번호 유효성검사에서 통과했는데 탈퇴가 안될 수 있으니까 if 안에 if를 넣었는데 마음에 안듬
-				// 바꿀방법을 생각해보기
+				// 비밀번호 유효성검사에서 통과했는데 탈퇴가 안될 수 있는 케이스
 				if (service.leaveUser(userVO) == 3) {
 					url = "redirect:/login/logout";
 				} else {
 					rtts.addFlashAttribute("msg", "회원탈퇴 실패했습니다!");
 					userVO.setUsrState("회원");
-					url = "redirect:/account/auth_leave";
+					url = "redirect:/mypage/auth_leave";
 				}
 				// 1-1. 비밀번호 틀렸을때
 			} else {
 				rtts.addFlashAttribute("msg", "비밀번호가 맞지 않아요");
-				url = "redirect:/account/auth_leave";
+				url = "redirect:/mypage/auth_leave";
 			}
 		}
 
 		return url;
 	}
 
-	// 모임관리 메인페이지
-	// 모임 수정버튼누르면 -> 모임페이지에서 수정하도록
-	@PostMapping("/myclub/main")
-	public String myclubMain(Authentication auth, Model model) {
-		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
-		// postmapping이라 필요한지는 모르겠는데 일단 넣어둠
-		String url = "account/myclub/main";
-		if (auth == null) {
-			url = "redirect:/login/login";
-		} else {
 
-			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-			model.addAttribute("clubVO", service.getMyCreateClubList(userVO.getUsrNum()));
-		}
-		return url;
-
-	}
 
 ////	// ajax로 내가 가입한 클럽 리스트 db 가져옴
 //	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
@@ -298,11 +305,6 @@ public class MypageController {
 //		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
 //	}
 //	
-	
-	
-	
-	
-	
 //	// ajax로 내가 만든 모임을 가져옴
 //	@RequestMapping(value = "/myclub/createclub/{cbLeaderNum}",` produces = { MediaType.TEXT_XML_VALUE,
 //			MediaType.APPLICATION_JSON_UTF8_VALUE })
