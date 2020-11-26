@@ -15,11 +15,11 @@ public interface ThunderMapper {
 	
 	public void insert(ThunderVO clubVO);	
 	
-	public ThunderVO read(Long cbNum);			
+	public ThunderVO read(long cbNum);			
 	
 	public int getTotalCount(Criteria cri);
 			
-	public int delete(Long cbNum);
+	public int delete(long cbNum);
 	
 	public int update(ThunderVO clubVO);
 	

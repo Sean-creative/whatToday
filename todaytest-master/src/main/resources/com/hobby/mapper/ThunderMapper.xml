@@ -137,11 +137,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
 
-			<if test="category != null  and category != '관심분야 선택' and category != '' ">
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
 				AND cbCategory = #{category}
 			</if>
 
-			<if test="subclass != null and subclass != '모임 선택' and subclass != ''">
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
 				AND cbSubcat = #{subclass}
 			</if>
 
@@ -149,7 +151,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND cbCity = #{city}
 			</if>
 
-			<if test="district != null and district != '세부지역 선택' and district != ''">
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
 				AND cbDistrict = #{district}
 			</if>
 

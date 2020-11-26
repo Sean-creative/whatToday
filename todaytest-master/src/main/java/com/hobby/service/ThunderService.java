@@ -4,6 +4,8 @@ package com.hobby.service;
  */
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.hobby.domain.ThunderVO;
 import com.hobby.domain.Criteria;
 
@@ -26,5 +28,8 @@ public interface ThunderService {
 	
 	public boolean remove(long cbNum);
 	
+	
+	//로그인이 되어있는지 알려주는 메소드
+	public boolean isLogin(Authentication auth);
 	
 }

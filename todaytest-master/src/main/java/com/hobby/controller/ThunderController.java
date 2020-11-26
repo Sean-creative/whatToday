@@ -40,8 +40,8 @@ public class ThunderController {
 		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
 		// @수정사항 -- 로그인이 안되어있으면, auth가 null이되고, auth.getPrincipal()에서 에러가 뜨면서 500번 에러 페이지가 뜸,
 		// @ -- 현재는 info에 접근자체가 안되지만, 로그인 된 유저의 번호를 가져오는 것을, 로그인이 안되있어도 에러가 안뜨는 솔루션을 찾아야 할 듯
-				if (auth == null) 
-					return "redirect:/login/login";
+		if (!service.isLogin(auth)) 
+			return "redirect:/login/login";		
 				
 		
 		log.info("/info- GET");
@@ -60,8 +60,10 @@ public class ThunderController {
 	    log.info("/info - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
 	      	      	      													
 				// A. view 단에 뿌려줘야 하는 것들 
-				// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.
+				// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.	    		
 				ThunderVO clubVO = service.get(cbNum);
+				
+				
 				log.info("/info- clubVO : " + clubVO);
 						
 				//A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
@@ -81,9 +83,9 @@ public class ThunderController {
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
-				if (auth == null) 
+				if (!service.isLogin(auth)) 
 					return "redirect:/login/login";		
-						
+				                    							 	    					
 				log.info("/modify - GET");
 				// 들어온 파라미터 값 확인
 				log.info("/modify - cri : " + cri);
@@ -166,11 +168,11 @@ public class ThunderController {
 	    //현재 로그인 되어있는 유저의 번호와 이름으로 club을 만든다.
 	    clubVO.setCbLeaderNum(usrNum);
 	    clubVO.setCbLeaderName(customUser.getUser().getUsrName());
+
+	    service.register(clubVO);	
 	      
 		log.info("add - clubVO : " + clubVO);
-		
-		service.register(clubVO);		
-					
+				 						
 		return "redirect:/thunder/list";
 	}
 
@@ -181,13 +183,12 @@ public class ThunderController {
 	public String add(Authentication auth, Model model) {
 		log.info("/add - GET");
 		
-		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
-		if (auth == null) 
-			return "redirect:/login/login";                         
 		
-		log.info("add GetMapping!!");
-				 	     
-	      return "/thunder/add";                    
+		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
+		if (service.isLogin(auth)) 
+			return "/thunder/add";                    							 	    
+		else 
+			return "redirect:/login/login";
 	}
 
 	
