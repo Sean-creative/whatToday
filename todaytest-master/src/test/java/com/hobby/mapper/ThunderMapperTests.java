@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hobby.domain.ThunderVO;
+import com.hobby.domain.Criteria;
 import com.hobby.domain.ThunderDetailVO;
+import com.hobby.domain.ThunderVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -21,9 +22,13 @@ public class ThunderMapperTests {
 	private ThunderMapper mapper;
 		
 		
-//	@Test
+	@Test
 	public void testGetList() {
-			mapper.getList().forEach(club -> log.info(club));		
+		Criteria cri = new Criteria();
+		cri.setPageNum(1);
+		cri.setAmount(5);
+		
+		mapper.getListWithPaging(cri).forEach(club -> log.info(club));		
 	}
 			
 	
@@ -73,7 +78,7 @@ public class ThunderMapperTests {
 	
 	
 	
-	@Test
+//	@Test
 	public void testUpdate() {
 		ThunderDetailVO thunderDetailVO = 
 				ThunderDetailVO.builder()				
