@@ -18,7 +18,8 @@
 </resultMap>
 
 <select id="idDuplicateCheck" resultType="string">
-	<!-- rownum = 1 : 이미 중복해서 들어간 값들이 있어서 쿼리 결과 값을  한개로 만들어 주기위해-->
+	<!-- rownum = 1 : 이미 중복해서 들어간 값들이 있어서 쿼리 결과 값을  한개로 만들어 주기 위해
+	1차 리뷰 : distict 넣기 -->
 	SELECT usrId FROM tbluser where usrId = #{usrId} and rownum = 1
 </select>
 
