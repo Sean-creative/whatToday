@@ -160,7 +160,7 @@ public class ThunderController {
 //		rttr.addAttribute("amount", cri.getAmount());
 //		rttr.addAttribute("type" , cri.getType());
 //		rttr.addAttribute("keyword", cri.getKeyword());
-		
+		// PR 테스트!
 		return "redirect:/thunder/list"+ cri.getListLink();
 	}
 			
