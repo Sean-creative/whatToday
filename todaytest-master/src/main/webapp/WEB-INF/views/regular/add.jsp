@@ -117,6 +117,7 @@
 				hobbyCategory[item1].forEach(item2 => { //item2(value)에 있는 option을 보여준다.(처음부터 끝까지)
 					let option = $("<option value=" + item2 + ">" + item2 + "</option>"); 
 					$("#cbSubcat").append(option); //아래로 붙여준다. 
+					//안녕//
 				})
 			} 
 		})
