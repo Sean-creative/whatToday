@@ -72,30 +72,42 @@ public class ClubController {
    @PostMapping("/add")
    public String registerClub(Authentication auth, ClubVO club, RedirectAttributes rttr) {
    //개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를 파라미터로 지정   
-      log.info("registerClub: " + club);
       
-      club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", ""));
+      club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); //유효성검사
       
       service.registerClub(club);
       
-      rttr.addFlashAttribute("result", club.getCbNum());
+      //일회성으로 데이터를 전달하는 용도 (전달된 값은 url뒤에 붙지 않는다.)
+      rttr.addFlashAttribute("result", club.getCbNum()); 
+      
+      log.info("registerClub: " + club);
+      log.info("##개설된 모임번호는:" + club.getCbNum());
       
       return "redirect:/regular/list";
    }
    
    @GetMapping("/add")
-   public void registerClub(Authentication auth, Model model) {
-      
+   public String registerClub(Authentication auth, Model model) {
+	   
+	   //로그인이 되어있지 않으면 로그인페이지로 이동
+	   if(auth == null) {
+		   return "redirect:/login/login";
+	   }
+	   
       log.info("register: ");
+      
       //로그인을 하면 Authentication을 통해 회원 정보를 가져온다. 
       CustomUser customUser = (CustomUser) auth.getPrincipal();
       UserVO userVO = customUser.getUser();
       
-      log.info("##/add 회원번호" + userVO.getUsrNum());
-      
-      //파라미터 model을 통해 개설자이름과 개설자번호를 결과에 담아 전달 한다.
+      //파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
       model.addAttribute("usrName", userVO.getUsrName());
       model.addAttribute("usrNum", userVO.getUsrNum());
+      
+      log.info("##/add 회원번호는 :" + userVO.getUsrNum());
+      log.info("##/add 회원이름는 :" + userVO.getUsrName());
+      
+      return "/regular/add";
    }
    
    //정기모임 상세정보

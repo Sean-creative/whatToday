@@ -19,9 +19,12 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping("/main")
-	public void main(Model model) {
+	//모델을통해서 뷰에 데이터 전달하기 
+	public void mainList(Model model) {
 		log.info("main");
+		//service.getListRegular(정기모임리스트)를main이라는 이름을 통해 뷰에 보내준다.
 		model.addAttribute("main", service.getListRegular());
+		//service.getListThunder(번개모임리스트)를 main2라는 이름을 통해서 뷰에 보내준다.
 		model.addAttribute("main2", service.getListThunder());
 	}
 }

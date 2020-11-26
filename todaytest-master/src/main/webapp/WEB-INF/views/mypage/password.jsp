@@ -86,10 +86,10 @@ if("${msg}" != ""){
 
 
 
-    let currentPassword = document.getElementsByName("currentPassword");
-    let newPassword = document.getElementsByName("newPassword");
+let currentPassword = document.getElementsByName("currentPassword");
+let newPassword = document.getElementsByName("newPassword");
     /* 유효성검사, 빈칸검사, 새 비밀번호 맞는지 확인검사 */
-function check(){
+let check = function (){
 	if(blankCheck() &&
 			passwordEqualCheck() && validCheck()){
         currentPassword[1].setAttribute("value", currentPassword[0].value);
@@ -100,7 +100,7 @@ function check(){
 	return false;
 }
     
-function blankCheck(){
+let blankCheck = function (){
 
     if(currentPassword[0].value.length == 0 ||
     		newPassword[0].value.length == 0 ||
@@ -110,7 +110,7 @@ function blankCheck(){
     }
     return true;
 }
-function passwordEqualCheck(){
+let passwordEqualCheck = function (){
 	if(currentPassword[0].value == newPassword[0].value){
 		alert("현재 비밀번호와 새로운 비밀번호를 다르게 입력해주세요");
 		return false
@@ -121,7 +121,7 @@ function passwordEqualCheck(){
 	alert("새비밀번호와 새비밀번호확인이 맞지 않음");
 	return false
 }
-function validCheck() {
+let validCheck = function () {
 	
 	let cpw = document.register.currentPassword;
 	let npw = document.getElementsByName("newPassword")[0];

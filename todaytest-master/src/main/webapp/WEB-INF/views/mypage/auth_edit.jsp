@@ -76,7 +76,7 @@ if("${msg}" != ""){
 	alert("${msg}");
 }
 
-function blankCheck(){
+let blankCheck = function(){
     let password = document.getElementsByName("password");
     if(password[0].value.length == 0){
     	alert("비밀번호를 입력해주세요.") 

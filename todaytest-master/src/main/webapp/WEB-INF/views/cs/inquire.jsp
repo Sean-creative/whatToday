@@ -22,7 +22,7 @@
             <input type="text" name='qsName' class="name" value="${usrName}" readonly>
 
             <label>연락처 :</label>
-            <input type="text" name='qsPhone' class="phone" placeholder="- 뺴고 입력해주세">
+            <input type="text" name='qsPhone' class="phone" placeholder="- 빼고 입력해주세요" id="phone">
             <br>
             <label>이메일 : </label>
             <input type="email" name='qsEmail' class="mgtop" id="email">
@@ -44,48 +44,53 @@
         <input type="submit" value="보내기">       
     </div>
 </form>
-
 <script>
+
 function inputCheck(){
-	let phoneNumber = document.inquire.qsPhone;
-	let mail = document.inquire.qsEmail;
-	let title = document.inquire.qsTitle;
-	let content = document.inquire.qsContent;
-	
-	
-	if(!phoneNumber.value){
-		alert("번호를 입력해주세요.");
-		return false;
-	}
-	
-	//핸드폰 번호 제한 
-	let phonePattern = /^\d{3}\d{3,4}\d{4}$/;
-	
+// 핸드폰 
+let phoneNumber = document.inquire.qsPhone;
+//이메일 
+let emailCheck =  document.inquire.qsEmail;
+//제목 
+let title = document.inquire.qsTitle;
+//내용 
+let content = document.inquire.qsContent;
+
+// 핸드폰 유효성 검사 
+let phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+//제목 유효성 검사 
+let titleValue = title.value.replace(/(^\s*)|(\s*$)/g, ""); 
+//내용 유효성 검사 
+let contentValue = content.value.replace(/(^\s*)|(\s*$)/g, ""); 
+//이메일 유효성 검사 
+let emailPattern = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+	// 핸드폰번호가 유호한지체크한다. 
 	if(phonePattern.test(phoneNumber.value) == false){
-    	alert(" - 빼고 입력주세요. ex: 01012341234");
-    	return false;
-    }
-	
-	if(!mailCheck.testvalue){
-		alert("이메일을 입력해주세요.....");
+		alert(" - 빼고 입력주세요. ex: 01012341234");
 		return false;
 	}
-	
-	
-	if(!title.value || title.value.length>30){
-		alert("제목을 입주세요.");
+	// 이메일이 입력했는지 유효한지 체크한다. 
+	if(emailCheck.value.length === 0){
+		alert("이메일을 입력하세요.");
+		return false;
+	} else if(emailPattern.test(emailCheck.value)== false){
+		alert("이메일을 다시 입력해주세요.");
+		return false;
+	} 
+	//모임명 빈문자열 체크 
+	if(titleValue.length <= 0) {		
+		alert("제목을 입력해주세요.");
 		return false;
 	}
-	
-	if(!content.value || content.value.length>30){
-		alert("내용을 30자이내로 입력해주세요.");
+	//내용 빈문자열 체크 
+	if(contentValue.length <= 0) {		
+		alert("내용을 입력해주세요.");
 		return false;
-	}
-	
-	
-	
+	}	
 }
 </script>
+
 <%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

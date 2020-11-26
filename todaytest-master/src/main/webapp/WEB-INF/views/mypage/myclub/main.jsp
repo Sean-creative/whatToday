@@ -127,7 +127,7 @@ $(document).ready(function() {
 		form.attr("action",url);
 	});
 	
-	/* 아직 구현 X */
+	/* 모임폐쇄구현할것 */
 	$("button[name=closeClub]").click(function(){
 		let index = $("button[name=modifyClub]").index(this);
 		let type = $("input[name=cbType]").eq(index).val();

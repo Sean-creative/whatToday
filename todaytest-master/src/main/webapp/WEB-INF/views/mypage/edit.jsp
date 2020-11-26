@@ -63,10 +63,13 @@
         <button>사진변경</button>
         </div>
         <div class="userInfo">
-            <span>ID </span><input type="text" readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br> 
+            <span>ID </span><input type="text" name="usrId"readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br> 
             <span>NAME </span><input type="text" name="usrName"  readonly="readonly" value="<c:out value="${userVO.usrName }"/>"><br>
             <span>PHONE </span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
             <input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
+            <input type="hidden" name="usrPwd" value="<c:out value="${userVO.usrPwd }"/>">
+            <input type="hidden" name="usrState" value="<c:out value="${userVO.usrState }"/>">
+    
         </div>
     
     </div>
@@ -209,7 +212,6 @@ $(document).ready(function() {
 				str += "<option value='군/구 선택'>군/구 선택</option>";
 		};
 		usrDistrict1.append(str);
-		usrDistrict2.append(str);
 		$("select option[value='<c:out value="${userVO.usrCity1 }"/>']:first").attr("selected", true);
 		$("select option[value='<c:out value="${userVO.usrDistrict1 }"/>']:first").attr("selected", true);
 	
