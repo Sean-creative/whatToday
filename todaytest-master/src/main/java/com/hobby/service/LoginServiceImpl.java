@@ -1,10 +1,10 @@
 package com.hobby.service;
-import javax.mail.internet.MimeMessage;
 
 /**
  * 회원가입 / 로그인 / 아이디/비밀번호 찾기 서비스 인터페이스 구현 클래스
  * @author jiyeong
  */
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -47,6 +47,7 @@ public class LoginServiceImpl implements LoginService{
 		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
 		// 테이블에 insert가 잘되면 행(1)을 반환
 		// 5개 테이블에 잘 들어갔는 지 확인 // 질문: 트랜잭션처리 했는데 또 확인 해야 하나?
+		// 1차리뷰: resultCount 필요없을듯
 		// mapper.inser(user);
 		int resultCount = 0;
 		log.info("##Service : register");
