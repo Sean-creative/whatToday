@@ -199,7 +199,7 @@
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
 				nameResult.innerHTML = "이름을 입력하세요.";
-			} else if (namePattern.test(nameInput.value) == false) {
+			} else if (namePattern.test(nameInput.value) == false) {ll
 				nameResult.innerHTML = "한글 2~4글자인 이름을 입력해주세요";
 			} else {
 				// 이름 형식이 맞을 경우
@@ -233,7 +233,7 @@
 				return false;
 			}
 			if(document.getElementById('idDuplicateCheck').value == ""){
-				alert("아이디 중복체크를 확인하세요");
+				ㄹ("아이디 중복체크를 확인하세요");
 				return false;
 			}
 			if(pwdInput.value == ""){
@@ -407,11 +407,10 @@
 				data : id,
 
 				success : function(data) {
-					if (data == -1) {
-						emailResult.innerHTML = "사용하실 수 있는 아이디입니다.";
-
+					if (data) {
+						emailResult.innerHTML = data + "는 이미 사용중인 아이디 입니다.";
 					} else {
-						emailResult.innerHTML = "이미 사용중인 아이디 입니다.";
+						emailResult.innerHTML = "사용하실 수 있는 아이디입니다.";
 					}
 				},
 				error : function() {
@@ -427,16 +426,16 @@
 			$.ajax({
 				url : 'phoneDuplicateCheck',
 				type : 'POST',
-				dataType : 'text', //서버로부터 내가 받는 데이터의 타입
-				contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+				dataType : 'text', 
+				contentType : 'text/plain; charset=utf-8;',
 				data : phone,
 
 				success : function(data) {
-					if (data == -1) {
-						phoneResult.innerHTML = "사용하실 수 있는 핸드폰번호입니다.";
+					if (data) {
+						phoneResult.innerHTML = "이미 사용중인 핸드폰 번호 입니다.";
 
 					} else {
-						phoneResult.innerHTML = "이미 사용중인 핸드폰 번호 입니다.";
+						phoneResult.innerHTML = "사용하실 수 있는 핸드폰번호입니다.";
 					}
 				},
 				error : function() {

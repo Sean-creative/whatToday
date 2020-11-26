@@ -1,6 +1,10 @@
 package com.hobby.security;
 /**
- * 작성자: 김지영
+ *
+ * UserDetailsService 인터페이스를 구현해서 처리하는 클래스
+ * (UserDetailsService는 UserDetail를 반환하기 때문에 
+ * customUser를 반환하게 하기 위해 만든 클래스)
+ * @author jiyeong
  */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.hobby.domain.UserVO;
-import com.hobby.mapper.AccountMapper;
+import com.hobby.mapper.LoginMapper;
 import com.hobby.security.domain.CustomUser;
 
 import lombok.Setter;
@@ -20,7 +24,7 @@ import lombok.extern.log4j.Log4j;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Setter(onMethod_ = @Autowired)
-	private AccountMapper mapper;
+	private LoginMapper mapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
