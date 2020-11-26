@@ -137,18 +137,6 @@
 </section>
 
 
-<%-- <div class="form-group">
-          	<label>RegDate</label>
-          	<input class="form-control" name='regDate' value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${board.regdate}" />' 
-          	readonly = "readonly">
-          </div>
-          
-          <div class="form-group">
-          	<label>Update Date</label>
-          	<input class="form-control" name='updateDate' value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${board.updateDate}" />' 
-          	readonly = "readonly">
-          </div>
---%>
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

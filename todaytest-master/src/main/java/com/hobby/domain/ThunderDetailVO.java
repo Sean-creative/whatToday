@@ -18,6 +18,7 @@ public class ThunderDetailVO {
 	// ClubVO와 중복된 내용은 없다.
 	// DB 컬럼 수정 완료   -- 2020/11/17
 	
+	//THUNDERDETAIL 테이블
 	
 	//모임번호(기본키)
 	private long cbNum;
