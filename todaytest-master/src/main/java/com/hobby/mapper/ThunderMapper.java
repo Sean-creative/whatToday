@@ -13,7 +13,7 @@ public interface ThunderMapper {
 	
 	public List<ThunderVO> getListWithPaging(Criteria cri);
 	
-	public void insert(ThunderVO clubVO);	
+	public int insert(ThunderVO clubVO);	
 	
 	public ThunderVO read(long cbNum);			
 	

@@ -60,7 +60,7 @@ public class ThunderController {
 	    log.info("/info - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
 	      	      	      													
 				// A. view 단에 뿌려줘야 하는 것들 
-				// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.	    		
+				// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.	    	
 				ThunderVO clubVO = service.get(cbNum);
 				
 				
@@ -68,14 +68,14 @@ public class ThunderController {
 						
 				//A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
 				UserVO userVO = userService.get((long) clubVO.getCbLeaderNum());
+			
 				log.info("/info- userVO : " + userVO);				
 				
 				//A.3 개설자와 모임에 대한 정보를  view단에 뿌려준다.
 				model.addAttribute("userVO", userVO);								
 				model.addAttribute("clubVO", clubVO);
-							
+																			    			    			    
 				//info로 넘어가는 데이터 - 1.로그인한 유저의 번호, 2.club의 정보, 3.해당 club 개설자의 정보  4, criteria
-												
 				return "/thunder/info";				 				 					 			
 	}
 	
@@ -100,10 +100,14 @@ public class ThunderController {
 	    // A. view 단에 뿌려줘야 하는 것들 
 		// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.
 		ThunderVO clubVO = service.get(cbNum);
+		
+	
 		log.info("/modify- clubVO : " + clubVO);
 				
 		//A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
 		UserVO userVO = userService.get((long) clubVO.getCbLeaderNum());
+		
+		
 		log.info("/modify- clubUserNum : " + userVO.getUsrNum());				
 		
 		//A.3 해당 모임에 대한 정보를  view단에 뿌려준다. userVO.getUsrNum()									
@@ -112,8 +116,8 @@ public class ThunderController {
 		// 로그인한 유저와 개설자의 번호가 일치하지 않으면 list로 돌려보낸다. (사용자가 url로 장난 쳤을 떄 방지)
 		if (loginUser.getUsrNum() != userVO.getUsrNum())
 			return "redirect:/thunder/list";		
-												
-				
+														
+							
 		//modify로 넘어가는 데이터 - 1.club의 정보,  2. criteria
 					return "/thunder/modify"; 					 				
 	}
@@ -126,10 +130,14 @@ public class ThunderController {
 		log.info("/modify - POST");		
 		
 		log.info("modify - club " + Club);
-		
+			
 		if(service.modify(Club)) {
-			rttr.addFlashAttribute("result", "success");
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 수정되었습니다..");
 				}
+		else {
+			rttr.addFlashAttribute("result", "모임 정보가 수정되지 않았습니다.");
+		}
 
 		
 		return "redirect:/thunder/list" + cri.getListLink(); 
@@ -141,8 +149,10 @@ public class ThunderController {
 		log.info("remove - cbNum : " + cbNum);
 		
 		if(service.remove(cbNum)) {
-			// 모달창으로 수정이되거나 삭제되면 구현 할 것!
-			rttr.addFlashAttribute("result", "success");
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 삭제되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "모임 정보가 삭제되지 않았습니다.");
 		}
 		
 //		원래는 이렇게 써야하는데, 아래처럼  '+cri.getListLink()' 해주면 가독성이 좋아진다.
@@ -153,12 +163,10 @@ public class ThunderController {
 		
 		return "redirect:/thunder/list"+ cri.getListLink();
 	}
-	
-	
-	
+			
 
 	@PostMapping("/add") 
-	public String add(Authentication auth, ThunderVO clubVO) {
+	public String add(Authentication auth, ThunderVO clubVO, RedirectAttributes rttr) {
 		log.info("/add - POST");
 									
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
@@ -169,7 +177,14 @@ public class ThunderController {
 	    clubVO.setCbLeaderNum(usrNum);
 	    clubVO.setCbLeaderName(customUser.getUser().getUsrName());
 
-	    service.register(clubVO);	
+	    
+	    if(service.register(clubVO)) {
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 등록되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "모임 정보가 등록되지 않았습니다.");
+		}
+	    	    
 	      
 		log.info("add - clubVO : " + clubVO);
 				 						
@@ -197,10 +212,12 @@ public class ThunderController {
 		log.info("/list - GET");
 		
 		log.info("list - cri : " + cri);
+		// cri에 들어있는 조건 대로, club 정보를 가져온다.
 		model.addAttribute("list", service.getList(cri));
 		
 		log.info("list : " + service.getList(cri));
 
+		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri); 
 		log.info("list - total : " + total);
 		

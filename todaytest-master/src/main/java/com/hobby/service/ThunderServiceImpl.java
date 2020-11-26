@@ -41,14 +41,14 @@ public class ThunderServiceImpl implements ThunderService {
 	}
 
 	@Override
-	public void register(ThunderVO clubVO) {
-		log.info("register ...." + clubVO);
-		mapper.insert(clubVO);
+	public boolean register(ThunderVO clubVO) {
+		log.info("register ...." + clubVO);		
+		return mapper.insert(clubVO) == 1;
 	}
 
 	@Override
 	public boolean modify(ThunderVO club) {
-		log.info("modify...." + club);
+		log.info("modify...." + club);		
 		return mapper.update(club) == 1;
 
 	}

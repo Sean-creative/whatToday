@@ -16,13 +16,12 @@ public interface ThunderService {
 	
 	public ThunderVO get(long cbNum);
 	
-	public void register(ThunderVO clubVO);
+	public boolean register(ThunderVO clubVO);
 						
 	public List<ThunderVO> getList(Criteria cri);
 	
 	public int getTotal(Criteria cri);
-	
-	
+		
 	
 	public boolean modify(ThunderVO clubVO);
 	

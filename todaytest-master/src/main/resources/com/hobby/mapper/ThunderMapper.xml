@@ -37,13 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getList" resultMap="ThunderVO">
-<![CDATA[  select * from club where cbNum > 0 ]]>
+<![CDATA[  select * from club ]]>
 	</select>
 
 
 	<select id="read" resultMap="ThunderVO">
-		select * from club c, thunderDetail
-		td
+		select * from club c, thunderDetail td
 		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum}
 	</select>
 
@@ -51,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
-		<selectKey keyProperty="cbNum" resultType="long"
+		<selectKey keyProperty="cbNum" resultType="int"
 			order="BEFORE">
 			select club_seq.nextval FROM DUAL
 		</selectKey>
@@ -97,8 +96,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		{
 		CALL
 		begin
-		delete from thunderDetail where cbNum=
-		#{cbNum};
+		delete from thunderDetail where cbNum= #{cbNum};
+		
 		delete from club where cbNum= #{cbNum};
 		END
 		}
@@ -179,7 +178,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="criteria"></include>			
 			<![CDATA[  
 			c.cbNum = td.cbNum AND c.cbType='번개모임' AND rownum<= ${pageNum} * ${amount}
-			     
+			order by c.cbNum desc			     
 			)			
 			where rn > (${pageNum}-1) * ${amount} ]]>
 	</select>
@@ -189,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTotalCount" resultType="int">
 		select count(*) from club where
 		<include refid="criteria"></include>
-		(cbNum > 0 AND cbType='번개모임')
+		cbType='번개모임'
 	</select>
 
 
