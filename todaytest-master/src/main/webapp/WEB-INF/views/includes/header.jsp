@@ -29,7 +29,7 @@
 			<ul>
         		<a href ="/" id="user"><sec:authentication property="principal.user.usrName"/>님</a>
             	<a href="/login/logout">로그아웃</a>
-            	<a href="/account/main">마이페이지</a>
+            	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
        	 	</ul>
 		</sec:authorize>

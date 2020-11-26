@@ -4,7 +4,7 @@ var categoryService = (function(){
 	function getCategorylist(param, callback, error){
 		var catClassificationCode = param.catClassificationCode;
 		
-		$.getJSON("/account/categorylist/"+catClassificationCode,function(data){
+		$.getJSON("/mypage/categorylist/"+catClassificationCode,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -25,7 +25,7 @@ var categoryService = (function(){
 var cityService = (function(){
 	function getCitylist(callback, error){
 		
-		$.getJSON("/account/citylist/",function(data){
+		$.getJSON("/mypage/citylist/",function(data){
 			if(callback){
 				callback(data);
 			}
@@ -38,7 +38,7 @@ var cityService = (function(){
 	function getDistrictlist(param, callback, error){
 		var rgName = param.rgName;
 		
-		$.getJSON("/account/districtlist/"+rgName,function(data){
+		$.getJSON("/mypage/districtlist/"+rgName,function(data){
 			if(callback){
 				callback(data);
 			}

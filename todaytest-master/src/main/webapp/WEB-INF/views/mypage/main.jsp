@@ -3,12 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/account.css' />?after">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
 <nav id="nav">
 <div class ="menu">
     <ul>
         <li>
-            <form action="/account/main" method="get">
+            <form action="/mypage/main" method="get">
                 <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
             </form>
         </li>
@@ -18,14 +18,14 @@
             <div class="dropdown-content">
             <ul>
                 <li>
-                <form action="/account/myclub/main" method="post">
+                <form action="/mypage/myclub/main" method="get">
             	<button type="submit">모임관리홈</button>
         		</form>
                 </li>
-                <li>                <form action="/account/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">만남개설</button>
         		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">회원관리</button>
         		</form></li>
                 
@@ -35,17 +35,17 @@
         </div>
         </li>
     <li>
-        <form action="/account/auth_edit" method="get">
+        <form action="/mypage/auth_edit" method="get">
             <button type="submit">회원정보수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/password" method="get">
+        <form action="/mypage/password" method="get">
             <button type="submit">비밀번호수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/auth_leave" method="get">
+        <form action="/mypage/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
         
@@ -75,14 +75,15 @@
 
 
 
-<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="0" end ="1">
-    <li class="cb" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/>
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
+    <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>
+    <input type="hidden" class="cb2" value ="${clubVO.cbType}">
     </li><br>
 </c:forEach>
 
-<c:forEach var="myClub" items="${myClub}" varStatus="status" begin ="2">
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="2">
         <c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
-<li class="cb hideList" style ="display: none" value ="${myClub.cbNum}"><c:out value="[${myClub.cbType}] "/><c:out value="${myClub.cbName}"/></li><br>
+<li class="cb hideList" style ="display: none" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/></li><br>
 <c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
 </c:forEach>
 
@@ -119,6 +120,10 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	if("${msg}" != ""){
+		alert("${msg}");
+	}
 
 	$(".moreList").click(function(){
 		$(".hideList").show();
@@ -142,27 +147,33 @@ $(document).ready(function() {
 		
 
 		/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
+		/*ajax 안쓰고 하는걸로 바꾸기*/
+
 		$('.cb').click(function(e)
-		{
+		{ 
 			let index = $(".cb").index(this);
 			let number = $(".cb").eq(index).val();
-			
+
+			let type = $(".cb").eq(index).children(".cb2").val();
+
 			console.log(index);
 			
 			console.log(number);
 			
+			console.log(type);
+			
 			var str = "";
-			var type= "";
-			clubService.getJoinClub({cbNum:number},function(list){
-				if(list.cbType == '정기'|| list.cbType == '정기모임'){
+			/*var type= "";
+			 clubService.getJoinClub({cbNum:number},function(club){
+				if(club.cbType == '정기'|| club.cbType == '정기모임'){
 					type = "regular"
 				}else{
 					type = "thunder";
-				}
-				console.log(list.cbType);
-				str += '<form action="/'+type+'/info" method="get">';
+				} 
+				console.log(club.cbType);*/
+				str += '<form name="joinClub" method="get">';
 				str += '<input type="hidden" name="cbNum" value="'+number+'">';
-				str += '<button>상세보기</button>';
+				str += '<button name="details">상세보기</button>';
 				str += '</form>';
 				str += '<button>탈퇴하기-아직구현X</button>'
 
@@ -180,7 +191,7 @@ $(document).ready(function() {
 				if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
 				if( divTop + oHeight > sHeight ) divTop -= oHeight;
 
-				// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치하자.
+				// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치.
 				if( divLeft < 0 ) divLeft = 0;
 				if( divTop < 0 ) divTop = 0;
 				
@@ -193,12 +204,30 @@ $(document).ready(function() {
 					"position": "absolute"
 				}).show();
 
-			})
+			/* }) */
+			
+				$("button[name=details]").click(function(){
+		
+					let form = $("form[name=joinClub]");
+				
+
+					if(type == "번개모임"){
+						console.log("번개요");
+						url = "/thunder/info";
+					}else{
+						console.log("정기요");
+						url = "/regular/info";
+					}
+					form.attr("action",url);
+				});
 			
 			
 
 			
 		});
+		
+	
+		
 	
 });
 	

@@ -14,7 +14,6 @@
         <div class="hobbytest"><a href="">취미테스트</a></div>
         <div class="hobbytest hbtn"><a href="/regular/list">정기모임</a></div> 
     </div>
-    
     <!--  정기모임 -->
    <div id="toregular">
         <span>정기모임</span>

@@ -1,11 +1,13 @@
 package com.hobby.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
@@ -24,7 +26,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public UserVO getUser(String id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		return mapper.getUser(id);
 	}
 
@@ -52,8 +54,6 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getPrevClubList(usrNum);
 	}
 
-
-
 	@Override
 	public int updateUserInfo(UserVO userVO) {
 		// TODO Auto-generated method stub
@@ -79,7 +79,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 	
 	@Override
-	public boolean findPwdInDB(String password, String password2) {
+	public boolean comparePwdDB(String password, String password2) {
 		// TODO Auto-generated method stub
 		return password.equals(password2);
 	}
@@ -100,6 +100,7 @@ public class MypageServiceImpl implements MypageService {
 	public List<ClubVO> getMyCreateClubList(Long usrNum) {
 		// TODO Auto-generated method stub
 		return mapper.getMyCreateClubList(usrNum);
+
 	}
 
 	@Override
@@ -127,9 +128,9 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int leaveSite(UserVO userVO) {
+	public int updateUserAuth(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mapper.leaveSite(userVO);
+		return mapper.updateUserAuth(userVO);
 	}
 
 	@Override
@@ -148,7 +149,39 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<RegionVO> getDistrictList(String rgName) {
 		// TODO Auto-generated method stub
-		return mapper.getDistrictList(rgName);
+		return mapper.getDistrictList(rgName);	
+		
+	}
+
+	@Override
+	@Transactional
+	public int updateUserTotalInfo(UserVO userVO) {
+		// TODO Auto-generated method stub
+		int cnt = 0;
+		
+		cnt += mapper.updateUserInfo(userVO);
+		cnt += mapper.updateUserDetail(userVO);
+		if(cnt != 2) {
+			//2이 아니면 강제 롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
+
+	@Override
+	@Transactional
+	public int leaveUser(UserVO userVO) {
+		// TODO Auto-generated method stub
+		int cnt = 0;
+		cnt += mapper.updateUserInfo(userVO);
+		cnt += mapper.insertUserHistory(userVO);
+		cnt += mapper.updateUserAuth(userVO);
+		if(cnt != 3) {
+			//3이 아니면 강제 롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
 	}
 
 
