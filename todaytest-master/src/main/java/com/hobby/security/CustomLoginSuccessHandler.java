@@ -1,6 +1,8 @@
 package com.hobby.security;
 /**
- * 작성자: 김지영
+ * 사용자가 권한이 있는지 확인
+ * 로그인 성공 후 특정 URI로 이동하기 위한 클래스
+ * @author jiyeong 
  */
 import java.io.IOException;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hobby.domain.UserVO;
 
-public interface AccountMapper {
+public interface LoginMapper {
 	
 	public int insert(UserVO user);
 	

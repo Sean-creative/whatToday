@@ -38,8 +38,9 @@
 	</form>
 
 <script type="text/javascript">
-	if("${registerSuccess }" != ""){
-		alert("회원가입 성공! ${registerSuccess}님 반갑습니다.");
+	// 모달창으로 변경 예정
+	if("${registerSuccessMsg }" != ""){
+		alert("회원가입 성공! ${registerSuccessMsg}님 반갑습니다.");
 	}
 </script>
  

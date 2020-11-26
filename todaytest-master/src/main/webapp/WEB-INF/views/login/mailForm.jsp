@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+ <!-- 작성자 : 김지영/ 메일보내기 참고 페이지 : 1:1 문의 하기(메일 보내기)완료되면  삭제하기 -->
 <!DOCTYPE html>
 <html>
 <head>

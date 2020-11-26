@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp"%>
 
-<!-- 작성자: 김지영 -->
+<!-- 작성자: 김지영 // test용 화면 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
