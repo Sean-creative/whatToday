@@ -17,5 +17,7 @@
 	<![CDATA[
 		select * from club where cbType ='번개모임'
 	]]>
+<!--  -->
 </select>
 </mapper>
+
