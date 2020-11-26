@@ -162,7 +162,7 @@ public class MypageServiceImpl implements MypageService {
 		cnt += mapper.updateUserInfo(userVO);
 		cnt += mapper.updateUserDetail(userVO);
 		if(cnt != 2) {
-			//2이 아니면 강제 롤백
+			//2이 아니면 강제 롤백??
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return cnt;
@@ -177,7 +177,7 @@ public class MypageServiceImpl implements MypageService {
 		cnt += mapper.insertUserHistory(userVO);
 		cnt += mapper.updateUserAuth(userVO);
 		if(cnt != 3) {
-			//3이 아니면 강제 롤백
+			//3이 아니면 강제 롤백??
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		

@@ -69,7 +69,6 @@
             <input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
             <input type="hidden" name="usrPwd" value="<c:out value="${userVO.usrPwd }"/>">
             <input type="hidden" name="usrState" value="<c:out value="${userVO.usrState }"/>">
-    
         </div>
     
     </div>
