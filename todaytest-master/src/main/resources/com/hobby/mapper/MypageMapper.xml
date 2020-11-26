@@ -39,7 +39,7 @@
 		set USRPHONE = #{usrPhone},
 		USRPWD = #{usrPwd},
 		USRSTATE = #{usrState}
-		where USRID = #{usrId} 
+		where USRNUM = #{usrNum} 
 	</update>
 	
 	<insert id="insertUserHistory">

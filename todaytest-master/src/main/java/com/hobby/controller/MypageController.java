@@ -150,18 +150,20 @@ public class MypageController {
 		String url = "redirect:/mypage/main";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/editAction");
+		
+		System.out.println(userVO);
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
 			// 부가 정보는 null일시 디폴트값이 정해져있으므로 null값이면 안되는 유저전화번호만 체크한다.
 			if (userVO.getUsrPhone() == null) {
-				rtts.addFlashAttribute("msg", "핸드폰 번호가 입력되지 않았어요!");
+				rtts.addFlashAttribute("msg", "핸드폰 번호가 입력되지 않았어요.");
 				url = "redirect:/mypage/auth_edit/";
 			}
 
 			// 1. edit에서 UserVO의 정보들을 보낸것을 통하여 업데이트가 필요한 테이블들을 업데이트
 			if (service.updateUserTotalInfo(userVO) != 2) {
-				rtts.addFlashAttribute("msg", "회원정보가 업데이트 되지 않았습니다!");
+				rtts.addFlashAttribute("msg", "회원정보가 업데이트 되지 않았어요.");
 				url = "redirect:/mypage/auth_edit/";
 			} else
 				rtts.addFlashAttribute("msg", "회원정보가 업데이트 되었습니다.");
@@ -195,6 +197,8 @@ public class MypageController {
 			url = "redirect:/login/login";
 		} else {
 			// 1. DB에 있는 비밀번호와 사용자가 입력한 비밀번호를 비교하기위해 Authencication에 저장된 usrId를 이용하여 유저 정보를 가져옴.
+			// Authentication에 들어있는 사용자 비밀번호를 쓰고 싶지만 유저가 로그인 상태에서 비밀번호를 바꾸면 같이 바뀌지않고
+			// 새로 로그인해야지 갱신된다함.
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 
