@@ -22,6 +22,13 @@ public interface FaqMapper {
 	public void insertqs(InquireVO inquire);
 	
 	
+	////공지사항///////
+	//공지사항 제목들 
+	public List<FaqVO> noticeList();
+	//공지사항 내용들 
+	public List<FaqVO> noticeContent();
+	
+	
 	
 
 }

@@ -33,8 +33,6 @@ public class FaqServiceImpl implements FaqService{
 		log.info("faqcontent......");
 		return mapper.faqContent();
 	}
-
-	
 	
 	@Override
 	public void register2(InquireVO inquire) {
@@ -43,8 +41,16 @@ public class FaqServiceImpl implements FaqService{
 		mapper.insertqs(inquire);
 	}
 
-	
+	@Override
+	public List<FaqVO> noticeList() {
+		log.info("noticelist...........");
+		return mapper.noticeList();
+	}
 
-
+	@Override
+	public List<FaqVO> noticeContent() {
+		log.info("noticeContent...........");
+		return mapper.noticeList();
+	}
 
 }
