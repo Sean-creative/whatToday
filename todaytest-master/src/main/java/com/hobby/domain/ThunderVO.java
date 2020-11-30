@@ -1,4 +1,5 @@
 package com.hobby.domain;
+
 /**
  * 작성자: 김선우
  */
@@ -12,29 +13,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ThunderVO {
-	
-	// DB 컬럼 수정 완료   -- 2020/11/17
+
+	// DB 컬럼 수정 완료 -- 2020/11/17
 	// DB 속성 -> 총 18개
+	
+	//CLUB 테이블
+
 	// 필수값!
 	// 모임번호
 	private long cbNum;
-	
-	
+
 	// 모임명
 	private String cbName;
-	
+
 	// 모임소개
 	private String cbIntro;
-	
+
 	// 카테고리-분야
 	private String cbCategory;
-	
+
 	// 소분류
 	private String cbSubcat;
-	
+
 	// 정원
 	private long cbMbnum;
-	
+
 	// 해시태그
 	private String cbHashtag;
 	// 지역
@@ -42,13 +45,11 @@ public class ThunderVO {
 	// 세부지역
 	private String cbDistrict;
 
-		
 	// 개설자 번호
 	private long cbLeaderNum;
 	// 현재인원
 	private long cbCurMbnum;
 
-	
 	// 개설자명
 	private String cbLeaderName;
 	// 개설일
@@ -63,13 +64,14 @@ public class ThunderVO {
 	// new
 	// 모임상세내용
 	private String cbDetailContent;
-	
-	// 첨부파일 
+
+	// 첨부파일
 	private String cbFile;
-	
+
 	// 모임상세테이블
 	private ThunderDetailVO thunderDetailVO;
 
+// 	   나중에 builder 쓸 때 참고!
 //	 public static ClubVOBuilder builder(int cl_number) {
 //         if(cl_number <= 0) {
 //             throw new IllegalArgumentException("기본키 부적절");

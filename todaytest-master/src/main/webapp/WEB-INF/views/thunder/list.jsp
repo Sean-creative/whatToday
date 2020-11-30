@@ -86,12 +86,17 @@
 						<c:out value="${thunderItem.cbName}" />
 						<br> [일 정] :
 						<c:out value="${thunderItem.thunderDetailVO.cbDate}" />
+						 
 						<br> [장 소] :
 						<c:out value="${thunderItem.cbDistrict}" />
 						<br> [인 원] :
 						<c:out value="${thunderItem.cbCurMbnum}" />
-						
+						/
 						<c:out value="${thunderItem.cbMbnum}" />
+						
+						<%-- 날짜 포맷 맞출 때 고려해보기
+						<fmt:formatDate pattern = "yyyy/MM/dd" value="${board.regdate}" /> --%>						
+
 					</div>
 				</c:forEach>
 			</div>
