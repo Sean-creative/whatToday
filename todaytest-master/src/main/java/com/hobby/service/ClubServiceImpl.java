@@ -3,6 +3,8 @@ package com.hobby.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
@@ -42,14 +44,6 @@ public class ClubServiceImpl implements ClubService {
 		return mapper.readclub(cbNum);
 	}
 
-	//정기모임 게시판 - 조회
-	@Override
-	public ClubVO get(Long cbBno) {
-		
-		log.info("get......"+ cbBno);
-		return mapper.read(cbBno);
-	}
-
 	//정기모임 게시판 - 목록list (페이징)
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
@@ -66,12 +60,53 @@ public class ClubServiceImpl implements ClubService {
 		return mapper.getList(cl_number);
 	}
 	
+	//정기모임 게시판 - 조회
+	@Override
+	public ClubVO get(Long cbBno) {
+		
+		log.info("get......"+ cbBno);
+		return mapper.read(cbBno);
+	}
+	
+	//정기모임 게시판 - 등록
+	@Override
+	public void boardRegister(ClubVO club) {
+		
+		log.info("boardregister....."+ club);
+		mapper.boardInsertSelectKey(club);
+		mapper.boardInsertDetail(club);
+	}
+	
+	//정기모임 게시판 - 삭제
+	@Override
+	public boolean boardRemove(Long cbBno) {
+		
+		log.info("boardRemove....."+ cbBno);
+		return mapper.boardDelete(cbBno) == 1;
+	}
+	
+	//정기모임 게시판 - 수정
+	@Override
+	@Transactional
+	public int boardModify(ClubVO club){
+		
+		log.info("boardmodify......"+club);
+		int cnt = 0;
+		cnt += mapper.boardUpdate(club);
+		cnt += mapper.boardUpdateContent(club);
+		
+		if(cnt != 2) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+	}
+	
 	//정기모임 게시판 - 조회수
 	@Override
 	public int boardViews(Long cbBno) {
 		
-		log.info("modify......"+ cbBno);
+		log.info("boardviews......"+ cbBno);
 		return mapper.boardViews(cbBno);
 	}
-
 }
