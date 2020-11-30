@@ -83,10 +83,10 @@ function checkId(){
 	    contentType : 'application/json; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
 	    data: JSON.stringify(send),
 	    success: function(data){
-	         if(data==-1){
-	        	 document.getElementById('resultId').innerHTML = "<p class='answer'>아이디를 찾을 수 없습니다.</p>";
-	         }else{
+	         if(data){
 	        	 document.getElementById('resultId').innerHTML = "<p class='answer'>아이디는 " + data + "입니다.</p>";
+	         }else{
+	        	 document.getElementById('resultId').innerHTML = "<p class='answer'>아이디를 찾을 수 없습니다.</p>";
 	         }
 	    },
 	    error: function (){        
@@ -114,12 +114,13 @@ function checkPwd(){
 	    data: email,
 	    
 	    success: function(data){
-	         if(data==-1){
-	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 찾을 수 없습니다.</p>";
-	         }else if(data==0){
-	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 받으실 메일 주소를 다시 입력해주세요</p>";
-	         }else{
+	    	 console.log("data: " + data);
+	         if(data==1){
 	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 메일로 발송하였습니다.</p>";
+	         }else if(data==0){
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 찾을 수 없습니다.</p>";
+	         }else{
+	        	 document.getElementById('resultPwd').innerHTML = "<p class='answer'>비밀번호를 받으실 메일 주소를 다시 입력해주세요</p>";
 	         }
 	    },
 	    error: function (){        

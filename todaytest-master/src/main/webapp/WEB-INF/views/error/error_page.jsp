@@ -9,13 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h4><c:out value="${exception.getMessage()}"></c:out></h4>
-	<ul>
-	 <c:forEach items="${exception.getStackTrace() }" var="stack">
-	 	<li> <c:out value="${stack}"></c:out></li>
-	 </c:forEach>
-	</ul>
-
+<h1>해당 웹페이지를 사용 할 수 없습니다.</h1>
+<a href="/index/main">홈으로 가기</a>
 </body>
 </html>

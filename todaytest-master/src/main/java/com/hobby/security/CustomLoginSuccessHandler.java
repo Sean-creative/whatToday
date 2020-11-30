@@ -1,6 +1,8 @@
 package com.hobby.security;
 /**
- * 작성자: 김지영
+ * 사용자가 권한이 있는지 확인
+ * 로그인 성공 후 특정 URI로 이동하기 위한 클래스
+ * @author jiyeong 
  */
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	}
 	
 	// 회원이 탈퇴되어 있으면 일단 로그아웃 페이지로 
+	// 1차 리뷰 : user테이블 상태로 체크해서 로그인 안되게 
 	if(roleNames.contains("ROLE_MEMBEROUT")) {
 		response.sendRedirect("/login/logout");
 		return;

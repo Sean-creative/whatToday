@@ -1,6 +1,7 @@
 package com.hobby.security;
 /**
- * 작성자: 김지영
+ * 암호화되지 않는 비밀번호로 비밀번호가 일치하는지 확인
+ * @author jiyeong
  */
 import org.springframework.security.crypto.password.PasswordEncoder;
 

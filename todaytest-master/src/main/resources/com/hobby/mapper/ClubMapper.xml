@@ -6,7 +6,7 @@
 <mapper namespace="com.hobby.mapper.ClubMapper">
 
 <!-- 정기모임 개설  -->
-<insert id="clubinsertSelectKey">
+<insert id="clubinsertSelectKey"> <!--insert문이 실행되고 생성된PK값을 알아야 하는 경우-->
    <selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
       select club_seq.nextval from dual
    </selectKey>
