@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
@@ -91,21 +92,28 @@ public class FaqController {
 	    return "redirect:/cs/faq";
 	}
 	
-	// 자주묻는 질문 	
+	// 공지사항 	
 	@GetMapping("/notice")
-	public void noticeRead(Model model) {
+	public void noticeRead( Model model) {
 		
-		log.info("notice");
+		log.info("##notice");
 		
 		//공지사항을 notice라는 이름으로 화면에 보낸다. 
 		model.addAttribute("noticeList", service.noticeList());
 		log.info("servcie.noticeList: \n\n"+ service.noticeList());
-		
+//		
 		System.out.println("model###"+model);
 		
 		//자주묻는 질문 내용을 noticecontent라는 이름으로 화면에 보내준다. 
-		model.addAttribute("noticeContent", service.noticeContent());
-		log.info("servcie.noticeContent: \n\n"+ service.noticeContent());
+//		model.addAttribute("noticeList", service.noticeContent());
+//		log.info("servcie.noticeContent: \n\n"+ service.noticeContent());
+	}
+	
+	@GetMapping("/noticepage")
+	public void noticePage(@RequestParam("ntNum") Long ntNum, Model model) {
+		
+		model.addAttribute("noticePage",service.noticeContent(ntNum));
+		log.info("#####noticePage");
 	}
 	
 }
