@@ -41,7 +41,7 @@ public class LoginController {
 	
 	// 3-0-1. 아이디 중복  검사
 	@ResponseBody
-	@RequestMapping(value = "/idDuplicateCheck", produces="text/plane")
+	@RequestMapping(value = "/idDuplicateCheck", produces="text/plain")
 	public String id_check(@RequestBody String inputValue) {
 		String id = service.idDuplicateCheck(inputValue);
 		// 입력한 아이디와 같은게 있으면 해당 아이디를 반환한다.
@@ -50,7 +50,7 @@ public class LoginController {
 	
 	// 3-0-2. 핸드폰 번호 중복  검사
 	@ResponseBody
-	@RequestMapping(value = "/phoneDuplicateCheck", produces="text/plane")
+	@RequestMapping(value = "/phoneDuplicateCheck", produces="text/plain")
 	public String phone_check(@RequestBody String inputValue) {
 		String phone = service.phoneDuplicateCheck(inputValue);
 		// 입력한 핸드폰 번호와 같은게 있으면 해당 핸드폰 번호를 반환한다.
@@ -66,6 +66,7 @@ public class LoginController {
 		// DB에 회원정보가 정상적으로 입력되었는가
 		// 회원가입 정보 - 5개 테이블에 입력 됨   
 		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
+		// 1차 리뷰 : boolean으로 
 		if(service.register(user) == 5) {
 			// alert로 회원가입 성공 여부 알림
 			rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
@@ -104,6 +105,7 @@ public class LoginController {
 	    
 	    // 사용자가 입력한 이름과 핸드폰번호로 사용자의 아이디를 찾는데 
 	    // 사용자의 아이디가 있으면 사용자의 아이디를 반환한다.
+	    // 1차 리뷰 : 리턴을 빈문자열로 
 	    log.info("##/find ID:  " + id);
 		return id == null ? null : id;
 	}
@@ -122,8 +124,9 @@ public class LoginController {
 		// 사용자가 입력한 이메일(아이디)로 사용자의 비밀번호를 찾는다.		
 		// 1. 비밀번호가 있으면
 		if(pwd!=null) {
-			// 1-1. 비밀번호를 입력한 사용자 이메일로 보낸다.
+			//1-1. 비밀번호를 입력한 사용자 이메일로 보낸다.
 			if(service.sendPassword(inputEmail, pwd)){
+				// 1차리뷰: result enum 처리 어떤가???
 				result = "1";
 			}// 1-2. 메일 보내기에 실패하면 "-1"를 반환한다.
 			else {
