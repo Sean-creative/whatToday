@@ -1,14 +1,18 @@
 package com.hobby.controller;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.hobby.domain.InquireVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.FaqService;
@@ -24,6 +28,9 @@ public class FaqController {
 	
 	private FaqService service;
 	
+	//메일 
+	@Autowired
+	private JavaMailSender mailSender;
 
 // 자주묻는 질문 	
 	@GetMapping("/faq")
@@ -60,14 +67,53 @@ public class FaqController {
 		return "/cs/inquire";	
 	}
 	
-	@PostMapping("/faq")
-	public String inquireRegister(InquireVO inquire, RedirectAttributes rttr) {
-		log.info("register2: ㅣㅣn\n\n\n" + inquire);
-		service.register2(inquire);
-		rttr.addFlashAttribute("result", inquire.getQsNum());
-		
-		return "redirect:/cs/faq";
+	@RequestMapping(value="/mailRequest")
+	public String inquireRegister(HttpServletRequest request) {
+		 log.info("mailRequest####");  
+		String setfrom = request.getParameter("qsEmail");  //사용자 메일 주소         
+		String tomail  = "whattodayhobby@gmail.com";     //운영자 메일 주소 
+	    String title   = request.getParameter("qsTitle");      // 제목
+	    String content = request.getParameter("qsContent");    // 내용
+	   
+	    try {
+	      MimeMessage message = mailSender.createMimeMessage();
+	      MimeMessageHelper messageHelper 
+	                        = new MimeMessageHelper(message, true, "UTF-8");
+	 
+	      messageHelper.setFrom(setfrom);  // 보내는사람 생략하거나 하면 정상작동을 안함
+	      messageHelper.setTo(tomail);     // 받는사람 이메일
+	      messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+	      messageHelper.setText(content);  // 메일 내용
+	     
+	      mailSender.send(message);
+	    } catch(Exception e){
+	      System.out.println(e);
+	    }
+	    return "redirect:/cs/faq";
 	}
 	
+	// 공지사항 	
+	@GetMapping("/notice")
+	public void noticeRead( Model model) {
+		
+		log.info("##notice");
+		
+		//공지사항을 notice라는 이름으로 화면에 보낸다. 
+		model.addAttribute("noticeList", service.noticeList());
+		log.info("servcie.noticeList: \n\n"+ service.noticeList());
+//		
+		System.out.println("model###"+model);
+		
+		//자주묻는 질문 내용을 noticecontent라는 이름으로 화면에 보내준다. 
+//		model.addAttribute("noticeList", service.noticeContent());
+//		log.info("servcie.noticeContent: \n\n"+ service.noticeContent());
+	}
+	
+	@GetMapping("/noticepage")
+	public void noticePage(@RequestParam("ntNum") Long ntNum, Model model) {
+		
+		model.addAttribute("noticePage",service.noticeContent(ntNum));
+		log.info("#####noticePage");
+	}
 	
 }

@@ -11,7 +11,7 @@
             <a href="/cs/inquire">1:1문의사항</a>
         </ul>
     </div>
-    <form role="form" action="/cs/faq" method="post" name="inquire" onsubmit="return inputCheck()">
+    <form role="form" action="/cs/mailRequest" method="post" name="inquire" onsubmit="return inputCheck()">
     <div class="cs_all">
         <h3>1:1 문의하기 </h3>
         
