@@ -1,8 +1,10 @@
+<%@page import="com.mchange.v2.cfg.PropertiesConfigSource.Parse"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
-
+<% int num = 2; 
+%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
 <nav id="nav">
 <div class ="menu">
@@ -57,8 +59,7 @@
 <section id="wrap">
 <div class ="info">
     <div class="pic">
-    	<img src="${userVO.usrImg }" alt="My Image">
-    <button>사진변경</button>
+    	<img src="<c:out value="${userVO.usrImg} "/>" style='width:130px; height:200px;' alt="로 딩 중">
     </div>
 	<div class="userInfo">
 		<p>ID : ${userVO.usrId } </p>
@@ -73,16 +74,16 @@
 <p>가입한 모임</p><br>
 <ul style="list-style-type: none;">
 
+<!-- 보여줄갯수 변수로 설정 -->
 
-
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end = "<%=num%>">
     <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>
     <input type="hidden" class="cb2" value ="${clubVO.cbType}">
     </li><br>
 </c:forEach>
 
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="2">
-        <c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
+<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin = "<%=num+1%>">
+        <c:if test="${status.first}"><p class="moreList">더보기</p></c:if>
 <li class="cb hideList" style ="display: none" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/></li><br>
 <c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
 </c:forEach>

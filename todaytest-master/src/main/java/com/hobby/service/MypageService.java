@@ -1,5 +1,6 @@
 package com.hobby.service;
 
+import java.io.File;
 import java.util.List;
 
 import com.hobby.domain.CategoryVO;
@@ -40,6 +41,9 @@ public interface MypageService {
 	
 	public int updateUserTotalInfo(UserVO userVO);
 	public int leaveUser(UserVO userVO);
+	
+	public String getFolder();
+	public boolean checkImageType(File file);
 
 
 }
