@@ -24,8 +24,20 @@ public interface ClubMapper {
 		
 	//정기모임 게시판 - 조회
 	public ClubVO read(Long cbBno);
+	
+	//정기모임 게시판 - 등록
+	public void boardInsertSelectKey(ClubVO club);
+	
+	//정기모임 게시판 - 등록상세 
+	public void boardInsertDetail(ClubVO club);
 
+	//정기모임 게시판 - 삭제
+	public int boardDelete(Long cbBno);
+	
+	//정기모임 게시판 - 수정
+	public int boardUpdate(ClubVO club);
+	public int boardUpdateContent(ClubVO club);
+	
 	//정기모임 게시판 - 조회수
 	public int boardViews(Long cbBno);
-	
 }

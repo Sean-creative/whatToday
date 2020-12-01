@@ -23,7 +23,16 @@ public interface ClubService {
 	public List<ClubVO> getList(Criteria cri);
 	
 	//정기모임 게시판 - 조회
-	public ClubVO get(Long cbBno);	
+	public ClubVO get(Long cbBno);
+	
+	//정기모임 게시판 - 등록
+	public void boardRegister(ClubVO club);
+
+	//정기모임 게시판 - 삭제
+	public boolean boardRemove(Long cbBno);
+		
+	//정기모임 게시판 - 수정
+	public int boardModify(ClubVO club);
 		
 	//정기모임 게시판 - 조회수
 	public int boardViews(Long cbBno);
