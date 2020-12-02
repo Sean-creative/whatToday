@@ -7,7 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hobby.mapper.ThunderMapper">
 
-	<resultMap type="com.hobby.domain.ThunderDetailVO" id="ThunderDetailVO">
+	<resultMap type="com.hobby.domain.ThunderDetailVO"
+		id="ThunderDetailVO">
 		<result column="cbNum" property="cbNum" />
 		<result column="cbDate" property="cbDate" />
 		<result column="cbAppPeriod" property="cbAppPeriod" />
@@ -24,53 +25,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbHashtag" property="cbHashtag" />
 		<result column="cbIntro" property="cbIntro" />
 		<result column="cbName" property="cbName" />
-		
+
 		<result column="cbLeaderNum" property="cbLeaderNum" />
-		
+
 		<!-- select 할떄만 쓰는 거니까, 현재인원 넣겠음 -->
 		<result column="cbCurMbnum" property="cbCurMbnum" />
-		
+
 		<collection property="thunderDetailVO"
 			resultMap="ThunderDetailVO"></collection>
 	</resultMap>
-	
-	
+
+
 	<select id="getList" resultMap="ThunderVO">
-<![CDATA[ 
-select * from club where cbNum > 0
-]]>
+<![CDATA[  select * from club ]]>
 	</select>
-	
-		
+
+
 	<select id="read" resultMap="ThunderVO">
 		select * from club c, thunderDetail td
 		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum}
 	</select>
-	
+
 
 
 	<insert id="insert">
 		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
-		<selectKey keyProperty="cbNum" resultType="long" order="BEFORE">
+		<selectKey keyProperty="cbNum" resultType="int"
+			order="BEFORE">
 			select club_seq.nextval FROM DUAL
 		</selectKey>
 
 		{
 		CALL
-			begin
-				insert into club
-(cbNum, cbIntro, cbName, cbCategory, cbMbnum, cbSubcat, cbHashtag ,cbCity, cbDistrict, cbType, cbLeaderNum
-,cbLeaderName,cbCurMbnum)
-values(#{cbNum}, #{cbIntro}, #{cbName}, #{cbCategory}, #{cbMbnum},
-#{cbSubcat}, #{cbHashtag}, #{cbCity}, #{cbDistrict}, '번개모임', #{cbLeaderNum}, #{cbLeaderName}, 1);
-					
+		begin
+		insert into club
+		(cbNum, cbIntro, cbName, cbCategory,
+		cbMbnum, cbSubcat, cbHashtag ,cbCity,
+		cbDistrict, cbType, cbLeaderNum
+		,cbLeaderName,cbCurMbnum)
+		values(#{cbNum}, #{cbIntro}, #{cbName},
+		#{cbCategory}, #{cbMbnum},
+		#{cbSubcat}, #{cbHashtag}, #{cbCity},
+		#{cbDistrict}, '번개모임', #{cbLeaderNum},
+		#{cbLeaderName}, 1);
 
-				insert into thunderDetail
-(cbNum,cbDate, cbAppPeriod, cbPlace, cbSupplies)
-values(#{cbNum}, #{thunderDetailVO.cbDate}, #{thunderDetailVO.cbAppPeriod},
-#{thunderDetailVO.cbPlace}, #{thunderDetailVO.cbSupplies});
 
-			END
+		insert into
+		thunderDetail
+		(cbNum,cbDate, cbAppPeriod, cbPlace, cbSupplies)
+		values(#{cbNum}, #{thunderDetailVO.cbDate},
+		#{thunderDetailVO.cbAppPeriod},
+		#{thunderDetailVO.cbPlace},
+		#{thunderDetailVO.cbSupplies});
+
+		END
 		}
 		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, 
 			#{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, 
@@ -80,36 +88,43 @@ values(#{cbNum}, #{thunderDetailVO.cbDate}, #{thunderDetailVO.cbAppPeriod},
 	</insert>
 
 
-	
+
 
 
 	<!-- 일단은, 아예 상태가 변하지 않고, 아예 사라지는 걸로 만들자. -->
 	<delete id="delete">
-	{
-	CALL
+		{
+		CALL
 		begin
-			delete from thunderDetail where cbNum= #{cbNum};
-			delete from club where cbNum= #{cbNum};
-		END
-	}
-	</delete>
-	
-	
-	<update id="update">		
-	{
-	CALL
-		begin
+		delete from thunderDetail where cbNum= #{cbNum};
 		
-			update club set cbIntro=#{cbIntro}, cbName=#{cbName}, cbCategory=#{cbCategory}, 
-			cbMbnum=#{cbMbnum}, cbSubcat=#{cbSubcat}, 
-			cbHashtag=#{cbHashtag}, cbCity=#{cbCity}, cbDistrict=#{cbDistrict}
-			where cbNum = #{cbNum};
-			
-				
-			update thunderDetail set cbDate=#{thunderDetailVO.cbDate}, 
-			cbAppPeriod=#{thunderDetailVO.cbAppPeriod}, cbPlace=#{thunderDetailVO.cbPlace},
-			cbSupplies=#{thunderDetailVO.cbSupplies}
-			where cbNum = #{cbNum};
+		delete from club where cbNum= #{cbNum};
+		END
+		}
+	</delete>
+
+
+	<update id="update">
+		{
+		CALL
+		begin
+
+		update club set cbIntro=#{cbIntro},
+		cbName=#{cbName},
+		cbCategory=#{cbCategory},
+		cbMbnum=#{cbMbnum},
+		cbSubcat=#{cbSubcat},
+		cbHashtag=#{cbHashtag}, cbCity=#{cbCity},
+		cbDistrict=#{cbDistrict}
+		where cbNum = #{cbNum};
+
+
+		update thunderDetail
+		set cbDate=#{thunderDetailVO.cbDate},
+		cbAppPeriod=#{thunderDetailVO.cbAppPeriod},
+		cbPlace=#{thunderDetailVO.cbPlace},
+		cbSupplies=#{thunderDetailVO.cbSupplies}
+		where cbNum = #{cbNum};
 
 		END
 		}
@@ -117,26 +132,26 @@ values(#{cbNum}, #{thunderDetailVO.cbDate}, #{thunderDetailVO.cbAppPeriod},
 
 
 
-
-
-
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
 
-			<if test="category != null  and category != ''">
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
 				AND cbCategory = #{category}
 			</if>
 
-			<if test="subclass != null and subclass != ''">
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
 				AND cbSubcat = #{subclass}
 			</if>
 
-			<if test="city != null and city != ''">
+			<if test="city != null and city != '지역 선택' and city != ''">
 				AND cbCity = #{city}
 			</if>
 
-			<if test="district != null and district != ''">
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
 				AND cbDistrict = #{district}
 			</if>
 
@@ -147,35 +162,33 @@ values(#{cbNum}, #{thunderDetailVO.cbDate}, #{thunderDetailVO.cbAppPeriod},
 	</sql>
 
 
-	<select id="getListWithPaging"
-		resultType="com.hobby.domain.ThunderVO">
+
+	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[ 	
 		select 
-		cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum
+		cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate
 		from
 			(
-				select /*+INDEX_DESC(club club_pk) */
-				rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum
-				from
-				club
+				select /*+INDEX_DESC(c club_pk)*/
+				rownum rn, c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate
+				from club c, thunderDetail td				
 				where 
 				]]>
 
 		<include refid="criteria"></include>			
 			<![CDATA[  
-			rownum<=#{pageNum} * #{amount} AND cbType='번개모임'
-			)
-			
-			where rn > (#{pageNum}-1) * #{amount} ]]> 
+			c.cbNum = td.cbNum AND c.cbType='번개모임' AND rownum<= ${pageNum} * ${amount}
+			order by c.cbNum desc			     
+			)			
+			where rn > (${pageNum}-1) * ${amount} ]]>
 	</select>
-
 
 
 
 	<select id="getTotalCount" resultType="int">
 		select count(*) from club where
 		<include refid="criteria"></include>
-		(cbNum > 0 AND cbType='번개모임')
+		cbType='번개모임'
 	</select>
 
 

@@ -10,6 +10,7 @@
 <div class="bcoran">
 	<a href="/cs/faq">자주묻는질문 </a>
 	<a href="/cs/inquire">1:1 문의사항  </a>
+	<a href="/cs/notice">공지사항</a>
 </div>
 
 <h4>자주묻는 질문입니다.</h4>

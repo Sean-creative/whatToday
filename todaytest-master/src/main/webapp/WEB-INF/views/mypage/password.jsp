@@ -3,12 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/account.css' />?after">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
 <nav id="nav">
 <div class ="menu">
     <ul>
         <li>
-            <form action="/account/main" method="get">
+            <form action="/mypage/main" method="get">
                 <button class="btn1" type="submit">마이페이지</button>
             </form>
         </li>
@@ -18,14 +18,14 @@
             <div class="dropdown-content">
             <ul>
                 <li>
-                <form action="/account/myclub/main" method="post">
+                <form action="/mypage/myclub/main" method="get">
             	<button type="submit">모임관리홈</button>
         		</form>
                 </li>
-                <li>                <form action="/account/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">만남개설</button>
         		</form></li>
-                <li>                <form action="/account/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">회원관리</button>
         		</form></li>
                                
@@ -34,17 +34,17 @@
         </div>
         </li>
     <li>
-        <form action="/account/auth_edit" method="get">
+        <form action="/mypage/auth_edit" method="get">
             <button type="submit">회원정보수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/password" method="get">
+        <form action="/mypage/password" method="get">
             <button type="submit" style="color: yellow">비밀번호수정</button>
         </form>
     </li>
     <li>
-        <form action="/account/auth_leave" method="get">
+        <form action="/mypage/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
         
@@ -70,7 +70,7 @@
 <span class="pwWord">현재 비밀번호 입력</span><input type="password" class="inputPwd" name="currentPassword"><br>
 <span class="pwWord">새로운 비밀번호 입력</span><input type="password" class="inputPwd" name="newPassword"><br>
 <span class="pwWord">새로운 비밀번호 확인</span><input type="password" class="inputPwd" name="newPassword"><br>
-<form name="register" action="/account/passwordAction" onsubmit="return check();" method="post">
+<form name="register" action="/mypage/passwordAction" onsubmit="return check();" method="post">
 <input type="hidden" name="currentPassword" value="">
 <input type="hidden" name="newPassword" value="">
 <button>변경완료</button>
@@ -86,10 +86,10 @@ if("${msg}" != ""){
 
 
 
-    let currentPassword = document.getElementsByName("currentPassword");
-    let newPassword = document.getElementsByName("newPassword");
+let currentPassword = document.getElementsByName("currentPassword");
+let newPassword = document.getElementsByName("newPassword");
     /* 유효성검사, 빈칸검사, 새 비밀번호 맞는지 확인검사 */
-function check(){
+let check = function (){
 	if(blankCheck() &&
 			passwordEqualCheck() && validCheck()){
         currentPassword[1].setAttribute("value", currentPassword[0].value);
@@ -100,7 +100,7 @@ function check(){
 	return false;
 }
     
-function blankCheck(){
+let blankCheck = function (){
 
     if(currentPassword[0].value.length == 0 ||
     		newPassword[0].value.length == 0 ||
@@ -110,7 +110,7 @@ function blankCheck(){
     }
     return true;
 }
-function passwordEqualCheck(){
+let passwordEqualCheck = function (){
 	if(currentPassword[0].value == newPassword[0].value){
 		alert("현재 비밀번호와 새로운 비밀번호를 다르게 입력해주세요");
 		return false
@@ -121,7 +121,7 @@ function passwordEqualCheck(){
 	alert("새비밀번호와 새비밀번호확인이 맞지 않음");
 	return false
 }
-function validCheck() {
+let validCheck = function () {
 	
 	let cpw = document.register.currentPassword;
 	let npw = document.getElementsByName("newPassword")[0];

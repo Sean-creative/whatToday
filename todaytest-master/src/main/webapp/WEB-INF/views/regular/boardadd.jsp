@@ -3,103 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp" %>
-
-<style>
-	*{
-		margin:0;
-		padding:0;
-	}
-	#body {
-		margin: auto;
-		width: 1000px;
-	}
-	#upper {
-        background-color: grey;
-        width: 100%;
-        height: 50px;
-	}
-	#left {
-        background-color: yellowgreen;
-        width: 33.333%;
-        height: 100%;
-		display: inline-block;
-		font-size: 20px;
-		text-align: center;
-		line-height: 50px;
-    }
-    #center {
-        background-color: skyblue;
-        width: 33.333%;
-        height: 100%;
-		display: inline-block;
-		font-size: 20px;
-		text-align: center;
-		line-height: 50px;
-    }
-    #right {
-        background-color: yellow;
-        width: 33.333%;
-        height: 100%;
-		display: inline-block;
-		font-size: 20px;
-		text-align: center;
-		line-height: 50px;
-    }
-    #bodymain {
-        width: 100%;
-	}
-	#clubboard {
-  		font-family: Arial, Helvetica, sans-serif;
- 		border-collapse: collapse;
-  		width: 100%;
-    }		
-	#clubboard td, #clubboard th {
-  		border: 1px solid #ddd;
-  		padding: 8px;
-	}
-	#clubboard th {
-  		padding-top: 12px;
-  		padding-bottom: 12px;
-  		text-align: center;
-  		background-color:whitesmoke;
-	}
-	#createBtn {
-	border: none;
-	background-color: #f44336;
-  	color: white;
-  	padding: 13px 30px;
-  	text-align: center;
-  	font-size: 14px;
-  	margin: 4px 2px;
-  	cursor: pointer;
-  	float: right;
-	}
-	.pullright {
-	text-align: center;
-	}
-
-	.pullright .pagination {
-  	display: -webkit-inline-box;
-	}
-
-	.pullright .pagination a {
-  	color: black;
-  	float: left;
-  	padding: 8px 16px;
-  	text-decoration: none;
-	}
-	.pullright .pagination .paginate_button {
-		display: inline-block;
-	}
-</style>
-<body>
+<link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
 <div id="body">
-	<div id=upper>
-		<div id="left">정보
-		</div><div id="center">게시판
-		</div><div id="right">채팅
-		</div>
+	<div id=banner>
+		<ul>
+			<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
+			<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+			<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li> <!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
+		</ul>
 	</div><div id=bodymain>
 			
 			<form role="form" action="/regular/boardadd" method="post">
@@ -117,8 +29,10 @@
 					<input class="form-control" name='cbBdWriter'>
 				</div>
 				
-				<button type="submit" class="btn btn-default">작성</button>
+				<button type="submit" class="btn btn-default">등록</button>
 				<button type="button" class="btn btn-default">취소</button>
+				
+				<input type="hidden" name="cbNum" value="${cbNum}"/>
 			</form>
 			
 			</div>

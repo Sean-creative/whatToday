@@ -34,6 +34,10 @@ public interface MypageMapper {
 	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	
-	public int leaveSite(UserVO userVO);
+	public int updateUserAuth(UserVO userVO);
+	
+	
+	public int shutClub(ClubVO clubVO);
+	public int leaveClub(UserVO userVO);
 	
 }

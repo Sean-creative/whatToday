@@ -1,5 +1,6 @@
 package com.hobby.service;
 
+import java.io.File;
 import java.util.List;
 
 import com.hobby.domain.CategoryVO;
@@ -34,10 +35,15 @@ public interface MypageService {
 	public int insertUserHistory(UserVO userVO);
 
 	public boolean isPwdValid(String password);
-	public boolean findPwdInDB(String password,String password2);
+	public boolean comparePwdDB(String password,String password2);
 	
-	public int leaveSite(UserVO userVO);
+	public int updateUserAuth(UserVO userVO);
 	
-	public void updateUserInfoAndName(UserVO userVO);
+	public int updateUserTotalInfo(UserVO userVO);
+	public int leaveUser(UserVO userVO);
+	
+	public String getFolder();
+	public boolean checkImageType(File file);
+
 
 }

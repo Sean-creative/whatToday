@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 작성자: 김선우
+ */
 @Getter
 @Setter
 @ToString
@@ -33,16 +36,10 @@ public class Criteria {
 		this.amount = amount;
 	}
 	
-//	public String[] getTypeArr() {			
-////		String[] type = {"category", "subclass", "city", "district"};
-//		  		 		
-//		//일단은 하나라도 NUll이 되지 않도록
-//		return keyword == null? new String[] {}: new String[]{"category", "subclass", "city", "district", "keyword"};
-//	}
-	
-
 	
 	  public String getListLink() {	 
+      //여러개의 파라미터들을 연결해서 URL 형태로 만들어주는 기능 
+	  //URL을 만들어주면 리다이렉트를 하거나, <form> 태그를 사용하는 상황을 많이 줄여줄 수 있다.
 	  UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
 	  .queryParam("pageNum", this.pageNum) 
 	  .queryParam("amount", this.getAmount())
