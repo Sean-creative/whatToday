@@ -419,7 +419,7 @@
 									dataType : 'json',
 									success : function(result) {
 										console.log(result);
-										//히든 밸류 usrImg만들어서 거기에 result path같은거? 넣게하면 대겟지?
+										
 										$("input[name=usrImg]").attr("value",'\\resources\\img\\upload\\'+result.uploadPath+'\\'+result.uuid+'_'+result.fileName)
 								
 										

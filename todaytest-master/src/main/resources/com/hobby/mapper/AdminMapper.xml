@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hobby.mapper.AdminMapper">
+
+	<select id="getUserList" resultType="com.hobby.domain.UserVO">
+		select * from TBLUSER where USRSTATE = '회원'
+	</select>
+	
+	<select id="getUser" resultType="com.hobby.domain.UserVO">
+		select * from USERDETAIL,TBLUSER where USRID = #{id} AND USERDETAIL.usrNum = TBLUSER.usrNum
+	</select>
+	
+	<update id="updateBanUser">
+		update TBLUSER
+		set USRSTATE = '강퇴'
+		where USRNUM = #{usrNum} 
+	</update>
+	
+	<select id="getBanLeaveUser" resultType="com.hobby.domain.UserVO">
+		select * from TBLUSER where USRSTATE = '강퇴' or USRSTATE = '사이트탈퇴'
+	</select>
+	
+	
+</mapper>

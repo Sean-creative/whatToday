@@ -38,7 +38,7 @@ import com.hobby.service.MypageService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import net.coobird.thumbnailator.Thumbnailator;
+
 
 @Controller
 @RequestMapping("/mypage/*")
