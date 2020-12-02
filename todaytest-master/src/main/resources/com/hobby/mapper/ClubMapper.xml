@@ -6,7 +6,7 @@
 <mapper namespace="com.hobby.mapper.ClubMapper">
 
 <!-- 정기모임 개설  -->
-<insert id="clubinsertSelectKey">
+<insert id="clubinsertSelectKey"> <!--insert문이 실행되고 생성된PK값을 알아야 하는 경우-->
    <selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
       select club_seq.nextval from dual
    </selectKey>
@@ -32,7 +32,7 @@
 <select id="getList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select * from clubboard
-	where cbBno > 0 and cbNum = #{cbNum}
+	where cbNum = #{cbNum} order by cbBno desc
 	]]>
 </select>
 
@@ -49,12 +49,45 @@
 
 <!-- 정기모임 게시판 - 조회 -->
 <select id="read" resultType="com.hobby.domain.ClubVO">
-	select * from clubboard where cbBno = #{cbBno}
+	select c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter 
+	from CLUBBOARD c, CLUBBOARDCONTENT d
+	where c.cbBno = d.cbBno and c.cbBno = #{cbBno}
 </select>
+
+<!-- 정기모임 게시판 - 등록 -->
+<insert id="boardInsertSelectKey">
+	<selectKey keyProperty="cbBno" order="BEFORE" resultType="long">
+		 select CLUBBOARD_seq.nextval from dual
+  	</selectKey>
+  	
+  	insert into CLUBBOARD (cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate)
+  	values (#{cbBno},#{cbNum},#{cbBdWriter},#{cbBdTitle},SYSDATE)
+</insert>
+
+<insert id="boardInsertDetail">
+	insert into CLUBBOARDCONTENT (cbBno, cbNum, cbBdContent)
+	values (#{cbBno},#{cbNum},#{cbBdContent})
+</insert>
+
+<!-- 정기모임 게시판 - 삭제 -->
+<delete id="boardDelete">
+	delete from CLUBBOARD where cbBno = #{cbBno}
+</delete>
+
+<!-- 정기모임 게시판 - 수정 -->
+<update id="boardUpdate">
+	update CLUBBOARD set cbBdWriter = #{cbBdWriter}, cbBdTitle=#{cbBdTitle}, cbBdDate=sysdate
+	where cbBno = #{cbBno}
+</update>
+
+<update id="boardUpdateContent">
+	update CLUBBOARDCONTENT set cbBdContent=#{cbBdContent}
+	where cbBno = #{cbBno}
+</update>
 
 <!-- 정기모임 게시판 - 조회수 -->
 <update id="boardViews">
-	update clubboard set cbBdView = cbBdView + 1 
+	update CLUBBOARD set cbBdView = cbBdView + 1 
 	where cbBno = #{cbBno}
 </update>
 
