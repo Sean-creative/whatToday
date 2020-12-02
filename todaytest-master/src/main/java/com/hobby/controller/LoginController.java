@@ -60,14 +60,11 @@ public class LoginController {
 	// 3. 회원가입 처리
 	@PostMapping("/registerAction")
 	public String registerAction(UserVO user, RedirectAttributes rtts) {
-		
 		log.info("##/registerAction: " + user);
-		
 		// DB에 회원정보가 정상적으로 입력되었는가
 		// 회원가입 정보 - 5개 테이블에 입력 됨   
 		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
-		// 1차 리뷰 : boolean으로 
-		if(service.register(user) == 5) {
+		if(service.register(user)) {
 			// alert로 회원가입 성공 여부 알림
 			rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
 			return "redirect:/login/login";
@@ -141,3 +138,4 @@ public class LoginController {
 	}
 	
 }
+
