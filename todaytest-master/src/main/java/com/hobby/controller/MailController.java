@@ -30,7 +30,6 @@ public class MailController {
 		mailSender.send(message);
 		
 	}
-
 	
 }
 
