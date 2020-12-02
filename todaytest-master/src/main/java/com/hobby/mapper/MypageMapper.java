@@ -15,6 +15,7 @@ public interface MypageMapper {
 	public ClubVO getJoinClub(Long cbNum);
 
 	public List<UserVO> getUserList();
+	public List<UserVO> getOldFiles();
 	public List<ClubVO> getMyClubList(Long usrNum);
 	public List<ClubVO> getWaitClubList(Long usrNum);
 	public List<ClubVO> getPrevClubList(Long usrNum);

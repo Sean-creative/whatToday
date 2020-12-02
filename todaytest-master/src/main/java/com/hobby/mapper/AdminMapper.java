@@ -2,16 +2,19 @@ package com.hobby.mapper;
 
 import java.util.List;
 
+import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 /**
- * ì‘ì„±ì: êµ­ë¯¼ì„±
+ * ÀÛ¼ºÀÚ : ±¹¹Î¼º
  */
 public interface AdminMapper {
 	
 	public List<UserVO> getUserList();
+	public List<UserVO> getBanLeaveUser();
+	public List<ClubVO> getClubList();
+	
 	public UserVO getUser(String id);
 	
-	public List<UserVO> getBanLeaveUser();
 	
 	public int updateBanUser(Long userNum);
 }

@@ -48,11 +48,16 @@ public class AdminController {
 	}
 	
 	@GetMapping("/banLeaveUser")
-		public void banLeaveUser(Model model) {
+	public void banLeaveUser(Model model) {
 		
-			model.addAttribute("userVO",service.getBanLeaveUser());
-			
-		}
+		model.addAttribute("userVO",service.getBanLeaveUser());
+		
+	}
+	
+	@GetMapping("/clubmanage")
+	public void clubmanage(Model model) {
+		model.addAttribute("clubVO",service.getClubList());
+	}
 
 	
 	@RequestMapping(value = "/usermanage/userlist", produces = { MediaType.TEXT_XML_VALUE,

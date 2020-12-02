@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.AdminMapper;
 
@@ -41,6 +42,12 @@ public class AdminServiceImpl implements AdminService{
 	public List<UserVO> getBanLeaveUser() {
 		
 		return mapper.getBanLeaveUser();
+	}
+
+	@Override
+	public List<ClubVO> getClubList() {
+		
+		return mapper.getClubList();
 	}
 
 	

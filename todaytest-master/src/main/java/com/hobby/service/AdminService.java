@@ -2,6 +2,7 @@ package com.hobby.service;
 
 import java.util.List;
 
+import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 
 public interface AdminService {
@@ -13,4 +14,6 @@ public interface AdminService {
 	public List<UserVO> getBanLeaveUser();
 	
 	public int updateBanUser(long usrNum);
+	
+	public List<ClubVO> getClubList();
 }

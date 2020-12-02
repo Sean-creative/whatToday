@@ -351,7 +351,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#clubInfoModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -380,56 +380,62 @@
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>최근로그인일시</th>
-                                            <th>상태</th>  
+                                            <th>모임명</th>
+                                            <th>타입</th>
+                                            <th>개설자</th>
+                                            <th>카테고리</th>
+                                            <th>세부카테고리</th>
+                                            <th>지역</th>
+                                            <th>세부지역</th>
+                                            <th>정원</th> 
+                                            <th>현재원</th> 
+                                            <th>생성일</th> 
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>최근 로그인</th>
-                                            <th>회원상태</th>  
+                                            <th>모임명</th>
+                                            <th>타입</th>
+                                            <th>개설자</th>
+                                            <th>카테고리</th>
+                                            <th>세부카테고리</th>
+                                            <th>지역</th>
+                                            <th>세부지역</th>
+                                            <th>정원</th> 
+                                            <th>현재원</th> 
+                                            <th>생성일</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     
-                                     <c:forEach var="userVO" items="${userVO}">
+                                     <c:forEach var="clubVO" items="${clubVO}">
                                     <tr>
-                                    	<td>${userVO.usrNum }</td>
+                                    	<td>${clubVO.cbNum }</td>
                                     	<td>
                                     	<button class="onModal" 
-                                    	data-usrnum="${userVO.usrNum }"
-                                    	data-usrimg="${userVO.usrImg }"
-                                    	data-usrid="${userVO.usrId }" 
-                                    	data-usrname="${userVO.usrName }" 
-                                    	data-usrphone="${userVO.usrPhone }"
-                                    	data-usrgender="${userVO.usrGender }"
-                                    	data-usrbirth="${userVO.usrBirth }"
-                                    	data-usrjoindate="${userVO.usrJoinDate }"
-                                    	data-usrlogindate="${userVO.usrLoginDate }"
-                                    	data-usrstate="${userVO.usrState }"
-                                    	data-usrnum="${userVO.usrNum }"
-                                    	type="button" data-toggle="modal" data-target="#userInfoModal">${userVO.usrId }</button>
+                                    	data-cbnum="${clubVO.cbNum }"
+                                    	data-cbname="${clubVO.cbName }" 
+                                    	data-cbtype="${clubVO.cbType }"
+                                    	data-cbledername="${clubVO.cbLeaderName }"
+                                    	data-cbcategory="${clubVO.cbCategory }"
+                                    	data-cbsubcat="${clubVO.cbSubcat }"
+                                    	data-cbcity="${clubVO.cbCity }"
+                                    	data-cbdistrict="${clubVO.cbDistrict }"
+                                    	data-cbmbnum="${clubVO.cbMbNum }"
+                                    	data-cbcurmbnum="${clubVO.cbCurMbNum }"
+                                    	data-cbmakedate="${clubVO.cbMakeDate }"
+                                    	type="button" data-toggle="modal" data-target="#clubInfoModal">${clubVO.cbName }</button>
                                     	</td>
-                                    	<td>${userVO.usrName }</td>
-                                    	<td>${userVO.usrPhone }</td>
-                                    	<td>${userVO.usrGender }</td>
-                                    	<td>${userVO.usrBirth }</td>
-                                    	<td>${userVO.usrJoinDate }</td>
-                                    	<td>${userVO.usrLoginDate }</td>
-                                    	<td>${userVO.usrState }</td>
+                                    	<td>${clubVO.cbType }</td>
+                                    	<td>${clubVO.cbLeaderName }</td>
+                                    	<td>${clubVO.cbCategory }</td>
+                                    	<td>${clubVO.cbSubcat }</td>
+                                    	<td>${clubVO.cbCity }</td>
+                                    	<td>${clubVO.cbDistrict }</td>
+                                    	<td>${clubVO.cbMbNum }</td>
+                                    	<td>${clubVO.cbCurMbNum }</td>
+                                    	<td>${clubVO.cbMakeDate }</td>
                                     </tr>
                                     </c:forEach>
                                     </tbody>
@@ -466,7 +472,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="clubInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -477,22 +483,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
-                	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
-                	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
-                	전화번호 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
-                	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
-                	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
-                	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
-                	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
-                	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
+                	모임명 <input type="text" id="cbName" name="cbName" style="border:none" readonly="readonly"><br>
+                	타입 <input type="text" id="cbType" name=""cbType"" style="border:none" readonly="readonly"><br>
+                	개설자 <input type="text" id="cbLeaderName" name="cbLeaderName" style="border:none" readonly="readonly"><br>
+                	카테고리 <input type="text" id="cbCategory" name="cbCategory" style="border:none" readonly="readonly"><br>
+                	세부카테고리 <input type="text" id="cbSubcat" name=""cbSubcat"" style="border:none" readonly="readonly"><br>
+                	지역 <input type="text" id="cbCity" name="cbCity" style="border:none" readonly="readonly"><br>
+                	세부지역<input type="text" id="cbDistrict" name="cbDistrict" style="border:none" readonly="readonly"><br>
+                	정원<input type="text" id="cbMbNum" name=""cbMbNum"" style="border:none" readonly="readonly"><br>
+                	현재원<input type="text" id="cbCurMbNum" name="cbCurMbNum" style="border:none" readonly="readonly"><br>
+                	생성일<input type="text" id=cbMakeDate name="cbMakeDate" style="border:none" readonly="readonly"><br>
 
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="/admin/banAction">
-                    <button class="btn btn-primary">강퇴</button>
-                    <input type="hidden" id="usrNum" name="usrNum">
+                    <form action="#">
+                    <button class="btn btn-primary">폐쇄</button>
                     </form>
                 </div>
             </div>
@@ -521,27 +527,28 @@
 		
  		$(".onModal").on("click",function(){
 			let index = $(".onModal").index(this)
-			let usrId = $(".onModal").eq(index).data("usrid");
-			let usrName = $(".onModal").eq(index).data("usrname");
-			let usrImg = $(".onModal").eq(index).data("usrimg");
-			let usrPhone = $(".onModal").eq(index).data("usrphone");
-			let usrGender = $(".onModal").eq(index).data("usrgender");
-			let usrBirth = $(".onModal").eq(index).data("usrbirth");
-			let usrJoinDate = $(".onModal").eq(index).data("usrjoindate");
-			let usrLoginDate = $(".onModal").eq(index).data("usrlogindate");
-			let usrState = $(".onModal").eq(index).data("usrstate");
-			let usrNum = $(".onModal").eq(index).data("usrnum");
+			let cbName = $(".onModal").eq(index).data("cbname");
+			let cbType = $(".onModal").eq(index).data("cbtype");
+			let cbLeaderName = $(".onModal").eq(index).data("cbledername");
+			let cbCategory = $(".onModal").eq(index).data("cbcategory");
+			let cbSubcat = $(".onModal").eq(index).data("cbsubcat");
+			let cbCity = $(".onModal").eq(index).data("cbcity");
+			let cbDistrict = $(".onModal").eq(index).data("cbdistrict");
+			let cbMbNum = $(".onModal").eq(index).data("cbmbnum");
+			let cbCurMbNum = $(".onModal").eq(index).data("cbcurmbnum");
+			let cbMakeDate = $(".onModal").eq(index).data("cbmakedate");
 
-			$("#usrImg").attr("src",usrImg);
-			$("#usrId").val(usrId);
-			$("#usrName").val(usrName);
-			$("#usrPhone").val(usrPhone);
-			$("#usrGender").val(usrGender);
-			$("#usrBirth").val(usrBirth);
-			$("#usrJoinDate").val(usrJoinDate);
-			$("#usrLoginDate").val(usrLoginDate);
-			$("#usrState").val(usrState);
-			$("#usrNum").val(usrNum);
+
+			$("#cbName").val(cbName);
+			$("#cbType").val(cbType);
+			$("#cbLeaderName").val(cbLeaderName);
+			$("#cbCategory").val(cbCategory);
+			$("#cbSubcat").val(cbSubcat);
+			$("#cbCity").val(cbCity);
+			$("#cbDistrict").val(cbDistrict);
+			$("#cbMbNum").val(cbMbNum);
+			$("#cbCurMbNum").val(cbCurMbNum);
+			$("#cbMakeDate").val(cbMakeDate);
 		}); 
 		
 	

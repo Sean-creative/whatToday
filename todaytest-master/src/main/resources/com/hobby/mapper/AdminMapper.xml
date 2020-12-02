@@ -21,5 +21,9 @@
 		select * from TBLUSER where USRSTATE = '강퇴' or USRSTATE = '사이트탈퇴'
 	</select>
 	
+	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
+		select * from CLUB
+	</select>
+	
 	
 </mapper>

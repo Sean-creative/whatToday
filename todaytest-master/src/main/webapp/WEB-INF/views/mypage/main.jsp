@@ -59,7 +59,8 @@
 <section id="wrap">
 <div class ="info">
     <div class="pic">
-    	<img src="<c:out value="${userVO.usrImg} "/>" style='width:130px; height:200px;' alt="로 딩 중">
+    	<img style='width:100px; height:100px;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
+		alt="로딩중"/>
     </div>
 	<div class="userInfo">
 		<p>ID : ${userVO.usrId } </p>

@@ -35,7 +35,8 @@
 		set USRPHONE = #{usrPhone},
 		USRPWD = #{usrPwd},
 		USRSTATE = #{usrState},
-		USRIMG = #{usrImg}
+		USRIMG = #{usrImg},
+		USRIMGPATH = #{usrImgPath}
 		where USRNUM = #{usrNum} 
 	</update>
 	
@@ -83,6 +84,10 @@
 
 	<select id="getDistrictList" resultType="com.hobby.domain.RegionVO">
 	select * from REGION where RGCLASSIFICATIONCODE = (select RGCODE from region where RGNAME = #{rgName})
+	</select>
+	
+	<select id="getOldFiles"  resultType="com.hobby.domain.UserVO">
+		select USRIMG, USRIMGPATH from TBLUSER where USRIMGPATH = to_char(sysdate -1,'yyyy\mm\dd')
 	</select>
 	
 </mapper>

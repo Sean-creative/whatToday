@@ -325,7 +325,8 @@ public class MypageController {
 	@ResponseBody
 	public ResponseEntity<AttachFileDTO> uploadFormPost(MultipartFile uploadFile){
 		
-		AttachFileDTO list = new AttachFileDTO();
+		AttachFileDTO imgFile = new AttachFileDTO();
+		//각자 컴퓨터 경로로 바꿔야할듯
 		String uploadFolder = "C:\\Users\\sudal\\Desktop\\workspace\\todaytest-master\\src\\main\\webapp\\resources\\img\\upload";
 		
 		//make folder---
@@ -363,12 +364,12 @@ public class MypageController {
 				if(service.checkImageType(saveFile)) {
 					attachDTO.setImage(true);
 				}
-				list = attachDTO;
+				imgFile = attachDTO;
 			}catch(Exception e) {
 				log.error(e.getMessage());
 			}
 		
-		return new ResponseEntity<>(list,HttpStatus.OK);
+		return new ResponseEntity<>(imgFile,HttpStatus.OK);
 	}
 
 
