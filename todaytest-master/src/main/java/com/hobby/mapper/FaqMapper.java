@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
+import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeVO;
 
 public interface FaqMapper {
@@ -20,11 +21,13 @@ public interface FaqMapper {
 	//문의내용 
 	public void insertqs(InquireVO inquire);
 	
-	////공지사항///////
+	////공지사항read ///////
 	//공지사항 제목들 
 	public List<NoticeVO> noticeList();
 	//공지사항 내용들 
 	public List<NoticeVO> noticeContent(Long ntNum);
 	
+	// 공지사항 페이징처리
+	public List<NoticeVO> noticeListWithPaging(NoticeCri cri);
 
 }

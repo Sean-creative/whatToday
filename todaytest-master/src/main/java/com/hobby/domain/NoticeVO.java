@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class NoticeVO {
 	//------------공지사항 ----------//	
-		//공지사항 읽어오기
 		//공지사항번호 
 		private Long ntNum;
 		//회원구분

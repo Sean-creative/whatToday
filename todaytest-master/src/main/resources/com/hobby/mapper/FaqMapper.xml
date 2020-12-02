@@ -47,9 +47,27 @@
 <!-- 공지사항  내용   -->
 <select id="noticeContent" resultType="com.hobby.domain.NoticeVO">
 	<![CDATA[	 
-		select notice.ntTitle, noticeContent.ntNum, noticeContent.ntContent
+		 select notice.ntTitle, noticeContent.ntNum, noticeContent.ntContent
 		 from notice, noticeContent
-		 where notice.ntNum = noticeContent.ntNum and notice.ntNum = #{ntNum}
+		 where notice.ntNum = noticeContent.ntNum and notice.ntNum = #{ntNum} 
 	]]>
 </select>
+
+<!-- 공지사항 페이징 처리  -->
+<select id="noticeListWithPaging" resultType="com.hobby.domain.NoticeVO">
+	<![CDATA[	 
+		select ntNum, ntUsrClassification,ntTitle,ntDate,ntContent
+		from 
+			(
+			select /*+ INDEX_DESC(notice)*/ 
+			rownum rn, n.ntNum, n.ntUsrClassification, n.ntTitle, n.ntDate, nc.ntContent
+		from notice n, noticeContent nc
+		where rownum <= #{pageNum} * #{amount} and n.ntNum = nc.ntNum
+		)
+		where rn > (#{pageNum} -1) * #{amount}
+	]]>
+</select>
+
+<!-- 공지사항 넣기 -->
+
 </mapper>
