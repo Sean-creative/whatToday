@@ -12,7 +12,6 @@
 		<security:form-login login-page ="/login/login" authentication-success-handler-ref="customLoginSuccess"/>
 		 	
 		<!--<security:form-login login-page ="/account/login" />-->
-		<security:logout logout-url="/login/logout" invalidate-session="true" />
 		
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" />
 

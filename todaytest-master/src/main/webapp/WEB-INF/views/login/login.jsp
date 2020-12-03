@@ -18,12 +18,12 @@
 			<label>이메일(아이디) </label>
 			<!-- type="email" test하고  바꾸기 -->
 			<input class="input-field" type="text" placeholder="Email"
-				name="username">
+				name="username" value = "${username }">
 		</div>
 
 		<div class="input-container">
 			<label>비밀번호 </label> <input class="input-field" type="password"
-				placeholder="Password" name="password">
+				placeholder="Password" name="password" value = "${password }">
 		</div>
 		
 		<div>
@@ -33,6 +33,9 @@
 	
 		<a href="/login/register">회원가입</a>
 		<a href="/login/find">아이디/비밀번호 찾기</a>
+		<br>
+		<a href="https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=	
+http://192.168.1.14:8080/login/kakaoLogin&response_type=code">카카오 로그인</a><br>
 
 		<button type="submit" class="btn">LOG IN</button>
 	</form>

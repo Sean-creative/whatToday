@@ -59,6 +59,20 @@ public class LoginServiceImpl implements LoginService{
 		
 		return resultCount == 5;
 	}
+	
+	@Transactional
+	@Override
+	public boolean snsRegister(UserVO user) {
+		log.info("##Service : snsRegister");
+		
+		int resultCount = 0;
+		
+		resultCount += mapper.insert(user);
+		resultCount += mapper.insertUserInfo(user);
+		resultCount += mapper.insertAuth();
+		
+		return resultCount == 3;
+	}
 
 	@Override
 	public String findUserId(String usrName, String usrPhone) {

@@ -7,6 +7,8 @@ import com.hobby.domain.UserVO;
 
 public interface LoginService {
 	public boolean register(UserVO user);
+
+	public boolean snsRegister(UserVO user);
 	
 	public String idDuplicateCheck(String us_id);
 
@@ -17,4 +19,5 @@ public interface LoginService {
 	public String findUserPwd(String us_id);
 
 	public boolean sendPassword(String email, String pwd);
+	
 }

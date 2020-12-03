@@ -5,16 +5,24 @@ package com.hobby.controller;
  */
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.hobby.domain.UserVO;
 import com.hobby.service.LoginService;
+import com.hobby.sns.KakaoLoginApi;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -136,6 +144,74 @@ public class LoginController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value ="/kakaoLogin", produces = "application/json" , method = RequestMethod.GET)
+	public String KakaoLogin(@RequestParam("code") String code, RedirectAttributes ra, HttpSession session,
+			HttpServletResponse response, Model model) throws Exception{
+		
+		JsonNode accessToken;
+		 
+        // JsonNode트리형태로 토큰받아온다
+        JsonNode jsonToken = KakaoLoginApi.getKakaoAccessToken(code);
+        // 여러 json객체 중 access_token을 가져온다
+        accessToken = jsonToken.get("access_token");
+
+        JsonNode userInfo = KakaoLoginApi.getKakaoUserInfo(accessToken);
+        System.out.println("###userInfo: " + userInfo);
+  
+
+        // 유저정보 카카오에서 가져오기 Get properties
+        JsonNode properties = userInfo.path("properties");
+        JsonNode kakao_account = userInfo.path("kakao_account");
+        
+        String usrId = kakao_account.path("email").asText();
+        // Get id
+        // 카카오에서 제공하는 id(고유값)을 우리 사이트에서는 비밀번호로 사용 
+        String usrPwd = userInfo.path("id").asText();
+        String usrName = properties.path("nickname").asText();
+        
+//        String profile_image = properties.path("profile_image").asText();
+ 
+        System.out.println("id : " + usrId);
+        System.out.println("name : " + usrPwd);
+        System.out.println("email : " + usrName);
+      
+        if (service.idDuplicateCheck(usrId) == null) {
+        	// 이메일이 db없으면 회원가입
+   
+        	UserVO user = new UserVO();
+        	user.setUsrId(usrId);
+        	user.setUsrPwd(usrPwd);
+        	user.setUsrName(usrName);
+        	user.setUsrPhone("");
+        	user.setUsrGender("");
+        	user.setUsrBirth("");
+        	user.setUsrType("카카오 회원가입");
+        	
+        	service.snsRegister(user);
+        }
+
+        if (usrId != null) {
+            session.setAttribute("userId", usrId);
+            session.setAttribute("token", accessToken);
+//            session.setAttribute("img", profile_image);
+        }
+        	model.addAttribute("username", usrId);
+        	model.addAttribute("password", usrPwd);
+
+        	return "/login/login";
+	}
+	
+    @RequestMapping(value = "/kakaoLogout", produces = "application/json")
+    public String kakaoLogout(HttpSession session) {
+        //kakao restapi 객체 선언
+        //노드에 로그아웃한 결과값음 담아줌 매개변수는 세션에 잇는 token을 가져와 문자열로 변환
+        JsonNode node = KakaoLoginApi.logout(session.getAttribute("token").toString());
+        //결과 값 출력
+        System.out.println("로그인 후 반환되는 아이디 : " + node.get("id"));
+        return "redirect:/board/list";
+    }
+	
 	
 }
 
