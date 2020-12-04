@@ -14,6 +14,16 @@
    insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
    values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
 </insert>
+                             
+<insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
+	values (CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'승인',sysdate) 
+</insert>
+
+<insert id="clubinsertJoinMember"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMbStResult, cbAppDate)
+	values (#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'승인',sysdate) 
+</insert> 
 
 <!-- 정기모임 목록  -->
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">
@@ -24,7 +34,7 @@
 
 <!-- 정기모임 상세정보  -->
 <select id="readclub" resultType="com.hobby.domain.ClubVO">
-	select cbNum,cbName,cbHashtag,cbIntro,cbDetailContent from club 
+	select cbNum,cbName,cbLeaderName,cbHashtag,cbIntro,cbDetailContent from club 
 	where cbNum = #{cbNum}
 </select>
 
@@ -91,4 +101,16 @@
 	where cbBno = #{cbBno}
 </update>
 
+<!-- 정기모임 가입  -->
+
+<insert id="clubJoin">
+	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
+	values (CLUBJOINHISTORY_SEQ.nextval,#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},'승인대기',sysdate) 
+</insert>
+
+<insert id="clubJoinMember">
+	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMemIntro, cbMbStResult, cbAppDate)
+	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
+</insert> 
+	
 </mapper>

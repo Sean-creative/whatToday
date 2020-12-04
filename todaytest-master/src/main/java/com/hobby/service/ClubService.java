@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.UserVO;
 
 public interface ClubService {
 	
@@ -36,5 +37,8 @@ public interface ClubService {
 		
 	//정기모임 게시판 - 조회수
 	public int boardViews(Long cbBno);
+	
+	//정기모임 가입 
+	public void clubJoin(ClubVO club, UserVO userVO);
 
 }

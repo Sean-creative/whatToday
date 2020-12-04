@@ -34,6 +34,11 @@ public class ClubController {
 	   
 	   club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); //유효성검사
 	   
+//	   CustomUser customUser = (CustomUser) auth.getPrincipal();
+//	   Long usrNum = customUser.getUser().getUsrNum();
+//	   
+//	   club.setCbLeaderNum(usrNum);
+	   
 	   service.registerClub(club);
 	   
 	   //일회성으로 데이터를 전달하는 용도 (전달된 값은 url뒤에 붙지 않는다.)
@@ -167,4 +172,28 @@ public class ClubController {
 	   }
 	   return "redirect:/regular/board?cbNum="+club.getCbNum();
    }
+   
+   //정기모임 가입
+   @PostMapping("/clubjoin")
+   public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr) {
+	   
+	   CustomUser customUser = (CustomUser) auth.getPrincipal();
+	   UserVO userVO = customUser.getUser();
+	   
+	   service.clubJoin(club,userVO);
+	   
+	   rttr.addFlashAttribute("usrName", userVO.getUsrName());
+	   rttr.addFlashAttribute("usrNum", userVO.getUsrNum());
+	   rttr.addFlashAttribute("cbType", club.getCbType());
+	   rttr.addFlashAttribute("cbName", club.getCbName());
+	   //일회성으로 데이터를 전달하는 용도 (전달된 값은 url뒤에 붙지 않는다.)
+	   rttr.addFlashAttribute("cbNum", club.getCbNum());
+	   
+	   log.info("##/add 회원번호는 :" + userVO.getUsrNum());
+	   log.info("##/add 회원이름는 :" + userVO.getUsrName());
+	   log.info("###clubjoin: " + club);
+	   
+	   return "/index/main";
+   }
+
 }
