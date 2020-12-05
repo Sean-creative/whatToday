@@ -21,7 +21,7 @@ public class ThunderDetailVO {
 	//THUNDERDETAIL 테이블
 	
 	//모임번호(기본키)
-	private long cbNum;
+	private Long cbNum;
 	
 	// 모임유형
 	private String cbType;
@@ -37,5 +37,13 @@ public class ThunderDetailVO {
 	
 	//모임 준비물
 	private String cbSupplies;
+	
+	
+	//모임좌표 -> 위도, 경도 
+	private String cbLocation;
+		
+	//모임주소
+	private String cbAddress;
+
 	
 }
