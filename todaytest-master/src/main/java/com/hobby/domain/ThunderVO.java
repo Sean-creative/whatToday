@@ -21,7 +21,7 @@ public class ThunderVO {
 
 	// 필수값!
 	// 모임번호
-	private long cbNum;
+	private Long cbNum;
 
 	// 모임명
 	private String cbName;
@@ -36,7 +36,7 @@ public class ThunderVO {
 	private String cbSubcat;
 
 	// 정원
-	private long cbMbnum;
+	private Long cbMbnum;
 
 	// 해시태그
 	private String cbHashtag;
@@ -46,9 +46,10 @@ public class ThunderVO {
 	private String cbDistrict;
 
 	// 개설자 번호
-	private long cbLeaderNum;
+	private Long cbLeaderNum;
+
 	// 현재인원
-	private long cbCurMbnum;
+	private Long cbCurMbnum;
 
 	// 개설자명
 	private String cbLeaderName;

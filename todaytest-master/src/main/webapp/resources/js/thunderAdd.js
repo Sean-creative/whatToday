@@ -214,7 +214,7 @@
 		return false;
 	}
 
-	if (!mbnum || mbnum < 0) {
+	if (!mbnum || mbnum < 1) {
 		alert("모임인원을 다시 입력해주세요.");
 		return false;
 	}
@@ -224,7 +224,8 @@
 		return false;
 	}
 
-	if (!hashtag || hashtag.length > 30) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (hashtag.length > 30) {
 		alert("해시태그를 다시 입력해주세요.");
 		return false;
 	}
@@ -244,11 +245,14 @@
 		return false;
 	}
 
-	if (!supplies || supplies.length > 50) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (supplies.length > 50) {
 		alert("모임 준비물을 다시 입력해주세요.");
 		return false;
 	}
-	if (!intro || intro.length > 300) {
+	
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (intro.length > 300) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
