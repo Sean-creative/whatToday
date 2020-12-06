@@ -14,7 +14,7 @@
 	<update id="updateBanUser">
 		update TBLUSER
 		set USRSTATE = '강퇴'
-		where USRNUM = #{usrNum} 
+		where USRID = #{id} 
 	</update>
 	
 	<select id="getBanLeaveUser" resultType="com.hobby.domain.UserVO">
@@ -25,5 +25,19 @@
 		select * from CLUB
 	</select>
 	
+	<select id="getClubMemberList" resultType="com.hobby.domain.UserVO">
+		select usrnum, usrname from clubmember where cbnum = #{cbNum}
+	</select>
+	
+	<insert id="insertUserHistory">
+	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
+	</insert>
+	
+	<update id="updateUserAuth">
+		update userauth
+		set  auth = 'ROLE_MEMBEROUT'
+		where  USRNUM = #{usrNum}
+	</update>
 	
 </mapper>

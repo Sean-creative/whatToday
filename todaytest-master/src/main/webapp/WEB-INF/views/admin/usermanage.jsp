@@ -376,7 +376,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
@@ -399,40 +399,10 @@
                                             <th>성별</th>
                                             <th>생일</th>
                                             <th>가입일</th>
-                                            <th>최근 로그인</th>
-                                            <th>회원상태</th>  
+                                            <th>최근로그인일시</th>
+                                            <th>상태</th> 
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                    
-                                     <c:forEach var="userVO" items="${userVO}">
-                                    <tr>
-                                    	<td>${userVO.usrNum }</td>
-                                    	<td>
-                                    	<button class="onModal" 
-                                    	data-usrnum="${userVO.usrNum }"
-                                    	data-usrimg="${userVO.usrImg }"
-                                    	data-usrid="${userVO.usrId }" 
-                                    	data-usrname="${userVO.usrName }" 
-                                    	data-usrphone="${userVO.usrPhone }"
-                                    	data-usrgender="${userVO.usrGender }"
-                                    	data-usrbirth="${userVO.usrBirth }"
-                                    	data-usrjoindate="${userVO.usrJoinDate }"
-                                    	data-usrlogindate="${userVO.usrLoginDate }"
-                                    	data-usrstate="${userVO.usrState }"
-                                    	data-usrnum="${userVO.usrNum }"
-                                    	type="button" data-toggle="modal" data-target="#userInfoModal">${userVO.usrId }</button>
-                                    	</td>
-                                    	<td>${userVO.usrName }</td>
-                                    	<td>${userVO.usrPhone }</td>
-                                    	<td>${userVO.usrGender }</td>
-                                    	<td>${userVO.usrBirth }</td>
-                                    	<td>${userVO.usrJoinDate }</td>
-                                    	<td>${userVO.usrLoginDate }</td>
-                                    	<td>${userVO.usrState }</td>
-                                    </tr>
-                                    </c:forEach>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -490,10 +460,10 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="/admin/banAction">
-                    <button class="btn btn-primary">강퇴</button>
-                    <input type="hidden" id="usrNum" name="usrNum">
-                    </form>
+                    <!-- <form action="/admin/banAction">
+                    <input type="hidden" name="usrId"> -->
+                    <button class="btn btn-primary" id="banUser" type='button' data-dismiss="modal">강퇴</button>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -519,30 +489,103 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
- 		$(".onModal").on("click",function(){
-			let index = $(".onModal").index(this)
-			let usrId = $(".onModal").eq(index).data("usrid");
-			let usrName = $(".onModal").eq(index).data("usrname");
-			let usrImg = $(".onModal").eq(index).data("usrimg");
-			let usrPhone = $(".onModal").eq(index).data("usrphone");
-			let usrGender = $(".onModal").eq(index).data("usrgender");
-			let usrBirth = $(".onModal").eq(index).data("usrbirth");
-			let usrJoinDate = $(".onModal").eq(index).data("usrjoindate");
-			let usrLoginDate = $(".onModal").eq(index).data("usrlogindate");
-			let usrState = $(".onModal").eq(index).data("usrstate");
-			let usrNum = $(".onModal").eq(index).data("usrnum");
+			 
+			let table = $('#userTable').DataTable({
+			 "createdRow": function( row, data, dataIndex ) {
+		        	$(row).attr("data-toggle","modal");
+		        	$(row).attr("data-target","#userInfoModal");
+		        	
+		        },
 
-			$("#usrImg").attr("src",usrImg);
-			$("#usrId").val(usrId);
-			$("#usrName").val(usrName);
-			$("#usrPhone").val(usrPhone);
-			$("#usrGender").val(usrGender);
-			$("#usrBirth").val(usrBirth);
-			$("#usrJoinDate").val(usrJoinDate);
-			$("#usrLoginDate").val(usrLoginDate);
-			$("#usrState").val(usrState);
-			$("#usrNum").val(usrNum);
-		}); 
+		     ajax: {
+		        'url':'/admin/usermanage/userlist.json',
+		        
+		        //'type': 'POST',
+		        'dataSrc':''
+		     },
+		    columns: [
+		        {"data": "usrNum"},
+		        {"data": "usrId"},
+		        {"data": "usrName"}, 
+		        {"data": "usrPhone"},
+		        {"data": "usrGender"},
+		        {"data": "usrBirth"},
+		        {"data": "usrJoinDate"},
+		        {"data": "usrLoginDate"},
+		        {"data": "usrState"},
+		        {"data": "usrImgPath"},
+		        {"data": "usrImg"}
+		        
+		    ],
+		    "columnDefs":[{
+		    	"targets":[9,10],
+		    	"searchable":false,
+		    	"visible":false
+		    }]
+		});
+		 
+		 $('#userTable tbody').on('click', 'tr', function (){
+			var data = table.row(this).data();
+			console.log(data);
+			
+			let usrImgPath = data.usrImgPath
+			let usrImg = data.usrImg
+			let imgAdress = "\\resources\\img\\upload\\"+usrImgPath+"\\"+usrImg;
+			
+			$("#usrImg").attr("src",imgAdress);
+			$("input[name=usrId]").val(data.usrId);
+			$("#usrName").val(data.usrName);
+			$("#usrPhone").val(data.usrPhone);	
+			$("#usrGender").val(data.usrGender);
+			$("#usrBirth").val(data.usrBirth);
+			$("#usrJoinDate").val(data.usrJoinDate);
+			$("#usrLoginDate").val(data.usrLoginDate);
+			$("#usrState").val(data.usrState);
+			
+		 });
+		 
+		 $('#banUser').on('click',function(){
+			 
+			 let usrId = $("input[name=usrId]").val();
+			 console.log(usrId);
+			 $.ajax({
+				 url: "/admin/usermanage/updateBanUser/",
+				 type:"PUT",
+				 data: JSON.stringify({usrId:usrId}),
+				 dataType: "json",
+				 contentType : "application/json; charset=utf-8",
+				 success: function(data){ 
+					 console.log(data);
+					 }
+				 }); 
+			 
+			 
+			 });
+		 
+		 let insertUserHistory = function(){
+			 let usrId = $("input[name=usrId]").val();
+			 let usrState = "강퇴";
+			 $.ajax({
+				 type : 'post',
+				 url : "/admin/usermanage/insertUserHistory/",
+				 data : JSON.stringify(),
+				 cntentType: "application/json; charset=utf-8",
+				 success : function(result, status, xhr){
+					if(callback){
+					 callback(result);
+					}
+				 },
+				 error : function(xhr,status,er){
+					 if(error){
+						 error(er);
+					 }
+				 }
+			 })
+		 }
+		 $('#userInfoModal').on('hidden.bs.modal', function () {
+			 table.ajax.reload();
+		 })
+		
 		
 	
 

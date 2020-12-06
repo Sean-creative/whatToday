@@ -13,7 +13,13 @@ public interface AdminService {
 	
 	public List<UserVO> getBanLeaveUser();
 	
-	public int updateBanUser(long usrNum);
+	public int updateBanUser(String id);
 	
 	public List<ClubVO> getClubList();
+	
+	public List<UserVO> getClubMemberList(Long usrNum);
+	
+	public int insertUserHistory(UserVO userVO);
+	
+	public int updateUserAuth(UserVO userVO);
 }

@@ -59,7 +59,7 @@
 <section id="wrap">
 <div class ="info">
     <div class="pic">
-    	<img style='width:100px; height:100px;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
+    	<img style='width:100%; height:100%;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
 		alt="로딩중"/>
     </div>
 	<div class="userInfo">
@@ -76,6 +76,7 @@
 <ul style="list-style-type: none;">
 
 <!-- 보여줄갯수 변수로 설정 -->
+<!-- 추후 AJAX로 변경할것 -->
 
 <c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end = "<%=num%>">
     <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>

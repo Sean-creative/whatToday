@@ -376,13 +376,13 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="clubTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
                                             <th>모임명</th>
                                             <th>타입</th>
-                                            <th>개설자</th>
+                                            <th>모임장</th>
                                             <th>카테고리</th>
                                             <th>세부카테고리</th>
                                             <th>지역</th>
@@ -397,7 +397,7 @@
                                             <th>번호</th>
                                             <th>모임명</th>
                                             <th>타입</th>
-                                            <th>개설자</th>
+                                            <th>모임장</th>
                                             <th>카테고리</th>
                                             <th>세부카테고리</th>
                                             <th>지역</th>
@@ -407,38 +407,7 @@
                                             <th>생성일</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                    
-                                     <c:forEach var="clubVO" items="${clubVO}">
-                                    <tr>
-                                    	<td>${clubVO.cbNum }</td>
-                                    	<td>
-                                    	<button class="onModal" 
-                                    	data-cbnum="${clubVO.cbNum }"
-                                    	data-cbname="${clubVO.cbName }" 
-                                    	data-cbtype="${clubVO.cbType }"
-                                    	data-cbledername="${clubVO.cbLeaderName }"
-                                    	data-cbcategory="${clubVO.cbCategory }"
-                                    	data-cbsubcat="${clubVO.cbSubcat }"
-                                    	data-cbcity="${clubVO.cbCity }"
-                                    	data-cbdistrict="${clubVO.cbDistrict }"
-                                    	data-cbmbnum="${clubVO.cbMbNum }"
-                                    	data-cbcurmbnum="${clubVO.cbCurMbNum }"
-                                    	data-cbmakedate="${clubVO.cbMakeDate }"
-                                    	type="button" data-toggle="modal" data-target="#clubInfoModal">${clubVO.cbName }</button>
-                                    	</td>
-                                    	<td>${clubVO.cbType }</td>
-                                    	<td>${clubVO.cbLeaderName }</td>
-                                    	<td>${clubVO.cbCategory }</td>
-                                    	<td>${clubVO.cbSubcat }</td>
-                                    	<td>${clubVO.cbCity }</td>
-                                    	<td>${clubVO.cbDistrict }</td>
-                                    	<td>${clubVO.cbMbNum }</td>
-                                    	<td>${clubVO.cbCurMbNum }</td>
-                                    	<td>${clubVO.cbMakeDate }</td>
-                                    </tr>
-                                    </c:forEach>
-                                    </tbody>
+                                   
                                 </table>
                             </div>
                         </div>
@@ -484,21 +453,21 @@
                 </div>
                 <div class="modal-body">
                 	모임명 <input type="text" id="cbName" name="cbName" style="border:none" readonly="readonly"><br>
-                	타입 <input type="text" id="cbType" name=""cbType"" style="border:none" readonly="readonly"><br>
-                	개설자 <input type="text" id="cbLeaderName" name="cbLeaderName" style="border:none" readonly="readonly"><br>
+                	타입 <input type="text" id="cbType" name="cbType" style="border:none" readonly="readonly"><br>
+                	모임장 <input type="text" id="cbLeaderName" name="cbLeaderName" style="border:none" readonly="readonly"><br>
                 	카테고리 <input type="text" id="cbCategory" name="cbCategory" style="border:none" readonly="readonly"><br>
-                	세부카테고리 <input type="text" id="cbSubcat" name=""cbSubcat"" style="border:none" readonly="readonly"><br>
+                	세부카테고리 <input type="text" id="cbSubcat" name="cbSubcat" style="border:none" readonly="readonly"><br>
                 	지역 <input type="text" id="cbCity" name="cbCity" style="border:none" readonly="readonly"><br>
                 	세부지역<input type="text" id="cbDistrict" name="cbDistrict" style="border:none" readonly="readonly"><br>
-                	정원<input type="text" id="cbMbNum" name=""cbMbNum"" style="border:none" readonly="readonly"><br>
+                	정원<input type="text" id="cbMbNum" name="cbMbNum" style="border:none" readonly="readonly"><br>
                 	현재원<input type="text" id="cbCurMbNum" name="cbCurMbNum" style="border:none" readonly="readonly"><br>
                 	생성일<input type="text" id=cbMakeDate name="cbMakeDate" style="border:none" readonly="readonly"><br>
-
                 </div>
+                <div class="modal-member"></div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
                     <form action="#">
-                    <button class="btn btn-primary">폐쇄</button>
+                    <button class="btn btn-danger">폐쇄</button>
                     </form>
                 </div>
             </div>
@@ -524,34 +493,126 @@
 	<script src="/resources/admin/js/list.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		
- 		$(".onModal").on("click",function(){
-			let index = $(".onModal").index(this)
-			let cbName = $(".onModal").eq(index).data("cbname");
-			let cbType = $(".onModal").eq(index).data("cbtype");
-			let cbLeaderName = $(".onModal").eq(index).data("cbledername");
-			let cbCategory = $(".onModal").eq(index).data("cbcategory");
-			let cbSubcat = $(".onModal").eq(index).data("cbsubcat");
-			let cbCity = $(".onModal").eq(index).data("cbcity");
-			let cbDistrict = $(".onModal").eq(index).data("cbdistrict");
-			let cbMbNum = $(".onModal").eq(index).data("cbmbnum");
-			let cbCurMbNum = $(".onModal").eq(index).data("cbcurmbnum");
-			let cbMakeDate = $(".onModal").eq(index).data("cbmakedate");
 
-
-			$("#cbName").val(cbName);
-			$("#cbType").val(cbType);
-			$("#cbLeaderName").val(cbLeaderName);
-			$("#cbCategory").val(cbCategory);
-			$("#cbSubcat").val(cbSubcat);
-			$("#cbCity").val(cbCity);
-			$("#cbDistrict").val(cbDistrict);
-			$("#cbMbNum").val(cbMbNum);
-			$("#cbCurMbNum").val(cbCurMbNum);
-			$("#cbMakeDate").val(cbMakeDate);
-		}); 
+		let table = $('#clubTable').DataTable({
+			 "createdRow": function( row, data, dataIndex ) {
+		        	$(row).attr("data-toggle","modal");
+		        	$(row).attr("data-target","#clubInfoModal");
+		        	
+		        },
+		     bAutoWidth: true,
+		     ajax: {
+		        'url':'/admin/clubmanage/clublist.json',
+		        
+		        //'type': 'POST',
+		        'dataSrc':''
+		     },
+		     columnDefs: [
+		         { targets: [11], visible: false, searchable: false}
+		         
+		     ],
+		    columns: [
+		        {"data": "cbNum"},
+		        {"data": "cbName"},
+		        {"data": "cbType"}, 
+		        {"data": "cbLeaderName"},
+		        {"data": "cbCategory"},
+		        {"data": "cbSubcat"},
+		        {"data": "cbCity"},
+		        {"data": "cbDistrict"},
+		        {"data": "cbMbNum"},
+		        {"data": "cbCurMbNum"},
+		        {"data": "cbMakeDate"},
+		        {"data": "cbLeaderNum"}
+		    ]
+		     
+		});
 		
-	
+		
+		 $('#clubTable tbody').on('click', 'tr', function (){
+				var data = table.row(this).data();
+				console.log(data);
+				
+				$("#cbNum").val(data.cbNum);
+				$("#cbName").val(data.cbName);	
+				$("#cbType").val(data.cbType);
+				$("#cbLeaderName").val(data.cbLeaderName);
+				$("#cbCategory").val(data.cbCategory);
+				$("#cbSubcat").val(data.cbSubcat);
+				$("#cbCity").val(data.cbCity);
+				$("#cbDistrict").val(data.cbDistrict);
+				$("#cbMbNum").val(data.cbMbNum);
+				$("#cbCurMbNum").val(data.cbCurMbNum);
+				$("#cbMakeDate").val(data.cbMakeDate);
+				
+				getClubMember(data);
+				
+		 });
+		 
+		 const getClubMember = function(data){
+		 
+		 $.ajax({
+	           type:"GET",
+
+	           url:"/admin/clubmanage/clubmemberlist/"+data.cbNum+".json",
+
+	           dataType:"JSON",
+
+	           success : function(list) {
+	        	   console.log(list);
+	        	   let str = "";
+	        	   for(let i = 0; i < list.length; i++){
+	        		   if(data.cbLeaderNum == list[i].usrNum){
+	        			   str += list[i].usrName;
+	        			   continue;
+	        		   }
+	        		   str += list[i].usrName+ "<button name='updateLeader'class='btn btn-primary' type='button'>모임장위임</button><br>";
+	        	   }
+	       		
+
+	        	   $(".modal-member").empty();
+	        	   $(".modal-member").append(str);
+	        	   
+	           },
+
+	           complete : function(list) {
+
+	           },
+
+	           error : function(xhr, status, error) {
+
+	                 alert("에러발생");
+
+	           }
+		});
+		};
+		
+/* 		const updateClubLeader = function(){
+			
+		    $.ajax({
+		        url: "나와바야알겠다"
+		        type:"post",
+		        cache : false,
+		        success: function(data){ 
+		         console.log(data);
+		        }
+		      });
+		     
+		  } */
+
+		 
+
+		 
+
+				
+
+ 		$('.modal').on('hidden.bs.modal', function (e) {
+ 		    console.log('modal close');
+ 		});
+ 		
+ 		$(document).on("click", "button[name=updateLeader]", function(){
+ 		    alert("ok");
+ 		});
 
 	});
 	

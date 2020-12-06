@@ -30,12 +30,10 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.getUser(id);
 	}
 
-
-	
 	@Override
-	public int updateBanUser(long usrNum) {
+	public int updateBanUser(String id) {
 		
-		return mapper.updateBanUser(usrNum);
+		return mapper.updateBanUser(id);
 	}
 
 	@Override
@@ -48,6 +46,23 @@ public class AdminServiceImpl implements AdminService{
 	public List<ClubVO> getClubList() {
 		
 		return mapper.getClubList();
+	}
+
+	@Override
+	public List<UserVO> getClubMemberList(Long cbNum) {
+		
+		return mapper.getClubMemberList(cbNum);
+	}
+	
+	@Override
+	public int insertUserHistory(UserVO userVO) {
+		return mapper.insertUserHistory(userVO);
+	}
+
+	@Override
+	public int updateUserAuth(UserVO userVO) {
+		
+		return mapper.updateUserAuth(userVO);
 	}
 
 	
