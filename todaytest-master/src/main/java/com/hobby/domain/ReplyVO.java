@@ -1,5 +1,7 @@
 package com.hobby.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,7 @@ public class ReplyVO {
 	private Long cbNum;
 	private String reply;
 	private String replyer;
-	private String replyDate;
-	private String updateDate;
+	private Date replyDate;
+	private Date updateDate;
 
 }

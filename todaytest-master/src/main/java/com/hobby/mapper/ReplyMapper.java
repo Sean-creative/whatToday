@@ -10,7 +10,7 @@ public interface ReplyMapper {
 	public int insert(ReplyVO vo);
 	
 	//댓글 조회
-	public ReplyVO read(Long cbBno);
+	public ReplyVO read(Long rno);
 	
 	//댓글 삭제
 	public int delete(Long rno);
