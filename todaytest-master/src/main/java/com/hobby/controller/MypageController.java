@@ -1,23 +1,36 @@
 package com.hobby.controller;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 /**
  * 작성자 : 국민성
  */
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.hobby.domain.AttachFileDTO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.MypageService;
@@ -25,6 +38,7 @@ import com.hobby.service.MypageService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/mypage/*")
@@ -53,7 +67,7 @@ public class MypageController {
 			// 1.1 회원 정보를 가져와서 모델에 넣음
 			model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 
-			// 2. 회원정보를 통해서 현재가입모임을 가져와서 모델에 넣음
+			// 2. 현재가입모임을 가져와서 모델에 넣음 - 가입신청했던 날짜순으로 출력함
 			model.addAttribute("clubVO", service.getMyClubList(usrNum));
 
 			// 가입대기중인 모임 / 이전에 가입한 모임 => 모임가입이 구현되면써먹을것.
@@ -73,7 +87,7 @@ public class MypageController {
 		if (auth == null) {
 			url = "redirect:/login/login";
 		} else {
-			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴
+			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴 - 모임 만든지 오래된 순으로 가져옴
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			model.addAttribute("clubVO", service.getMyCreateClubList(customUser.getUser().getUsrNum()));
 		}
@@ -113,7 +127,7 @@ public class MypageController {
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
 			UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 			System.out.println(userVO);
-
+			
 			// 2-1. 비밀번호 유효성검사, 가져온 유저정보와 비교해서 맞는지 Check하고 수정페이지로 보냄
 			if (password != null && service.isPwdValid(password)
 					&& service.comparePwdDB(password, userVO.getUsrPwd())) {
@@ -276,7 +290,86 @@ public class MypageController {
 
 		return url;
 	}
+	
+	@GetMapping("/uploadUserImage")
+	public void uploadUserImage() {
+		log.info("uploadUserImage");
+	}
 
+	
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(String fileName){
+		
+		log.info("fileName: "+fileName);
+		
+		File file = new File("c:\\upload\\"+fileName);
+		
+		log.info("file: " + file);
+		
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			HttpHeaders header = new HttpHeaders();
+			
+			header.add("Content-type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	@PostMapping(value = "/uploadFormAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public ResponseEntity<AttachFileDTO> uploadFormPost(MultipartFile uploadFile){
+		
+		AttachFileDTO list = new AttachFileDTO();
+		String uploadFolder = "C:\\Users\\sudal\\Desktop\\workspace\\todaytest-master\\src\\main\\webapp\\resources\\img\\upload";
+		
+		//make folder---
+		String uploadFolderpath = service.getFolder();
+		
+		File uploadPath = new File(uploadFolder, uploadFolderpath);
+		log.info("upload path: " + uploadPath);
+		
+		if(uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		}
+		//make yyyy/MM/dd folder
+		
+		
+			
+			AttachFileDTO attachDTO = new AttachFileDTO(); 
+			String uploadFileName = uploadFile.getOriginalFilename();
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			log.info("only file name: " + uploadFileName);
+			attachDTO.setFileName(uploadFileName);
+			
+			UUID uuid = UUID.randomUUID();
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+		
+			
+			
+			try {
+				File saveFile = new File(uploadPath, uploadFileName);
+				uploadFile.transferTo(saveFile);
+				
+				attachDTO.setUuid(uuid.toString());
+				attachDTO.setUploadPath(uploadFolderpath);
+				//check image type file
+				if(service.checkImageType(saveFile)) {
+					attachDTO.setImage(true);
+				}
+				list = attachDTO;
+			}catch(Exception e) {
+				log.error(e.getMessage());
+			}
+		
+		return new ResponseEntity<>(list,HttpStatus.OK);
+	}
 
 
 ////	// ajax로 내가 가입한 클럽 리스트 db 가져옴

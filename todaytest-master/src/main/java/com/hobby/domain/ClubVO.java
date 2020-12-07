@@ -69,7 +69,7 @@ public class ClubVO {
 
 	private String cbBdTitle;
 
-	private Date cbBdDate;
+	private String cbBdDate;
 
 	private Long cbBdView;
 	

@@ -25,7 +25,7 @@
 				<tr>
 					<td><c:out value="${club.cbBno}" /></td>
 					<td>
-					<a class='move' href='<c:out value="${club.cbBno }"/>'> 
+					<a href='/regular/boardget?cbNum=<c:out value="${cbNum}"/>&cbBno=<c:out value="${club.cbBno }"/>'> 
 					<c:out value="${club.cbBdTitle }" /></a></td>
 					<td><c:out value="${club.cbBdWriter}" /></td>
 					<td><c:out value="${club.cbBdDate}" /></td>
@@ -35,7 +35,7 @@
 			</table>
 			</div> 
 		
-<%-- 		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
+ 		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
 		
 			<div class='pullright'>
 				<ul class="pagination">
@@ -53,9 +53,9 @@
 						</c:if>						
 					</ul>
 			</div>
-			<!--  end Pagination --> --%>
+			<!--  end Pagination --> 
 		</div>
-			<%-- <form id='actionForm' action="/regular/board" method='get'>
+		    <form id='actionForm' action="/regular/board" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 			</form>		
@@ -76,13 +76,13 @@
 							
 							actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 							actionForm.submit();
-						}); --%>
+						});
 						
-						<!-- $("#createBtn").on("click", function() {
+						$("#createBtn").on("click", function() {
 							
-							self.location = "/regular/boardadd";
+							self.location = "/regular/boardadd?cbNum=<c:out value="${cbNum}" />";
 						});				
 				});
-</script> -->
+</script>
 
 <%@include file="../includes/footer.jsp" %>
