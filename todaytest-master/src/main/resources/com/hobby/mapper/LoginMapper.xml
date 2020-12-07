@@ -29,7 +29,7 @@
 
 <insert id="insert">
 	insert into tbluser(usrNum, usrClassification, usrId, usrPwd, usrName, usrPhone, usrGender, usrBirth, usrJoinDate, usrType, usrState, usrLoginDate, usrImg, usrChangePwdDate)  
-	values(tbluser_seq.nextval, '회원', #{usrId}, #{usrPwd},#{usrName}, #{usrPhone}, #{usrGender}, #{usrBirth}, sysdate, '일반회원가입', '회원', sysdate, '이미지', sysdate)
+	values(tbluser_seq.nextval, '회원', #{usrId}, #{usrPwd},#{usrName}, #{usrPhone}, #{usrGender}, #{usrBirth}, sysdate, #{usrType}, '회원', sysdate, '이미지', sysdate)
 </insert>   
 
 <insert id="insertUserInfo">

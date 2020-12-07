@@ -35,6 +35,8 @@
 			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 웹소켓을 위한 설정(비동기 지원) : 1대 다 통신을 할때 필요한 비동기 설정 -->
+		<async-supported>true</async-supported>
 		
 		<multipart-config>
 			<location>C:\\upload\\tmp</location>

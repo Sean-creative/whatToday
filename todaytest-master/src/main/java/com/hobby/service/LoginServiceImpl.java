@@ -43,12 +43,11 @@ public class LoginServiceImpl implements LoginService{
 
 	@Transactional
 	@Override
-	public int register(UserVO user) {
+	public boolean register(UserVO user) {
 		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
 		// 테이블에 insert가 잘되면 행(1)을 반환
-		// 5개 테이블에 잘 들어갔는 지 확인 // 질문: 트랜잭션처리 했는데 또 확인 해야 하나?
-		// 1차리뷰: resultCount 필요없을듯
-		// mapper.inser(user);
+		// 5개 테이블에 잘 들어갔는 지 확인
+
 		int resultCount = 0;
 		log.info("##Service : register");
 		
@@ -57,8 +56,22 @@ public class LoginServiceImpl implements LoginService{
 		resultCount += mapper.insertUserTerms(user);
 		resultCount += mapper.insertUserHistory(user);
 		resultCount += mapper.insertAuth();
-
-		return resultCount;
+		
+		return resultCount == 5;
+	}
+	
+	@Transactional
+	@Override
+	public boolean snsRegister(UserVO user) {
+		log.info("##Service : snsRegister");
+		
+		int resultCount = 0;
+		
+		resultCount += mapper.insert(user);
+		resultCount += mapper.insertUserInfo(user);
+		resultCount += mapper.insertAuth();
+		
+		return resultCount == 3;
 	}
 
 	@Override

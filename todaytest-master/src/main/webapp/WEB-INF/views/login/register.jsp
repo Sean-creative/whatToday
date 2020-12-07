@@ -67,6 +67,8 @@
 				placeholder="Birthday" name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
 		</div>
 		
+		<input name="usrType" value="일반회원가입">
+		
 		<p>관심정보</p>
 		<p>관심정보는 선택사항이며 선택하지 않아도 회원가입이 가능합니다.</p>
 		<div class="input-container">
@@ -233,7 +235,7 @@
 				return false;
 			}
 			if(document.getElementById('idDuplicateCheck').value == ""){
-				ㄹ("아이디 중복체크를 확인하세요");
+				alert("아이디 중복체크를 확인하세요");
 				return false;
 			}
 			if(pwdInput.value == ""){

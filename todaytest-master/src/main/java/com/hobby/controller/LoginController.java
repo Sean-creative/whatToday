@@ -1,44 +1,64 @@
 package com.hobby.controller;
-/**
- * 회원가입 / 로그인 / 아이디/비밀번호 찾기 페이지 관리
- * @author jiyeong
- */
+
+import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.LoginService;
+import com.hobby.sns.KakaoLoginApi;
+import com.hobby.sns.NaverLoginDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+
+/**
+ * 회원가입 / 로그인 / 아이디/비밀번호 찾기 페이지 관리
+ * @author jiyeong
+ */
+
 
 @Controller
 @Log4j
 @RequestMapping("/login/*")
 @AllArgsConstructor
 public class LoginController {
-	
+
 	private LoginService service;
-	
+
 	//1 . 로그인 화면 요청
 	@GetMapping("/login")
 	public void login() {
 		log.info("##/login");
 	}
-	
+
 	// 2. 회원가입 화면 요청
 	@GetMapping("/register")
 	public void register() {
 		log.info("##/register");
 	}
-	
+
 	// 3-0-1. 아이디 중복  검사
 	@ResponseBody
 	@RequestMapping(value = "/idDuplicateCheck", produces="text/plain")
@@ -47,7 +67,7 @@ public class LoginController {
 		// 입력한 아이디와 같은게 있으면 해당 아이디를 반환한다.
 		return id == null ? null : id;
 	}
-	
+
 	// 3-0-2. 핸드폰 번호 중복  검사
 	@ResponseBody
 	@RequestMapping(value = "/phoneDuplicateCheck", produces="text/plain")
@@ -56,57 +76,54 @@ public class LoginController {
 		// 입력한 핸드폰 번호와 같은게 있으면 해당 핸드폰 번호를 반환한다.
 		return phone == null ? null : phone;
 	}
-	
+
 	// 3. 회원가입 처리
 	@PostMapping("/registerAction")
 	public String registerAction(UserVO user, RedirectAttributes rtts) {
-		
 		log.info("##/registerAction: " + user);
-		
 		// DB에 회원정보가 정상적으로 입력되었는가
 		// 회원가입 정보 - 5개 테이블에 입력 됨   
 		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
-		// 1차 리뷰 : boolean으로 
-		if(service.register(user) == 5) {
+		if(service.register(user)) {
 			// alert로 회원가입 성공 여부 알림
 			rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
 			return "redirect:/login/login";
-		// 회원가입이 안되면 다시 회원가입 페이지로 이동
+			// 회원가입이 안되면 다시 회원가입 페이지로 이동
 		}else {
 			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
 			return "redirect:/login/register";
 		}
 	}
-	
-//	@GetMapping("/loginSuccess")
-//	public void loginSuccess(Authentication auth, Model model) {
-//		log.info("##/loginSuccess");
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-//		String usrName = customUser.getUser().getUsrName();
-//		model.addAttribute("usrName", usrName);
-//	}
-	
+
+	//	@GetMapping("/loginSuccess")
+	//	public void loginSuccess(Authentication auth, Model model) {
+	//		log.info("##/loginSuccess");
+	//		CustomUser customUser = (CustomUser) auth.getPrincipal();
+	//		String usrName = customUser.getUser().getUsrName();
+	//		model.addAttribute("usrName", usrName);
+	//	}
+
 	// 4. 아이디/비밀 번호 찾기 화면 요청
 	@GetMapping("/find")
 	public void find() {
 		log.info("##/find");
 	}
-	
+
 	// 4-1. 아이디 찾기
 	@ResponseBody
 	@RequestMapping(value = "/find_id", produces="text/plane")
 	public String find_id(@RequestBody Map<String, String> map) {
 		log.info("##/find_id");
-		
+
 		String inputName = map.get("name");
 		String inputPhone = map.get("phone");
-		
-	    String id = service.findUserId(inputName, inputPhone);
-	    
-	    // 사용자가 입력한 이름과 핸드폰번호로 사용자의 아이디를 찾는데 
-	    // 사용자의 아이디가 있으면 사용자의 아이디를 반환한다.
-	    // 1차 리뷰 : 리턴을 빈문자열로 
-	    log.info("##/find ID:  " + id);
+
+		String id = service.findUserId(inputName, inputPhone);
+
+		// 사용자가 입력한 이름과 핸드폰번호로 사용자의 아이디를 찾는데 
+		// 사용자의 아이디가 있으면 사용자의 아이디를 반환한다.
+		// 1차 리뷰 : 리턴을 빈문자열로 
+		log.info("##/find ID:  " + id);
 		return id == null ? null : id;
 	}
 
@@ -114,13 +131,13 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping(value = "/find_pwd", produces="text/plane")
 	public String find_pwd(@RequestBody String inputEmail) {
-		
+
 		log.info("##/find_pwd");
 
 		String result = "";
-	    String pwd = service.findUserPwd(inputEmail);
+		String pwd = service.findUserPwd(inputEmail);
 		log.info("##/find pwd:  " + pwd);
-		
+
 		// 사용자가 입력한 이메일(아이디)로 사용자의 비밀번호를 찾는다.		
 		// 1. 비밀번호가 있으면
 		if(pwd!=null) {
@@ -139,5 +156,151 @@ public class LoginController {
 		}
 		return result;
 	}
+
+	// 5. 카카오 로그인
+	@RequestMapping(value ="/kakaoLogin", produces = "application/json" , method = RequestMethod.GET)
+	public String KakaoLogin(@RequestParam("code") String code, RedirectAttributes rtts, HttpSession session,
+			HttpServletResponse response, Model model) throws Exception{
+
+		JsonNode accessToken;
+
+		// JsonNode트리형태로 토큰받아온다
+		JsonNode jsonToken = KakaoLoginApi.getKakaoAccessToken(code);
+		accessToken = jsonToken.get("access_token");
+
+		JsonNode userInfo = KakaoLoginApi.getKakaoUserInfo(accessToken);
+		System.out.println("###userInfo: " + userInfo);
+
+		JsonNode properties = userInfo.path("properties");
+		JsonNode kakao_account = userInfo.path("kakao_account");
+
+		// 카카오 이메일을 사이트 아이디랑 비밀번호로 
+		String kakaoEmail = kakao_account.path("email").asText();
+		String usrName = properties.path("nickname").asText();
+
+		//        String usrPwd = userInfo.path("id").asText();
+		//        String profile_image = properties.path("profile_image").asText();
+
+		//        System.out.println("id : " + usrId);
+		//        System.out.println("name : " + usrPwd);
+		//        System.out.println("email : " + usrName);
+
+		// 5-1. 이메일이 DB없으면 회원가입 (카카오에서 제공하는 회원가입 창 그대로 사용 / sns회원가입 -> 따로 사용자 정보 입력X)
+		if (service.idDuplicateCheck(kakaoEmail) == null) {
+
+			UserVO user = new UserVO();
+			user.setUsrId(kakaoEmail);
+			user.setUsrPwd(kakaoEmail);
+			user.setUsrName(usrName);
+			user.setUsrPhone("");
+			user.setUsrGender("");
+			user.setUsrBirth("");
+			user.setUsrType("카카오 회원가입");
+
+			if(service.snsRegister(user)) {
+				// alert로 회원가입 성공 여부 알림
+				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
+				return "redirect:/login/login";
+				// 회원가입이 안되면 다시 회원가입 페이지로 이동
+			}else {
+				rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+				return "redirect:/login/register";
+			}
+		}
+
+		// 5-2. 이메일이 DB에 있으면 사이트 회원이므로 로그인 입력창 회원정보 넘겨주기.
+		model.addAttribute("username", kakaoEmail);
+		model.addAttribute("password", kakaoEmail);
+
+		return "/login/login";
+	}
+
+	//    @RequestMapping(value = "/kakaoLogout", produces = "application/json")
+	//    public String kakaoLogout(HttpSession session) {
+	//        //kakao restapi 객체 선언
+	//        //노드에 로그아웃한 결과값음 담아줌 매개변수는 세션에 잇는 token을 가져와 문자열로 변환
+	//        JsonNode node = KakaoLoginApi.logout(session.getAttribute("token").toString());
+	//        //결과 값 출력
+	//        System.out.println("로그인 후 반환되는 아이디 : " + node.get("id"));
+	//        return "redirect:/login/login";
+	//    }
+
+	// 6. 네이버 로그인
+	@RequestMapping(value = "/login/naverLogin")
+	public String login(Model model, HttpSession session) {
+		log.info("##/login/naverLogin");
+
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 NaverLoginDTO클래스의 getAuthorizationUrl메소드 호출 */
+		String naverAuthUrl = NaverLoginDTO.getAuthorizationUrl(session);
+		System.out.println("네이버:" + naverAuthUrl);
+
+		/* 생성한 인증 URL로 로그인 요청 */
+		return "redirect: " + naverAuthUrl;
+	}
+
+
+	// 6-1. 네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/login/naverCallback")
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rtts)
+			throws IOException, ParseException {
+		log.info("##/login/naverCallback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = NaverLoginDTO.getAccessToken(session, code, state);
+		//로그인 사용자 정보를 읽어온다.
+		String apiResult = NaverLoginDTO.getUserProfile(oauthToken);
+		//        System.out.println("사용자 정보: " + apiResult);
+		//{"resultcode":"00","message":"success","response":{"id":"62403566","email":"dnwntjs1531@naver.com","name":"\uae40\uc9c0\uc601"}}
+
+		// 사용자 정보를 String으로만 받을 수 있어서 변환 후 원하는 정보만 가져오기
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+
+		JSONObject jsonObj = (JSONObject) obj;
+		JSONObject response = (JSONObject)jsonObj.get("response");
+
+		// 네이버 이메일을 사이트 아이디, 비밀번호로 
+		String naverEmail = (String) response.get("email");
+		String usrName = (String) response.get("name");
+
+
+		// 6-1-1. 이메일이 DB에 없으면 자동 회원가입
+		if(service.idDuplicateCheck(naverEmail) == null) {
+			UserVO user = new UserVO();
+			user.setUsrId(naverEmail);
+			user.setUsrPwd(naverEmail);
+			user.setUsrName(usrName);
+			user.setUsrPhone("");
+			user.setUsrGender("");
+			user.setUsrBirth(""); 
+			user.setUsrType("네이버 회원가입");
+
+			if(service.snsRegister(user)) {
+				// alert로 회원가입 성공 여부 알림
+				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
+				return "redirect:/login/login";
+				// 회원가입이 안되면 다시 회원가입 페이지로 이동
+			}else {
+				rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+				return "redirect:/login/register";
+			}
+		}
+
+		// 6-1-2. 이메일이 DB에 있으면 사이트 회원이므로 로그인 입력창 회원정보 넘겨주기.
+		model.addAttribute("username", naverEmail);
+		model.addAttribute("password", naverEmail);
+
+		return "/login/login";
+	}
+
 	
+	@GetMapping("/test")
+	@PreAuthorize("isAuthenticated()")
+	public void test() {
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = customUser.getUser().getUsrName();
+		log.info("####test####");
+		log.info("name" + name);
+		
+	}
 }
+
