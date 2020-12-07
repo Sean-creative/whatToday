@@ -1,4 +1,7 @@
 package com.hobby.controller;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
 import com.hobby.domain.ThunderVO;
@@ -44,7 +48,7 @@ public class ThunderController {
 			return "redirect:/login/login";		
 				
 		
-		log.info("/info- GET");
+		log.info("/info(GET) - ");
 		// 들어온 파라미터 값 확인
 		log.info("/info- cri : " + cri);
 		log.info("/info- cbNum : " + cbNum);
@@ -76,6 +80,87 @@ public class ThunderController {
 				model.addAttribute("clubVO", clubVO);
 																			    			    			    
 				//info로 넘어가는 데이터 - 1.로그인한 유저의 번호, 2.club의 정보, 3.해당 club 개설자의 정보  4, criteria
+				
+				
+				
+//				//카카오 맵을 이용한 길 찾기 시작!!
+//				WebDriver driver = null;
+//				String text = null;
+//				
+//				
+//				
+//				try {
+//					// drvier 설정 - 저는 d드라이브 work 폴더에 있습니다.
+//					System.setProperty("webdriver.chrome.driver", "e:\\work\\chromedriver.exe");
+//					
+//					ChromeOptions options = new ChromeOptions();
+//					
+////					options.addArguments("--headless");
+//					options.addArguments("--disable-extensions");
+//					options.addArguments("--disable-gpu");
+//					options.addArguments("--window-size=1920x1080");
+//					
+//					
+//					// Chrome 드라이버 인스턴스 설정
+//					driver = new ChromeDriver(options);		
+//					
+//					String location = clubVO.getThunderDetailVO().getCbLocation();
+//					log.info(location);
+//					
+//					
+//					//1. 사용자의 위치를 어떻게 가져올 것인가?
+//					//리스트일 때 받아올 수있고
+//					
+//					
+//					// 카카오맵 길찾기 URL로 접속
+//					driver.get("https://map.kakao.com/link/to/모임장소,"+location+"/from/본인위치,37.537623499999995,127.1580072");									
+////					driver.get("https://map.kakao.com/?map_type=TYPE_MAP&target=traffic&option=2&rt=534912%2C1121729%2C523953%2C1084098&rt1=%EB%B3%B8%EC%9D%B8%EC%9C%84%EC%B9%98&rt2=%EB%AA%A8%EC%9E%84%EC%9E%A5%EC%86%8C&rtIds=%2C&rtTypes=%2C");
+//
+//					driver.findElement(By.className("transit")).sendKeys(Keys.ENTER);
+//					
+//										
+//					// 대기 설정 -- 이것을 해줘야지 element를 찾을 때 오류가 안남(로딩때매 그런듯)
+//					driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+//
+//					
+////					element = driver.findElement(By.xpath("//*[@id=\"info.flagsearch\"]/div[6]/ul/li/div[1]/div/div[1]/p/span[1]"));			
+//					WebElement element = driver.findElement(By.xpath("/html/body/div[5]/div[2]/div[2]/div[5]/div[5]/ul/li[1]/div[1]/span[1]"));
+//																			
+//					System.out.println(element.getText());	
+//					text = element.getText();
+//
+//				} catch (Throwable e) {
+//					e.printStackTrace();
+//				} finally {
+////					driver.close();
+//				}
+//			
+//				
+//				model.addAttribute("text", text);		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				String joinState = service.getCbMemByUsrNum(loginUser.getUsrNum(), clubVO.getCbNum());
+				log.info("/info(GET) - joinState : " + joinState);
+				//joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
+				
+				model.addAttribute("joinState", joinState);
+				
+					
+				List<ClubMemberVO> joinList = service.getJoinList(clubVO.getCbNum(), "가입승인");			            
+				for (ClubMemberVO club : joinList) {
+					log.info("/info(GET) - joinList : " + club);				
+				}
+				
+				
+				model.addAttribute("joinList", joinList);
+								
 				return "/thunder/info";				 				 					 			
 	}
 	
@@ -99,9 +184,7 @@ public class ThunderController {
 	      	      	      													    
 	    // A. view 단에 뿌려줘야 하는 것들 
 		// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.
-		ThunderVO clubVO = service.get(cbNum);
-		
-	
+		ThunderVO clubVO = service.get(cbNum);		
 		log.info("/modify- clubVO : " + clubVO);
 				
 		//A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
@@ -121,6 +204,44 @@ public class ThunderController {
 		//modify로 넘어가는 데이터 - 1.club의 정보,  2. criteria
 					return "/thunder/modify"; 					 				
 	}
+	
+	
+	
+	
+	@PostMapping("/join")
+	// join 할때도 cri가 유지되어 있어야 하나???
+	public String join(Authentication auth, String joinState, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri,  RedirectAttributes rttr) {
+		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
+		if (!service.isLogin(auth)) 
+			return "redirect:/login/login";
+		
+		log.info("/join(POST) - cri : " + cbNum);
+		log.info("/join(POST) - cri : " + cri);
+		log.info("/join(POST) - joinState : " + joinState);
+				
+		ThunderVO clubVO = service.get(cbNum);				
+		log.info("/join - ThunderVO : " + clubVO);													
+		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+	    UserVO loginUser = customUser.getUser();	    
+	    log.info("/join(POST) -loginUser : " + loginUser);
+	    		
+	    //join메서드에 주어야 하는 것 -> 1.loginUser 2.clubVO 3.joinState
+		if(service.join(clubVO, loginUser, joinState)) { // 모달창으로 신청되었는지 알려줘야함!!
+		rttr.addFlashAttribute("result", "처리되었습니다."); } 
+		else {
+		rttr.addFlashAttribute("result", "처리되지 않았습니다."); }
+		 
+		
+		
+		rttr.addAttribute("cbNum", cbNum);
+		//조건문(cri) 다가지고 info로 돌아간다!
+		return "redirect:/thunder/info" + cri.getListLink(); 
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -165,6 +286,7 @@ public class ThunderController {
 	}
 			
 
+	
 	@PostMapping("/add") 
 	public String add(Authentication auth, ThunderVO clubVO, RedirectAttributes rttr) {
 		log.info("/add - POST");
@@ -176,20 +298,26 @@ public class ThunderController {
 	    //현재 로그인 되어있는 유저의 번호와 이름으로 club을 만든다.
 	    clubVO.setCbLeaderNum(usrNum);
 	    clubVO.setCbLeaderName(customUser.getUser().getUsrName());
+	    clubVO.setCbType("번개모임");
+		clubVO.setCbCurMbnum((long) 1);
+		clubVO.setCbFinalState("진행중");
 
+	    log.info("add - clubVO : " + clubVO);
 	    
-	    if(service.register(clubVO)) {
-			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
-			rttr.addFlashAttribute("result", "모임 정보가 등록되었습니다.");
-		} else {
-			rttr.addFlashAttribute("result", "모임 정보가 등록되지 않았습니다.");
+	    
+		
+		if(service.register(clubVO, customUser.getUser(), "가입승인")) { // 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+		rttr.addFlashAttribute("result", "모임 정보가 등록되었습니다."); 
 		}
-	    	    
-	      
-		log.info("add - clubVO : " + clubVO);
-				 						
+	
+		else {
+		rttr.addFlashAttribute("result", "모임 정보가 등록되지 않았습니다."); 
+		}
+		 
+	    	    	      				 					
 		return "redirect:/thunder/list";
 	}
+	
 
 	
 	

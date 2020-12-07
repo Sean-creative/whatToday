@@ -140,13 +140,13 @@
 		
 		if ($(o).val()) { 
 			// 값을 입력한 후 일 때 Value는 냅둬야함
-			console.log("값이 있다.");
+			
 						
 			
 		} else if (!($(o).val())) {
 			// date의 값이 아무것도 없을 때 (초기 설정일 때)는 초기 설정을 해준다
 			//초기 설정 
-			console.log("값이 없다.");
+			
 			
 			$('#cbDate').val(nowDate);
 			$('#cbAppPeriod').val(nowDate);			
@@ -214,7 +214,7 @@
 		return false;
 	}
 
-	if (!mbnum || mbnum < 0) {
+	if (!mbnum || mbnum < 1) {
 		alert("모임인원을 다시 입력해주세요.");
 		return false;
 	}
@@ -224,7 +224,8 @@
 		return false;
 	}
 
-	if (!hashtag || hashtag.length > 30) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (hashtag.length > 30) {
 		alert("해시태그를 다시 입력해주세요.");
 		return false;
 	}
@@ -244,11 +245,14 @@
 		return false;
 	}
 
-	if (!supplies || supplies.length > 50) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (supplies.length > 50) {
 		alert("모임 준비물을 다시 입력해주세요.");
 		return false;
 	}
-	if (!intro || intro.length > 300) {
+	
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (intro.length > 300) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
