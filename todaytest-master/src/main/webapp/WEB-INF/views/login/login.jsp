@@ -35,7 +35,10 @@
 		<a href="/login/find">아이디/비밀번호 찾기</a>
 		<br>
 		<a href="https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=	
-http://192.168.1.14:8080/login/kakaoLogin&response_type=code">카카오 로그인</a><br>
+http://localhost:8080/login/kakaoLogin&response_type=code">카카오 로그인</a><br>
+
+		<a href="/login/naverLogin">네이버 로그인</a>
+		<a href="http://nid.naver.com/nidlogin.logout">네이버 로그아웃(TEST)</a>
 
 		<button type="submit" class="btn">LOG IN</button>
 	</form>
@@ -45,6 +48,7 @@ http://192.168.1.14:8080/login/kakaoLogin&response_type=code">카카오 로그�
 	if("${registerSuccessMsg }" != ""){
 		alert("회원가입 성공! ${registerSuccessMsg}님 반갑습니다.");
 	}
+	
 </script>
  
 

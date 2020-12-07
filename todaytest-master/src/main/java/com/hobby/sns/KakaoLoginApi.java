@@ -1,5 +1,10 @@
 package com.hobby.sns;
 
+/**
+ * 카카오 로그인 : 카카오 토큰 얻어오기 / 사용자 정보 얻어오기 / 로그아웃
+ * @author jiyeong
+ */
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -25,7 +30,7 @@ public class KakaoLoginApi {
 
 		postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
 		postParams.add(new BasicNameValuePair("client_id", "14e5f73be7a3dcdce0e0cf981f72f775")); // REST API KEY
-		postParams.add(new BasicNameValuePair("redirect_uri", "http://192.168.1.14:8080/login/kakaoLogin")); // 리다이렉트 URI
+		postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8080/login/kakaoLogin")); // 리다이렉트 URI
 		postParams.add(new BasicNameValuePair("code", code)); // 로그인 과정중 얻은 code 값
 
 		final HttpClient client = HttpClientBuilder.create().build();
