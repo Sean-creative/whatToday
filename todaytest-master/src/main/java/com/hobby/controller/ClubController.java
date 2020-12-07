@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
+import com.hobby.domain.ReplyVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
@@ -33,6 +34,11 @@ public class ClubController {
 	   //개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를 파라미터로 지정   
 	   
 	   club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); //유효성검사
+	   
+//	   CustomUser customUser = (CustomUser) auth.getPrincipal();
+//	   Long usrNum = customUser.getUser().getUsrNum();
+//	   
+//	   club.setCbLeaderNum(usrNum);
 	   
 	   service.registerClub(club);
 	   
@@ -118,6 +124,7 @@ public class ClubController {
 	   //화면쪽으로 해당 게시물번호의 정보를 전달하기위해 model에 담는다.
 	   model.addAttribute("cbNum", cbNum);
 	   model.addAttribute("club", service.get(cbBno));  
+	   model.addAttribute("replyVO", new ReplyVO());
    }
    
    //정기모임 게시판 - 등록 
@@ -167,4 +174,28 @@ public class ClubController {
 	   }
 	   return "redirect:/regular/board?cbNum="+club.getCbNum();
    }
+   
+   //정기모임 가입
+   @PostMapping("/clubjoin")
+   public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr) {
+	   
+	   CustomUser customUser = (CustomUser) auth.getPrincipal();
+	   UserVO userVO = customUser.getUser();
+	   
+	   service.clubJoin(club,userVO);
+	   
+	   rttr.addFlashAttribute("usrName", userVO.getUsrName());
+	   rttr.addFlashAttribute("usrNum", userVO.getUsrNum());
+	   rttr.addFlashAttribute("cbType", club.getCbType());
+	   rttr.addFlashAttribute("cbName", club.getCbName());
+	   //일회성으로 데이터를 전달하는 용도 (전달된 값은 url뒤에 붙지 않는다.)
+	   rttr.addFlashAttribute("cbNum", club.getCbNum());
+	   
+	   log.info("##/add 회원번호는 :" + userVO.getUsrNum());
+	   log.info("##/add 회원이름는 :" + userVO.getUsrName());
+	   log.info("###clubjoin: " + club);
+	   
+	   return "/index/main";
+   }
+
 }
