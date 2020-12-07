@@ -12,15 +12,11 @@
 	</select>
 	
 	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB 
-		where CBNAME in 
-		(select CBNAME from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '승인')
+		select cbnum,cbname,cbtype from (select * from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '승인' order by cbappdate)
 	</select>
 	
 	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB 
-		where CBNAME in 
-		(select CBNAME from CLUBMEMBER where CBLEADERNUM = #{usrNum} and CBMBSTRESULT = '승인대기')
+		select cbnum,cbname,cbtype from (select * from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '승인대기' order by cbappdate)
 	</select>
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
@@ -38,7 +34,8 @@
 		update TBLUSER
 		set USRPHONE = #{usrPhone},
 		USRPWD = #{usrPwd},
-		USRSTATE = #{usrState}
+		USRSTATE = #{usrState},
+		USRIMG = #{usrImg}
 		where USRNUM = #{usrNum} 
 	</update>
 	
@@ -50,15 +47,9 @@
 	<select id="getMyCreateClubList" resultType="com.hobby.domain.ClubVO">
 		select * from CLUB
 		where 
-		CBLEADERNUM = #{usrNum}
+		CBLEADERNUM = #{usNum} order by cbNum asc
 	</select>
-	
-	<select id="getMyClublist" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB
-		where 
-		CBNUM = #{cbNum}
-	</select>
-	
+
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">
 		select * from CLUB,THUNDERDETAIL  
 		where 

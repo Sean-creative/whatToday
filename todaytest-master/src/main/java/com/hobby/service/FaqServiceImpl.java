@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
-import com.hobby.domain.MainVO;
+import com.hobby.domain.NoticeVO;
 import com.hobby.mapper.FaqMapper;
 
 import lombok.AllArgsConstructor;
@@ -33,8 +33,6 @@ public class FaqServiceImpl implements FaqService{
 		log.info("faqcontent......");
 		return mapper.faqContent();
 	}
-
-	
 	
 	@Override
 	public void register2(InquireVO inquire) {
@@ -44,7 +42,17 @@ public class FaqServiceImpl implements FaqService{
 	}
 
 	
+	@Override
+	public List<NoticeVO> noticeList() {
+		log.info("noticelist...........");
+		return mapper.noticeList();
+	}
 
 
+	@Override
+	public List<NoticeVO> noticeContent(Long ntNum) {
+		log.info("noticeContent...........");
+		return mapper.noticeContent(ntNum);
+	}
 
 }

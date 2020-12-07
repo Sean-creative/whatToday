@@ -8,14 +8,14 @@
 <!-- 메인 정기  -->
 <select id="getListRegular" resultType="com.hobby.domain.MainVO">
 	<![CDATA[
-		select * from club where cbType ='정기모임'
+		select * from club where cbType ='정기모임'order by cbNum desc
 	]]>
 </select>
 
 <!-- 메인 번개  -->
 <select id="getListThunder" resultType="com.hobby.domain.MainVO">
 	<![CDATA[
-		select * from club where cbType ='번개모임'
+		select * from club where cbType ='번개모임'order by cbNum desc
 	]]>
 <!--  -->
 </select>

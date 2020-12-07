@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.ThunderDetailVO;
 import com.hobby.domain.ThunderVO;
+import com.hobby.domain.UserVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -22,11 +23,12 @@ public class ThunderMapperTests {
 	private ThunderMapper mapper;
 		
 		
-	@Test
+//	@Test
 	public void testGetList() {
 		Criteria cri = new Criteria();
 		cri.setPageNum(1);
 		cri.setAmount(5);
+		
 		
 		mapper.getListWithPaging(cri).forEach(club -> log.info(club));		
 	}
@@ -40,6 +42,29 @@ public class ThunderMapperTests {
 		
 		log.info("clubVO : \n\n\n" +clubVO);
 				
+	}
+	
+	@Test
+	public void testInsertJoin() {
+		
+		
+		UserVO loginUser = new UserVO();
+		loginUser.setUsrNum((long)40);
+		loginUser.setUsrName("김선우");
+				
+				
+				
+		ThunderVO clubVO = ThunderVO.builder()				
+				.cbNum((long)163)
+				.cbType("번개모임")												
+				.cbName("조인 테스트")								
+				.build();
+		
+		
+					
+//		mapper.insertJoin(clubVO, loginUser);
+		log.info(clubVO);
+		log.info(loginUser);
 	}
 	
 	
