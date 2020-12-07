@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.LoginService;
 import com.hobby.sns.KakaoLoginApi;
 import com.hobby.sns.NaverLoginDTO;
@@ -287,6 +290,17 @@ public class LoginController {
 		model.addAttribute("password", naverEmail);
 
 		return "/login/login";
+	}
+
+	
+	@GetMapping("/test")
+	@PreAuthorize("isAuthenticated()")
+	public void test() {
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = customUser.getUser().getUsrName();
+		log.info("####test####");
+		log.info("name" + name);
+		
 	}
 }
 

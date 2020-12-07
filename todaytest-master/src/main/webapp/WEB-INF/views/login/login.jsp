@@ -40,6 +40,7 @@ http://localhost:8080/login/kakaoLogin&response_type=code">카카오 로그인</
 		<a href="/login/naverLogin">네이버 로그인</a>
 		<a href="http://nid.naver.com/nidlogin.logout">네이버 로그아웃(TEST)</a>
 
+
 		<button type="submit" class="btn">LOG IN</button>
 	</form>
 
