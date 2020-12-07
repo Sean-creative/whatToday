@@ -65,5 +65,16 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.updateUserAuth(userVO);
 	}
 
+	@Override
+	public int updateClubLeader(ClubVO clubVO) {
+		
+		return mapper.updateClubLeader(clubVO);
+	}
+
+	@Override
+	public int shutClub(Long cbNum) {
+		return mapper.shutClub(cbNum);
+	}
+
 	
 }

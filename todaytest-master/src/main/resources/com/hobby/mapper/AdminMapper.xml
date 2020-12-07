@@ -16,13 +16,27 @@
 		set USRSTATE = '강퇴'
 		where USRID = #{id} 
 	</update>
+
+	<update id="shutClub">
+		update CLUB
+		set CBFINALSTATE = '폐쇄',
+		CBSHUTDATE = sysdate
+		where CBNUM = #{cbNum} 
+	</update>
+	
+	<update id="updateClubLeader">
+		update CLUB
+		set CBLEADERNUM = #{usrNum},
+		CBLEADERNAME = #{usrName}
+		where CBNUM = #{cbNum} 
+	</update>
 	
 	<select id="getBanLeaveUser" resultType="com.hobby.domain.UserVO">
 		select * from TBLUSER where USRSTATE = '강퇴' or USRSTATE = '사이트탈퇴'
 	</select>
 	
 	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB
+		select * from CLUB WHERE CBFINALSTATE != '폐쇄'
 	</select>
 	
 	<select id="getClubMemberList" resultType="com.hobby.domain.UserVO">

@@ -452,6 +452,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                
+                	<input type="hidden" id="cbNum" name="cbNum" style="border:none" readonly="readonly"><br>
                 	모임명 <input type="text" id="cbName" name="cbName" style="border:none" readonly="readonly"><br>
                 	타입 <input type="text" id="cbType" name="cbType" style="border:none" readonly="readonly"><br>
                 	모임장 <input type="text" id="cbLeaderName" name="cbLeaderName" style="border:none" readonly="readonly"><br>
@@ -467,7 +469,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
                     <form action="#">
-                    <button class="btn btn-danger">폐쇄</button>
+                    <button name ="shutClub" class="btn btn-danger" type="button" data-dismiss="modal">폐쇄</button>
                     </form>
                 </div>
             </div>
@@ -528,45 +530,44 @@
 		     
 		});
 		
-		
+		let udata;
 		 $('#clubTable tbody').on('click', 'tr', function (){
-				var data = table.row(this).data();
-				console.log(data);
+				udata = table.row(this).data();
+				console.log(udata);
 				
-				$("#cbNum").val(data.cbNum);
-				$("#cbName").val(data.cbName);	
-				$("#cbType").val(data.cbType);
-				$("#cbLeaderName").val(data.cbLeaderName);
-				$("#cbCategory").val(data.cbCategory);
-				$("#cbSubcat").val(data.cbSubcat);
-				$("#cbCity").val(data.cbCity);
-				$("#cbDistrict").val(data.cbDistrict);
-				$("#cbMbNum").val(data.cbMbNum);
-				$("#cbCurMbNum").val(data.cbCurMbNum);
-				$("#cbMakeDate").val(data.cbMakeDate);
+				$("#cbNum").val(udata.cbNum);
+				$("#cbName").val(udata.cbName);	
+				$("#cbType").val(udata.cbType);
+				$("#cbLeaderName").val(udata.cbLeaderName);
+				$("#cbCategory").val(udata.cbCategory);
+				$("#cbSubcat").val(udata.cbSubcat);
+				$("#cbCity").val(udata.cbCity);
+				$("#cbDistrict").val(udata.cbDistrict);
+				$("#cbMbNum").val(udata.cbMbNum);
+				$("#cbCurMbNum").val(udata.cbCurMbNum);
+				$("#cbMakeDate").val(udata.cbMakeDate);
 				
-				getClubMember(data);
+				getClubMember(udata);
 				
 		 });
 		 
-		 const getClubMember = function(data){
+		 const getClubMember = function(e){
 		 
 		 $.ajax({
 	           type:"GET",
 
-	           url:"/admin/clubmanage/clubmemberlist/"+data.cbNum+".json",
-
+	           url:"/admin/clubmanage/clubmemberlist/"+e.cbNum+".json",
+	           
 	           dataType:"JSON",
 
 	           success : function(list) {
 	        	   console.log(list);
 	        	   let str = "";
 	        	   for(let i = 0; i < list.length; i++){
-	        		   if(data.cbLeaderNum == list[i].usrNum){
-	        			   str += list[i].usrName;
+	        		   if(e.cbLeaderNum == list[i].usrNum){
 	        			   continue;
 	        		   }
-	        		   str += list[i].usrName+ "<button name='updateLeader'class='btn btn-primary' type='button'>모임장위임</button><br>";
+	        		   str += list[i].usrName+ "<button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
 	        	   }
 	       		
 
@@ -587,31 +588,58 @@
 		});
 		};
 		
-/* 		const updateClubLeader = function(){
+		
+		const shutClub = function(e){
+		
+			console.log(e);
+			$.ajax({
+				url: "/admin/clubmanage/shutClub",
+				type:"PUT",
+				data: JSON.stringify({cbNum:e}),
+				dataType: "json",
+				contentType : "application/json; charset=utf-8",
+				success: function(data){ 
+					console.log(data);
+					
+				}
+				});
+			};  
 			
-		    $.ajax({
-		        url: "나와바야알겠다"
-		        type:"post",
-		        cache : false,
-		        success: function(data){ 
-		         console.log(data);
-		        }
-		      });
-		     
-		  } */
-
-		 
-
-		 
-
+			
+  		const updateClubLeader = function(e){		
+				console.log(e.cbnum);
+				console.log(e.usrname);
+				console.log(e.usrnum);
 				
-
+				$.ajax({
+					url: "/admin/clubmanage/updateClubLeader",
+					type:"PUT",
+					data: JSON.stringify({cbNum:e.cbnum, usrName:e.usrname, usrNum:e.usrnum}),
+					dataType: "json",
+					contentType : "application/json; charset=utf-8",
+					success: function(data){ 
+						console.log(data);	
+					}
+					});
+				};  
+  		
+  		
  		$('.modal').on('hidden.bs.modal', function (e) {
- 		    console.log('modal close');
+ 			console.log('modal close');
+ 			table.ajax.reload();
  		});
  		
- 		$(document).on("click", "button[name=updateLeader]", function(){
- 		    alert("ok");
+ 		$(document).on("click", "button[name=shutClub]", function(){
+ 			
+ 			shutClub($("#cbNum").val());
+ 			
+ 		});
+ 		
+		$(document).on("click", "button[name=updateLeader]", function(){
+ 			
+			updateClubLeader(this.dataset);
+			
+ 			
  		});
 
 	});

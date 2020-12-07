@@ -583,7 +583,8 @@
 			 })
 		 }
 		 $('#userInfoModal').on('hidden.bs.modal', function () {
-			 table.ajax.reload();
+			
+			 table.ajax.reload(null, false);
 		 })
 		
 		

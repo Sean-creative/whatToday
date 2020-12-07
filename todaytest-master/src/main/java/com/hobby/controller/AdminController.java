@@ -81,10 +81,34 @@ public class AdminController {
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/clubmanage/updateClubLeader", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateClubLeader(
+			@RequestBody ClubVO clubVO) {
+		System.out.println(clubVO);
+	
+	return service.updateClubLeader(clubVO) == 1
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/clubmanage/shutClub", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> shutClub(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.shutClub(clubVO.getCbNum()) == 1
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
 	@RequestMapping(value = "/clubmanage/clublist.json", produces = { MediaType.TEXT_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ClubVO>> getClubList() {
-	
+	public ResponseEntity<List<ClubVO>> getClubList() {	
 	return new ResponseEntity<>(service.getClubList(),HttpStatus.OK);
 	}
 	
@@ -94,15 +118,17 @@ public class AdminController {
 	
 	return new ResponseEntity<>(service.getClubMemberList(cbNum),HttpStatus.OK);
 	}
+	
 	@PostMapping(value="/usermanage/insertUserHistory",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertUserHistory(@RequestBody UserVO userVO){
 		
-		
 		return service.insertUserHistory(userVO) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
 						: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
 
 }

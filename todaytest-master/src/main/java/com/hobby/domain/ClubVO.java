@@ -29,10 +29,9 @@ public class ClubVO {
 	///////////////////////////////////////////CLUBMEMBER
 	
 	
-	
-	
 
-	private Long usrName;
+	private String usrName;
+	private Long usrNum;
 	private String cbMbStResult;
 	private String cbMemIntro;
 	private Date cbAppDate;

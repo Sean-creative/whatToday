@@ -22,4 +22,8 @@ public interface AdminService {
 	public int insertUserHistory(UserVO userVO);
 	
 	public int updateUserAuth(UserVO userVO);
+	
+	public int updateClubLeader(ClubVO clubVO);
+	
+	public int shutClub(Long cbNum);
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 /**
- * ÀÛ¼ºÀÚ : ±¹¹Î¼º
+ * ì‘ì„±ã…ˆ ã…êµ­ë¯¼ì„±
  */
 public interface AdminMapper {
 	
@@ -20,4 +20,7 @@ public interface AdminMapper {
 	public int updateBanUser(String id);
 	
 	public int updateUserAuth(UserVO userVO);
+	public int updateClubLeader(ClubVO clubVO);
+
+	public int shutClub(Long cbNum);
 }
