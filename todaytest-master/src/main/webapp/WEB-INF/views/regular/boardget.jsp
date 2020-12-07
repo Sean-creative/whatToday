@@ -52,7 +52,21 @@
 				</div>
 				</div>
 		</div>
-
+<!-- 댓글 등록  -->
+	<div class="my reply add">
+		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
+		<form:hidden path="cbBno" id="cbBno"/>
+			<div class="row">
+				<div class="col-sm-10">
+					<textarea name="reply" id="reply" class="form-control" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+				</div>
+				<div class="col-sm-2">
+					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
+					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
+				</div>	
+			</div>
+		</form>
+	</div>
 <!-- 댓글목록 처리 -->
 		<div class='row'>
 			<div class="col-lg-12">

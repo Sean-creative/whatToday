@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
+import com.hobby.domain.ReplyVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
@@ -123,6 +124,7 @@ public class ClubController {
 	   //화면쪽으로 해당 게시물번호의 정보를 전달하기위해 model에 담는다.
 	   model.addAttribute("cbNum", cbNum);
 	   model.addAttribute("club", service.get(cbBno));  
+	   model.addAttribute("replyVO", new ReplyVO());
    }
    
    //정기모임 게시판 - 등록 
