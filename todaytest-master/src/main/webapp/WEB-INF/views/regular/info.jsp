@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri = "http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
@@ -52,10 +53,21 @@
 <script type="text/javascript">
 	var modal = document.getElementById('id01');
 	
+	var replyer = null;
+	<sec:authorize access="isAuthenticated()">
+		replyer = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
+	
 	window.onclick = function(event) {
-		if(event.target == modal) {
-			modal.style.display = "block";
+		if(!replyer){
+				alert("로그인");
+				location.href="/regular/clubjoin?cbNum=${club.cbNum}";
+				return ;
+			if(event.target == modal) {
+				modal.style.display = "block";
+			}
 		}
 	}
+	
 </script>
 <%@include file="../includes/footer.jsp" %>
