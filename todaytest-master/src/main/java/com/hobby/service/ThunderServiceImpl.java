@@ -58,19 +58,21 @@ public class ThunderServiceImpl implements ThunderService {
 	@Override
 	@Transactional
 	public boolean register(ThunderVO clubVO, UserVO loginUser, String joinState) {
-		clubVO.setCbType("번개모임");
-		log.info("register ...." + clubVO);
+		System.out.println("register ...." + clubVO);		
 		
 		int result =  mapper.insert(clubVO);				
 		System.out.println("Service-register..... : " + result);
 		
 		// 등록이 잘되었다고 하면, 모임 멤버, 모임 이력에 모임장도 등록해준다.				
-		result += mapper.insertJoin(clubVO, loginUser, joinState);
-		System.out.println("Service-register..... : " + result);
+		result += mapper.insertJoin(clubVO, loginUser,joinState);
+		System.out.println("Service-join...... result : " + result);
 		
-		//위의 rsult 결과 -> -1 + 1 = 0
+		result += mapper.insertJoinHistory(clubVO, loginUser, joinState);
+		System.out.println("Service-join...... result : " + result);
+		
+		//위의 rsult 결과 -> -1 + 1 + 1=  1
 		//insert - {call begin  ~ end}는 성공하면 반환값이 -1이 찍힌다..?
-		return mapper.insert(clubVO) == 0;
+		return result == 1;
 	}
 	
 
@@ -153,11 +155,12 @@ public class ThunderServiceImpl implements ThunderService {
 	    
 		// 멤버상태를 변경해주고 나서는, club의 현재인원을 update해준다.
 		// 오류나서, 이거 제외하고 민성이형 주기
-		/* result += mapper.update(clubVO); */	    
+		result += mapper.update(clubVO); 	    
 		log.info("result : " + result);
 		System.out.println("result : " + result);
 					
-		return result == 3;
+		// update가 call-begin-end되있어서 반환값 -1 이라 -> 2-1 =1 나옴
+		return result == 1;
 	}
 
 	@Override

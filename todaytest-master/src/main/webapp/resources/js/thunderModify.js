@@ -37,43 +37,19 @@ $(function() {
 		dating(this, $("#cbAppPeriod"));
 	});
 
-	// 초기 지역 설정!!
-	const cityArr = [ "지역 선택", "서울특별시", "경기도" ];
-
-	for (let j = 0; j < cityArr.length; j++) {
-
-		// 기존에 등록한 데이터(ct)와 일치하면 selected를 준다.
-		if (ct == (cityArr[j])) {
-			// 하나의 지역이 셀렉트가 되었을 때
-			document.getElementById("city")[j] = new Option(cityArr[j],
-					cityArr[j], true, true);
-		} else {
-			document.getElementById("city")[j] = new Option(cityArr[j],
-					cityArr[j]);
-		}
-	}
-
-	// 지역 설정이 끝나면, 세부지역 설정도 다시 해준다.
-	region($("#city"), $("#district"));
-
-	// 아래의 dt(subCat)는 변수이다.
-	// 값이 'dt'인 옵션에게 selected를 준다.
-	$("#district option[value='" + dt + "']").attr('selected', 'selected');
-
+		
+	
 	// 관심취미 고를 때
 	$('#category').change(function() {
 		cate(this, $("#subcat"));
 	});
 
-	// 관심지역 고를 때
-	$('#city').change(function() {
-		region(this, $("#district"));
-	});
+	
 
 	// Modify, Remove, List 중 버튼을 누른다면,
-	let formObj = $("form");
+	let formObj = $("#modifyForm");
 
-	$('button').on("click", function(e) {
+	$('.btn btn-default').on("click", function(e) {
 		e.preventDefault();
 
 		let operation = $(this).data("oper");
@@ -164,42 +140,8 @@ const cate = function(o, d) {
 	}
 }
 
-const region = function(o, d) {
 
-	const seoul = [ "세부지역 선택", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
-			"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구",
-			"성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구" ];
 
-	const gyeonggi = [ "세부지역 선택", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시",
-			"김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시",
-			"안양시", "양주시", "여주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시",
-			"평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "연천군" ];
-
-	let district;
-
-	d.empty();
-
-	// change(function(){$( ':selected', o).val() => this }
-	if ($(':selected', o).val() == "서울특별시") {
-
-		district = seoul;
-	} else if ($(':selected', o).val() == "경기도") {
-
-		district = gyeonggi;
-	} else {
-
-		// 다시 '시/도 선택'을 누르면 리턴
-		let option = $("<option value='세부지역 선택'> 세부지역 선택</option>");
-		d.append(option);
-		return;
-	}
-
-	for (let i = 0; i < district.length; i++) {
-		let option = $("<option value='" + district[i] + "'>" + district[i]
-				+ "</option>");
-		d.append(option);
-	}
-}
 
 // '번개만들기'를 클릭 했을 때 이 함수가 호출되면서, 지속적으로 MIN을 현재 시간으로 바꿔주어야 한다. (Value는 냅둬야함)
 const dating = function(o, d) {	
@@ -239,34 +181,37 @@ const dating = function(o, d) {
 const inputCheck = function(){
 
 	// 번개만들기를 클릭 했을 때, 날짜를 한번 더 업데이트 해준다음에 검사한다.
-	dating($('#cbDate'), $('#cbAppPeriod'));
-
-	let date = $('#cbDate').val();
-	let category = $("select[name=cbCategory]").val();
+	dating($('#cbDate'), $('#cbAppPeriod'));	
+	
+	
+	let date = $('#cbDate').val();		
+	let category = $("select[name=cbCategory]").val();	
 	let subcat = $("[name=cbSubcat]").val();
-	let mbnum = $("[name=cbMbnum]").val();
+	let mbnum = $("[name=cbMbnum]").val();	
 	let appPeriod = $('#cbAppPeriod').val();
 	let city = $("[name=cbCity]").val();
 	let district = $("[name=cbDistrict]").val();
-
-	// 공백을 제거해한 뒤에 개수를 세던지 한다.
-	let clubname = $.trim($("[name=cbName]").val());
+		
+	//공백을 제거해한 뒤에 개수를 세던지 한다.	
+	let clubname = $.trim($("[name=cbName]").val());	
 	let hashtag = $.trim($("[name=cbHashtag]").val());
 	let intro = $.trim($("[name=cbIntro]").val());
 	let place = $.trim($('#cbPlace').val());
-	let supplies = $.trim($('#cbSupplies').val());
-
+	let supplies = $.trim($('#cbSupplies').val());		
+		
 	$('[name=cbName]').val(clubname);
 	$('[name=cbHashtag]').val(hashtag);
-	$('[name=cbIntro]').val(intro);
+	$('[name=cbIntro]').val(intro);	
 	$('#cbPlace').val(place);
 	$('#cbSupplies').val(supplies);
 
+	
 	if (!clubname || clubname.length > 30) {
 		alert("모임명을 다시 입력해주세요.");
 		return false;
 	}
 
+	
 	if (!date) {
 		alert("모임날짜를 입력해주세요.");
 		return false;
@@ -282,7 +227,7 @@ const inputCheck = function(){
 		return false;
 	}
 
-	if (!mbnum || mbnum < 0) {
+	if (!mbnum || mbnum < 1) {
 		alert("모임인원을 다시 입력해주세요.");
 		return false;
 	}
@@ -292,7 +237,8 @@ const inputCheck = function(){
 		return false;
 	}
 
-	if (!hashtag || hashtag.length > 30) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (hashtag.length > 30) {
 		alert("해시태그를 다시 입력해주세요.");
 		return false;
 	}
@@ -312,14 +258,18 @@ const inputCheck = function(){
 		return false;
 	}
 
-	if (!supplies || supplies.length > 50) {
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (supplies.length > 50) {
 		alert("모임 준비물을 다시 입력해주세요.");
 		return false;
 	}
-	if (!intro || intro.length >= 300) {
+	
+	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	if (intro.length > 300) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
+    	
 
 	alert('수정되었습니다.');
 

@@ -2,6 +2,7 @@
 //문서가 모두 로드 되는 시점에 하는 것
 $(function() {
 
+
 	actionForm = $("#actionForm");
 
 	$(".paginate_button a").on("click", function(e) {
@@ -160,7 +161,7 @@ const region = function(o, d) {
 }
 
 // onclick 속성을 가져올 수 없어서,함수를 사용.
-const move2 = function(cbNum) {
+const linkToInfo = function(cbNum) {
 
 	actionForm.append("<input type='hidden' name='cbNum' value='" + cbNum
 			+ "'>");

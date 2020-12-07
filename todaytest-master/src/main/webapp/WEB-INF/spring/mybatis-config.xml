@@ -6,7 +6,7 @@
     <settings>
         <!-- http://www.mybatis.org/mybatis-3/ko/configuration.html -->
         <setting name="cacheEnabled" value="true"/>      
-        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+        <setting name="jdbcTypeForNull" value="NULL"/>
         
         <!-- <setting name="lazyLoadingEnabled" value="false"/>
         <setting name="multipleResultSetsEnabled" value="true"/>
@@ -22,6 +22,7 @@
     <!-- MyBatis mapper 파일이 추가될 때마다 지정해줘야 . -->
     <mappers>
         <mapper resource="com/hobby/mapper/ThunderMapper.xml"/>        
+         <!-- <mapper class="com.hobby.mapper.ThunderMapper"/> -->
     </mappers>
     
 </configuration>
