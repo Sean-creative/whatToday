@@ -1,6 +1,6 @@
-// 컨트롤러 단에 전달할 form - Sean
-		let formObj = $("#mapForm");
-	
+
+
+
 	
 		// 마커를 담을 배열입니다
 		var markers = [];			
