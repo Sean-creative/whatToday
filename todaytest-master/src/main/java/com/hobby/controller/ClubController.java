@@ -1,5 +1,6 @@
 package com.hobby.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -172,7 +173,16 @@ public class ClubController {
 		   
 		   rttr.addFlashAttribute("result", "success");
 	   }
+	   
 	   return "redirect:/regular/board?cbNum="+club.getCbNum();
+   }
+   
+   @GetMapping("/clubjoin")
+   @PreAuthorize("isAuthenticated()")
+   public String clubJoin( @RequestParam("cbNum") Long cbNum) {
+	   log.info("###/clubjoin");
+	   
+	   return "redirect:/regular/info?cbNum="+cbNum;
    }
    
    //정기모임 가입
