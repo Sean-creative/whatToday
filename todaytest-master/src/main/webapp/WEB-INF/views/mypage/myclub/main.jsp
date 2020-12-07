@@ -26,7 +26,7 @@
                 <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">만남개설</button>
         		</form></li>
-                <li>                <form action="/mypage/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
 
@@ -88,7 +88,7 @@
 </div>
 </section>
 
-<script type="text/javascript" src="/resources/js/club.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	

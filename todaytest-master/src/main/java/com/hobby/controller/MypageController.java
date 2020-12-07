@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.AttachFileDTO;
+import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.MypageService;
@@ -71,8 +73,8 @@ public class MypageController {
 			model.addAttribute("clubVO", service.getMyClubList(usrNum));
 
 			// 가입대기중인 모임 / 이전에 가입한 모임 => 모임가입이 구현되면써먹을것.
-//			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
-//			model.addAttribute("prevClub", service.getPrevClubList(usrNum));
+			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
+			model.addAttribute("prevClub", service.getPrevClubList(usrNum));
 		}
 		return url;
 	}
@@ -95,6 +97,18 @@ public class MypageController {
 
 	}
 	
+	@GetMapping("/myclub/userManage")
+	public String userManage(Authentication auth, Model model) {
+		String url = "mypage/myclub/userManage";
+		log.info("/myclub/userManage");
+		if (auth == null) {
+			url = "redirect:/login/login";
+		}
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		
+		model.addAttribute("usrNum",customUser.getUser().getUsrNum());
+		return url;
+	}
 	// 회원정보수정하게되면 비밀번호를 재입력받는 페이지
 	// auth_leave 페이지랑 통합하는 방법을 생각해볼것
 	@GetMapping("/auth_edit")
@@ -373,26 +387,26 @@ public class MypageController {
 
 
 ////	// ajax로 내가 가입한 클럽 리스트 db 가져옴
-//	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
-//		log.info("get...........: " + cbNum);
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-//		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-//		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
-//	}
+	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
+		log.info("get...........: " + cbNum);
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
+	}
 //	
 //	// ajax로 내가 만든 모임을 가져옴
-//	@RequestMapping(value = "/myclub/createclub/{cbLeaderNum}",` produces = { MediaType.TEXT_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<List<ClubVO>> getMyCreateClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
-//			Authentication auth) {
-//		log.info("get...........: " + cbLeaderNum);
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-//		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-//		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()), HttpStatus.OK);
-//	}
-//
+	@RequestMapping(value = "/createclub/{cbLeaderNum}", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<ClubVO>> getMyCreateClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
+			Authentication auth) {
+		log.info("get...........: " + cbLeaderNum);
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()), HttpStatus.OK);
+	}
+
 //	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
 //	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
 //

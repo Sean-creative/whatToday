@@ -4,7 +4,7 @@ var clubService = (function(){
 	function getMyCreateClubList(param, callback, error){
 		var cbLeaderNum = param.cbLeaderNum;
 		
-		$.getJSON("/mypage/myclub/"+cbLeaderNum,function(data){
+		$.getJSON("/mypage/createclub/"+cbLeaderNum,function(data){
 			if(callback){
 				callback(data);
 			}

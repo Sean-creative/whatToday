@@ -1,18 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@include file = "../includes/header.jsp" %>
-
-
+<%@include file = "../../includes/header.jsp" %>
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+
 <nav id="nav">
 <div class ="menu">
     <ul>
         <li>
             <form action="/mypage/main" method="get">
-                <button class="btn1" type="submit" >마이페이지</button>
-
+                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
             </form>
         </li>
             <li>
@@ -31,7 +29,7 @@
                 <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
-                
+
                 
             </ul>
             </div>
@@ -39,7 +37,7 @@
         </li>
     <li>
         <form action="/mypage/auth_edit" method="get">
-            <button type="submit" style="color: yellow">회원정보수정</button>
+            <button type="submit">회원정보수정</button>
         </form>
     </li>
     <li>
@@ -56,36 +54,25 @@
     </ul>
 
 </div>
-</nav>
+</nav>2
 <section id="wrap">
-<div class = "pwdInput">
-    <div>
-        <h1 style="text-align: center;">비밀번호재입력</h1><br>
-        <p style="text-align: center;">본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</p>
-        <br><br>
-        <form action="/mypage/authAction" onsubmit="return blankCheck();" method="post">
-        <input type="password" class="inputPwd" name="password"><br>
-        <button type="submit">확인</button>
-        </form>
-    </div>
-</div>
+	<select name="clubList" id="clubList">
+	
+	</select>
 </section>
 
+<script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
-if("${msg}" != ""){
-	alert("${msg}");
-}
+$(document).ready(function() {
+	let number = <c:out value="${usrNum}"/>;
+	let clubList = $("#clubList")
+	clubService.getMyCreateClubList({cbLeaderNum:number},function(club){
+		for(let i = 0; i < club.length; i++){
+			console.log(club[i]);
+		}
+	})
 
-let blankCheck = function(){
-    let password = document.getElementsByName("password");
-    if(password[0].value.length == 0){
-    	alert("비밀번호를 입력해주세요.") 
-        return false;
-    }
-    return true;
-}
+});
 </script>
 
-
-
-    <%@include file = "../includes/footer.jsp" %>
+    <%@include file = "../../includes/footer.jsp" %>

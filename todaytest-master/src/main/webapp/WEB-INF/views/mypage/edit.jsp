@@ -30,7 +30,7 @@
 								</form>
 							</li>
 							<li>
-								<form action="/mypage/myclub/main" method="post">
+								<form action="/mypage/myclub/userManage" method="get">
 									<button type="submit">회원관리</button>
 								</form>
 							</li>
