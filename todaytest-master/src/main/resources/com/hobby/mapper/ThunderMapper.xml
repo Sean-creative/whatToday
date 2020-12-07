@@ -4,8 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 작성자 : 김선우 -->
-    
+
+
 <mapper namespace="com.hobby.mapper.ThunderMapper">
+
 
 	<resultMap type="com.hobby.domain.ThunderDetailVO"
 		id="ThunderDetailVO">
@@ -20,20 +22,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<resultMap type="com.hobby.domain.ThunderVO" id="ThunderVO">
 		<result column="cbNum" property="cbNum" />
-		<result column="cbType" property="cbType" />
+		<result column="cbName" property="cbName" />
+		<result column="cbIntro" property="cbIntro" />
 		<result column="cbCategory" property="cbCategory" />
 		<result column="cbSubcat" property="cbSubcat" />
-		<result column="cbCity" property="cbCity" />
-		<result column="cbDistrict" property="cbDistrict" />
 		<result column="cbMbnum" property="cbMbnum" />
 		<result column="cbHashtag" property="cbHashtag" />
-		<result column="cbIntro" property="cbIntro" />
-		<result column="cbName" property="cbName" />
-
-		<result column="cbLeaderNum" property="cbLeaderNum" />
-
-		<!-- select 할떄만 쓰는 거니까, 현재인원 넣겠음 -->
+		<result column="cbCity" property="cbCity" />
+		<result column="cbDistrict" property="cbDistrict" />
+		<result column="cbLeaderNum" property="cbLeaderNum" />		
 		<result column="cbCurMbnum" property="cbCurMbnum" />
+		
+		<result column="cbLeaderName" property="cbLeaderName" />
+		<result column="cbMakeDate" property="cbMakeDate" />
+		<result column="cbShutDate" property="cbShutDate" />
+		<result column="cbType" property="cbType" />
+		<result column="cbFinalState" property="cbFinalState" />
+		<result column="cbDetailContent" property="cbDetailContent" />
+		<result column="cbFile" property="cbFile" />
+
+
 
 		<collection property="thunderDetailVO"
 			resultMap="ThunderDetailVO"></collection>
@@ -41,13 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getList" resultMap="ThunderVO">
-<![CDATA[  select * from club ]]>
+<![CDATA[  select * from club c, thunderDetail td
+		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum} ]]>
 	</select>
 
 
 	<select id="read" resultMap="ThunderVO">
-		select * from club c, thunderDetail
-		td
+		select * from club c, thunderDetail td
 		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum}
 	</select>
 
@@ -67,12 +75,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(cbNum, cbIntro, cbName, cbCategory,
 		cbMbnum, cbSubcat, cbHashtag ,cbCity,
 		cbDistrict, cbType, cbLeaderNum
-		,cbLeaderName, cbCurMbnum)
+		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState)
 		values(#{cbNum}, #{cbIntro}, #{cbName},
 		#{cbCategory}, #{cbMbnum},
 		#{cbSubcat}, #{cbHashtag}, #{cbCity},
 		#{cbDistrict}, #{cbType}, #{cbLeaderNum},
-		#{cbLeaderName}, 1);
+		#{cbLeaderName}, #{cbCurMbnum}, sysdate, #{thunderDetailVO.cbDate}, #{cbFinalState});
 
 
 		insert
@@ -149,25 +157,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 
+<!-- 바뀔 수 있는 부분만 바꿀 것!! -->
 	<update id="update">
 		{
 		CALL
 		begin
-
-		update club set cbIntro=#{cbIntro},
+		
+		update club set 
+		cbIntro=#{cbIntro},
 		cbName=#{cbName},
 		cbCategory=#{cbCategory},
-		cbMbnum=#{cbMbnum},
 		cbSubcat=#{cbSubcat},
+		cbMbnum=#{cbMbnum},		
 		cbHashtag=#{cbHashtag}, 
 		cbCity=#{cbCity},
 		cbDistrict=#{cbDistrict},
-		cbCurMbnum=#{cbCurMbnum}
+		cbCurMbnum=#{cbCurMbnum},
+		
+		cbShutDate=#{thunderDetailVO.cbDate}
 		where cbNum = #{cbNum};
 
 
-		update thunderDetail
-		set cbDate=#{thunderDetailVO.cbDate},
+		update thunderDetail set
+		cbDate=#{thunderDetailVO.cbDate},
 		cbAppPeriod=#{thunderDetailVO.cbAppPeriod},
 		cbPlace=#{thunderDetailVO.cbPlace},
 		cbSupplies=#{thunderDetailVO.cbSupplies},
@@ -229,7 +241,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</select> -->
 
 
-
+<!-- List 화면에 보여줄 값들만 찾아오면 된다.... -->
 	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[
 	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate
@@ -263,5 +275,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-
 </mapper>
+

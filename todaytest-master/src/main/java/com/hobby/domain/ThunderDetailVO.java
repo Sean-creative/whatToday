@@ -22,9 +22,6 @@ public class ThunderDetailVO {
 	
 	//모임번호(기본키)
 	private Long cbNum;
-	
-	// 모임유형
-	private String cbType;
 		
 	//모임날짜
 	private String cbDate;

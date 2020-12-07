@@ -140,13 +140,13 @@
 		
 		if ($(o).val()) { 
 			// 값을 입력한 후 일 때 Value는 냅둬야함
-			console.log("값이 있다.");
+			
 						
 			
 		} else if (!($(o).val())) {
 			// date의 값이 아무것도 없을 때 (초기 설정일 때)는 초기 설정을 해준다
 			//초기 설정 
-			console.log("값이 없다.");
+			
 			
 			$('#cbDate').val(nowDate);
 			$('#cbAppPeriod').val(nowDate);			

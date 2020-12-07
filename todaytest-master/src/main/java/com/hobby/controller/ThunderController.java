@@ -298,6 +298,9 @@ public class ThunderController {
 	    //현재 로그인 되어있는 유저의 번호와 이름으로 club을 만든다.
 	    clubVO.setCbLeaderNum(usrNum);
 	    clubVO.setCbLeaderName(customUser.getUser().getUsrName());
+	    clubVO.setCbType("번개모임");
+		clubVO.setCbCurMbnum((long) 1);
+		clubVO.setCbFinalState("진행중");
 
 	    log.info("add - clubVO : " + clubVO);
 	    
