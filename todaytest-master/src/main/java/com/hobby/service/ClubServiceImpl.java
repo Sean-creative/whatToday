@@ -64,16 +64,19 @@ public class ClubServiceImpl implements ClubService {
 		return mapper.getList(cbNum);
 	}
 	
-	//정기모임 게시판 - 조회
+	//정기모임 게시판 - 조회 + 조회수
 	@Override
+	@Transactional
 	public ClubVO get(Long cbBno) {
 		
 		log.info("get......"+ cbBno);
+		mapper.boardViews(cbBno);
 		return mapper.read(cbBno);
 	}
 	
 	//정기모임 게시판 - 등록
 	@Override
+	@Transactional
 	public void boardRegister(ClubVO club) {
 		
 		log.info("boardregister....."+ club);
@@ -106,16 +109,9 @@ public class ClubServiceImpl implements ClubService {
 		return cnt;
 	}
 	
-	//정기모임 게시판 - 조회수
-	@Override
-	public int boardViews(Long cbBno) {
-		
-		log.info("boardviews......"+ cbBno);
-		return mapper.boardViews(cbBno);
-	}
-	
 	//정기모임 가입 
 	@Override
+	@Transactional
 	public void clubJoin(ClubVO club, UserVO userVO) {
 		
 		log.info("clubJoin....."+ club);

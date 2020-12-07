@@ -35,9 +35,6 @@ public interface ClubService {
 	//정기모임 게시판 - 수정
 	public int boardModify(ClubVO club);
 		
-	//정기모임 게시판 - 조회수
-	public int boardViews(Long cbBno);
-	
 	//정기모임 가입 
 	public void clubJoin(ClubVO club, UserVO userVO);
 
