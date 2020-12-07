@@ -2,6 +2,8 @@ package com.hobby.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
 import com.hobby.domain.NoticeCri;
@@ -29,5 +31,8 @@ public interface FaqMapper {
 	
 	// 공지사항 페이징처리
 	public List<NoticeVO> noticeListWithPaging(NoticeCri cri);
+	
+	//조회수
+	public void noticeReadCnt(@Param("ntNum")Long ntNum);
 
 }

@@ -56,11 +56,11 @@
 <!-- 공지사항 페이징 처리  -->
 <select id="noticeListWithPaging" resultType="com.hobby.domain.NoticeVO">
 	<![CDATA[	 
-		select ntNum, ntUsrClassification,ntTitle,ntDate,ntContent
+		select ntNum, ntUsrClassification,ntTitle,ntDate,ntContent,readcnt
 		from 
 			(
 			select /*+ INDEX_DESC(notice)*/ 
-			rownum rn, n.ntNum, n.ntUsrClassification, n.ntTitle, n.ntDate, nc.ntContent
+			rownum rn, n.ntNum, n.ntUsrClassification, n.ntTitle, n.ntDate, nc.ntContent,readcnt
 		from notice n, noticeContent nc
 		where rownum <= #{pageNum} * #{amount} and n.ntNum = nc.ntNum
 		)
@@ -68,6 +68,10 @@
 	]]>
 </select>
 
-<!-- 공지사항 넣기 -->
+
+<!--공지사항 조회수 -->
+<update id="noticeReadCnt">
+	update notice set readCnt = readCnt+1 where ntNum = #{ntNum}
+</update>
 
 </mapper>

@@ -1,26 +1,49 @@
 package com.hobby.mapper;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+
+import com.hobby.domain.NoticeVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
-	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
+//@WebAppConfiguration
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class NoticeMapperTests {
+	@Setter(onMethod_=@Autowired)
+	private NoticeMapper mapper;
+	
+	//@Test
+	public void testRead() {
+		NoticeVO notice = mapper.getNotice(10L);
+		
+		log.info(notice);
+	}
+	
+	
+	@Test 
+	public void testDelete() {
+		log.info("deleteNotice count" + mapper.deleteNotice(69L));
+		//log.info("deleteNotiCon count" + mapper.deleteNotiCon(13L));
+	}
+	
+	@Test
+	public void testUpdate() {
+		NoticeVO notice = new NoticeVO();
+		notice.setNtNum(70L);
+		notice.setNtTitle("수정");
+		notice.setNtContent("수정내용 ");
+		notice.setNtDate("2020-10-09");
+		
+		int count = mapper.updateNotice(notice);
+		int count2 = mapper.updateNotiCon(notice);
+	}
 	
 //	@Setter(onMethod_ = {@Autowired}) 
 //	private WebApplicationContext ctx;

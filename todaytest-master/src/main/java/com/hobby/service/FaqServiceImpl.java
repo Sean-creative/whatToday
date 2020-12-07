@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
@@ -55,10 +57,11 @@ public class FaqServiceImpl implements FaqService{
 		return mapper.noticeListWithPaging(cri);
 	}
 
-
+	@Transactional(isolation =Isolation.READ_COMMITTED)
 	@Override
 	public List<NoticeVO> noticeContent(Long ntNum) {
 		log.info("noticeContent...........");
+		mapper.noticeReadCnt(ntNum);
 		return mapper.noticeContent(ntNum);
 	}
 
