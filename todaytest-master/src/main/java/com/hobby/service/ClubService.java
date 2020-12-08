@@ -14,6 +14,9 @@ public interface ClubService {
 	//정기모임 목록 
 	public List<ClubVO> getClubList();
 		
+	//정기모임 목록 (검색 추가 및 검색조건에 맞는 모임 총 갯수)
+	public int getTotal(Criteria cri);
+	
 	//정기모임 상세정보
 	public ClubVO getClub(Long cbNum);
 	
@@ -38,7 +41,4 @@ public interface ClubService {
 	//정기모임 가입 
 	public void clubJoin(ClubVO club, UserVO userVO);
 	
-	//정기모임 목록 (검색조건에 맞는 모임 갯수찾기)
-	public int getTotal(Criteria cri);
-
 }

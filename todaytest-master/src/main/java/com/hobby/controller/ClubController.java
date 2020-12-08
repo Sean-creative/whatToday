@@ -34,14 +34,9 @@ public class ClubController {
    //정기모임 개설 
    @PostMapping("/add")
    public String registerClub(Authentication auth, ClubVO club, RedirectAttributes rttr) {
-	   //개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를 파라미터로 지정   
+   //개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를 파라미터로 지정   
 	   
 	   club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); //유효성검사
-	   
-//	   CustomUser customUser = (CustomUser) auth.getPrincipal();
-//	   Long usrNum = customUser.getUser().getUsrNum();
-//	   
-//	   club.setCbLeaderNum(usrNum);
 	   
 	   service.registerClub(club);
 	   
@@ -54,13 +49,10 @@ public class ClubController {
 	   return "redirect:/regular/list";
    }
    
+   //정기모임 개설 
    @GetMapping("/add")
+   @PreAuthorize("isAuthenticated()")
    public String registerClub(Authentication auth, Model model) {
-	   
-	   //로그인이 되어있지 않으면 로그인페이지로 이동
-	   if(auth == null) {
-		   return "redirect:/login/login";
-	   }
 	   
 	   log.info("register: ");
 	   
@@ -84,6 +76,7 @@ public class ClubController {
 	   
       log.info("clublist");
       log.info("list - cri : " + cri);
+      
       // cri에 들어있는 조건 대로, club 정보를 가져온다.
       model.addAttribute("clublist", service.getList(cri));
       
@@ -163,6 +156,7 @@ public class ClubController {
 	   return "redirect:/regular/board?cbNum="+club.getCbNum();
    }
    
+   //정기모임 게시판 - 등록 
    @GetMapping("/boardadd")
    public void boardRegister(Model model, @RequestParam("cbNum") Long cbNum) {
 	   
@@ -199,8 +193,9 @@ public class ClubController {
 	   return "redirect:/regular/board?cbNum="+club.getCbNum();
    }
    
+   //정기모임 가입
    @GetMapping("/clubjoin")
-   @PreAuthorize("isAuthenticated()")
+   @PreAuthorize("isAuthenticated()") //인증된 사용자면 true
    public String clubJoin(@RequestParam("cbNum") Long cbNum) {
 	   
 	   log.info("###/clubjoin");
