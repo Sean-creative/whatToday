@@ -1,10 +1,10 @@
 console.log("club module...");
 
 var clubService = (function(){
-	function getMyCreateClubList(param, callback, error){
+	function getLeaderClubList(param, callback, error){
 		var cbLeaderNum = param.cbLeaderNum;
 		
-		$.getJSON("/mypage/myclub/"+cbLeaderNum,function(data){
+		$.getJSON("/mypage/createclub/"+cbLeaderNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -31,7 +31,7 @@ var clubService = (function(){
 	}
 			
 	return{
-		getMyCreateClubList : getMyCreateClubList,
+		getLeaderClubList : getLeaderClubList ,
 		getJoinClub : getJoinClub
 	};
 	

@@ -89,8 +89,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<ClubVO> getMyCreateClubList(Long usrNum) {
-		return mapper.getMyCreateClubList(usrNum);
+	public List<ClubVO> getLeaderClubList(Long usrNum) {
+		return mapper.getLeaderClubList(usrNum);
 
 	}
 
@@ -185,6 +185,27 @@ public class MypageServiceImpl implements MypageService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Override
+	public List<ClubVO> getClubManageMemList(Long cbNum) {
+		
+		return mapper.getClubManageMemList(cbNum);
+	}
+
+	@Override
+	public int changeClubMemState(ClubVO clubVO) {
+
+		int cnt = 0;
+		cnt += mapper.insertClubJoinHistory(clubVO);
+		cnt += mapper.updateClubManageMem(clubVO);
+		
+		if(cnt != 2) {
+			//2이아니라면 강제 롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
 	}
 
 
