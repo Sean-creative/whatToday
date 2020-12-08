@@ -9,14 +9,12 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/thunder.css">
 
 
-
-<!--  번개 모임 개설 -->
 <section id="wrap" style="border: 1px solid; margin-top: 30px; padding: 30px;">
 	<form action="/thunder/list" method="get" onsubmit="return inputCheck()">
 
 
 		<div style="font-size: 30px; margin-bottom: 20px;">
-			<b>전체모임</b>
+			<b>전체모임(번개)</b>
 		</div>
 
 		<!-- 상세검색창 -->
