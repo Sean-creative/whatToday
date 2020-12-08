@@ -162,4 +162,52 @@
 	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
 </insert> 
 	
+<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
+
+
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
+				AND cbCategory = #{category}
+			</if>
+
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
+				AND cbSubcat = #{subclass}
+			</if>
+
+			<if test="city != null and city != '지역 선택' and city != ''">
+				AND cbCity = #{city}
+			</if>
+
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
+				AND cbDistrict = #{district}
+			</if>
+
+			<if test="keyword != null and keyword!= ''">
+				AND cbName like '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</sql>
+
+<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
+	<![CDATA[
+	select 
+		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
+		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		from club where ]]>
+
+		<include refid="criteria"></include>
+							
+	<![CDATA[  		     
+	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
+	where rn > (#{pageNum}-1) * #{amount} ]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from club where
+		<include refid="criteria"></include>
+		cbType='정기모임'
+	</select>
 </mapper>
