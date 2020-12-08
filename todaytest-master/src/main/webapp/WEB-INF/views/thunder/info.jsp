@@ -121,7 +121,7 @@ section a:hover {
 		<button data-oper='list' class="btn btn-info">List</button>
 	</div>
 
-<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 신청하기버튼을 보여줘야한다. -->
+<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
 <c:if test="${usrNum != clubVO.cbLeaderNum}">
 	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
 	data-oper='join' id="join">		
