@@ -2,16 +2,23 @@ package com.hobby.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.UserVO;
 
 public interface ClubMapper {
 	
 	//정기모임 개설
 	public void clubinsertSelectKey(ClubVO club);
+	public void clubinsertJoin(ClubVO club);
+	public void clubinsertJoinMember(ClubVO club);
 	
 	//정기모임 목록 
 	public List<ClubVO> getClubList();
+	
+	
 		
 	//정기모임 상세정보
 	public ClubVO readclub(Long cbNum);
@@ -22,6 +29,8 @@ public interface ClubMapper {
 	//정기모임 게시판 - 목록list (페이징)
 	public List<ClubVO> getListWithPaging(Criteria cri);
 		
+	public int getTotalCount(Criteria cri);
+	
 	//정기모임 게시판 - 조회
 	public ClubVO read(Long cbBno);
 	
@@ -39,5 +48,10 @@ public interface ClubMapper {
 	public int boardUpdateContent(ClubVO club);
 	
 	//정기모임 게시판 - 조회수
-	public int boardViews(Long cbBno);
+	public void boardViews(Long cbBno);
+	
+	//정기모임 가입 
+	public void clubJoin(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
+	public void clubJoinMember(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
+	
 }
