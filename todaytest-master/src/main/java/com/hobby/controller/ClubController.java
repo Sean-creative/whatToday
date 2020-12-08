@@ -1,5 +1,7 @@
 package com.hobby.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -78,18 +80,38 @@ public class ClubController {
    
    //정기모임 목록 
    @GetMapping("/list")
-   public void clublist(Model model) {
+   public void clublist(Criteria cri, Model model) {
 	   
       log.info("clublist");
+      log.info("list - cri : " + cri);
+      // cri에 들어있는 조건 대로, club 정보를 가져온다.
+      model.addAttribute("clublist", service.getList(cri));
+      
+      log.info("list : " + service.getList(cri));
+      
+      // cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
+      int total = service.getTotal(cri); 
+      log.info("list - total : " + total);
+      
+      model.addAttribute("pageMaker", new PageDTO(cri, total));
       
       //파라미터 model을 통해 clubserviceImpl 객체의 getClubList 결과를 담아 전달 한다.   
-      model.addAttribute("clublist", service.getClubList());
+      //model.addAttribute("clublist", service.getClubList());
    }
    
    //정기모임 상세정보
    @GetMapping("/info")
-   public void getClub(@RequestParam("cbNum") Long cbNum, Model model) {
-      
+   public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
+	   
+	   if (auth != null) {
+		   CustomUser customUser = (CustomUser) auth.getPrincipal();
+		   UserVO userVO = customUser.getUser();
+		   LocalDate onlyDate = LocalDate.now();
+		   //파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
+		   model.addAttribute("usrName", userVO.getUsrName());
+		   model.addAttribute("toDate", onlyDate);
+	   }
+	   
       log.info("/info");
       //화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
       model.addAttribute("club", service.getClub(cbNum));
@@ -179,7 +201,8 @@ public class ClubController {
    
    @GetMapping("/clubjoin")
    @PreAuthorize("isAuthenticated()")
-   public String clubJoin( @RequestParam("cbNum") Long cbNum) {
+   public String clubJoin(@RequestParam("cbNum") Long cbNum) {
+	   
 	   log.info("###/clubjoin");
 	   
 	   return "redirect:/regular/info?cbNum="+cbNum;
@@ -205,7 +228,7 @@ public class ClubController {
 	   log.info("##/add 회원이름는 :" + userVO.getUsrName());
 	   log.info("###clubjoin: " + club);
 	   
-	   return "/index/main";
+	   return "redirect:/index/main";
    }
 
 }

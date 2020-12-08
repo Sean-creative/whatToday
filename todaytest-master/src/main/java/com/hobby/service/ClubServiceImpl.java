@@ -118,4 +118,10 @@ public class ClubServiceImpl implements ClubService {
 		mapper.clubJoin(club,userVO);
 		mapper.clubJoinMember(club, userVO);
 	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		return mapper.getTotalCount(cri);
+	}
 }
