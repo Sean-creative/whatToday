@@ -21,16 +21,20 @@
         <input type="text" placeholder="관심취미를 입력해주세요." name="subclass">
         </form>
         
-        <ul class = "main">
-            <a href="/login/login">로그인</a>
-            <a href="/cs/faq">고객센터</a>
-        </ul>
+        <sec:authorize access="isAnonymous()">
+	        <ul class = "main">
+	            <a href="/login/login">로그인</a>
+	            <a href="/cs/faq">고객센터</a>
+	        </ul>
+        </sec:authorize>
         
         <!-- 로그인되면 보여지는 페이지 -->
         <sec:authorize access="isAuthenticated()">			
 			<ul>
         		<a href ="/" id="user"><sec:authentication property="principal.user.usrName"/>님</a>
             	<a href="/login/logout">로그아웃</a>
+            	
+            	
             	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
        	 	</ul>
@@ -60,6 +64,7 @@
 </div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<<<<<<< HEAD
 <script type="text/javascript">
 
 		var id = document.getElementById("user");
@@ -81,3 +86,5 @@
 			}
 	
 </script>
+=======
+>>>>>>> master
