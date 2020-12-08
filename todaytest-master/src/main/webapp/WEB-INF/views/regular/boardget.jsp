@@ -52,28 +52,142 @@
 				</div>
 				</div>
 		</div>
-</div>	
-</body>
+<!-- 댓글 등록  -->
+	<div class="my reply add">
+		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
+		<form:hidden path="cbBno" id="cbBno"/>
+			<div class="row">
+				<div class="col-sm-10">
+					<textarea name="reply" id="reply" class="form-control" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+				</div>
+				<div class="col-sm-2">
+					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
+					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
+				</div>	
+			</div>
+		</form>
+	</div>
+<!-- 댓글목록 처리 -->
+		<div class='row'>
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					 <div class="panel-heading">
+        				<i class="fa fa-comments fa-fw"></i> Reply
+      				 </div> 
+					<div class="panel-body">
+						<ul class="chat">
+						</ul>
+					</div>
+					<div class="panel-footer"></div>
+				</div>
+			</div>
+		</div>	
+</div>
 
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		
-		var operForm = $("#operForm");
-		
-		$("button[data-oper='update']").on("click", function(e) {
-		
-		operForm.attr("action", "/regular/boardupdate").submit();
-			
-		});
-		
-		$("button[data-oper='list']").on("click", function(e) {
-			console.log($("#cbNum").val())
-			operForm.find("#cbBno").remove();
-			operForm.attr("action", '/regular/board?cbNum='+$("#cbNum").val());
-			operForm.submit();
 
-		});
+	$(document).ready(function() {
+
+				var operForm = $("#operForm");
+
+				$("button[data-oper='update']").on("click", function(e) {
+
+					operForm.attr("action", "/regular/boardupdate").submit();
+
+				});
+
+				$("button[data-oper='list']").on("click",function(e) {
+							console.log($("#cbNum").val())
+							operForm.find("#cbBno").remove();
+							operForm.attr("action", '/regular/board?cbNum='+ $("#cbNum").val());
+							operForm.submit();
+						});
+			});
+</script>
+<script>
+	//댓글
+/* 	console.log(replyService);
+	console.log("==============");
+	console.log("JS TEST");
+	
+	var cbBnoValue = '<c:out value="${club.cbBno}"/>';
+	var cbNumValue = '<c:out value="${cbNum}"/>';
+	
+	//for replyService add test
+ 	replyService.add(
+			{reply: "JS Test", replyer:"tester", cbBno:cbBnoValue, cbNum:cbNumValue},
+			function(result){
+				alert("RESULT: " + result);
+			}
+	); 
+	
+	replyService.getList({cbBno:cbBnoValue}, function(list) {
+		
+	
+		for(var i = 0, len=list.length || 0; i< len; i++) {
+			
+			console.log(list[i]);
+		}
 	});
+	
+ 	replyService.remove(15, function(count) {
+		
+		console.log(count);
+		
+		if(count === "success") {
+			alert("REMOVED");
+		}
+	}, function(err) {
+		alert('ERROR...');
+	}); 
+	
+	replyService.update({
+		rno : 22,
+		cbBno : cbBnoValue,
+		reply : "Modified Reply...."
+	}, function(result) {
+		alert("수정 완료....");
+	});
+	
+	replyService.get(22, function(data) {
+		console.log(data);
+	});  */
+</script>
+
+<script>  
+	$(document).ready(function() {
+
+						var cbBnoValue = '<c:out value="${club.cbBno}"/>';
+						var cbNumValue = '<c:out value="${cbNum}"/>';
+						var replyUL = $(".chat");
+
+						showList(1);
+
+						function showList(page) {
+
+							replyService.getList({cbBno : cbBnoValue}, function(list) {
+
+												var str = "";
+												if (list == null || list.length == 0) {
+													replyUL.html("");
+													return;
+												}
+												for (var i = 0, len = list.length || 0; i < len; i++) {
+												       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+												       str +="  <div><div class='header'><strong class='primary-font'>["
+												    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+												       str +="    <small class='pull-right text-muted'>"
+												           +replyService.displayTime(list[i].replyDate)+"</small></div>";
+												       str +="    <p>"+list[i].reply+"</p></div></li>";
+												     }
+												     
+												     replyUL.html(str);
+											});
+						}
+
+				});
+					 
 </script>
 
 <%@include file="../includes/footer.jsp" %>

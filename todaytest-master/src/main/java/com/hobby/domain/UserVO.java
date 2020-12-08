@@ -3,14 +3,17 @@ package com.hobby.domain;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Data
 public class UserVO {
-	
 	// tbluser테이블
 	// 회원번호 
     private Long usrNum;
+    
     // 회원구분 (일반회원 or 운영자)
     private String usrClassification;
     // 아이디(=이메일)
@@ -44,18 +47,23 @@ public class UserVO {
     
     //userdetail 테이블
     // 관심지역1
-    private String usrCity1;
-    // 관심지역1_세부지역
-    private String usrDistrict1;
-    // 관심지역2
-    private String usrCity2;
-    // 관심지역2_세부지역
-    private String usrDistrict2;
-    // 관심분야1
-    private String usrCategory1;
-    // 관심분야2
-    private String usrCategory2;
+    private String usrCity1="시/도 선택";
     
+    // 관심지역1_세부지역
+    private String usrDistrict1="군/구 선택";
+
+    // 관심지역2
+    private String usrCity2="시/도 선택";
+
+    // 관심지역2_세부지역
+    private String usrDistrict2="군/구 선택";
+
+    // 관심분야1
+    private String usrCategory1="관심분야";
+
+    // 관심분야2
+    private String usrCategory2="관심분야";
+
     //userterms 테이블
     // 이용약관 동의 여부
     private String usrTerm; 

@@ -14,6 +14,16 @@
    insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
    values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
 </insert>
+                             
+<insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
+	values (CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'승인',sysdate) 
+</insert>
+
+<insert id="clubinsertJoinMember"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMbStResult, cbAppDate)
+	values (#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'승인',sysdate) 
+</insert> 
 
 <!-- 정기모임 목록  -->
 <select id="getClubList" resultType="com.hobby.domain.ClubVO">
@@ -24,7 +34,7 @@
 
 <!-- 정기모임 상세정보  -->
 <select id="readclub" resultType="com.hobby.domain.ClubVO">
-	select cbNum,cbName,cbHashtag,cbIntro,cbDetailContent from club 
+	select cbNum,cbName,cbLeaderName,cbHashtag,cbIntro,cbDetailContent from club 
 	where cbNum = #{cbNum}
 </select>
 
@@ -37,7 +47,7 @@
 </select>
 
 <!-- 정기모임 게시판 - 목록(페이징) -->
-<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
+<!-- <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
 		cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView from
@@ -45,7 +55,7 @@
 		from clubboard where rownum <= #{pageNum} * #{amount} and cbNum = #{cbNum}) 
 	where rn > (#{pageNum} -1) * #{amount} 
 	]]>
-</select>
+</select> -->
 
 <!-- 정기모임 게시판 - 조회 -->
 <select id="read" resultType="com.hobby.domain.ClubVO">
@@ -91,4 +101,64 @@
 	where cbBno = #{cbBno}
 </update>
 
+<!-- 정기모임 가입  -->
+
+<insert id="clubJoin">
+	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
+	values (CLUBJOINHISTORY_SEQ.nextval,#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},'승인대기',sysdate) 
+</insert>
+
+<insert id="clubJoinMember">
+	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMemIntro, cbMbStResult, cbAppDate)
+	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
+</insert> 
+	
+<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
+
+
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
+				AND cbCategory = #{category}
+			</if>
+
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
+				AND cbSubcat = #{subclass}
+			</if>
+
+			<if test="city != null and city != '지역 선택' and city != ''">
+				AND cbCity = #{city}
+			</if>
+
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
+				AND cbDistrict = #{district}
+			</if>
+
+			<if test="keyword != null and keyword!= ''">
+				AND cbName like '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</sql>
+
+<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
+	<![CDATA[
+	select 
+		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
+		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		from club where ]]>
+
+		<include refid="criteria"></include>
+							
+	<![CDATA[  		     
+	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
+	where rn > (#{pageNum}-1) * #{amount} ]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from club where
+		<include refid="criteria"></include>
+		cbType='정기모임'
+	</select>
 </mapper>
