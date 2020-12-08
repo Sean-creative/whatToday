@@ -121,18 +121,19 @@ section a:hover {
 		<button data-oper='list' class="btn btn-info">List</button>
 	</div>
 
-	<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 신청하기버튼을 보여줘야한다. -->
-	<c:if test="${usrNum != clubVO.cbLeaderNum}">
-		<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" data-oper='join' id="join">
-			<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-			<c:choose>
-				<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-				<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-				<c:otherwise>가입불가</c:otherwise>
-			</c:choose>
-		</button>
-	</c:if>
 
+<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
+<c:if test="${usrNum != clubVO.cbLeaderNum}">
+	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
+	data-oper='join' id="join">		
+		<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+		<c:choose>
+		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
+		<c:otherwise>가입불가</c:otherwise>
+		</c:choose>
+	</button>
+</c:if>	
 
 
 
