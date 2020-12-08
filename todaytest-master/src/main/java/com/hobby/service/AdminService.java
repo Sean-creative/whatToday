@@ -17,7 +17,7 @@ public interface AdminService {
 	
 	public List<ClubVO> getClubList();
 	
-	public List<UserVO> getClubMemberList(Long usrNum);
+	public List<ClubVO> getClubMemberList(Long usrNum);
 	
 	public int insertUserHistory(UserVO userVO);
 	

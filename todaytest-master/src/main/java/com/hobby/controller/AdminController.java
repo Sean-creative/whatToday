@@ -114,7 +114,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/clubmanage/clubmemberlist/{cbNum}.json", produces = { MediaType.TEXT_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<UserVO>> getClubMemberList(@PathVariable("cbNum") Long cbNum) {
+	public ResponseEntity<List<ClubVO>> getClubMemberList(@PathVariable("cbNum") Long cbNum) {
 	
 	return new ResponseEntity<>(service.getClubMemberList(cbNum),HttpStatus.OK);
 	}

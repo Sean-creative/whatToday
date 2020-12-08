@@ -34,7 +34,9 @@ public class ClubVO {
 	private Long usrNum;
 	private String cbMbStResult;
 	private String cbMemIntro;
-	private Date cbAppDate;
+	private String cbAppDate;
+	
+	private UserVO userVO;
 	
 	//////////////////////////////////////////CLUBJOINHISTORY
 	

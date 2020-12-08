@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<UserVO> getClubMemberList(Long cbNum) {
+	public List<ClubVO> getClubMemberList(Long cbNum) {
 		
 		return mapper.getClubMemberList(cbNum);
 	}

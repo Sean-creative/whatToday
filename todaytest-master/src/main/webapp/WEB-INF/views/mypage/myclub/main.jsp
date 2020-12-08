@@ -58,7 +58,7 @@
 <section id="wrap">
 <div class ="info">
 <div class ="clubInfoSmall">
-<p>개설한 모임</p><br>
+<p>내가 모임장인 모임</p><br>
 <c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
    <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
    <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">

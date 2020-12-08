@@ -5,14 +5,14 @@ import java.util.List;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
 /**
- * 작성ㅈ ㅏ국민성
+ * 작성자 국민성
  */
 public interface AdminMapper {
 	
 	public List<UserVO> getUserList();
 	public List<UserVO> getBanLeaveUser();
 	public List<ClubVO> getClubList();
-	public List<UserVO> getClubMemberList(Long cbNum);
+	public List<ClubVO> getClubMemberList(Long cbNum);
 	
 	public UserVO getUser(String id);
 	

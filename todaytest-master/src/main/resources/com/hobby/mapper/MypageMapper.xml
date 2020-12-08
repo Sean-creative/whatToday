@@ -3,6 +3,23 @@
 
 <mapper namespace="com.hobby.mapper.MypageMapper">
 
+<resultMap id="cbMem" type="com.hobby.domain.ClubVO">
+ 	<result property="usrNum" column="usrNum" />
+    <result property="usrName" column="usrName" />
+    <result property="cbMemIntro" column="cbMemIntro" />
+    <result property="cbAppDate" column="cbAppDate" />  
+    <result property="cbMbStResult" column="cbMbStResult" />  
+    <result property="cbNum" column="cbNum" />  
+    <result property="cbType" column="cbType" />  
+    <result property="cbName" column="cbName" />  
+    <association property="userVO" javaType="com.hobby.domain.UserVO">
+    	<id column="usrGender" property="usrGender"/>
+		<result column="usrBirth" property="usrBirth"/>
+    </association>
+</resultMap>
+
+
+
 	<select id="getUser" resultType="com.hobby.domain.UserVO">
 		select * from USERDETAIL,TBLUSER where USRID = #{id} AND USERDETAIL.usrNum = TBLUSER.usrNum
 	</select>
@@ -45,10 +62,10 @@
 	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
 	</insert>
 	
-	<select id="getMyCreateClubList" resultType="com.hobby.domain.ClubVO">
+	<select id="getLeaderClubList" resultType="com.hobby.domain.ClubVO">
 		select * from CLUB
 		where 
-		CBLEADERNUM = #{usNum} order by cbNum asc
+		CBLEADERNUM = #{usNum} and CBFINALSTATE != '폐쇄' order by cbNum asc
 	</select>
 
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">
@@ -89,5 +106,19 @@
 	<select id="getOldFiles"  resultType="com.hobby.domain.UserVO">
 		select USRIMG, USRIMGPATH from TBLUSER where USRIMGPATH = to_char(sysdate -1,'yyyy\mm\dd')
 	</select>
+	
+	<select id="getClubManageMemList" resultMap="cbMem">
+		select * from tbluser,clubmember where cbnum = #{cbNum} and clubmember.usrnum = tbluser.usrnum and clubmember.cbmbstresult in ('가입승인','승인대기')
+	</select>
+	
+	<insert id="insertClubJoinHistory">
+		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE)  
+		values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbMbStResult}, sysdate)
+	</insert>
+	<update id="updateClubManageMem">
+		update CLUBMEMBER
+		set  CBMBSTRESULT = #{cbMbStResult}
+		where  USRNUM = #{usrNum} and CBNUM = #{cbNum}
+	</update>
 	
 </mapper>

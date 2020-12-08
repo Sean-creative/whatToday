@@ -39,8 +39,8 @@
 		select * from CLUB WHERE CBFINALSTATE != '폐쇄'
 	</select>
 	
-	<select id="getClubMemberList" resultType="com.hobby.domain.UserVO">
-		select usrnum, usrname from clubmember where cbnum = #{cbNum}
+	<select id="getClubMemberList" resultType="com.hobby.domain.ClubVO">
+		select * from clubmember where cbnum = #{cbNum}
 	</select>
 	
 	<insert id="insertUserHistory">

@@ -19,7 +19,8 @@ public interface MypageService {
 	public List<ClubVO> getMyClubList(Long usrNum);
 	public List<ClubVO> getWaitClubList(Long usrNum);
 	public List<ClubVO> getPrevClubList(Long usrNum);
-	public List<ClubVO> getMyCreateClubList(Long usrNum);
+	public List<ClubVO> getLeaderClubList(Long usrNum);
+	public List<ClubVO> getClubManageMemList(Long cbNum);
 	
 	public List<CategoryVO> getCategoryList(String catClassificationCode);
 	public List<RegionVO> getCityList();
@@ -33,6 +34,8 @@ public interface MypageService {
 	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int insertUserHistory(UserVO userVO);
+	
+	public int changeClubMemState(ClubVO clubVO);
 
 	public boolean isPwdValid(String password);
 	public boolean comparePwdDB(String password,String password2);

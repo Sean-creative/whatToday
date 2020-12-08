@@ -25,7 +25,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,6 +73,7 @@ public class MypageController {
 
 			// 2. 현재가입모임을 가져와서 모델에 넣음 - 가입신청했던 날짜순으로 출력함
 			model.addAttribute("clubVO", service.getMyClubList(usrNum));
+			
 
 			// 가입대기중인 모임 / 이전에 가입한 모임 => 모임가입이 구현되면써먹을것.
 			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
@@ -91,7 +94,7 @@ public class MypageController {
 		} else {
 			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴 - 모임 만든지 오래된 순으로 가져옴
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			model.addAttribute("clubVO", service.getMyCreateClubList(customUser.getUser().getUsrNum()));
+			model.addAttribute("clubVO", service.getLeaderClubList(customUser.getUser().getUsrNum()));
 		}
 		return url;
 
@@ -386,25 +389,44 @@ public class MypageController {
 	}
 
 
-////	// ajax로 내가 가입한 클럽 리스트 db 가져옴
-	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
-		log.info("get...........: " + cbNum);
-		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
-	}
-//	
-//	// ajax로 내가 만든 모임을 가져옴
+	// ajax로 내가 가입한 클럽 리스트 db 가져옴
+//	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
+//			MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
+//		log.info("get...........: " + cbNum);
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
+//		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+//		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
+//	}
+	
+	// ajax로 내가 만든 모임을 가져옴
 	@RequestMapping(value = "/createclub/{cbLeaderNum}", produces = { MediaType.TEXT_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ClubVO>> getMyCreateClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
+	public ResponseEntity<List<ClubVO>> getLeaderClubList(@PathVariable("cbLeaderNum") Long cbLeaderNum,
 			Authentication auth) {
 		log.info("get...........: " + cbLeaderNum);
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-		return new ResponseEntity<>(service.getMyCreateClubList(userVO.getUsrNum()), HttpStatus.OK);
+		return new ResponseEntity<>(service.getLeaderClubList(userVO.getUsrNum()), HttpStatus.OK);
+	}
+	@RequestMapping(value = "/clubmanage/getClubManageMemList/{cbNum}.json", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<ClubVO>> getClubManageMemList(@PathVariable("cbNum") Long cbNum) {
+	System.out.println(service.getClubManageMemList(cbNum));
+	return new ResponseEntity<>(service.getClubManageMemList(cbNum),HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/clubmanage/changeClubMemState", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> changeClubMemState(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.changeClubMemState(clubVO) == 2
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 
 //	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
