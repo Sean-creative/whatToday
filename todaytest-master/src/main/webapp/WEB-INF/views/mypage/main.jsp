@@ -3,8 +3,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
-<% int num = 2; 
-%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
 <nav id="nav">
 <div class ="menu">
@@ -27,7 +25,7 @@
                 <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">만남개설</button>
         		</form></li>
-                <li>                <form action="/mypage/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
                 
@@ -59,7 +57,8 @@
 <section id="wrap">
 <div class ="info">
     <div class="pic">
-    	<img src="<c:out value="${userVO.usrImg} "/>" style='width:130px; height:200px;' alt="로 딩 중">
+    	<img style='width:100%; height:100%;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
+		alt="로딩중"/>
     </div>
 	<div class="userInfo">
 		<p>ID : ${userVO.usrId } </p>
@@ -73,25 +72,6 @@
 <div class ="clubInfoSmall">
 <p>가입한 모임</p><br>
 <ul style="list-style-type: none;">
-
-<!-- 보여줄갯수 변수로 설정 -->
-
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end = "<%=num%>">
-    <li class="cb" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/>
-    <input type="hidden" class="cb2" value ="${clubVO.cbType}">
-    </li><br>
-</c:forEach>
-
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin = "<%=num+1%>">
-        <c:if test="${status.first}"><p class="moreList">더보기</p></c:if>
-<li class="cb hideList" style ="display: none" value ="${clubVO.cbNum}"><c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/></li><br>
-<c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
-</c:forEach>
-
-
-
-
-
 
 </ul>
 </div>
@@ -118,9 +98,22 @@
 </div>
 
 </section>
+
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	let number = "${userVO.usrNum}"
+	clubService.getLeaderClubList({cbLeaderNum:number},function(club){
+		console.log(club);
+		/* let str = "";
+		for(let i = 0; i < club.length; i++){
+			str += "<option value='"+club[i].cbNum+"'>"+"["+club[i].cbType+"]"+club[i].cbName+"</option>";
+		}
+		clubList.append(str);
+		let cbNum = $("#clubList option:selected").val();
+		getClubManageMemList(cbNum); */
+	})
 	
 	if("${msg}" != ""){
 		alert("${msg}");

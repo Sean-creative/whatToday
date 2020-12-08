@@ -1,6 +1,7 @@
 package com.hobby.domain;
 
 
+
 import lombok.Data;
 
 @Data
@@ -25,13 +26,16 @@ public class ClubVO {
 	private String cbFile;
 	
 	///////////////////////////////////////////CLUBMEMBER
+	
+	
 
 	private String usrName;
+	private Long usrNum;
 	private String cbMbStResult;
 	private String cbMemIntro;
 	private String cbAppDate;
-	
-	
+
+	private UserVO userVO;
 	//////////////////////////////////////////CLUBJOINHISTORY
 	
 	private Long cbJoinNum;
@@ -50,11 +54,14 @@ public class ClubVO {
 	
 	//CLUB/////////////////////////////////////////////////////////////
 
+
 	private String cbLeaderName;
 
 
+	
 	//CLUBBOARD////////////////////////////////////////////////////////
 	
+
 	private Long cbBno;
 
 	private String cbBdWriter;
@@ -65,10 +72,11 @@ public class ClubVO {
 
 	private Long cbBdView;
 	
-	
 	//CLUBBOARDCONTENT/////////////////////////////////////////////////
 	
+
 	private String cbBdContent;
 	
 	
+
 }
