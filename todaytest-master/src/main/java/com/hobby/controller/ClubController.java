@@ -1,5 +1,7 @@
 package com.hobby.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -88,8 +90,17 @@ public class ClubController {
    
    //정기모임 상세정보
    @GetMapping("/info")
-   public void getClub(@RequestParam("cbNum") Long cbNum, Model model) {
-      
+   public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
+	   
+	   if (auth != null) {
+		   CustomUser customUser = (CustomUser) auth.getPrincipal();
+		   UserVO userVO = customUser.getUser();
+		   LocalDate onlyDate = LocalDate.now();
+		   //파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
+		   model.addAttribute("usrName", userVO.getUsrName());
+		   model.addAttribute("toDate", onlyDate);
+	   }
+	   
       log.info("/info");
       //화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
       model.addAttribute("club", service.getClub(cbNum));
@@ -179,7 +190,8 @@ public class ClubController {
    
    @GetMapping("/clubjoin")
    @PreAuthorize("isAuthenticated()")
-   public String clubJoin( @RequestParam("cbNum") Long cbNum) {
+   public String clubJoin(@RequestParam("cbNum") Long cbNum) {
+	   
 	   log.info("###/clubjoin");
 	   
 	   return "redirect:/regular/info?cbNum="+cbNum;
@@ -205,7 +217,7 @@ public class ClubController {
 	   log.info("##/add 회원이름는 :" + userVO.getUsrName());
 	   log.info("###clubjoin: " + club);
 	   
-	   return "/index/main";
+	   return "redirect:/index/main";
    }
 
 }

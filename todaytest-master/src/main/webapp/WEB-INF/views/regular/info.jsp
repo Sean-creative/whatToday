@@ -21,7 +21,8 @@
     		한줄소개 - <c:out value="${club.cbIntro}" /><br>
     		상세내용 - <c:out value="${club.cbDetailContent}" /></div>
     	<div>개설자 - <c:out value="${club.cbLeaderName }"/></div>	
-    	<button type="submit" onclick="document.getElementById('id01').style.display='block'">가입하기</button>
+    	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
+    	<button onclick="javascript:join();">가입하기</button>
 </div>
 	<div id="id01" class="modal">
 		<span onclick="document.getElementById('id01').style.display='none'"
@@ -31,14 +32,14 @@
 			<div class="container">
 				<h2>가입인사</h2>
 				<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />"/>
-				<input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum}" />"/>
+				<input type="hidden" name="usrNum" value="<c:out value="${usrNum}" />"/>
 				<input type="hidden" name="cbType" value="정기모임"/>
 				<input type="hidden" name="cbName" value="${club.cbName }"/>
 				<input type="hidden" name="cbJoinStateResult" value="승인대기"/> 
 				<label><b>가입일자</b></label> 
-				<input type="text" name="cbAppDate"><br>
+				<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="true"><br>
 				<label><b>이름</b></label>
-				<input type="text" name="usrName" value="<c:out value="${userVO.usrName}" />"><br>
+				<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true"><br>
 				<label><b>가입인사</b></label> 
 				<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea><br>
 			<div class="clearfix">
@@ -53,12 +54,13 @@
 <script type="text/javascript">
 	var modal = document.getElementById('id01');
 	
-	var replyer = null;
+	var replyer = false;
 	<sec:authorize access="isAuthenticated()">
-		replyer = '<sec:authentication property="principal.username"/>';
+		/* replyer = '<sec:authentication property="principal.username"/>'; */
+		replyer = true;
 	</sec:authorize>
 	
-	window.onclick = function(event) {
+	/* window.onclick = function(event) {
 		if(!replyer){
 				alert("로그인");
 				location.href="/regular/clubjoin?cbNum=${club.cbNum}";
@@ -66,6 +68,16 @@
 			if(event.target == modal) {
 				modal.style.display = "block";
 			}
+		}
+	} */
+	
+	function join() {
+		if(!replyer){
+			location.href="/regular/clubjoin?cbNum=${club.cbNum}";
+			return;
+		} else {
+			
+			modal.style.display = "block";
 		}
 	}
 	
