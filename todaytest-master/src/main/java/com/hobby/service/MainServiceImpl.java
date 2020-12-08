@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hobby.domain.MainVO;
+import com.hobby.domain.ThunderVO;
 import com.hobby.mapper.MainMapper;
 
 import lombok.AllArgsConstructor;
@@ -32,5 +33,11 @@ public class MainServiceImpl implements MainService{
 		log.info("getLsitThunder.........");
 		return mapper.getListThunder();
 	}
+
+//	@Override
+//	public List<ThunderVO> getListWithKeyword(String subCat) {
+//		log.info("getListWithKeyword.........");
+//		return mapper.getListWithKeyword(subCat);
+//	}
 	
 }
