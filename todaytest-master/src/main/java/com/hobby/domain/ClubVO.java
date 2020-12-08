@@ -1,8 +1,6 @@
 package com.hobby.domain;
 
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -21,7 +19,7 @@ public class ClubVO {
 	private String cbHashtag;
 	private String cbIntro;
 	private String cbMakeDate;
-	private Date cbShutDate;
+	private String cbShutDate;
 	private String cbFinalState;
 	private String cbDetailContent;
 	private String cbFile;

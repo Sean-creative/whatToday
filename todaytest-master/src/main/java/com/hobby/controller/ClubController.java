@@ -80,12 +80,23 @@ public class ClubController {
    
    //정기모임 목록 
    @GetMapping("/list")
-   public void clublist(Model model) {
+   public void clublist(Criteria cri, Model model) {
 	   
       log.info("clublist");
+      log.info("list - cri : " + cri);
+      // cri에 들어있는 조건 대로, club 정보를 가져온다.
+      model.addAttribute("clublist", service.getList(cri));
+      
+      log.info("list : " + service.getList(cri));
+      
+      // cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
+      int total = service.getTotal(cri); 
+      log.info("list - total : " + total);
+      
+      model.addAttribute("pageMaker", new PageDTO(cri, total));
       
       //파라미터 model을 통해 clubserviceImpl 객체의 getClubList 결과를 담아 전달 한다.   
-      model.addAttribute("clublist", service.getClubList());
+      //model.addAttribute("clublist", service.getClubList());
    }
    
    //정기모임 상세정보

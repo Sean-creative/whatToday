@@ -37,5 +37,8 @@ public interface ClubService {
 		
 	//정기모임 가입 
 	public void clubJoin(ClubVO club, UserVO userVO);
+	
+	//정기모임 목록 (검색조건에 맞는 모임 갯수찾기)
+	public int getTotal(Criteria cri);
 
 }
