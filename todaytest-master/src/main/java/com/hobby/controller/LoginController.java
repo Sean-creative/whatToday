@@ -2,6 +2,7 @@ package com.hobby.controller;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,8 +10,13 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +29,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.LoginService;
+import com.hobby.sns.GoogleLogin;
 import com.hobby.sns.KakaoLoginApi;
-import com.hobby.sns.NaverLoginDTO;
+import com.hobby.sns.NaverLogin;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -37,7 +45,6 @@ import lombok.extern.log4j.Log4j;
  * 회원가입 / 로그인 / 아이디/비밀번호 찾기 페이지 관리
  * @author jiyeong
  */
-
 
 @Controller
 @Log4j
@@ -227,11 +234,11 @@ public class LoginController {
 
 	// 6. 네이버 로그인
 	@RequestMapping(value = "/login/naverLogin")
-	public String login(Model model, HttpSession session) {
+	public String naverLogin(Model model, HttpSession session) {
 		log.info("##/login/naverLogin");
 
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 NaverLoginDTO클래스의 getAuthorizationUrl메소드 호출 */
-		String naverAuthUrl = NaverLoginDTO.getAuthorizationUrl(session);
+		String naverAuthUrl = NaverLogin.getAuthorizationUrl(session);
 		System.out.println("네이버:" + naverAuthUrl);
 
 		/* 생성한 인증 URL로 로그인 요청 */
@@ -242,12 +249,12 @@ public class LoginController {
 	// 6-1. 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/login/naverCallback")
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rtts)
-			throws IOException, ParseException {
+			throws IOException, ParseException, InterruptedException, ExecutionException {
 		log.info("##/login/naverCallback");
 		OAuth2AccessToken oauthToken;
-		oauthToken = NaverLoginDTO.getAccessToken(session, code, state);
+		oauthToken = NaverLogin.getAccessToken(session, code, state);
 		//로그인 사용자 정보를 읽어온다.
-		String apiResult = NaverLoginDTO.getUserProfile(oauthToken);
+		String apiResult = NaverLogin.getUserProfile(oauthToken);
 		//        System.out.println("사용자 정보: " + apiResult);
 		//{"resultcode":"00","message":"success","response":{"id":"62403566","email":"dnwntjs1531@naver.com","name":"\uae40\uc9c0\uc601"}}
 
@@ -292,7 +299,6 @@ public class LoginController {
 		return "/login/login";
 	}
 
-	
 	@GetMapping("/test")
 	@PreAuthorize("isAuthenticated()")
 	public void test() {
@@ -300,7 +306,48 @@ public class LoginController {
 		String name = customUser.getUser().getUsrName();
 		log.info("####test####");
 		log.info("name" + name);
+
+	}
+
+	// 7. 구글 로그인
+	@RequestMapping(value = "/googleLogin", method = { RequestMethod.GET, RequestMethod.POST })
+	public String login(Model model, HttpSession session) {
+		log.info("##/login/googleLogin");
+		/* 구글 아이디 인증 URL을 생성하기 위하여 googleLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+		String googleAuthUrl = GoogleLogin.getAuthorizationUrl();
+		System.out.println("구글 AuthURI: " + googleAuthUrl);
+
+		model.addAttribute("url", googleAuthUrl);
+
+		/* 생성한 인증 URL로 로그인 요청 */
+		return "redirect: " + googleAuthUrl;
+	}
+
+	// 7-1. 구글 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/auth/google/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code)
+			throws IOException, InterruptedException, ExecutionException {
+		log.info("##/login/googleCallback");
 		
+		OAuth2AccessToken oauthToken = GoogleLogin.getAccessToken(code);
+		
+		//로그인 사용자 정보를 읽어온다.
+		String apiResult = GoogleLogin.getUserProfile(oauthToken);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode userInfo = mapper.readTree(apiResult);
+
+		log.info("userInfo: " + userInfo);
+
+		String googleEmail = userInfo.path("email").asText();
+		System.out.println(googleEmail);
+		
+		// 이름 정보를 가져오고 싶으면 GoogleLogin에서 scope 변경해서 가져와야함.
+//		String usrName = userInfo.path("name").asText();
+//		System.out.println(usrName);
+
+		model.addAttribute("user", googleEmail);
+		return "/login/googleSuccess";
 	}
 }
 

@@ -27,10 +27,10 @@ public class ChatController {
 	public void chat22(Model model) {
 		log.info("##/chat22");
 	
-//		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		String name = customUser.getUser().getUsrName();
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = customUser.getUser().getUsrName();
 		
-//		log.info("username:chat22" + name);
-		model.addAttribute("usrName", "usrName");
+		log.info("username:chat22" + name);
+		model.addAttribute("usrName", name);
 	}
 }
