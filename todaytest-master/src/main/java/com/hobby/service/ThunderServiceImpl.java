@@ -104,6 +104,8 @@ public class ThunderServiceImpl implements ThunderService {
 	}
 
 	
+	
+	
 	@Override
 	@Transactional
 	public boolean join(ThunderVO clubVO, UserVO loginUser, String joinState) {

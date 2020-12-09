@@ -130,7 +130,7 @@ section a:hover {
 		<c:choose>
 		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
 		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-		<c:otherwise>가입불가</c:otherwise>
+		<c:otherwise>모임 가입불가</c:otherwise>
 		</c:choose>
 	</button>
 </c:if>	
@@ -259,7 +259,10 @@ section a:hover {
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none';
 		document.getElementById("pulsButton").value = "🐵";
+	} else if ($("#join").text().trim() == '모임 가입불가') {		
+		document.getElementById('join').disabled = 'disabled';
 	}
+
 
 	function viewPlus() {
 
