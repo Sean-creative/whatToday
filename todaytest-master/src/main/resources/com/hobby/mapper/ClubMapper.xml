@@ -11,18 +11,18 @@
       select club_seq.nextval from dual
    </selectKey>
    
-   insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile,cbShutDate)
-   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile},'99/12/31')
+   insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile,cbShutDate,cbFinalState)
+   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile},'99/12/31','진행중')
 </insert>
                              
 <insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
 	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
-	values (CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'승인',sysdate) 
+	values (CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'가입승인',sysdate) 
 </insert>
 
 <insert id="clubinsertJoinMember"> <!-- 모임을 개설한 사람만을 위한 SQL -->
 	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMbStResult, cbAppDate)
-	values (#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'승인',sysdate) 
+	values (#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'가입승인',sysdate) 
 </insert> 
 
 <!-- 정기모임 목록  -->
@@ -162,52 +162,45 @@
 	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
 </insert> 
 	
-<sql id="criteria">
-		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
-
-			<if
-				test="category != null  and category != '관심분야 선택' and category != '' ">
-				AND cbCategory = #{category}
-			</if>
-
-			<if
-				test="subclass != null and subclass != '모임 선택' and subclass != ''">
-				AND cbSubcat = #{subclass}
-			</if>
-
-			<if test="city != null and city != '지역 선택' and city != ''">
-				AND cbCity = #{city}
-			</if>
-
-			<if
-				test="district != null and district != '세부지역 선택' and district != ''">
-				AND cbDistrict = #{district}
-			</if>
-
-			<if test="keyword != null and keyword!= ''">
-				AND cbName like '%'||#{keyword}||'%'
-			</if>
-		</trim>
-	</sql>
-
-<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
-	<![CDATA[
-	select 
-		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
-		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
-		from club where ]]>
-
-		<include refid="criteria"></include>
-							
-	<![CDATA[  		     
-	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
-	where rn > (#{pageNum}-1) * #{amount} ]]>
+	<!-- //////////////////////////////////////////////////////////////////// -->
+	<select id='readCbMemByUsrNum' resultType="String">
+		select cbMbStResult
+		from CLUBMEMBER where usrNum=#{usrNum} and
+		cbNum=#{cbNum}
 	</select>
 
-	<select id="getTotalCount" resultType="int">
-		select count(*) from club where
-		<include refid="criteria"></include>
-		cbType='정기모임'
+	 <!-- 해당 클럽에 대한 가입 정보를 가져오는 SQL -->
+	<select id='getJoinList' resultType="com.hobby.domain.ClubVO">
+		select usrnum, cbNum, cbtype, cbname, usrname, cbmbstresult,CBAPPDATE
+		from CLUBMEMBER
+		where cbnum=#{cbNum} AND
+		cbmbstresult=#{cbMbStResult}
 	</select>
+	
+		<!-- <insert id="insertJoin">
+		insert into CLUBMEMBER(usrnum, cbnum, cbtype, cbname,
+		usrname, cbmbstresult,
+		CBAPPDATE)
+		values(#{userVO.usrNum},
+		#{club.cbNum}, #{club.cbType}, #{club.cbName},
+		#{userVO.usrName}, #{joinState}, sysdate)
+	</insert>
+
+	<insert id="insertJoinHistory">
+		insert into clubjoinhistory(cbjoinnum, usrnum, cbnum,
+		cbtype, cbname,
+		CBJOINSTATERESULT, CBJOINSTATEUPDATEDATE)
+		values(CLUBJOINHISTORY_SEQ.NEXTVAL, #{userVO.usrNum},
+		#{club.cbNum}, #{club.cbType}, #{club.cbName}, #{joinState},
+		sysdate)
+	</insert>
+
+	<update id="updateJoin">
+		update CLUBMEMBER set
+		cbmbstresult=#{joinState}
+		where
+		usrnum=#{userVO.usrNum} AND cbnum=#{club.cbNum}
+	</update> -->
+	
 </mapper>
