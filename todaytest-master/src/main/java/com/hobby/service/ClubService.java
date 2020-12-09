@@ -2,6 +2,7 @@ package com.hobby.service;
 
 import java.util.List;
 
+import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.UserVO;
@@ -38,11 +39,15 @@ public interface ClubService {
 	//정기모임 게시판 - 수정
 	public int boardModify(ClubVO club);
 		
-	//정기모임 가입 
-	public void clubJoin(ClubVO club, UserVO userVO);
-
 	public String getCbMemByUsrNum(Long usrNum, Long cbNum);
 
-	public List<ClubVO> getJoinList(Long cbNum, String cbMbStResult);
+	public List<ClubMemberVO> getJoinList(Long cbNum, String cbMbStResult);
+
+	
+	
+	
+	
+	//정기모임 가입 
+	public boolean join(ClubVO clubVO, UserVO loginUser, String joinState);
 	
 }

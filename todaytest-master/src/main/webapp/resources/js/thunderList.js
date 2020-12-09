@@ -169,6 +169,9 @@ const linkToInfo = function(cbNum) {
 	actionForm.submit();
 }
 
+//테스트!!
+
+
 const inputCheck = function(){
 	// 공백을 제거해한 뒤에 개수를 세던지 한다.
 	let keyword = $.trim($("[name=keyword]").val());

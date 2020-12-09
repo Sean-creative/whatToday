@@ -43,4 +43,8 @@ public interface ThunderMapper {
 	
 	public int update(ThunderVO clubVO);
 	
+	
+	//모임 클릭 시 조회수 올라감
+	public void clubViews(Long cbNum);
+	
 }

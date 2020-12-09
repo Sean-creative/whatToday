@@ -4,13 +4,50 @@
 <!-- 작성자 : 김선우 -->
 
 <%@include file="../includes/header.jsp"%>
+<style>
+.weather {
+	display: flex;
+	color: white;
+}
+
+.weather div {
+	width: 100px;
+	text-align: center;
+}
+
+.City {
+	background-color: red;
+}
+
+.weatherContent {
+	background-color: black;
+	color: white;
+}
+
+.day {
+	font-size: 0.938rem;
+}
+
+.Icon, .Temp {
+	font-size: 1.375em;
+}
+
+.Icon {
+	margin-right: 2px;
+}
+</style>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
 
 <!--  번개 모임 개설 -->
 <section id="wrap">
-	<form action="/thunder/add" method="post" onsubmit="return inputCheck()">
 
+	<div class='weather'>
+		<div class='City'></div>
+	</div>
+
+
+	<form action="/thunder/add" method="post" onsubmit="return inputCheck()">
 		<div>
 			<div>
 				모임명<br>
@@ -41,13 +78,11 @@
 				<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 			<div>
-				카테고리/분야<br>
-				<select name="cbCategory" required="required" id='category' style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
+				카테고리/분야<br> <select name="cbCategory" required="required" id='category' style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
 			</div>
 
 			<div>
-				모임<br>
-				<select name="cbSubcat" required="required" id="subcat" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임<br> <select name="cbSubcat" required="required" id="subcat" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 					<option value="모임 선택" selected>모임 선택
 				</select>
 			</div>
@@ -56,18 +91,15 @@
 
 		<div>
 			<div>
-				모임 인원<br>
-				<input type="number" required="required" name='cbMbnum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 인원<br> <input type="number" required="required" name='cbMbnum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				모임 마감기간<br>
-				<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 마감기간<br> <input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				해시태그<br>
-				<input type="text" name='cbHashtag'>
+				해시태그<br> <input type="text" name='cbHashtag'>
 			</div>
 		</div>
 
@@ -103,13 +135,11 @@
 
 		<div>
 			<div>
-				모임 장소 <br>
-				<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 장소 <br> <input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				모임 준비물<br>
-				<input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50">
+				모임 준비물<br> <input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50">
 			</div>
 		</div>
 
@@ -126,9 +156,7 @@
 
 
 		<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
-		<input type='hidden' name='cbCity'>
-		<input type='hidden' name='cbDistrict'>
-		<input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation'>
+		<input type='hidden' name='cbCity'> <input type='hidden' name='cbDistrict'> <input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation'>
 
 	</form>
 
@@ -144,8 +172,7 @@
 				<div>
 
 					<form role="form" onsubmit="searchPlaces(); return false;">
-						모임 장소 :
-						<input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+						모임 장소 : <input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 						<button type="submit">검색하기</button>
 
 
@@ -173,7 +200,55 @@
 
 <script type="text/javascript" src="/resources/js/kakaoMap.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script>
+	let city = 'Seoul';
+	// var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
+	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
+	$
+			.ajax({
+				url : apiURI,
+				dataType : "json",
+				type : "GET",
+				async : "false",
+				success : function(resp) {					
+					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+					$('.City').append(resp.timezone.split('/')[1]);									
+
+					for ( let idx in resp.daily) {
+						let tmp = '<div class="weatherContent">';
+						let days = new Date();
+						days.setTime(resp.daily[idx].dt * 1000);
+						const today = moment(days);
+						console.log("날짜 : " + today.format('YYYY-MM-DD'));
+						tmp += '<div class="day">' + today.format('MM월 DD일')
+								+ '<div>';
+
+						console.log("최고 기온 : " + resp.daily[idx].temp.max);
+						tmp += '<div class="Temp">'
+								+ Math.floor(resp.daily[idx].temp.min)
+								+ '&ordm/'
+								+ Math.floor(resp.daily[idx].temp.max)
+								+ '&ordm<div>';
+
+						imgURL = "http://openweathermap.org/img/w/"
+								+ resp.daily[idx].weather[0].icon + ".png";
+						tmp += '<div class="Icon">' + "<img src="+imgURL+">"
+								+ '<div>';
+						tmp += "</div>"
+
+						$('.weather').append(tmp);
+					}
+				}
+			})
+</script>
+
+
+
+
 <%@include file="../includes/footer.jsp"%>
+
 
 
 

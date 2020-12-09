@@ -122,15 +122,18 @@ section a:hover {
 	</div>
 
 
-<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
+<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
 <c:if test="${usrNum != clubVO.cbLeaderNum}">
 	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
 	data-oper='join' id="join">		
 		<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-		<c:choose>
+		<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
+		<c:choose>		
 		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-		<c:otherwise>가입불가</c:otherwise>
+		<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
+		<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
+				
+		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>					
 		</c:choose>
 	</button>
 </c:if>	
@@ -253,13 +256,22 @@ section a:hover {
 
 	console.log($("#join").text().trim());
 	if ($("#join").text().trim() == '모임 나가기') {
+		//모임에 참석중일 때
 		document.getElementById("plusDiv").style.display = "block";
-
+		document.getElementById("pulsButton").value = "🐵";
 	} else if ($("#join").text().trim() == '모임 가입하기') {
+		//모임에 참석 중이 아닐 때
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none';
-		document.getElementById("pulsButton").value = "🐵";
+		
+	} 
+	else if ($("#join").text().trim() == '모임 가입불가' || $("#join").text().trim() =='모임 정원 초과') {
+		//모임에 가입이 불가능 할 때
+		document.getElementById('join').disabled = 'disabled';
+		document.getElementById("plusDiv").style.display = "none";
+		document.getElementById("plus").style.display = 'none'
 	}
+	
 
 	function viewPlus() {
 
