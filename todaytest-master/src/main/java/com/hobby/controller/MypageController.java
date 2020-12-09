@@ -70,14 +70,9 @@ public class MypageController {
 			
 			// 1.1 회원 정보를 가져와서 모델에 넣음
 			model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
-
-			// 2. 현재가입모임을 가져와서 모델에 넣음 - 가입신청했던 날짜순으로 출력함
-			model.addAttribute("clubVO", service.getMyClubList(usrNum));
-			
-
-			// 가입대기중인 모임 / 이전에 가입한 모임 => 모임가입이 구현되면써먹을것.
+			// 가입대기중인 모임
 			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
-			model.addAttribute("prevClub", service.getPrevClubList(usrNum));
+
 		}
 		return url;
 	}
@@ -91,11 +86,11 @@ public class MypageController {
 		String url = "mypage/myclub/main";
 		if (auth == null) {
 			url = "redirect:/login/login";
-		} else {
-			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴 - 모임 만든지 오래된 순으로 가져옴
-			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			model.addAttribute("clubVO", service.getLeaderClubList(customUser.getUser().getUsrNum()));
 		}
+		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("usrNum",customUser.getUser().getUsrNum());
+		
 		return url;
 
 	}
@@ -313,30 +308,6 @@ public class MypageController {
 		log.info("uploadUserImage");
 	}
 
-	
-	/*
-	 * @GetMapping("/display")
-	 * 
-	 * @ResponseBody public ResponseEntity<byte[]> getFile(String fileName){
-	 * 
-	 * log.info("fileName: "+fileName);
-	 * 
-	 * File file = new File("c:\\upload\\"+fileName);
-	 * 
-	 * log.info("file: " + file);
-	 * 
-	 * ResponseEntity<byte[]> result = null;
-	 * 
-	 * try { HttpHeaders header = new HttpHeaders();
-	 * 
-	 * header.add("Content-type", Files.probeContentType(file.toPath())); result =
-	 * new
-	 * ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
-	 * 
-	 * }catch (Exception e) { e.printStackTrace(); } return result;
-	 * 
-	 * }
-	 */
 	@PostMapping(value = "/uploadFormAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<AttachFileDTO> uploadFormPost(MultipartFile uploadFile){
@@ -390,14 +361,23 @@ public class MypageController {
 
 
 	// ajax로 내가 가입한 클럽 리스트 db 가져옴
-//	@RequestMapping(value = "/myclub/joinclub/{cbNum}", produces = { MediaType.TEXT_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<ClubVO> getJoinClub(@PathVariable("cbNum") Long cbNum, Authentication auth) {
-//		log.info("get...........: " + cbNum);
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-//		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-//		return new ResponseEntity<>(service.getJoinClub(cbNum), HttpStatus.OK);
-//	}
+	@RequestMapping(value = "/myclub/getMyClubList/{usrNum}", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<ClubVO>> getMyClubList(@PathVariable("usrNum") Long usrNum, Authentication auth) {
+		log.info("get...........: " + usrNum);
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		return new ResponseEntity<>(service.getMyClubList(usrNum), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/myclub/getPrevClubList/{usrNum}", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<ClubVO>> getPrevClubList(@PathVariable("usrNum") Long usrNum, Authentication auth) {
+		log.info("get...........: " + usrNum);
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		return new ResponseEntity<>(service.getPrevClubList(usrNum), HttpStatus.OK);
+	}
 	
 	// ajax로 내가 만든 모임을 가져옴
 	@RequestMapping(value = "/createclub/{cbLeaderNum}", produces = { MediaType.TEXT_XML_VALUE,
@@ -409,13 +389,14 @@ public class MypageController {
 		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
 		return new ResponseEntity<>(service.getLeaderClubList(userVO.getUsrNum()), HttpStatus.OK);
 	}
+	//클럽멤버리스트 가져옴
 	@RequestMapping(value = "/clubmanage/getClubManageMemList/{cbNum}.json", produces = { MediaType.TEXT_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<ClubVO>> getClubManageMemList(@PathVariable("cbNum") Long cbNum) {
 	System.out.println(service.getClubManageMemList(cbNum));
 	return new ResponseEntity<>(service.getClubManageMemList(cbNum),HttpStatus.OK);
 	}
-	
+	//클럽멤버 추방같은 상태 변환
 	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
 			value = "/clubmanage/changeClubMemState", consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -424,15 +405,26 @@ public class MypageController {
 		
 		System.out.println(clubVO);
 	
-	return service.changeClubMemState(clubVO) == 2
+	return service.changeClubMemState(clubVO) == 3
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/myclub/clubmanage/shutClub", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> shutClub(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.shutClub(clubVO.getCbNum()) == 1
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 
-//	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
-//	// 굳이 ajax쓸 필요없어보이긴함. model로 리스트 담아서 스크립트단에서 처리하는 방법으로 바꿀것
-//
-//
+
+
 //	// ajax로 카테고리 db 가져옴
 //	@RequestMapping(value = "/categorylist/{catClassificationCode}", produces = { MediaType.TEXT_XML_VALUE,
 //			MediaType.APPLICATION_JSON_UTF8_VALUE })

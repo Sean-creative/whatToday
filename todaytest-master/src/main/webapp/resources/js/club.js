@@ -15,10 +15,10 @@ var clubService = (function(){
 		});
 	}
 	
-	function getJoinClub(param, callback, error){
-		var cbNum = param.cbNum; 
+	function getMyClubList(param, callback, error){
+		var usrNum = param.usrNum; 
 	
-	$.getJSON("/mypage/myclub/joinclub/"+cbNum,function(data){
+	$.getJSON("/mypage/myclub/getMyClubList/"+usrNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -29,10 +29,27 @@ var clubService = (function(){
 			}
 		});
 	}
+	
+	function getPrevClubList(param, callback, error){
+		var usrNum = param.usrNum; 
+	
+	$.getJSON("/mypage/myclub/getPrevClubList/"+usrNum,function(data){
+			if(callback){
+				callback(data);
+			}
+			
+			}).fail(function(xhr,status,err){
+			if(error){
+				error();
+			}
+		});
+	}
+	
 			
 	return{
 		getLeaderClubList : getLeaderClubList ,
-		getJoinClub : getJoinClub
+		getPrevClubList : getPrevClubList,
+		getMyClubList : getMyClubList
 	};
 	
 

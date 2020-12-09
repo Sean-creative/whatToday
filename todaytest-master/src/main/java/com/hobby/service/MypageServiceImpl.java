@@ -58,15 +58,6 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.updateUserInfo(userVO);
 	}
 
-	@Override
-	public int updateClubFounderName(UserVO userVO) {
-		return mapper.updateClubFounderName(userVO);
-	}
-
-	@Override
-	public int updateClubMemberName(UserVO userVO) {
-		return mapper.updateClubMemberName(userVO);
-	}
 
 	@Override
 	public boolean isPwdValid(String str1) {
@@ -83,10 +74,7 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.insertUserHistory(userVO);
 	}
 
-	@Override
-	public int updateNameUserHistory(UserVO userVO) {
-		return mapper.updateNameUserHistory(userVO);
-	}
+
 
 	@Override
 	public List<ClubVO> getLeaderClubList(Long usrNum) {
@@ -99,10 +87,7 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getClub(clubVO);
 	}
 
-	@Override
-	public int updateMeetingMemberName(UserVO userVO) {
-		return mapper.updateMeetingMemberName(userVO);
-	}
+
 
 	@Override
 	public List<CategoryVO> getCategoryList(String catClassificationCode) {
@@ -193,20 +178,30 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getClubManageMemList(cbNum);
 	}
 
+	@Transactional
 	@Override
 	public int changeClubMemState(ClubVO clubVO) {
 
 		int cnt = 0;
 		cnt += mapper.insertClubJoinHistory(clubVO);
 		cnt += mapper.updateClubManageMem(clubVO);
+		cnt += mapper.updateClubMemNum(clubVO);
 		
-		if(cnt != 2) {
+		if(cnt != 3) {
 			//2이아니라면 강제 롤백
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		
 		return cnt;
 	}
+
+	@Override
+	public int shutClub(Long cbNum) {
+		
+		return mapper.shutClub(cbNum);
+	}
+
+
 
 
 }

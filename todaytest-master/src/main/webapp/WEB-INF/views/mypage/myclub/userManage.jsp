@@ -105,10 +105,16 @@ $(document).ready(function() {
 	        	   let str = "";
 	        	   memList = [];
 	        	   memberTable.empty();
+	        	  
 	        	   str += "<thead><tr><th>이름</th><th>성별</th><th>생일</th><th>신청일</th><th>회원상태</th></tr></thead>"
 
 	        	   for(let i = 0; i < list.length; i++){
 	        		   if(number == list[i].usrNum){
+	        			   str += "<td>"+list[i].usrName+"</td>";
+	        			   str += "<td>"+list[i].userVO.usrGender+"</td>";
+	        			   str += "<td>"+list[i].userVO.usrBirth+"</td>";
+	        			   str += "<td>"+list[i].cbAppDate+"</td>";
+	        			   str += "<td>모임장</td>";
 	        			   continue;
 	        		   }
 	        		   	memList.push(list[i]);
