@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.PageDTO;
@@ -107,22 +108,25 @@ public class ClubController {
 			// 파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
 			model.addAttribute("usrName", userVO.getUsrName());
 			model.addAttribute("toDate", onlyDate);
-			
-		log.info("###usrnum:"+userVO);
-		String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
-		log.info("/info(GET) - joinState : " + joinState); //joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-		model.addAttribute("joinState", joinState);
 
-		model.addAttribute("usrNum", userVO.getUsrNum());
-		
-		List<ClubVO> joinList = service.getJoinList(cbNum, "가입승인"); 
-		for(ClubVO club : joinList) { log.info("/info(GET) - joinList : " + club);
+			log.info("###usrnum:" + userVO);
+			
+			
+			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
+			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
+			model.addAttribute("joinState", joinState);
+
+			model.addAttribute("usrNum", userVO.getUsrNum());
+
+			//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
+			List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
+			for (ClubMemberVO club : joinList) {
+				log.info("/info(GET) - joinList : " + club);				
+			}
+
+			model.addAttribute("joinList", joinList);
 		}
-		
-		model.addAttribute("joinList", joinList);
-		
-		}
-	
+
 		log.info("/info");
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("club", service.getClub(cbNum));
@@ -228,7 +232,10 @@ public class ClubController {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = customUser.getUser();
 
-		service.clubJoin(club, userVO);
+		String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), club.getCbNum());
+		log.info("/clubjoin(POST) - joinState : " + joinState); // joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
+		
+		log.info(service.join(club, userVO, joinState));
 
 		rttr.addFlashAttribute("usrName", userVO.getUsrName());
 		rttr.addFlashAttribute("usrNum", userVO.getUsrNum());

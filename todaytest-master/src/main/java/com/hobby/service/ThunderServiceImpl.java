@@ -41,6 +41,9 @@ public class ThunderServiceImpl implements ThunderService {
 	@Override
 	public ThunderVO get(long cbNum) {
 		log.info("get ...." + cbNum);
+		
+		//모임 클릭 시 조회수 올라감
+		mapper.clubViews(cbNum);
 		return mapper.read(cbNum);
 	}
 

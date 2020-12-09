@@ -202,6 +202,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		}
 	</update>
 
+	<update id="clubViews">
+		update club set cbView = cbView + 1
+		where cbNum = #{cbNum}
+	</update>
 
 
 	<sql id="criteria">

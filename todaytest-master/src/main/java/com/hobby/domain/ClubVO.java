@@ -25,10 +25,9 @@ public class ClubVO {
 	private String cbDetailContent;
 	private String cbFile;
 	
+	
+	
 	///////////////////////////////////////////CLUBMEMBER
-	
-	
-
 	private String usrName;
 	private Long usrNum;
 	private String cbMbStResult;
@@ -36,45 +35,35 @@ public class ClubVO {
 	private String cbAppDate;
 
 	private UserVO userVO;
-	//////////////////////////////////////////CLUBJOINHISTORY
 	
+	
+	
+	//////////////////////////////////////////CLUBJOINHISTORY	
 	private Long cbJoinNum;
 	private String cbJoingStateResult;
 	private String cbJoinStateUpdateDate;
 
 	
 	/////////////////////////////////////////THUNDERDETAIL
-	
 	private String cbDate;
 	private String cbAppPeriod;
 	private String cbPlace;
 	private String cbSupplies;
 
-
 	
 	//CLUB/////////////////////////////////////////////////////////////
-
-
 	private String cbLeaderName;
-
-
 	
-	//CLUBBOARD////////////////////////////////////////////////////////
 	
-
+	//CLUBBOARD////////////////////////////////////////////////////////	
 	private Long cbBno;
-
 	private String cbBdWriter;
-
 	private String cbBdTitle;
-
 	private String cbBdDate;
-
-	private Long cbBdView;
+	private Long cbBdView;	
 	
-	//CLUBBOARDCONTENT/////////////////////////////////////////////////
 	
-
+	//CLUBBOARDCONTENT/////////////////////////////////////////////////	
 	private String cbBdContent;
 	
 	
