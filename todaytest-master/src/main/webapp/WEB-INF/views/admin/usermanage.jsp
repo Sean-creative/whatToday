@@ -489,14 +489,14 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
-			 
+			
 			let table = $('#userTable').DataTable({
 			 "createdRow": function( row, data, dataIndex ) {
 		        	$(row).attr("data-toggle","modal");
 		        	$(row).attr("data-target","#userInfoModal");
 		        	
 		        },
-
+			
 		     ajax: {
 		        'url':'/admin/usermanage/userlist.json',
 		        
@@ -583,8 +583,9 @@
 			 })
 		 }
 		 $('#userInfoModal').on('hidden.bs.modal', function () {
-			
-			 table.ajax.reload(null, false);
+			 table.ajax.reload( function ( json ) {
+				    $('#myInput').val( json.lastInput );
+				},false);
 		 })
 		
 		
