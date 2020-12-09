@@ -70,27 +70,28 @@
 </div>
 <div class ="info">
 <div class ="clubInfoSmall">
-<p>가입한 모임</p><br>
-<ul style="list-style-type: none;">
-
-</ul>
+<select id="joinClubList">
+	<option value="정기모임">가입한 정기모임</option>
+	<option value="번개모임">가입한 번개모임</option>
+</select>
+<div id="myClub"></div>
 </div>
 <div class ="clubInfoSmall">
-<p>가입 신청 대기중인 모임</p><br>
+<p>가입 신청중인 정기 모임</p><br>
 <c:forEach var="waitClub" items="${waitClub}">
    <c:out value="[${waitClub.cbType}] "/><c:out value="${waitClub.cbName}"/><br>
 </c:forEach>
 </div>
 <div class ="clubInfoSmall">
-<p>이전 가입했던 모임</p><br>
-<c:forEach var="prevClub" items="${prevClub}">
-<c:out value="[${prevClub.cbType}]" /><c:out value="${prevClub.cbName}"/><br>
-</c:forEach>
+<select id="prevClubList">
+	<option value="정기모임">이전에 가입한 정기모임</option>
+	<option value="번개모임">이전에 가입한 번개모임</option>
+</select>
+<div id="prevClub"></div>
 </div>
 </div>
 <div class="popupLayer">
 <div class="popupLayer2">
-
 </div>
 <span class="closeWin" style="cursor:pointer;font-size:2em;" title="닫기">X</span>
 
@@ -102,22 +103,73 @@
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	
 	let number = "${userVO.usrNum}"
-	clubService.getLeaderClubList({cbLeaderNum:number},function(club){
-		console.log(club);
-		/* let str = "";
-		for(let i = 0; i < club.length; i++){
-			str += "<option value='"+club[i].cbNum+"'>"+"["+club[i].cbType+"]"+club[i].cbName+"</option>";
-		}
-		clubList.append(str);
-		let cbNum = $("#clubList option:selected").val();
-		getClubManageMemList(cbNum); */
-	})
+	let joinClubList = $("#joinClubList");
+	let prevClubList = $("#prevClubList")
 	
 	if("${msg}" != ""){
 		alert("${msg}");
 	}
+	
+	const getMyClubList = function(){
+		clubService.getMyClubList({usrNum:number},function(club){
+			console.log(joinClubList.val());
+			let myClub = $("#myClub");
+			let str = "";
+			for(let i = 0; i < club.length; i++){
+				if(joinClubList.val() == club[i].cbType){
+					str += "<p class='cb' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["+club[i].cbType+"]"+club[i].cbName+"</p><br>";
+					}
+				}
+			myClub.empty();
+			myClub.append(str);
+			});
+	};
+	getMyClubList();
+	
+	joinClubList.on("change", function(){
+		getMyClubList();
+		}
+	);
+	
+	
+	const changeClubMemState = function(e){
+		$.ajax({
+			url: "/mypage/clubmanage/changeClubMemState",
+			type:"PUT",
+			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbMbStResult:e.cbmbstresult}),
+			dataType: "json",
+			contentType : "application/json; charset=utf-8",
+			success: function(data){ 
+				
+			},
+			complete : function(list) {
+				getMyClubList();
+				getPrevClubList();
+	           }
+			});
+		};
+		
+	const getPrevClubList = function(){
+		clubService.getPrevClubList({usrNum:number},function(club){
+			console.log(prevClubList.val());
+			let prevClub = $("#prevClub");
+			let str = "";
+			for(let i = 0; i < club.length; i++){
+				if(prevClubList.val() == club[i].cbType){
+					str += "<p class='cb' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["+club[i].cbType+"]"+club[i].cbName+"</p><br>";
+					}
+				}
+			prevClub.empty();
+			prevClub.append(str);
+			});
+		};
+		getPrevClubList();
+		
+		prevClubList.on("change", function(){
+			getPrevClubList();
+			}
+		);
 
 	$(".moreList").click(function(){
 		$(".hideList").show();
@@ -134,99 +186,71 @@ $(document).ready(function() {
 	$(function(){
 
 		$(".closeWin").click(function(e)
-		{
+				{
 			$(".popupLayer").hide()
+			});
 		});
-
+	$(document).on("click", ".cb", function(e){
+		let index = $(".cb").index(this);
+		let data = $(".cb").eq(index).data();
 		
+		console.log(index);
+		console.log(data);
+		var str = "";
+		str += '<form name="joinClub" method="get">';
+		str += '<input type="hidden" name="cbNum" value="'+data.cbnum+'">';
+		str += '<button name="details" data-cbtype="'+data.cbtype+'">상세보기</button>';
+		str += '</form>';
+		str += '<button name="drop" type="button" data-usrnum="'+"${userVO.usrNum}"+'"data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
 
-		/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
-		/*ajax 안쓰고 하는걸로 바꾸기*/
+		let sWidth = window.innerWidth;
+		let sHeight = window.innerHeight;
 
-		$('.cb').click(function(e)
-		{ 
-			let index = $(".cb").index(this);
-			let number = $(".cb").eq(index).val();
+		let oWidth = $('.popupLayer').width();
+		let oHeight = $('.popupLayer').height();
 
-			let type = $(".cb").eq(index).children(".cb2").val();
+		// 레이어가 나타날 위치를 셋팅한다.
+		let divLeft = e.clientX + 10;
+		let divTop = e.clientY + 5;
 
-			console.log(index);
-			
-			console.log(number);
-			
-			console.log(type);
-			
-			var str = "";
-			/*var type= "";
-			 clubService.getJoinClub({cbNum:number},function(club){
-				if(club.cbType == '정기'|| club.cbType == '정기모임'){
-					type = "regular"
+		// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
+		if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
+		if( divTop + oHeight > sHeight ) divTop -= oHeight;
+
+		// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치.
+		if( divLeft < 0 ) divLeft = 0;
+		if( divTop < 0 ) divTop = 0;
+
+		$(".popupLayer2").html(str);
+
+		$('.popupLayer').css({
+			"top": divTop,
+			"left": divLeft,
+			"position": "absolute"
+			}).show();
+		$("button[name=details]").click(function(){
+			let form = $("form[name=joinClub]");
+			let data = $("button[name=details]").data();
+			console.log(data);
+			if(data.cbtype == "번개모임"){
+				console.log("번개요");
+				url = "/thunder/info";
 				}else{
-					type = "thunder";
-				} 
-				console.log(club.cbType);*/
-				str += '<form name="joinClub" method="get">';
-				str += '<input type="hidden" name="cbNum" value="'+number+'">';
-				str += '<button name="details">상세보기</button>';
-				str += '</form>';
-				str += '<button>탈퇴하기-아직구현X</button>'
-
-				let sWidth = window.innerWidth;
-				let sHeight = window.innerHeight;
-
-				let oWidth = $('.popupLayer').width();
-				let oHeight = $('.popupLayer').height();
-
-				// 레이어가 나타날 위치를 셋팅한다.
-				let divLeft = e.clientX + 10;
-				let divTop = e.clientY + 5;
-
-				// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
-				if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
-				if( divTop + oHeight > sHeight ) divTop -= oHeight;
-
-				// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치.
-				if( divLeft < 0 ) divLeft = 0;
-				if( divTop < 0 ) divTop = 0;
-				
-				
-				$(".popupLayer2").html(str);
-
-				$('.popupLayer').css({
-					"top": divTop,
-					"left": divLeft,
-					"position": "absolute"
-				}).show();
-
-			/* }) */
-			
-				$("button[name=details]").click(function(){
-		
-					let form = $("form[name=joinClub]");
-				
-
-					if(type == "번개모임"){
-						console.log("번개요");
-						url = "/thunder/info";
-					}else{
-						console.log("정기요");
-						url = "/regular/info";
+					console.log("정기요");
+					url = "/regular/info";
 					}
-					form.attr("action",url);
+			form.attr("action",url);
+			});
+	
+			$("button[name=drop]").click(function(){
+				
+				let data = $("button[name=drop]").data();
+				console.log(data)
+				changeClubMemState(data);
+				$(".popupLayer").hide();
 				});
-			
-			
-
-			
-		});
-		
-	
-		
-	
-});
-	
-
-});
+			});
+	});
 
 
 </script>

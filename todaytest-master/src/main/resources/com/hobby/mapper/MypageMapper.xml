@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
-		select cbnum,cbname,cbtype from (select * from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '승인' order by cbappdate)
+		select cbnum,cbname,cbtype from CLUBMEMBER where USRNUM = #{usrNum} and CBMBSTRESULT = '가입승인' order by cbappdate
 	</select>
 	
 	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
@@ -38,7 +38,7 @@
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
 		select * from CLUBJOINHISTORY 
-		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '탈퇴'
+		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴'
 	</select>
 	
 	<update id="updateUserAuth">
@@ -65,7 +65,7 @@
 	<select id="getLeaderClubList" resultType="com.hobby.domain.ClubVO">
 		select * from CLUB
 		where 
-		CBLEADERNUM = #{usNum} and CBFINALSTATE != '폐쇄' order by cbNum asc
+		CBLEADERNUM = #{usNum} and CBFINALSTATE != '폐쇄' AND CBFINALSTATE != '강제폐쇄' order by cbNum asc
 	</select>
 
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">
@@ -92,7 +92,7 @@
 	</update>
 	
 	<select id="getJoinClub" resultType="com.hobby.domain.ClubVO">
-		select * from club where CBNUM = #{cbNum}
+		select * from CLUBMEMBER where USRNUM = #{usrNum}
 	</select>
 	
 	<select id="getCityList" resultType="com.hobby.domain.RegionVO">

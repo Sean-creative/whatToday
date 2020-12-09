@@ -13,7 +13,7 @@ public interface MypageService {
 	
 	public UserVO getUser(String id);
 	public ClubVO getClub(ClubVO clubVO);
-	public ClubVO getJoinClub(Long cbNum);
+	public ClubVO getJoinClub(Long usrNum);
 	
 	public List<UserVO> getUserList();
 	public List<ClubVO> getMyClubList(Long usrNum);

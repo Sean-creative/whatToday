@@ -10,12 +10,12 @@
     <ul>
         <li>
             <form action="/mypage/main" method="get">
-                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
+                <button class="btn1" type="submit">마이페이지</button>
             </form>
         </li>
             <li>
         <div class="dropdown">
-            <button type="button" class="dropbtn">모임관리</button>
+            <button type="button" class="dropbtn" style="color: yellow;">모임관리</button>
             <div class="dropdown-content">
             <ul>
                 <li>
@@ -117,7 +117,7 @@ $(document).ready(function() {
 		let form = $("form[name=manageClub]").eq(index);
 		let cbNum = $("input[name=cbNum]").eq(index).val();
 		let url;
-		if(type == "정기모임" || type == "정기"){
+		if(type == "정기모임"){
 			console.log("정기요");
 			url = "/regular/info";
 		}else{
@@ -126,6 +126,8 @@ $(document).ready(function() {
 		}
 		form.attr("action",url);
 	});
+	
+	
 	
 	/* 모임폐쇄구현할것 */
 	$("button[name=closeClub]").click(function(){
