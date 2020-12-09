@@ -53,4 +53,7 @@ public interface ClubMapper {
 	public void clubJoin(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
 	public void clubJoinMember(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
 	
+	public String readCbMemByUsrNum(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public List<ClubVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
+	
 }

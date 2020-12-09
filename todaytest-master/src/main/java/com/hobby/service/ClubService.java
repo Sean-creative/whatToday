@@ -40,5 +40,9 @@ public interface ClubService {
 		
 	//정기모임 가입 
 	public void clubJoin(ClubVO club, UserVO userVO);
+
+	public String getCbMemByUsrNum(Long usrNum, Long cbNum);
+
+	public List<ClubVO> getJoinList(Long cbNum, String cbMbStResult);
 	
 }
