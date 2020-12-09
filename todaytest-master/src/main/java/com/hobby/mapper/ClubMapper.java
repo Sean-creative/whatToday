@@ -18,7 +18,8 @@ public interface ClubMapper {
 	//정기모임 목록 
 	public List<ClubVO> getClubList();
 	
-	
+	//정기모임 목록 (검색 추가 및 검색조건에 맞는 모임 총 갯수)
+	public int getTotalCount(Criteria cri);
 		
 	//정기모임 상세정보
 	public ClubVO readclub(Long cbNum);
@@ -26,11 +27,9 @@ public interface ClubMapper {
 	//정기모임 게시판 - 목록list
 	public List<ClubVO> getList(Long cbNum);
 		
-	//정기모임 게시판 - 목록list (페이징)
+	//정기모임 게시판 - 목록list (페이징) -- 정기모임 목록 상세검색에 같이 사용 
 	public List<ClubVO> getListWithPaging(Criteria cri);
 		
-	public int getTotalCount(Criteria cri);
-	
 	//정기모임 게시판 - 조회
 	public ClubVO read(Long cbBno);
 	
@@ -53,5 +52,8 @@ public interface ClubMapper {
 	//정기모임 가입 
 	public void clubJoin(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
 	public void clubJoinMember(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
+	
+	public String readCbMemByUsrNum(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public List<ClubVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
 	
 }
