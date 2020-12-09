@@ -4,8 +4,9 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="/resources/css/thunder.css">
+<!-- <link rel="stylesheet" href="../resources/css/clubListStyle.css"> -->
 
-<!--  번개 모임 개설 -->
+<!--정기  모임 -->
 <section id="wrap" style="border: 1px solid; margin-top: 30px; padding: 30px;">
 	<form action="/regular/list" method="get" onsubmit="return inputCheck()">
 
@@ -50,11 +51,9 @@
 			<div style="font-size: 20px; margin: 0px;">최신순 인기순 마감임박순</div>
 			<div style="margin-top: 20px; display: flex; justify-content: space-between;">
 
-				<c:forEach items="${clublist}" var="club">
-					<!--20개 목록만 보여주기-->
+				<c:forEach items="${clublist}" var="club"> 
 					<div style="border: 1px solid black; width: 170px; height: 140px; cursor: pointer;" class='move' onclick='linkToInfo(${club.cbNum})'
-					id ='itemDiv${status.count}'>								
-						${status.count}<br>
+					id ='itemDiv${status.count}'> ${status.count}<br>
 						
 						<ul class="demo">
 							<li>모임명:<c:out value="${club.cbName}" /></li>
@@ -104,3 +103,16 @@
 <script type="text/javascript" src="/resources/js/regularList.js"></script>
 
 <%@include file="../includes/footer.jsp"%>
+
+<%-- <div id="body">
+	<c:forEach items="${clublist}" var="club" varStatus="status" begin="0" end="19"> <!--20개 목록만 보여주기-->
+		<div class="box">
+			<ul class="demo">
+				<li>모임명:<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'> <!--cbNum(모임번호)을 가지고 모임상세 페이지이동-->
+						<c:out value="${club.cbName}" /></a></li>
+				<li>지역:<c:out value="${club.cbDistrict}" /></li>
+				<li>현재인원:<c:out value="${club.cbCurMbNum}" /></li>
+			</ul>
+		</div>
+	</c:forEach>
+</div> --%>

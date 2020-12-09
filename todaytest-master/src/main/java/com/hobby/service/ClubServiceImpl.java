@@ -39,7 +39,14 @@ public class ClubServiceImpl implements ClubService {
 		log.info("getList.......");
 		return mapper.getClubList();
 	}
-
+    
+	//정기모임 목록 (검색조건에 맞는 모임 총 갯수)
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		return mapper.getTotalCount(cri);
+	}
+	
 	//정기모임 상세정보
 	@Override
 	public ClubVO getClub(Long cbNum) {
@@ -48,7 +55,7 @@ public class ClubServiceImpl implements ClubService {
 		return mapper.readclub(cbNum);
 	}
 
-	//정기모임 게시판 - 목록list (페이징)
+	//정기모임 게시판 - 목록list (페이징) -- 정기모임 목록 상세검색에 같이 사용
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
@@ -119,9 +126,4 @@ public class ClubServiceImpl implements ClubService {
 		mapper.clubJoinMember(club, userVO);
 	}
 
-	@Override
-	public int getTotal(Criteria cri) {
-		
-		return mapper.getTotalCount(cri);
-	}
 }
