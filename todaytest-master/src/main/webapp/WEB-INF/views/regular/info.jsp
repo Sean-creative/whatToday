@@ -22,7 +22,21 @@
     		상세내용 - <c:out value="${club.cbDetailContent}" /></div>
     	<div>개설자 - <c:out value="${club.cbLeaderName }"/></div>	
     	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
-    	<button onclick="javascript:join();">가입하기</button>
+    	<!-- <button onclick="javascript:join();">가입하기</button> -->
+    	
+    	<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
+	<c:if test="${usrNum != club.cbLeaderNum}">
+	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
+	data-oper='join' id="join">		
+		<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+		<c:choose>
+		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+		<c:when test="${joinState eq '승인대기'}">승인 대기 중</c:when>
+		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
+		<c:otherwise>가입불가</c:otherwise>
+		</c:choose>
+	</button>
+</c:if>	
 </div>
 	<div id="id01" class="modal">
 		<span onclick="document.getElementById('id01').style.display='none'"
@@ -79,6 +93,11 @@
 			
 			modal.style.display = "block";
 		}
+	}
+	
+	console.log($("#join").text().trim());
+	if ($("#join").text().trim() == '가입불가' || $("#join").text().trim() == '승인 대기 중') {
+		document.getElementById("join").disabled = 'disabled';
 	}
 	
 </script>
