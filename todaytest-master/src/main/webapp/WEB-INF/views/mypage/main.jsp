@@ -114,13 +114,19 @@ $(document).ready(function() {
 	const getMyClubList = function(){
 		clubService.getMyClubList({usrNum:number},function(club){
 			console.log(joinClubList.val());
+			console.log(club);
 			let myClub = $("#myClub");
 			let str = "";
+			let cnt = 0;
 			for(let i = 0; i < club.length; i++){
-				if(joinClubList.val() == club[i].cbType){
-					str += "<p class='cb' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["+club[i].cbType+"]"+club[i].cbName+"</p><br>";
+				if(joinClubList.val() == club[i].cbType && number != club[i].cbLeaderNum){
+					str += "<p class='cb' data-mycb='true' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["+club[i].cbType+"]"+club[i].cbName+"</p><br>";
+					cnt++;
 					}
 				}
+			if(cnt == 0){
+				str += "가입한 모임이 없어요"
+			}
 			myClub.empty();
 			myClub.append(str);
 			});
@@ -155,11 +161,17 @@ $(document).ready(function() {
 			console.log(prevClubList.val());
 			let prevClub = $("#prevClub");
 			let str = "";
+			let cnt = 0;
 			for(let i = 0; i < club.length; i++){
+				
 				if(prevClubList.val() == club[i].cbType){
 					str += "<p class='cb' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["+club[i].cbType+"]"+club[i].cbName+"</p><br>";
+					cnt++;
 					}
 				}
+			if(cnt == 0){
+				str += "이전에 가입한 모임이 없어요"
+			}
 			prevClub.empty();
 			prevClub.append(str);
 			});
@@ -191,18 +203,21 @@ $(document).ready(function() {
 			});
 		});
 	$(document).on("click", ".cb", function(e){
+		console.log(e)
 		let index = $(".cb").index(this);
 		let data = $(".cb").eq(index).data();
 		
 		console.log(index);
 		console.log(data);
+		
 		var str = "";
 		str += '<form name="joinClub" method="get">';
 		str += '<input type="hidden" name="cbNum" value="'+data.cbnum+'">';
 		str += '<button name="details" data-cbtype="'+data.cbtype+'">상세보기</button>';
 		str += '</form>';
-		str += '<button name="drop" type="button" data-usrnum="'+"${userVO.usrNum}"+'"data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
-
+		if(data.mycb == true){
+			str += '<button name="drop" type="button" "data-usrnum="'+"${userVO.usrNum}"+'"data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
+			}
 		let sWidth = window.innerWidth;
 		let sHeight = window.innerHeight;
 

@@ -28,12 +28,9 @@ public interface MypageService {
 	
 	
 	public int updateUserInfo(UserVO userVO);
-	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberName(UserVO userVO);
-	public int updateNameUserHistory(UserVO userVO);
-	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int insertUserHistory(UserVO userVO);
+
 	
 	public int changeClubMemState(ClubVO clubVO);
 
@@ -44,6 +41,7 @@ public interface MypageService {
 	
 	public int updateUserTotalInfo(UserVO userVO);
 	public int leaveUser(UserVO userVO);
+	public int shutClub(Long cbNum);
 	
 	public String getFolder();
 	public boolean checkImageType(File file);

@@ -86,11 +86,11 @@ public class MypageController {
 		String url = "mypage/myclub/main";
 		if (auth == null) {
 			url = "redirect:/login/login";
-		} else {
-			// Authentication에 저장된 usrNum(유저번호)을 통하여 내가 만든 모임을 가져옴 - 모임 만든지 오래된 순으로 가져옴
-			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			model.addAttribute("clubVO", service.getLeaderClubList(customUser.getUser().getUsrNum()));
 		}
+		
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("usrNum",customUser.getUser().getUsrNum());
+		
 		return url;
 
 	}
@@ -405,7 +405,20 @@ public class MypageController {
 		
 		System.out.println(clubVO);
 	
-	return service.changeClubMemState(clubVO) == 2
+	return service.changeClubMemState(clubVO) == 3
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/myclub/clubmanage/shutClub", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> shutClub(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.shutClub(clubVO.getCbNum()) == 1
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}

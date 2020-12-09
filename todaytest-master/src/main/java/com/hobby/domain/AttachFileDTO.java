@@ -2,7 +2,12 @@ package com.hobby.domain;
 
 import lombok.Data;
 
-//ÆÄÀÏ¾÷·Îµå¿ë DTD
+/**
+ * 
+ * @author êµ­ë¯¼ì„±
+ * íŒŒì¼ ì²¨ë¶€ DTO
+ */
+
 @Data
 public class AttachFileDTO {
 

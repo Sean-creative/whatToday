@@ -31,18 +31,15 @@ public interface MypageMapper {
 	public int insertUserHistory(UserVO userVO);
 	public int insertClubJoinHistory(ClubVO clubVO);
 	
-	public int updateNameUserHistory(UserVO userVO);
-	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberName(UserVO userVO);
+
 	public int updateUserInfo(UserVO userVO);
-	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int updateClubManageMem(ClubVO clubVO);
-	
 	public int updateUserAuth(UserVO userVO);
+	public int updateClubMemNum(ClubVO clubVO);
+
 	
-	
-	public int shutClub(ClubVO clubVO);
+	public int shutClub(Long cbNum);
 	public int leaveClub(UserVO userVO);
 	
 }
