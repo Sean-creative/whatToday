@@ -10,13 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.oauth2.AccessGrant;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Parameters;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +35,7 @@ import com.hobby.sns.KakaoLoginApi;
 import com.hobby.sns.NaverLogin;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -83,7 +80,7 @@ public class LoginController {
 		// 입력한 핸드폰 번호와 같은게 있으면 해당 핸드폰 번호를 반환한다.
 		return phone == null ? null : phone;
 	}
-
+	
 	// 3. 회원가입 처리
 	@PostMapping("/registerAction")
 	public String registerAction(UserVO user, RedirectAttributes rtts) {

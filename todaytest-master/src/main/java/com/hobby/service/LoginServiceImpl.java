@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,9 @@ public class LoginServiceImpl implements LoginService{
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Setter(onMethod_=@Autowired)
+	private PasswordEncoder pwencoder;
+	
 	@Override
 	public String idDuplicateCheck(String usrId) {
 		log.info("##Service : id_check");
@@ -47,10 +51,13 @@ public class LoginServiceImpl implements LoginService{
 		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
 		// 테이블에 insert가 잘되면 행(1)을 반환
 		// 5개 테이블에 잘 들어갔는 지 확인
-
-		int resultCount = 0;
 		log.info("##Service : register");
 		
+		String registerPwd = user.getUsrPwd();
+		user.setUsrPwd(pwencoder.encode(registerPwd));
+		
+		int resultCount = 0;
+
 		resultCount += mapper.insert(user);
 		resultCount += mapper.insertUserInfo(user);
 		resultCount += mapper.insertUserTerms(user);
@@ -64,6 +71,9 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public boolean snsRegister(UserVO user) {
 		log.info("##Service : snsRegister");
+		
+		String registerPwd = user.getUsrPwd();
+		user.setUsrPwd(pwencoder.encode(registerPwd));
 		
 		int resultCount = 0;
 		

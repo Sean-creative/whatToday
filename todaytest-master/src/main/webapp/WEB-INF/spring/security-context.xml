@@ -6,8 +6,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 <bean id="customAccessDenied" class="com.hobby.security.CustomAccessDeniedHandler"></bean>
 <bean id="customLoginSuccess" class="com.hobby.security.CustomLoginSuccessHandler"></bean>
-<bean id="customPasswordEncoder" class="com.hobby.security.CustomNoOpPasswordEncoder"></bean>
+<!--<bean id="customPasswordEncoder" class="com.hobby.security.CustomNoOpPasswordEncoder"></bean>-->
+<bean id="customPasswordEncoder" class="com.hobby.security.CustomPasswordEncoder"></bean>
 <!--<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />-->
+<!--<bean id="standardPasswordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder" />-->
 <bean id="customUserDetailsService" class="com.hobby.security.CustomUserDetailsService"></bean>
 <security:http>
 	<!-- <security:access-denied-handler error-page ="/accessError"/>-->
