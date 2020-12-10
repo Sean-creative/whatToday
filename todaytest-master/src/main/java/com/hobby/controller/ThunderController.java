@@ -165,6 +165,8 @@ public class ThunderController {
 	}
 	
 	
+	
+	
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		//로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.

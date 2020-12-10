@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
 
 public interface ClubMapper {
@@ -17,6 +19,9 @@ public interface ClubMapper {
 	
 	//정기모임 목록 
 	public List<ClubVO> getClubList();
+	
+	//정기모임 목록 (검색 추가 및 검색조건에 맞는 모임 총 갯수)
+	public int getTotalCount(Criteria cri);
 		
 	//정기모임 상세정보
 	public ClubVO readclub(Long cbNum);
@@ -24,7 +29,7 @@ public interface ClubMapper {
 	//정기모임 게시판 - 목록list
 	public List<ClubVO> getList(Long cbNum);
 		
-	//정기모임 게시판 - 목록list (페이징)
+	//정기모임 게시판 - 목록list (페이징) -- 정기모임 목록 상세검색에 같이 사용 
 	public List<ClubVO> getListWithPaging(Criteria cri);
 		
 	//정기모임 게시판 - 조회
@@ -46,8 +51,20 @@ public interface ClubMapper {
 	//정기모임 게시판 - 조회수
 	public void boardViews(Long cbBno);
 	
+	
 	//정기모임 가입 
-	public void clubJoin(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
-	public void clubJoinMember(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
+	public int insertJoin(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int updateJoin(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int insertJoinHistory(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int update(ClubVO club);
+	
+	
+	
+	
+	public String readCbMemByUsrNum(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public List<ClubMemberVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
 	
 }

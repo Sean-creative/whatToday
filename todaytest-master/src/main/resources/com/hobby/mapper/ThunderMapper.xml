@@ -107,14 +107,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<insert id="insertJoin">
-		insert into clubmember(usrnum, cbnum, cbtype, cbname, usrname, cbmbstresult,
+		insert into clubmember(usrnum, cbnum, cbtype, cbname,
+		usrname, cbmbstresult,
 		CBAPPDATE)
-		values(#{loginUser.usrNum}, #{clubVO.cbNum}, #{clubVO.cbType}, #{clubVO.cbName},
+		values(#{loginUser.usrNum},
+		#{clubVO.cbNum}, #{clubVO.cbType}, #{clubVO.cbName},
 		#{loginUser.usrName}, #{joinState}, sysdate)
 	</insert>
 
 	<insert id="insertJoinHistory">
-		insert into clubjoinhistory(cbjoinnum, usrnum, cbnum, cbtype, cbname,
+		insert into clubjoinhistory(cbjoinnum, usrnum, cbnum,
+		cbtype, cbname,
 		CBJOINSTATERESULT, CBJOINSTATEUPDATEDATE)
 		values(CLUBJOINHISTORY_SEQ.NEXTVAL, #{loginUser.usrNum},
 		#{clubVO.cbNum}, #{clubVO.cbType}, #{clubVO.cbName}, #{joinState},
@@ -124,24 +127,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateJoin">
 		update clubmember set
 		cbmbstresult=#{joinState}
-		where usrnum=#{loginUser.usrNum} AND cbnum=#{clubVO.cbNum}
+		where
+		usrnum=#{loginUser.usrNum} AND cbnum=#{clubVO.cbNum}
 	</update>
 
 
 
 	<select id='readCbMemByUsrNum' resultType="String">
-		select cbmbstresult from clubmember where usrnum=#{usrNum} AND
+		select cbmbstresult
+		from clubmember where usrnum=#{usrNum} AND
 		cbnum=#{cbNum}
 	</select>
 
-<!-- 해당 클럽에 대한 가입 정보를 가져오는 SQL -->
-	<select id='getJoinList' resultType="com.hobby.domain.ClubMemberVO">
-		select usrnum, cbnum, cbtype, cbname, usrname, cbmbstresult,CBAPPDATE
+	<!-- 해당 클럽에 대한 가입 정보를 가져오는 SQL -->
+	<select id='getJoinList'
+		resultType="com.hobby.domain.ClubMemberVO">
+		select usrnum, cbnum, cbtype, cbname, usrname,
+		cbmbstresult,CBAPPDATE
 		from clubmember
-		where cbnum=#{cbnum} AND cbmbstresult=#{cbmbstresult}
+		where cbnum=#{cbnum} AND
+		cbmbstresult=#{cbmbstresult}
 	</select>
 
-	
+
 
 	<!-- 일단은, 아예 상태가 변하지 않고, 아예 사라지는 걸로 만들자. -->
 	<delete id="delete">
@@ -168,6 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		cbName=#{cbName},
 		cbCategory=#{cbCategory},
 		cbSubcat=#{cbSubcat},
+
 		cbMbnum=#{cbMbnum},		
 		cbHashtag=#{cbHashtag}, 
 		cbCity=#{cbCity},
@@ -176,6 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		cbShutDate=#{thunderDetailVO.cbDate}
 		where cbNum = #{cbNum};
+
 
 
 		update thunderDetail set
@@ -192,6 +202,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		}
 	</update>
 
+	<update id="clubViews">
+		update club set cbView = cbView + 1
+		where cbNum = #{cbNum}
+	</update>
 
 
 	<sql id="criteria">
@@ -225,11 +239,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-
-	<!-- <select id="getListWithPaging" resultMap="ThunderVO"> <![CDATA[ select 
-		* from ( select /*+INDEX_DESC(c club_pk)*/ rownum rn, c.cbNum, c.cbname, 
+<!-- 
+	<select id="getListWithPaging" resultMap="ThunderVO"> 
+	<![CDATA[ select 
+* from ( select /*+INDEX_DESC(c club_pk)*/ rownum rn, c.cbNum, c.cbname, 
 		td.cbDate from club c,thunderDetail td where c.cbNum = td.cbNum AND c.cbType='번개모임' 
-		order by c.cbNum DESC ) where rn<= 5 ]]> </select> -->
+		order by c.cbNum DESC ) where rn<= 5 ]]>
+	</select> -->
 
 
 	<!-- <select id="getListWithPaging" resultMap="ThunderVO"> <![CDATA[ select 

@@ -2,115 +2,225 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="com.hobby.mapper.ClubMapper">
 
-<!-- 정기모임 개설  -->
-<insert id="clubinsertSelectKey"> <!--insert문이 실행되고 생성된PK값을 알아야 하는 경우-->
-   <selectKey keyProperty="cbNum" order="BEFORE" resultType="long">
-      select club_seq.nextval from dual
-   </selectKey>
-   
-   insert into club (cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile)
-   values (#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile})
-</insert>
-                             
-<insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
-	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
-	values (CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'승인',sysdate) 
-</insert>
+	<!-- 정기모임 개설 -->
+	<insert id="clubinsertSelectKey"> <!--insert문이 실행되고 생성된PK값을 알아야 하는 경우 -->
+		<selectKey keyProperty="cbNum" order="BEFORE"
+			resultType="long">
+			select club_seq.nextval from dual
+		</selectKey>
 
-<insert id="clubinsertJoinMember"> <!-- 모임을 개설한 사람만을 위한 SQL -->
-	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMbStResult, cbAppDate)
-	values (#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'승인',sysdate) 
-</insert> 
+		insert into club
+		(cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile,cbShutDate,cbFinalState,
+		cbCurMbNum)
+		values
+		(#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile},'99/12/31','진행중',1)
+	</insert>
 
-<!-- 정기모임 목록  -->
-<select id="getClubList" resultType="com.hobby.domain.ClubVO">
+	<insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+		insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName,
+		cbJoinStateResult, cbJoinStateUpdateDate)
+		values
+		(CLUBJOINHISTORY_SEQ.nextval,#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},'가입승인',sysdate)
+	</insert>
+
+	<insert id="clubinsertJoinMember"> <!-- 모임을 개설한 사람만을 위한 SQL -->
+		insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName,
+		cbMbStResult, cbAppDate)
+		values
+		(#{cbLeaderNum},#{cbNum},#{cbType},#{cbName},#{cbLeaderName},'가입승인',sysdate)
+	</insert>
+
+	<!-- 정기모임 목록 -->
+	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select * from club where cbType ='정기모임' order by cbNum desc
 	]]>
-</select>
+	</select>
 
-<!-- 정기모임 상세정보  -->
-<select id="readclub" resultType="com.hobby.domain.ClubVO">
-	select cbNum,cbName,cbLeaderName,cbHashtag,cbIntro,cbDetailContent from club 
-	where cbNum = #{cbNum}
-</select>
+	<!-- 정기모임 목록 :상세검색 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
-<!-- 정기모임 게시판 - 목록 -->
-<select id="getList" resultType="com.hobby.domain.ClubVO">
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
+				AND cbCategory = #{category}
+			</if>
+
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
+				AND cbSubcat = #{subclass}
+			</if>
+
+			<if test="city != null and city != '지역 선택' and city != ''">
+				AND cbCity = #{city}
+			</if>
+
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
+				AND cbDistrict = #{district}
+			</if>
+
+			<if test="keyword != null and keyword!= ''">
+				AND cbName like '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</sql>
+
+	<select id="getListWithPaging"
+		resultType="com.hobby.domain.ClubVO">
+	<![CDATA[
+	select 
+		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
+		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		from club where ]]>
+
+		<include refid="criteria"></include>
+							
+	<![CDATA[  		     
+	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
+	where rn > (#{pageNum}-1) * #{amount} ]]>
+	</select>
+
+	<!-- 정기모임 목록 :모임 총 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from club where
+		<include refid="criteria"></include>
+		cbType='정기모임'
+	</select>
+
+	<!-- 정기모임 상세정보 -->
+	<!-- 모임의 정보를 가져올 때는 가져올 수있는걸 다 가져오는걸로!! -Sean -->
+	<select id="readclub" resultType="com.hobby.domain.ClubVO">
+		select
+		cbNum, cbName, cbType, cbLeaderNum, cbCategory, cbSubcat, cbCity,
+		cbDistrict, cbMbNum,
+		cbCurMbNum, cbHashtag, cbIntro, cbMakeDate, cbShutDate, cbFinalState,
+		cbDetailContent cbFile
+		from club
+		where cbNum = #{cbNum}
+	</select>
+
+	<!-- 정기모임 게시판 - 목록 -->
+	<select id="getList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select * from clubboard
 	where cbNum = #{cbNum} order by cbBno desc
 	]]>
-</select>
+	</select>
 
-<!-- 정기모임 게시판 - 목록(페이징) -->
-<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
-	<![CDATA[
-	select 
-		cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView from
-		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView
-		from clubboard where rownum <= #{pageNum} * #{amount} and cbNum = #{cbNum}) 
-	where rn > (#{pageNum} -1) * #{amount} 
-	]]>
-</select>
+	<!-- 정기모임 게시판 - 목록(페이징) -->
+	<!-- <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO"> 
+		<![CDATA[ select cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView 
+		from (select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, cbNum, cbBdWriter, 
+		cbBdTitle, cbBdDate, cbBdView from clubboard where rownum <= #{pageNum} * 
+		#{amount} and cbNum = #{cbNum}) where rn > (#{pageNum} -1) * #{amount} ]]> 
+		</select> -->
 
-<!-- 정기모임 게시판 - 조회 -->
-<select id="read" resultType="com.hobby.domain.ClubVO">
-	select c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter 
-	from CLUBBOARD c, CLUBBOARDCONTENT d
-	where c.cbBno = d.cbBno and c.cbBno = #{cbBno}
-</select>
+	<!-- 정기모임 게시판 - 조회 -->
+	<select id="read" resultType="com.hobby.domain.ClubVO">
+		select c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter
+		from CLUBBOARD c, CLUBBOARDCONTENT d
+		where c.cbBno = d.cbBno and c.cbBno = #{cbBno}
+	</select>
 
-<!-- 정기모임 게시판 - 등록 -->
-<insert id="boardInsertSelectKey">
-	<selectKey keyProperty="cbBno" order="BEFORE" resultType="long">
-		 select CLUBBOARD_seq.nextval from dual
-  	</selectKey>
-  	
-  	insert into CLUBBOARD (cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate)
-  	values (#{cbBno},#{cbNum},#{cbBdWriter},#{cbBdTitle},SYSDATE)
-</insert>
+	<!-- 정기모임 게시판 - 등록 -->
+	<insert id="boardInsertSelectKey">
+		<selectKey keyProperty="cbBno" order="BEFORE"
+			resultType="long">
+			select CLUBBOARD_seq.nextval from dual
+		</selectKey>
 
-<insert id="boardInsertDetail">
-	insert into CLUBBOARDCONTENT (cbBno, cbNum, cbBdContent)
-	values (#{cbBno},#{cbNum},#{cbBdContent})
-</insert>
+		insert into CLUBBOARD (cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate)
+		values (#{cbBno},#{cbNum},#{cbBdWriter},#{cbBdTitle},SYSDATE)
+	</insert>
 
-<!-- 정기모임 게시판 - 삭제 -->
-<delete id="boardDelete">
-	delete from CLUBBOARD where cbBno = #{cbBno}
-</delete>
+	<insert id="boardInsertDetail">
+		insert into CLUBBOARDCONTENT (cbBno, cbNum, cbBdContent)
+		values (#{cbBno},#{cbNum},#{cbBdContent})
+	</insert>
 
-<!-- 정기모임 게시판 - 수정 -->
-<update id="boardUpdate">
-	update CLUBBOARD set cbBdWriter = #{cbBdWriter}, cbBdTitle=#{cbBdTitle}, cbBdDate=sysdate
-	where cbBno = #{cbBno}
-</update>
+	<!-- 정기모임 게시판 - 삭제 -->
+	<delete id="boardDelete">
+		delete from CLUBBOARD where cbBno = #{cbBno}
+	</delete>
 
-<update id="boardUpdateContent">
-	update CLUBBOARDCONTENT set cbBdContent=#{cbBdContent}
-	where cbBno = #{cbBno}
-</update>
+	<!-- 정기모임 게시판 - 수정 -->
+	<update id="boardUpdate">
+		update CLUBBOARD set cbBdWriter = #{cbBdWriter}, cbBdTitle=#{cbBdTitle},
+		cbBdDate=sysdate
+		where cbBno = #{cbBno}
+	</update>
 
-<!-- 정기모임 게시판 - 조회수 -->
-<update id="boardViews">
-	update CLUBBOARD set cbBdView = cbBdView + 1 
-	where cbBno = #{cbBno}
-</update>
+	<update id="boardUpdateContent">
+		update CLUBBOARDCONTENT set cbBdContent=#{cbBdContent}
+		where cbBno = #{cbBno}
+	</update>
 
-<!-- 정기모임 가입  -->
+	<!-- 정기모임 게시판 - 조회수 -->
+	<update id="boardViews">
+		update CLUBBOARD set cbBdView = cbBdView + 1
+		where cbBno = #{cbBno}
+	</update>
 
-<insert id="clubJoin">
-	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
-	values (CLUBJOINHISTORY_SEQ.nextval,#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},'승인대기',sysdate) 
-</insert>
 
-<insert id="clubJoinMember">
-	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMemIntro, cbMbStResult, cbAppDate)
-	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
-</insert> 
-	
+
+	<!-- //////////////////////////////////////////////////////////////////// -->
+	<!-- history 테이블에서 특정 모임에 대한 현재 회원의 '가장 최신 이력'을 가져옴 -->
+	<select id='readCbMemByUsrNum' resultType="String">
+		select
+		cbjoinstateresult from (
+		select * from clubjoinhistory where usrNum=#{usrNum} and
+		cbNum=#{cbNum} order
+		by cbjoinnum desc)
+		where rownum=1
+	</select>
+
+	<!-- 해당 클럽에 대한 가입 정보를 가져오는 SQL -->
+	<select id='getJoinList'
+		resultType="com.hobby.domain.ClubMemberVO">
+		select usrnum, cbnum, cbtype, cbname, usrname,
+		cbmbstresult,CBAPPDATE
+		from clubmember
+		where cbnum=#{cbNum} AND
+		cbmbstresult=#{cbMbStResult}
+	</select>
+
+	<!-- 정기모임 가입 -->
+	<insert id="insertJoin">
+		insert into CLUBMEMBER(usrnum, cbnum, cbtype, cbname,
+		usrname, cbmbstresult,
+		CBAPPDATE)
+		values(#{loginUser.usrNum},
+		#{club.cbNum}, #{club.cbType}, #{club.cbName},
+		#{loginUser.usrName},
+		#{joinState}, sysdate)
+	</insert>
+
+	<insert id="insertJoinHistory">
+		insert into clubjoinhistory(cbjoinnum, usrnum, cbnum,
+		cbtype, cbname,
+		CBJOINSTATERESULT, CBJOINSTATEUPDATEDATE)
+		values(CLUBJOINHISTORY_SEQ.NEXTVAL, #{loginUser.usrNum},
+		#{club.cbNum}, #{club.cbType}, #{club.cbName}, #{joinState},
+		sysdate)
+	</insert>
+
+	<update id="updateJoin">
+		update CLUBMEMBER set
+		cbmbstresult=#{joinState}
+		where
+		usrnum=#{loginUser.usrNum} AND cbnum=#{club.cbNum}
+	</update>
+
+	<update id="update">
+		update club set
+		cbCurMbNum=#{cbCurMbNum}
+		where cbNum = #{cbNum}
+
+	</update>
+
+
 </mapper>

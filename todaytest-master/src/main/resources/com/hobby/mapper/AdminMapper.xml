@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hobby.mapper.AdminMapper">
+
+	<select id="getUserList" resultType="com.hobby.domain.UserVO">
+		select * from TBLUSER where USRSTATE = '회원'
+	</select>
+	
+	<select id="getUser" resultType="com.hobby.domain.UserVO">
+		select * from USERDETAIL,TBLUSER where USRID = #{id} AND USERDETAIL.usrNum = TBLUSER.usrNum
+	</select>
+	
+	<update id="updateBanUser">
+		update TBLUSER
+		set USRSTATE = '강퇴'
+		where USRID = #{id} 
+	</update>
+
+	<update id="shutClub">
+		update CLUB
+		set CBFINALSTATE = '강제폐쇄',
+		CBSHUTDATE = sysdate
+		where CBNUM = #{cbNum} 
+	</update>
+	
+	<update id="updateClubLeader">
+		update CLUB
+		set CBLEADERNUM = #{usrNum},
+		CBLEADERNAME = #{usrName}
+		where CBNUM = #{cbNum} 
+	</update>
+	
+	<select id="getBanLeaveUser" resultType="com.hobby.domain.UserVO">
+		select * from TBLUSER where USRSTATE = '강퇴' or USRSTATE = '사이트탈퇴'
+	</select>
+	
+	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
+		select * from CLUB WHERE CBFINALSTATE != '폐쇄'
+	</select>
+	
+	<select id="getClubMemberList" resultType="com.hobby.domain.ClubVO">
+		select * from clubmember where cbnum = #{cbNum}
+	</select>
+	
+	<insert id="insertUserHistory">
+	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
+	</insert>
+	
+	<update id="updateUserAuth">
+		update userauth
+		set  auth = 'ROLE_MEMBEROUT'
+		where  USRNUM = #{usrNum}
+	</update>
+	
+</mapper>

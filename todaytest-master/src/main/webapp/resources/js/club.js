@@ -1,10 +1,10 @@
 console.log("club module...");
 
 var clubService = (function(){
-	function getMyCreateClubList(param, callback, error){
+	function getLeaderClubList(param, callback, error){
 		var cbLeaderNum = param.cbLeaderNum;
 		
-		$.getJSON("/mypage/myclub/"+cbLeaderNum,function(data){
+		$.getJSON("/mypage/createclub/"+cbLeaderNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -15,10 +15,10 @@ var clubService = (function(){
 		});
 	}
 	
-	function getJoinClub(param, callback, error){
-		var cbNum = param.cbNum; 
+	function getMyClubList(param, callback, error){
+		var usrNum = param.usrNum; 
 	
-	$.getJSON("/mypage/myclub/joinclub/"+cbNum,function(data){
+	$.getJSON("/mypage/myclub/getMyClubList/"+usrNum,function(data){
 			if(callback){
 				callback(data);
 			}
@@ -29,10 +29,27 @@ var clubService = (function(){
 			}
 		});
 	}
+	
+	function getPrevClubList(param, callback, error){
+		var usrNum = param.usrNum; 
+	
+	$.getJSON("/mypage/myclub/getPrevClubList/"+usrNum,function(data){
+			if(callback){
+				callback(data);
+			}
+			
+			}).fail(function(xhr,status,err){
+			if(error){
+				error();
+			}
+		});
+	}
+	
 			
 	return{
-		getMyCreateClubList : getMyCreateClubList,
-		getJoinClub : getJoinClub
+		getLeaderClubList : getLeaderClubList ,
+		getPrevClubList : getPrevClubList,
+		getMyClubList : getMyClubList
 	};
 	
 

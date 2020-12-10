@@ -38,6 +38,8 @@ public class UserVO {
     private String usrLoginDate;
     // 이미지
     private String usrImg;
+    // 유저 이미지 경로
+    private String usrImgPath;
     // 비밀번호 변경일자
     private String usrChangePwdDate;
     // 회원 권한 리스트

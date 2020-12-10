@@ -13,13 +13,14 @@ public interface MypageService {
 	
 	public UserVO getUser(String id);
 	public ClubVO getClub(ClubVO clubVO);
-	public ClubVO getJoinClub(Long cbNum);
+	public ClubVO getJoinClub(Long usrNum);
 	
 	public List<UserVO> getUserList();
 	public List<ClubVO> getMyClubList(Long usrNum);
 	public List<ClubVO> getWaitClubList(Long usrNum);
 	public List<ClubVO> getPrevClubList(Long usrNum);
-	public List<ClubVO> getMyCreateClubList(Long usrNum);
+	public List<ClubVO> getLeaderClubList(Long usrNum);
+	public List<ClubVO> getClubManageMemList(Long cbNum);
 	
 	public List<CategoryVO> getCategoryList(String catClassificationCode);
 	public List<RegionVO> getCityList();
@@ -27,12 +28,11 @@ public interface MypageService {
 	
 	
 	public int updateUserInfo(UserVO userVO);
-	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberName(UserVO userVO);
-	public int updateNameUserHistory(UserVO userVO);
-	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int insertUserHistory(UserVO userVO);
+
+	
+	public int changeClubMemState(ClubVO clubVO);
 
 	public boolean isPwdValid(String password);
 	public boolean comparePwdDB(String password,String password2);
@@ -41,6 +41,7 @@ public interface MypageService {
 	
 	public int updateUserTotalInfo(UserVO userVO);
 	public int leaveUser(UserVO userVO);
+	public int shutClub(Long cbNum);
 	
 	public String getFolder();
 	public boolean checkImageType(File file);

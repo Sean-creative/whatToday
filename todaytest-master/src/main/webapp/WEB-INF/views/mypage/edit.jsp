@@ -30,7 +30,7 @@
 								</form>
 							</li>
 							<li>
-								<form action="/mypage/myclub/main" method="post">
+								<form action="/mypage/myclub/userManage" method="get">
 									<button type="submit">회원관리</button>
 								</form>
 							</li>
@@ -71,7 +71,8 @@
 
 			<!-- 해당 위치 안에 이미지가 쌓이게 된다. -->
 			<div id="preview">
-			<img style='width:100px; height:100px;'src="<c:out value="${userVO.usrImg}"/>"/>
+			<img style='width:100px; height:100px;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
+			alt="<c:out value="${userVO.usrImg }"/>"/>
 			</div>
 			<div class="userInfo">
 				<span>ID </span><input type="text" name="usrId" readonly="readonly"
@@ -89,6 +90,9 @@
 					<input
 					type="hidden" name="usrImg"
 					value="<c:out value="${userVO.usrImg}"/>">
+					<input
+					type="hidden" name="usrImgPath"
+					value="<c:out value="${userVO.usrImgPath}"/>">
 			</div>
 
 		</div>
@@ -419,8 +423,10 @@
 									dataType : 'json',
 									success : function(result) {
 										console.log(result);
-										//히든 밸류 usrImg만들어서 거기에 result path같은거? 넣게하면 대겟지?
-										$("input[name=usrImg]").attr("value",'\\resources\\img\\upload\\'+result.uploadPath+'\\'+result.uuid+'_'+result.fileName)
+										
+										$("input[name=usrImg]").attr("value",result.uuid+'_'+result.fileName)
+										$("input[name=usrImgPath]").attr("value",result.uploadPath);
+										
 								
 										
 									}

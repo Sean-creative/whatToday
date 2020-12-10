@@ -10,12 +10,12 @@
     <ul>
         <li>
             <form action="/mypage/main" method="get">
-                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
+                <button class="btn1" type="submit">마이페이지</button>
             </form>
         </li>
             <li>
         <div class="dropdown">
-            <button type="button" class="dropbtn">모임관리</button>
+            <button type="button" class="dropbtn" style="color: yellow;">모임관리</button>
             <div class="dropdown-content">
             <ul>
                 <li>
@@ -26,7 +26,7 @@
                 <li>                <form action="/mypage/myclub/main" method="post">
             	<button type="submit">만남개설</button>
         		</form></li>
-                <li>                <form action="/mypage/myclub/main" method="post">
+                <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
 
@@ -58,39 +58,65 @@
 <section id="wrap">
 <div class ="info">
 <div class ="clubInfoSmall">
-<p>개설한 모임</p><br>
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="0" end ="1">
-   <c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
-   <form name="manageClub" method="get">
-   <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
-   <button name="modifyClub" type="submit">수정</button> 
-   <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
-   </form>
-</c:forEach>
-
-<c:forEach var="clubVO" items="${clubVO}" varStatus="status" begin ="2">
-<c:if test="${status.index eq '2'}"><p class="moreList">더보기</p></c:if>
-<div class = "hideList" style ="display: none">
-<c:out value="[${clubVO.cbType}] "/><c:out value="${clubVO.cbName}"/><br>
-   <input type="hidden" name="cbType" value="<c:out value="${clubVO.cbType}"/>">
-   <form name="manageClub" method="get">
-   <input type="hidden" name="cbNum" value="<c:out value="${clubVO.cbNum}"/>">
-   <button name="modifyClub" type="submit">수정</button> 
-   <button name="closeClub" type="submit">모임폐쇄 아직 구현 X</button> 
-   </form>
-<c:if test="${status.last}"><p class="closeList" style ="display: none">감추기</p></c:if>
+<select id="createClubList">
+	<option value="정기모임">내가 모임장인 정기모임</option>
+	<option value="번개모임">내가 모임장인 번개모임</option>
+</select>
+<div id="myClub"></div>
+<form name="manageClub">
+<input type="hidden" name="cbNum">
+</form>
 </div>
-</c:forEach>
-
-</div>
-
 </div>
 </section>
 
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	let number = <c:out value="${usrNum}"/>;
+	let createClubList = $("#createClubList");
+	
+	const getLeaderClubList = function(){
+		clubService.getLeaderClubList({cbLeaderNum:number},function(club){
+			
+			let str = "";
+			let myClub = $("#myClub");
+			console.log(club);
+			
+			myClub.empty();
+			for(let i = 0; i < club.length; i++){
+				if(createClubList.val() == club[i].cbType){
+					str += "<p>"+"["+club[i].cbType+"] "+club[i].cbName+"<button name='modifyClub' data-cbtype='"+club[i].cbType+"'data-cbnum='"+club[i].cbNum+"'>수정하기</button><button name='closeClub' type='button' data-cbnum='"+club[i].cbNum+"'>폐쇄하기</button></p>";
+					}
+				}
+			myClub.append(str);
+		});
+	};getLeaderClubList();
+	
+	const shutClub = function(e){
+		
+		console.log(e);
+		$.ajax({
+			url: "/mypage/myclub/clubmanage/shutClub",
+			type:"PUT",
+			data: JSON.stringify({cbNum:e}),
+			dataType: "json",
+			contentType : "application/json; charset=utf-8",
+			success: function(data){ 
+				console.log(data);
+			},
+			complete: function(data){
+				getLeaderClubList();
+			}
+			});
+		};  
+	
+	createClubList.on("change",function(){
+		getLeaderClubList();
+	})
+	
+	
+	
 	
 	$(".moreList").click(function(){
 		$(".hideList").show();
@@ -105,33 +131,33 @@ $(document).ready(function() {
 	})
 	
 	
-	
-	let number = '<c:out value="${clubVO[0].cbLeaderNum }"/>'
-	let clubInfoSmall = $(".clubInfoSmall")
-	if(number == ""){
-		clubInfoSmall.html('<p>개설한 모임이 없어요</p>')
-	}
-	$("button[name=modifyClub]").click(function(){
+	$(document).on("click", "button[name=modifyClub]", function(){
 		let index = $("button[name=modifyClub]").index(this);
-		let type = $("input[name=cbType]").eq(index).val();
-		let form = $("form[name=manageClub]").eq(index);
-		let cbNum = $("input[name=cbNum]").eq(index).val();
-		let url;
-		if(type == "정기모임" || type == "정기"){
+		let data = $("button[name=modifyClub]").eq(index).data();
+		let form = $("form[name=manageClub]");
+		let input = $("input[name=cbNum]");
+		
+		input.val(data.cbnum);
+		
+		if(data.cbtype == "정기모임"){
 			console.log("정기요");
 			url = "/regular/info";
 		}else{
 			console.log("번개요");
-			url = "/thunder/info";
-		}
+			url = "/thunder/modify";
+		} 
 		form.attr("action",url);
+		form.submit();
 	});
 	
-	/* 모임폐쇄구현할것 */
-	$("button[name=closeClub]").click(function(){
-		let index = $("button[name=modifyClub]").index(this);
-		let type = $("input[name=cbType]").eq(index).val();
-		let form = $("form[name=manageClub]").eq(index);
+	
+	
+
+	$(document).on("click", "button[name=closeClub]", function(){
+		let index = $("button[name=closeClub]").index(this);
+		let data = $("button[name=closeClub]").eq(index).data();
+		
+		shutClub(data.cbnum);
 	});
 	});
 </script>

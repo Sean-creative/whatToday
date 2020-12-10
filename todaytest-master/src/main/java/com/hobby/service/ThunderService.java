@@ -44,4 +44,6 @@ public interface ThunderService {
 	//로그인이 되어있는지 알려주는 메소드
 	public boolean isLogin(Authentication auth);
 	
+	
+	
 }

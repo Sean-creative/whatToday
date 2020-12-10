@@ -12,32 +12,34 @@ public interface MypageMapper {
 	
 	public UserVO getUser(String id);
 	public ClubVO getClub(ClubVO clubVO);
-	public ClubVO getJoinClub(Long cbNum);
+	public ClubVO getJoinClub(Long usrNum);
 
 	public List<UserVO> getUserList();
+	public List<UserVO> getOldFiles();
 	public List<ClubVO> getMyClubList(Long usrNum);
 	public List<ClubVO> getWaitClubList(Long usrNum);
 	public List<ClubVO> getPrevClubList(Long usrNum);
-	public List<ClubVO> getMyCreateClubList(Long usrNum);
+	public List<ClubVO> getLeaderClubList(Long usrNum);
 	public List<ClubVO> getMyCreateTypeClubList(Long usrNum);
+	public List<ClubVO> getClubManageMemList(Long cbNum);
 	public List<RegionVO> getCityList();
 	public List<RegionVO> getDistrictList(String rgName);
+	
 	
 	public List<CategoryVO> getCategoryList(String catClassificationCode);
 	
 	public int insertUserHistory(UserVO userVO);
+	public int insertClubJoinHistory(ClubVO clubVO);
 	
-	public int updateNameUserHistory(UserVO userVO);
-	public int updateClubFounderName(UserVO userVO);
-	public int updateClubMemberName(UserVO userVO);
+
 	public int updateUserInfo(UserVO userVO);
-	public int updateMeetingMemberName(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
-	
+	public int updateClubManageMem(ClubVO clubVO);
 	public int updateUserAuth(UserVO userVO);
+	public int updateClubMemNum(ClubVO clubVO);
+
 	
-	
-	public int shutClub(ClubVO clubVO);
+	public int shutClub(Long cbNum);
 	public int leaveClub(UserVO userVO);
 	
 }
