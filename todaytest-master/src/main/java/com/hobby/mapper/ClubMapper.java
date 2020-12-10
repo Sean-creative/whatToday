@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
 
 public interface ClubMapper {
@@ -49,11 +51,20 @@ public interface ClubMapper {
 	//정기모임 게시판 - 조회수
 	public void boardViews(Long cbBno);
 	
+	
 	//정기모임 가입 
-	public void clubJoin(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
-	public void clubJoinMember(@Param("club") ClubVO club, @Param("userVO") UserVO userVO);
+	public int insertJoin(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int updateJoin(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int insertJoinHistory(@Param("club") ClubVO clubVO, @Param("loginUser") UserVO loginUser, @Param("joinState") String joinState);
+	
+	public int update(ClubVO club);
+	
+	
+	
 	
 	public String readCbMemByUsrNum(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
-	public List<ClubVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
+	public List<ClubMemberVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
 	
 }
