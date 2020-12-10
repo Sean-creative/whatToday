@@ -30,6 +30,7 @@ public interface MypageService {
 	public int updateUserInfo(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int insertUserHistory(UserVO userVO);
+	public int insertClubJoinHistory(ClubVO clubVO);
 
 	
 	public int changeClubMemState(ClubVO clubVO);

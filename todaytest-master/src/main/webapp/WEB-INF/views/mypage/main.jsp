@@ -130,8 +130,7 @@ $(document).ready(function() {
 			myClub.empty();
 			myClub.append(str);
 			});
-	};
-	getMyClubList();
+	};getMyClubList();
 	
 	joinClubList.on("change", function(){
 		getMyClubList();
@@ -143,18 +142,33 @@ $(document).ready(function() {
 		$.ajax({
 			url: "/mypage/clubmanage/changeClubMemState",
 			type:"PUT",
-			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbMbStResult:e.cbmbstresult}),
+			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbMbStResult:e.cbmbstresult}),
 			dataType: "json",
 			contentType : "application/json; charset=utf-8",
 			success: function(data){ 
 				
 			},
 			complete : function(list) {
-				getMyClubList();
-				getPrevClubList();
+				insertClubJoinHistory(e);
 	           }
 			});
 		};
+		const insertClubJoinHistory = function(e){
+			$.ajax({
+				url: "/mypage/clubmanage/insertClubJoinHistory",
+				type:"POST",
+				data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbMbStResult:e.cbmbstresult}),
+				dataType: "json",
+				contentType : "application/json; charset=utf-8",
+				success: function(data){ 
+					
+				},
+				complete : function(list) {
+					getMyClubList();
+					getPrevClubList();
+		           }
+				});
+			};
 		
 	const getPrevClubList = function(){
 		clubService.getPrevClubList({usrNum:number},function(club){
@@ -216,7 +230,7 @@ $(document).ready(function() {
 		str += '<button name="details" data-cbtype="'+data.cbtype+'">상세보기</button>';
 		str += '</form>';
 		if(data.mycb == true){
-			str += '<button name="drop" type="button" "data-usrnum="'+"${userVO.usrNum}"+'"data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
+			str += '<button name="drop" type="button" data-usrnum="'+number+'" data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
 			}
 		let sWidth = window.innerWidth;
 		let sHeight = window.innerHeight;

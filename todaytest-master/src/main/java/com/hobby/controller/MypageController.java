@@ -405,7 +405,7 @@ public class MypageController {
 		
 		System.out.println(clubVO);
 	
-	return service.changeClubMemState(clubVO) == 3
+	return service.changeClubMemState(clubVO) == 2
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
@@ -422,7 +422,18 @@ public class MypageController {
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
-
+	@RequestMapping(method = {RequestMethod.POST},
+			value = "/clubmanage/insertClubJoinHistory", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> insertClubJoinHistory(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.insertClubJoinHistory(clubVO) == 1
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
 
 
 //	// ajax로 카테고리 db 가져옴

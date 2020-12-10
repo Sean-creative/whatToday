@@ -583,9 +583,7 @@
 			 })
 		 }
 		 $('#userInfoModal').on('hidden.bs.modal', function () {
-			 table.ajax.reload( function ( json ) {
-				    $('#myInput').val( json.lastInput );
-				},false);
+			 table.ajax.reload();
 		 })
 		
 		

@@ -183,11 +183,10 @@ public class MypageServiceImpl implements MypageService {
 	public int changeClubMemState(ClubVO clubVO) {
 
 		int cnt = 0;
-		cnt += mapper.insertClubJoinHistory(clubVO);
 		cnt += mapper.updateClubManageMem(clubVO);
 		cnt += mapper.updateClubMemNum(clubVO);
 		
-		if(cnt != 3) {
+		if(cnt != 2) {
 			//2이아니라면 강제 롤백
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
@@ -199,6 +198,11 @@ public class MypageServiceImpl implements MypageService {
 	public int shutClub(Long cbNum) {
 		
 		return mapper.shutClub(cbNum);
+	}
+
+	@Override
+	public int insertClubJoinHistory(ClubVO clubVO) {
+				return mapper.insertClubJoinHistory(clubVO);
 	}
 
 
