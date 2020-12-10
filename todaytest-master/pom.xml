@@ -228,7 +228,7 @@
             <version>4.5.2</version>
         </dependency>
 		
-<!-- 구글 소셜 로그인 구현 -->
+		<!-- 구글 소셜 로그인 구현 -->
 		<dependency>
 			<groupId>com.github.scribejava</groupId>
 			<artifactId>scribejava-apis</artifactId>
@@ -257,8 +257,8 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
 		</dependency>
-
-
+		<!-- 구글 소셜 로그인 구현 END -->	
+	
 		<!-- chatting -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
 		<dependency>
