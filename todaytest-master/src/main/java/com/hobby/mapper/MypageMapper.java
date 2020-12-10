@@ -30,13 +30,15 @@ public interface MypageMapper {
 	
 	public int insertUserHistory(UserVO userVO);
 	public int insertClubJoinHistory(ClubVO clubVO);
+	public int insertClubMember(ClubVO clubVO);
 	
 
 	public int updateUserInfo(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int updateClubManageMem(ClubVO clubVO);
 	public int updateUserAuth(UserVO userVO);
-	public int updateClubMemNum(ClubVO clubVO);
+	public int updateClubMemNumPlus(ClubVO clubVO);
+	public int updateClubMemNumMinus(ClubVO clubVO);
 
 	
 	public int shutClub(Long cbNum);
