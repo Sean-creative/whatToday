@@ -277,7 +277,9 @@ $(document).ready(function() {
 				console.log(data)
 				changeClubMemState(data);
 				$(".popupLayer").hide();
+				alert("탈퇴하셨습니다.");
 				});
+			
 			});
 	});
 

@@ -33,7 +33,8 @@ public interface MypageService {
 	public int insertClubJoinHistory(ClubVO clubVO);
 
 	
-	public int changeClubMemState(ClubVO clubVO);
+	public int changeClubMemStatePlus(ClubVO clubVO);
+	public int changeClubMemStateMinus(ClubVO clubVO);
 
 	public boolean isPwdValid(String password);
 	public boolean comparePwdDB(String password,String password2);
@@ -43,9 +44,11 @@ public interface MypageService {
 	public int updateUserTotalInfo(UserVO userVO);
 	public int leaveUser(UserVO userVO);
 	public int shutClub(Long cbNum);
+	public int insertClubMember(ClubVO clubVO);
 	
 	public String getFolder();
 	public boolean checkImageType(File file);
+	public int updateClubManageMem(ClubVO clubVO);
 
 
 }

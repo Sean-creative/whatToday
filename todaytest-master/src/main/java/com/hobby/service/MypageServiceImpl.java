@@ -180,18 +180,38 @@ public class MypageServiceImpl implements MypageService {
 
 	@Transactional
 	@Override
-	public int changeClubMemState(ClubVO clubVO) {
+	public int changeClubMemStatePlus(ClubVO clubVO) {
 
 		int cnt = 0;
 		cnt += mapper.updateClubManageMem(clubVO);
-		cnt += mapper.updateClubMemNum(clubVO);
+		cnt += mapper.updateClubMemNumPlus(clubVO);
 		
-		if(cnt != 2) {
-			//2이아니라면 강제 롤백
+		if(cnt == 0) {
+			//0이면 강제 롤백
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		
 		return cnt;
+	}
+	@Transactional
+	@Override
+	public int changeClubMemStateMinus(ClubVO clubVO) {
+		
+		int cnt = 0;
+		cnt += mapper.updateClubManageMem(clubVO);
+		cnt += mapper.updateClubMemNumMinus(clubVO);
+		
+		if(cnt == 0) {
+			//0이면 강제 롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+	}
+	
+	@Override
+	public int updateClubManageMem(ClubVO clubVO) {
+		return mapper.updateClubManageMem(clubVO);
 	}
 
 	@Override
@@ -203,6 +223,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int insertClubJoinHistory(ClubVO clubVO) {
 				return mapper.insertClubJoinHistory(clubVO);
+	}
+
+	@Override
+	public int insertClubMember(ClubVO clubVO) {
+		return mapper.insertClubMember(clubVO);
 	}
 
 

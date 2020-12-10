@@ -40,7 +40,7 @@ public class ClubVO {
 	
 	//////////////////////////////////////////CLUBJOINHISTORY	
 	private Long cbJoinNum;
-	private String cbJoingStateResult;
+	private String cbJoinStateResult;
 	private String cbJoinStateUpdateDate;
 
 	
