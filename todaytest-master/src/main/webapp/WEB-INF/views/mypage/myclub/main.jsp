@@ -156,8 +156,8 @@ $(document).ready(function() {
 	$(document).on("click", "button[name=closeClub]", function(){
 		let index = $("button[name=closeClub]").index(this);
 		let data = $("button[name=closeClub]").eq(index).data();
-		
 		shutClub(data.cbnum);
+		alert("폐쇄하셨습니다.")
 	});
 	});
 </script>

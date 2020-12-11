@@ -367,6 +367,7 @@ public class MypageController {
 		log.info("get...........: " + usrNum);
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		
 		return new ResponseEntity<>(service.getMyClubList(usrNum), HttpStatus.OK);
 	}
 	
@@ -396,18 +397,43 @@ public class MypageController {
 	System.out.println(service.getClubManageMemList(cbNum));
 	return new ResponseEntity<>(service.getClubManageMemList(cbNum),HttpStatus.OK);
 	}
-	//클럽멤버 추방같은 상태 변환
+	//클럽멤버 추가 상태 변환
 	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
-			value = "/clubmanage/changeClubMemState", consumes = "application/json",
+			value = "/clubmanage/changeClubMemStatePlus", consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> changeClubMemState(
+	public ResponseEntity<String> changeClubMemStatePlus(
 			@RequestBody ClubVO clubVO) {
 		
 		System.out.println(clubVO);
 	
-	return service.changeClubMemState(clubVO) == 3
+	return service.changeClubMemStatePlus(clubVO) != 0
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/clubmanage/changeClubMemStateMinus", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> changeClubMemStateMinus(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.changeClubMemStateMinus(clubVO) != 0
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/clubmanage/updateClubManageMem", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateClubManageMem(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+		
+		return service.updateClubManageMem(clubVO) == 1
+				? new ResponseEntity<>("success",HttpStatus.OK)
+						:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 	
 	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
@@ -422,7 +448,31 @@ public class MypageController {
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
-
+	@RequestMapping(method = {RequestMethod.POST},
+			value = "/clubmanage/insertClubJoinHistory", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> insertClubJoinHistory(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.insertClubJoinHistory(clubVO) == 1
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	} 
+	
+	@RequestMapping(method = {RequestMethod.POST},
+			value = "/clubmanage/insertClubMember", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> insertClubMember(
+			@RequestBody ClubVO clubVO) {
+		
+		System.out.println(clubVO);
+	
+	return service.insertClubMember(clubVO) == 1
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	} 
 
 
 //	// ajax로 카테고리 db 가져옴
