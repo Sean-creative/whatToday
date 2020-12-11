@@ -26,7 +26,7 @@
 					<td><c:out value="${club.cbBno}" /></td>
 					<td>
 					<a href='/regular/boardget?cbNum=<c:out value="${cbNum}"/>&cbBno=<c:out value="${club.cbBno }"/>'> 
-					<c:out value="${club.cbBdTitle }" /></a></td>
+					<c:out value="${club.cbBdTitle }" /></a>(${club.replyCount})</td>
 					<td><c:out value="${club.cbBdWriter}" /></td>
 					<td><c:out value="${club.cbBdDate}" /></td>
 					<td><c:out value="${club.cbBdView}" /></td>

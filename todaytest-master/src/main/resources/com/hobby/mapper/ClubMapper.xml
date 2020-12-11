@@ -103,12 +103,18 @@
 		where cbNum = #{cbNum}
 	</select>
 
+<<<<<<< HEAD
 	<!-- 정기모임 게시판 - 목록 -->
 	<select id="getList" resultType="com.hobby.domain.ClubVO">
+=======
+<!-- 정기모임 게시판 - 목록 -->
+<!-- <select id="getList" resultType="com.hobby.domain.ClubVO">
+>>>>>>> dahye
 	<![CDATA[
 	select * from clubboard
 	where cbNum = #{cbNum} order by cbBno desc
 	]]>
+<<<<<<< HEAD
 	</select>
 
 	<!-- 정기모임 게시판 - 목록(페이징) -->
@@ -166,6 +172,93 @@
 	</update>
 
 
+=======
+</select> -->
+
+<select id="getList" resultType="com.hobby.domain.ClubVO">
+  	select 
+	  	cb.cbbno,
+	    cb.cbnum,
+	    cb.cbbdwriter,
+	    cb.cbbdtitle,
+	    cb.cbbddate,
+	    NVL(cb.cbbdview, 0) cbbdview,
+	    NVL(cbr.reply_count, 0) replyCount
+	from CLUBBOARD cb
+    	left outer join
+      		(select cbbno, count(cbbno) reply_count
+       		from CLUBBOARD_REPLY
+       		group by cbbno) cbr
+    	on cb.cbbno = cbr.cbbno
+    where cbNum = #{cbNum} order by cbBno desc
+</select>
+<!-- 정기모임 게시판 - 목록(페이징) -->
+<!-- <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
+	<![CDATA[
+	select 
+		cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView from
+		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView
+		from clubboard where rownum <= #{pageNum} * #{amount} and cbNum = #{cbNum}) 
+	where rn > (#{pageNum} -1) * #{amount} 
+	]]>
+</select> -->
+
+<!-- 정기모임 게시판 - 조회 -->
+<select id="read" resultType="com.hobby.domain.ClubVO">
+	select c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter 
+	from CLUBBOARD c, CLUBBOARDCONTENT d
+	where c.cbBno = d.cbBno and c.cbBno = #{cbBno}
+</select>
+
+<!-- 정기모임 게시판 - 등록 -->
+<insert id="boardInsertSelectKey">
+	<selectKey keyProperty="cbBno" order="BEFORE" resultType="long">
+		 select CLUBBOARD_seq.nextval from dual
+  	</selectKey>
+  	
+  	insert into CLUBBOARD (cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate)
+  	values (#{cbBno},#{cbNum},#{cbBdWriter},#{cbBdTitle},SYSDATE)
+</insert>
+
+<insert id="boardInsertDetail">
+	insert into CLUBBOARDCONTENT (cbBno, cbNum, cbBdContent)
+	values (#{cbBno},#{cbNum},#{cbBdContent})
+</insert>
+
+<!-- 정기모임 게시판 - 삭제 -->
+<delete id="boardDelete">
+	delete from CLUBBOARD where cbBno = #{cbBno}
+</delete>
+
+<!-- 정기모임 게시판 - 수정 -->
+<update id="boardUpdate">
+	update CLUBBOARD set cbBdWriter = #{cbBdWriter}, cbBdTitle=#{cbBdTitle}, cbBdDate=sysdate
+	where cbBno = #{cbBno}
+</update>
+
+<update id="boardUpdateContent">
+	update CLUBBOARDCONTENT set cbBdContent=#{cbBdContent}
+	where cbBno = #{cbBno}
+</update>
+
+<!-- 정기모임 게시판 - 조회수 -->
+<update id="boardViews">
+	update CLUBBOARD set cbBdView = cbBdView + 1 
+	where cbBno = #{cbBno}
+</update>
+
+<!-- 정기모임 가입  -->
+<insert id="clubJoin">
+	insert into CLUBJOINHISTORY (cbJoinNum, usrNum, cbNum, cbType, cbName, cbJoinStateResult, cbJoinStateUpdateDate)
+	values (CLUBJOINHISTORY_SEQ.nextval,#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},'승인대기',sysdate) 
+</insert>
+
+<insert id="clubJoinMember">
+	insert into CLUBMEMBER (usrNum, cbNum, cbType, cbName, usrName, cbMemIntro, cbMbStResult, cbAppDate)
+	values (#{userVO.usrNum},#{club.cbNum},#{club.cbType},#{club.cbName},#{userVO.usrName},#{club.cbMemIntro},'승인대기',sysdate) 
+</insert> 
+	
+>>>>>>> dahye
 
 	<!-- //////////////////////////////////////////////////////////////////// -->
 	<!-- history 테이블에서 특정 모임에 대한 현재 회원의 '가장 최신 이력'을 가져옴 -->

@@ -52,28 +52,35 @@
 				</div>
 				</div>
 		</div>
+		
 <!-- 댓글 등록  -->
-	<div class="my reply add">
+<div>
+ 	<!-- <div class="my reply add"> -->
+ 	<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
 		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<textarea name="reply" id="reply" class="form-control" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+					<textarea name="reply" id="reply" class="form-control" cols="100" rows="3" style="resize: none;" placeholder="댓글을 입력해주세요."></textarea>
 				</div>
 				<div class="col-sm-2">
 					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
-					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
+					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert" style="width: 30%; margin-top: 10px">등록</button>
 				</div>	
 			</div>
 		</form>
+	</div>  
+	
+<!-- 댓글 목록  -->	
+	<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+				<div id="replyList"></div>
 	</div>
+</div>	
+
 <!-- 댓글목록 처리 -->
-		<div class='row'>
+<!-- 		<div class='row'>
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					 <div class="panel-heading">
-        				<i class="fa fa-comments fa-fw"></i> Reply
-      				 </div> 
 					<div class="panel-body">
 						<ul class="chat">
 						</ul>
@@ -81,10 +88,10 @@
 					<div class="panel-footer"></div>
 				</div>
 			</div>
-		</div>	
+		</div>
+</div> -->
 </div>
-
-<script type="text/javascript" src="/resources/js/reply.js"></script>
+<!-- <script type="text/javascript" src="/resources/js/reply.js"></script> -->
 <script type="text/javascript">
 
 	$(document).ready(function() {
@@ -155,39 +162,185 @@
 	});  */
 </script>
 
-<script>  
+<!-- <script>  
 	$(document).ready(function() {
 
-						var cbBnoValue = '<c:out value="${club.cbBno}"/>';
-						var cbNumValue = '<c:out value="${cbNum}"/>';
-						var replyUL = $(".chat");
+		var cbBnoValue = '<c:out value="${club.cbBno}"/>';
+		var cbNumValue = '<c:out value="${cbNum}"/>';
+		var replyUL = $(".chat");
 
-						showList(1);
+		showList(1);
 
-						function showList(page) {
+		function showList(page) {
 
-							replyService.getList({cbBno : cbBnoValue}, function(list) {
+		replyService.getList({cbBno : cbBnoValue}, function(list) {
 
-												var str = "";
-												if (list == null || list.length == 0) {
-													replyUL.html("");
-													return;
-												}
-												for (var i = 0, len = list.length || 0; i < len; i++) {
-												       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-												       str +="  <div><div class='header'><strong class='primary-font'>["
-												    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-												       str +="    <small class='pull-right text-muted'>"
-												           +replyService.displayTime(list[i].replyDate)+"</small></div>";
-												       str +="    <p>"+list[i].reply+"</p></div></li>";
-												     }
+			var str = "";
+			if (list == null || list.length == 0) {
+			replyUL.html("");
+			return;
+			}
+			for (var i = 0, len = list.length || 0; i < len; i++) {
+				str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+				str +="  <div><div class='header'><strong class='primary-font'>["
+					   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+				str +="    <small class='pull-right text-muted'>"
+					   +replyService.displayTime(list[i].replyDate)+"</small></div>";
+				str +="    <p>"+list[i].reply+"</p></div></li>";
+			}
 												     
-												     replyUL.html(str);
-											});
-						}
-
-				});
+			replyUL.html(str);
+		});
+		}		
+		
+	});
 					 
+</script> -->
+
+<script>
+
+	<c:url var="btnReplyInsert" value="/replies/insert"></c:url>
+	<c:url var="updateReplyURL" value="/replies/update"></c:url>
+	<c:url var="deleteReplyURL" value="/replies/delete"></c:url>
+
+	$(document).ready(function() {
+		showReplyList();
+	});
+	
+	function showReplyList() {
+		
+		var url = "${pageContext.request.contextPath}/replies/list";
+		var paramData = {"cbBno": "${club.cbBno}"};
+		$.ajax({
+            type: 'POST',
+            url: url,
+            data: paramData,
+            dataType: 'json',
+            success: function(result) {
+               	var htmls = "";
+				if(result.length < 1){
+					console.log("result.length:"+result.length);
+					htmls += "<span>등록된 댓글이 없습니다.</span>";
+				} else {
+					$(result).each(function(){
+		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0;">';
+		                htmls += '<title>Placeholder</title>';
+		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+		                htmls += '<div>';
+		                htmls += '<span class="d-block">';
+		                htmls += '<strong class="text-gray-dark">' + this.replyer + '</strong>';
+		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+		                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
+		                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                htmls += '</span>';
+		                htmls += '</span>';
+		                htmls += '</div>';
+		                htmls += '<div>';
+		                htmls += this.reply;
+		                htmls += '</div>';
+		                htmls += '</p>';
+		                htmls += '</div>';
+		           });	//each end
+				}
+				$("#replyList").html(htmls);
+            }	   // Ajax success end
+		});	// Ajax end
+	}
+
+	$(document).on('click', '#btnReplyInsert', function() {
+		
+		var reply = $('#reply').val();
+		var replyer = $('#replyer').val();
+		var paramData = JSON.stringify({"reply":reply, "replyer":replyer, "cbBno":"${club.cbBno}", "cbNum":"${cbNum}"});
+	    var headers = {"Content-Type" : "application/json", "X-HTTP-Method-Override" : "POST"};
+		
+	    $.ajax({
+
+			url: "${btnReplyInsert}"
+			, headers : headers
+			, data : paramData
+			, type : 'POST'
+			, dataType : 'text'
+			, success: function(result){
+				showReplyList();
+				$('#reply').val('');
+				$('#replyer').val('');
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+	});
+	
+	function fn_editReply(rno, replyer, reply){
+
+		var htmls = "";
+		htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0;">';
+		htmls += '<title>Placeholder</title>';
+		htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+		htmls += '<div>';
+		htmls += '<span class="d-block">';
+		htmls += '<strong class="text-gray-dark">' + replyer + '</strong>';
+		htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+		htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + rno + ', \'' + replyer + '\')" style="padding-right:5px">저장</a>';
+		htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
+		htmls += '</span>';
+		htmls += '</span>';		
+		htmls += '</div>';		
+		htmls += '<div>';		
+		htmls += '<textarea name="editContent" id="editContent" class="form-control" cols="100" rows="3" style="resize: none;">';
+		htmls += reply;
+		htmls += '</textarea>';
+		htmls += '</p>';
+		htmls += '</div>';
+		htmls += '</div>';
+		$('#rno' + rno).replaceWith(htmls);
+		$('#rno' + rno + ' #editContent').focus();
+	}
+	
+	function fn_updateReply(rno, replyer){
+
+		var replyEditContent = $('#editContent').val();
+		var paramData = JSON.stringify({"reply": replyEditContent, "rno": rno});
+		var headers = {"Content-Type" : "application/json", "X-HTTP-Method-Override" : "POST"};
+
+		$.ajax({
+
+			url: "${updateReplyURL}"
+			, headers : headers
+			, data : paramData
+			, type : 'POST'
+			, dataType : 'text'
+			, success: function(result){
+                console.log(result);
+				showReplyList();
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+	}
+	
+	function fn_deleteReply(rno){
+
+		var paramData = {"rno": rno};
+
+		$.ajax({
+
+			url: "${deleteReplyURL}"
+			, data : paramData
+			, type : 'POST'
+			, dataType : 'text'
+			, success: function(result){
+				showReplyList();
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+		location.reload();
+	}
+	
 </script>
 
 <%@include file="../includes/footer.jsp" %>
