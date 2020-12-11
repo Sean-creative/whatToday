@@ -63,7 +63,7 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-table"></i>
@@ -71,13 +71,12 @@
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">회원:</h6>
-                        <a class="collapse-item" href="/admin/usermanage">회원목록</a>
+                        <a class="collapse-item" href="#">회원목록</a>
                         <a class="collapse-item" href="/admin/banLeaveUser">강퇴/탈퇴회원</a>
                         </div>
                     </div>
                 </li>
-                
-            <li class="nav-item">
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -90,7 +89,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -102,7 +101,7 @@
                         </div>
                     </div>
                 </li>
-
+                
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -331,16 +330,16 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">UserTables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">NoticeTables</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Notice</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
@@ -350,7 +349,10 @@
                                             <th>성별</th>
                                             <th>생일</th>
                                             <th>가입일</th>
-                                            <th>상태</th>  
+                                            <th>최근로그인일시</th>
+                                            <th>상태</th> 
+                                            <th>경로</th> 
+                                            <th>이미지</th> 
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -362,24 +364,12 @@
                                             <th>성별</th>
                                             <th>생일</th>
                                             <th>가입일</th>
-                                            <th>상태</th>  
+                                            <th>최근로그인일시</th>
+                                            <th>상태</th> 
+                                            <th>경로</th> 
+                                            <th>이미지</th> 
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                    
-                                     <c:forEach var="userVO" items="${userVO}">
-                                    <tr>
-                                    	<td>${userVO.usrNum }</td>
-                                    	<td>${userVO.usrId }</td>
-                                    	<td>${userVO.usrName }</td>
-                                    	<td>${userVO.usrPhone }</td>
-                                    	<td>${userVO.usrGender }</td>
-                                    	<td>${userVO.usrBirth }</td>
-                                    	<td>${userVO.usrJoinDate }</td>
-                                    	<td>${userVO.usrState }</td>
-                                    </tr>
-                                    </c:forEach>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -427,7 +417,7 @@
                 	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
                 	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
                 	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
-                	휴대전화 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
+                	전화번호 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
                 	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
                 	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
                 	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
@@ -437,10 +427,10 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="/admin/banAction">
-                    <button class="btn btn-primary">강퇴</button>
-                    <input type="hidden" id="usrNum" name="usrNum">
-                    </form>
+                    <!-- <form action="/admin/banAction">
+                    <input type="hidden" name="usrId"> -->
+                    <button class="btn btn-primary" id="banUser" type='button' data-dismiss="modal">강퇴</button>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -466,7 +456,110 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
- 	
+			var table;
+			var data;
+			table = $('#userTable').DataTable({
+			 "createdRow": function( row, data, dataIndex ) {
+		        	$(row).attr("data-toggle","modal");
+		        	$(row).attr("data-target","#userInfoModal");
+		        	
+		        },
+			
+		     ajax: {
+		        'url':'/admin/usermanage/userlist.json',
+		        
+		        //'type': 'POST',
+		        'dataSrc':''
+		     },
+		    columns: [
+		        {"data": "usrNum"},
+		        {"data": "usrId"},
+		        {"data": "usrName"}, 
+		        {"data": "usrPhone"},
+		        {"data": "usrGender"},
+		        {"data": "usrBirth"},
+		        {"data": "usrJoinDate"},
+		        {"data": "usrLoginDate"},
+		        {"data": "usrState"},
+		        {"data": "usrImgPath"},
+		        {"data": "usrImg"}
+		        
+		    ],
+		    "columnDefs":[{
+		    	"targets":[9,10],
+		    	"searchable":false,
+		    	"visible":false
+		    }]
+		});
+		 
+		 $('#userTable tbody').on('click', 'tr', function (){
+			data = table.row(this).data();
+			console.log(data);
+			
+			let usrImgPath = data.usrImgPath
+			let usrImg = data.usrImg
+			let imgAdress = "\\resources\\img\\upload\\"+usrImgPath+"\\"+usrImg;
+			
+			$("#usrImg").attr("src",imgAdress);
+			$("input[name=usrId]").val(data.usrId);
+			$("#usrName").val(data.usrName);
+			$("#usrPhone").val(data.usrPhone);	
+			$("#usrGender").val(data.usrGender);
+			$("#usrBirth").val(data.usrBirth);
+			$("#usrJoinDate").val(data.usrJoinDate);
+			$("#usrLoginDate").val(data.usrLoginDate);
+			$("#usrState").val(data.usrState);
+			
+		 });
+		 
+		 $('#banUser').on('click',function(){
+			 
+			 console.log(data);
+			  $.ajax({
+				 url: "/admin/usermanage/updateBanUser/",
+				 type:"PUT",
+				 data: JSON.stringify({usrNum:data.usrNum}),
+				 dataType: "json",
+				 contentType : "application/json; charset=utf-8",
+				 success: function(data){ 
+					 console.log(data);
+					 
+					 },
+			 	 complete : function(com){
+			 		 console.log("끝")
+			 		insertUserHistory(data);
+					},
+				 });  
+			 
+			 
+			 });
+		 
+		 let insertUserHistory = function(data){
+			 console.log("히스토리");
+			 console.log(data);
+			 let usrState = "강퇴";
+			 $.ajax({
+				 type : 'post',
+				 url : "/admin/usermanage/insertUserHistory/",
+				 data : JSON.stringify({usrNum:data.usrNum,usrName:data.usrName,usrState:usrState}),
+				 dataType: "json",
+				 contentType: "application/json; charset=utf-8",
+				 success : function(result, status, xhr){
+					if(callback){
+					 callback(result);
+					}
+					
+				 },
+				 complete : function(result, status, xhr){
+					 table.ajax.reload();
+					}
+			 })
+		 }
+		 $('#userInfoModal').on('hidden.bs.modal', function () {
+			
+			 
+		 })
+		
 		
 	
 

@@ -29,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class AdminController {
 	
-	
+	//아 몰 랑
 	@Setter(onMethod_ = @Autowired)
 	private AdminService service;
 	
@@ -57,6 +57,11 @@ public class AdminController {
 	@GetMapping("/closeClub")
 	public void closeClub(Model model) {
 		model.addAttribute("clubVO",service.getCloseClub());
+	}
+	
+	@GetMapping("/noticemanage")
+	public void noticemanage() {
+		
 	}
 
 	
@@ -122,13 +127,19 @@ public class AdminController {
 	produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertUserHistory(@RequestBody UserVO userVO){
 		
-		System.out.println("히스토리인서트" + userVO);
 		
 		return service.insertUserHistory(userVO) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
 						: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	/*
+	 * @RequestMapping(value = "/noticemanage/noticelist.json", produces = {
+	 * MediaType.TEXT_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE }) public
+	 * ResponseEntity<List<UserVO>> getCloseClub() {
+	 * 
+	 * return new ResponseEntity<>(service.getCloseClub(),HttpStatus.OK); }
+	 */
 	
 
 }

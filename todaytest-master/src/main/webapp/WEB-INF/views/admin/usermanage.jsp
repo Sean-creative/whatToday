@@ -85,9 +85,23 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
+                        <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
                         </div>
                     </div>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
+                 	aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>공지사항</span></a>
+                    <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">공지사항:</h6>
+                        <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
+                        </div>
+                    </div>
+                </li>
+                
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
