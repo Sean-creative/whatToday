@@ -13,6 +13,7 @@ public interface AdminMapper {
 	public List<UserVO> getBanLeaveUser();
 	public List<ClubVO> getClubList();
 	public List<ClubVO> getClubMemberList(Long cbNum);
+	public List<ClubVO> getCloseClub();
 	
 	public UserVO getUser(String id);
 	

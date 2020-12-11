@@ -83,5 +83,10 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.shutClub(cbNum);
 	}
 
+	@Override
+	public List<ClubVO> getCloseClub() {
+		return mapper.getCloseClub();
+	}
+
 	
 }

@@ -76,7 +76,8 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item active">
+                
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -88,6 +89,7 @@
                         </div>
                     </div>
                 </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -300,7 +302,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#clubInfoModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -325,7 +327,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="clubTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
@@ -336,9 +338,7 @@
                                             <th>세부카테고리</th>
                                             <th>지역</th>
                                             <th>세부지역</th>
-                                            <th>정원</th> 
-                                            <th>현재원</th> 
-                                            <th>생성일</th> 
+                                            <th>폐쇄일</th>  
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -351,12 +351,25 @@
                                             <th>세부카테고리</th>
                                             <th>지역</th>
                                             <th>세부지역</th>
-                                            <th>정원</th> 
-                                            <th>현재원</th> 
-                                            <th>생성일</th>
+                                            <th>폐쇄일</th>    
                                         </tr>
                                     </tfoot>
-                                   
+                                    <tbody>
+                                    
+                                     <c:forEach var="clubVO" items="${clubVO}">
+                                    <tr>
+                                    	<td>${clubVO.cbNum }</td>
+                                    	<td>${clubVO.cbName }</td>
+                                    	<td>${clubVO.cbType }</td>
+                                    	<td>${clubVO.cbLeaderName }</td>
+                                    	<td>${clubVO.cbCategory }</td>
+                                    	<td>${clubVO.cbSubcat }</td>
+                                    	<td>${clubVO.cbCity }</td>
+                                    	<td>${clubVO.cbDistrict }</td>
+                                    	<td>${clubVO.cbShutDate }</td>
+                                    </tr>
+                                    </c:forEach>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -390,7 +403,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="clubInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -401,24 +414,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                
-                	<input type="hidden" id="cbNum" name="cbNum" style="border:none" readonly="readonly"><br>
-                	모임명 <input type="text" id="cbName" name="cbName" style="border:none" readonly="readonly"><br>
-                	타입 <input type="text" id="cbType" name="cbType" style="border:none" readonly="readonly"><br>
-                	모임장 <input type="text" id="cbLeaderName" name="cbLeaderName" style="border:none" readonly="readonly"><br>
-                	카테고리 <input type="text" id="cbCategory" name="cbCategory" style="border:none" readonly="readonly"><br>
-                	세부카테고리 <input type="text" id="cbSubcat" name="cbSubcat" style="border:none" readonly="readonly"><br>
-                	지역 <input type="text" id="cbCity" name="cbCity" style="border:none" readonly="readonly"><br>
-                	세부지역<input type="text" id="cbDistrict" name="cbDistrict" style="border:none" readonly="readonly"><br>
-                	정원<input type="text" id="cbMbNum" name="cbMbNum" style="border:none" readonly="readonly"><br>
-                	현재원<input type="text" id="cbCurMbNum" name="cbCurMbNum" style="border:none" readonly="readonly"><br>
-                	생성일<input type="text" id=cbMakeDate name="cbMakeDate" style="border:none" readonly="readonly"><br>
+                	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
+                	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
+                	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
+                	휴대전화 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
+                	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
+                	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
+                	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
+                	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
+                	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
+
                 </div>
-                <div class="modal-member"></div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="#">
-                    <button name ="shutClub" class="btn btn-danger" type="button" data-dismiss="modal">폐쇄</button>
+                    <form action="/admin/banAction">
+                    <button class="btn btn-primary">강퇴</button>
+                    <input type="hidden" id="usrNum" name="usrNum">
                     </form>
                 </div>
             </div>
@@ -444,161 +455,10 @@
 	<script src="/resources/admin/js/list.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-
 		
-		var table;
-		table = $('#clubTable').DataTable({
-			 "createdRow": function( row, data, dataIndex ) {
-		        	$(row).attr("data-toggle","modal");
-		        	$(row).attr("data-target","#clubInfoModal");
-		        	
-		        },
-		     bAutoWidth: true,
-		     ajax: {
-		        'url':'/admin/clubmanage/clublist.json',
-		        
-		        //'type': 'POST',
-		        'dataSrc':''
-		     },
-		     columnDefs: [
-		         { targets: [11], visible: false, searchable: false}
-		         
-		     ],
-		    columns: [
-		        {"data": "cbNum"},
-		        {"data": "cbName"},
-		        {"data": "cbType"}, 
-		        {"data": "cbLeaderName"},
-		        {"data": "cbCategory"},
-		        {"data": "cbSubcat"},
-		        {"data": "cbCity"},
-		        {"data": "cbDistrict"},
-		        {"data": "cbMbNum"},
-		        {"data": "cbCurMbNum"},
-		        {"data": "cbMakeDate"},
-		        {"data": "cbLeaderNum"}
-		    ]
-		     
-		});
+ 	
 		
-		let udata;
-		 $('#clubTable tbody').on('click', 'tr', function (){
-				udata = table.row(this).data();
-				console.log(udata);
-				
-				$("#cbNum").val(udata.cbNum);
-				$("#cbName").val(udata.cbName);	
-				$("#cbType").val(udata.cbType);
-				$("#cbLeaderName").val(udata.cbLeaderName);
-				$("#cbCategory").val(udata.cbCategory);
-				$("#cbSubcat").val(udata.cbSubcat);
-				$("#cbCity").val(udata.cbCity);
-				$("#cbDistrict").val(udata.cbDistrict);
-				$("#cbMbNum").val(udata.cbMbNum);
-				$("#cbCurMbNum").val(udata.cbCurMbNum);
-				$("#cbMakeDate").val(udata.cbMakeDate);
-				
-				getClubMember(udata);
-				
-		 });
-		 
-		 const getClubMember = function(e){
-		 
-		 $.ajax({
-	           type:"GET",
-
-	           url:"/admin/clubmanage/clubmemberlist/"+e.cbNum+".json",
-	           
-	           dataType:"JSON",
-
-	           success : function(list) {
-	        	   console.log(list);
-	        	   let str = "";
-	        	   for(let i = 0; i < list.length; i++){
-	        		   if(e.cbLeaderNum == list[i].usrNum){
-	        			   continue;
-	        		   }
-	        		   str += list[i].usrName+ "<button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
-	        	   }
-	       		
-
-	        	   $(".modal-member").empty();
-	        	   $(".modal-member").append(str);
-	        	   
-	           },
-
-	           complete : function(list) {
-
-	           },
-
-	           error : function(xhr, status, error) {
-
-	                 alert("에러발생");
-
-	           }
-		});
-		};
-		
-		
-		const shutClub = function(e){
-		
-			console.log(e);
-			$.ajax({
-				url: "/admin/clubmanage/shutClub",
-				type:"PUT",
-				data: JSON.stringify({cbNum:e}),
-				dataType: "json",
-				contentType : "application/json; charset=utf-8",
-				success: function(data){ 
-					
-				},
-				complete: function(list){
-					console.log(list);
-					table.ajax.reload();
-				}
-				});
-			};  
-			
-			
-  		const updateClubLeader = function(e){		
-				console.log(e.cbnum);
-				console.log(e.usrname);
-				console.log(e.usrnum);
-				
-				$.ajax({
-					url: "/admin/clubmanage/updateClubLeader",
-					type:"PUT",
-					data: JSON.stringify({cbNum:e.cbnum, usrName:e.usrname, usrNum:e.usrnum}),
-					dataType: "json",
-					contentType : "application/json; charset=utf-8",
-					success: function(data){ 
-						console.log(data);	
-						
-					},
-					complete : function(list){
-						 table.ajax.reload(); 
-					}
-					});
-				};  
-  		
-  		
- 		$('.modal').on('hidden.bs.modal', function (e) {
- 			console.log('modal close');
- 			
- 		});
- 		
- 		$(document).on("click", "button[name=shutClub]", function(){
- 			
- 			shutClub($("#cbNum").val());
- 			
- 		});
- 		
-		$(document).on("click", "button[name=updateLeader]", function(){
- 			
-			updateClubLeader(this.dataset);
-			
- 			
- 		});
+	
 
 	});
 	

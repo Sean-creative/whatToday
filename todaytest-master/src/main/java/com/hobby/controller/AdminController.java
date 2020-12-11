@@ -53,6 +53,11 @@ public class AdminController {
 	public void clubManage(Model model) {
 		model.addAttribute("clubVO",service.getClubList());
 	}
+	
+	@GetMapping("/closeClub")
+	public void closeClub(Model model) {
+		model.addAttribute("clubVO",service.getCloseClub());
+	}
 
 	
 	@RequestMapping(value = "/usermanage/userlist.json", produces = { MediaType.TEXT_XML_VALUE,

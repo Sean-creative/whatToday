@@ -17,10 +17,11 @@ public interface AdminService {
 	
 	public List<ClubVO> getClubList();
 	
+	public List<ClubVO> getCloseClub();
+	
 	public List<ClubVO> getClubMemberList(Long usrNum);
 	
 	public int insertUserHistory(UserVO userVO);
-	
 	
 	public int updateClubLeader(ClubVO clubVO);
 	
