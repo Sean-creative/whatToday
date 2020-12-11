@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.UserVO;
@@ -30,10 +32,20 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.getUser(id);
 	}
 
+	@Transactional
 	@Override
-	public int updateBanUser(String id) {
+	public int updateBanUser(UserVO userVO) {
 		
-		return mapper.updateBanUser(id);
+		int cnt = 0;
+		
+		cnt += mapper.updateUserAuth(userVO);
+		cnt += mapper.updateBanUser(userVO);
+		
+		if(cnt != 2) {
+			//2가 아니라면 강제롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
 	}
 
 	@Override
@@ -59,11 +71,6 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.insertUserHistory(userVO);
 	}
 
-	@Override
-	public int updateUserAuth(UserVO userVO) {
-		
-		return mapper.updateUserAuth(userVO);
-	}
 
 	@Override
 	public int updateClubLeader(ClubVO clubVO) {

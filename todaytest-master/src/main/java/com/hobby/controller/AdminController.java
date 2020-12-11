@@ -35,19 +35,12 @@ public class AdminController {
 	
 	
 	@GetMapping("/usermanage")
-	public void register() {
+	public void userManage() {
 		log.info("usermanage");
 
 	}
 
-	@GetMapping("/banAction")
-	public String banAction(String usrId) {
-		
-		service.updateBanUser(usrId);
-		service.insertUserHistory(service.getUser(usrId));
-		service.updateUserAuth(service.getUser(usrId));
-		return "redirect:/admin/usermanage";
-	}
+
 	
 	@GetMapping("/banLeaveUser")
 	public void banLeaveUser(Model model) {
@@ -57,7 +50,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/clubmanage")
-	public void clubmanage(Model model) {
+	public void clubManage(Model model) {
 		model.addAttribute("clubVO",service.getClubList());
 	}
 
@@ -76,7 +69,7 @@ public class AdminController {
 		
 		System.out.println(userVO);
 	
-	return service.updateBanUser(userVO.getUsrId()) == 1
+	return service.updateBanUser(userVO) == 2
 			? new ResponseEntity<>("success",HttpStatus.OK)
 					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
@@ -119,10 +112,12 @@ public class AdminController {
 	return new ResponseEntity<>(service.getClubMemberList(cbNum),HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/usermanage/insertUserHistory",
+	@RequestMapping(method = {RequestMethod.POST}, value="/usermanage/insertUserHistory",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertUserHistory(@RequestBody UserVO userVO){
+		
+		System.out.println("히스토리인서트" + userVO);
 		
 		return service.insertUserHistory(userVO) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)

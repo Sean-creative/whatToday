@@ -17,7 +17,7 @@ public interface AdminMapper {
 	public UserVO getUser(String id);
 	
 	public int insertUserHistory(UserVO userVO);
-	public int updateBanUser(String id);
+	public int updateBanUser(UserVO userVO);
 	
 	public int updateUserAuth(UserVO userVO);
 	public int updateClubLeader(ClubVO clubVO);

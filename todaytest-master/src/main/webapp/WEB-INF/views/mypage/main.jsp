@@ -138,37 +138,38 @@ $(document).ready(function() {
 	);
 	
 	
-	const changeClubMemState = function(e){
+	const changeClubMemStateMinus = function(e){
 		$.ajax({
-			url: "/mypage/clubmanage/changeClubMemState",
+			url: "/mypage/clubmanage/changeClubMemStateMinus",
 			type:"PUT",
-			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbMbStResult:e.cbmbstresult}),
+			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbMbStResult:e.cbmbstresult}),
 			dataType: "json",
 			contentType : "application/json; charset=utf-8",
 			success: function(data){ 
-				
+			
 			},
 			complete : function(list) {
 				insertClubJoinHistory(e);
 	           }
 			});
 		};
-		const insertClubJoinHistory = function(e){
-			$.ajax({
-				url: "/mypage/clubmanage/insertClubJoinHistory",
-				type:"POST",
-				data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbMbStResult:e.cbmbstresult}),
-				dataType: "json",
-				contentType : "application/json; charset=utf-8",
-				success: function(data){ 
-					
-				},
-				complete : function(list) {
-					getMyClubList();
-					getPrevClubList();
-		           }
-				});
-			};
+		
+	const insertClubJoinHistory = function(e){
+		$.ajax({
+			url: "/mypage/clubmanage/insertClubJoinHistory",
+			type:"POST",
+			data: JSON.stringify({usrNum:e.usrnum,cbNum:e.cbnum,cbName:e.cbname,cbType:e.cbtype,cbJoinStateResult:e.cbmbstresult}),
+			dataType: "json",
+			contentType : "application/json; charset=utf-8",
+			success: function(data){
+				
+			},
+			complete : function(list) {
+				getMyClubList();
+				getPrevClubList();
+	           }
+			});
+		};
 		
 	const getPrevClubList = function(){
 		clubService.getPrevClubList({usrNum:number},function(club){
@@ -275,7 +276,7 @@ $(document).ready(function() {
 				
 				let data = $("button[name=drop]").data();
 				console.log(data)
-				changeClubMemState(data);
+				changeClubMemStateMinus(data);
 				$(".popupLayer").hide();
 				alert("탈퇴하셨습니다.");
 				});

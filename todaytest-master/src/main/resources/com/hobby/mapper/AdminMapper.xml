@@ -14,7 +14,7 @@
 	<update id="updateBanUser">
 		update TBLUSER
 		set USRSTATE = '강퇴'
-		where USRID = #{id} 
+		where USRNUM = #{usrNum} 
 	</update>
 
 	<update id="shutClub">
