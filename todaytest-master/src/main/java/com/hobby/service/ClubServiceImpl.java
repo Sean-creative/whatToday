@@ -8,6 +8,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.UserVO;
 import com.hobby.mapper.ClubMapper;
 
 import lombok.AllArgsConstructor;
@@ -22,10 +23,13 @@ public class ClubServiceImpl implements ClubService {
 	
 	//정기모임 개설 
 	@Override
+	@Transactional
 	public void registerClub(ClubVO club) {
 		
 		log.info("registerClub....."+ club);
 		mapper.clubinsertSelectKey(club);
+		mapper.clubinsertJoin(club);
+		mapper.clubinsertJoinMember(club);
 	}
 
 	//정기모임 목록 
@@ -54,22 +58,25 @@ public class ClubServiceImpl implements ClubService {
 
 	//정기모임 게시판 - 목록list
 	@Override
-	public List<ClubVO> getList(Long cl_number) {
+	public List<ClubVO> getList(Long cbNum) {
 		
 		log.info("getList........");
-		return mapper.getList(cl_number);
+		return mapper.getList(cbNum);
 	}
 	
-	//정기모임 게시판 - 조회
+	//정기모임 게시판 - 조회 + 조회수
 	@Override
+	@Transactional
 	public ClubVO get(Long cbBno) {
 		
 		log.info("get......"+ cbBno);
+		mapper.boardViews(cbBno);
 		return mapper.read(cbBno);
 	}
 	
 	//정기모임 게시판 - 등록
 	@Override
+	@Transactional
 	public void boardRegister(ClubVO club) {
 		
 		log.info("boardregister....."+ club);
@@ -102,11 +109,19 @@ public class ClubServiceImpl implements ClubService {
 		return cnt;
 	}
 	
-	//정기모임 게시판 - 조회수
+	//정기모임 가입 
 	@Override
-	public int boardViews(Long cbBno) {
+	@Transactional
+	public void clubJoin(ClubVO club, UserVO userVO) {
 		
-		log.info("boardviews......"+ cbBno);
-		return mapper.boardViews(cbBno);
+		log.info("clubJoin....."+ club);
+		mapper.clubJoin(club,userVO);
+		mapper.clubJoinMember(club, userVO);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		return mapper.getTotalCount(cri);
 	}
 }
