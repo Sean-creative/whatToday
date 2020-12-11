@@ -89,13 +89,30 @@
 </select>
 
 <!-- 정기모임 게시판 - 목록 -->
-<select id="getList" resultType="com.hobby.domain.ClubVO">
+<!-- <select id="getList" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select * from clubboard
 	where cbNum = #{cbNum} order by cbBno desc
 	]]>
-</select>
+</select> -->
 
+<select id="getList" resultType="com.hobby.domain.ClubVO">
+  	select 
+	  	cb.cbbno,
+	    cb.cbnum,
+	    cb.cbbdwriter,
+	    cb.cbbdtitle,
+	    cb.cbbddate,
+	    NVL(cb.cbbdview, 0) cbbdview,
+	    NVL(cbr.reply_count, 0) replyCount
+	from CLUBBOARD cb
+    	left outer join
+      		(select cbbno, count(cbbno) reply_count
+       		from CLUBBOARD_REPLY
+       		group by cbbno) cbr
+    	on cb.cbbno = cbr.cbbno
+    where cbNum = #{cbNum} order by cbBno desc
+</select>
 <!-- 정기모임 게시판 - 목록(페이징) -->
 <!-- <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[

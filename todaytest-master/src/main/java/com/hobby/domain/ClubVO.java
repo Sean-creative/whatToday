@@ -72,6 +72,8 @@ public class ClubVO {
 
 	private Long cbBdView;
 	
+	private int replyCount;
+	
 	//CLUBBOARDCONTENT/////////////////////////////////////////////////
 	
 

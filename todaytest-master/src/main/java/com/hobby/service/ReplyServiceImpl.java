@@ -25,13 +25,6 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public ReplyVO get(Long rno) {
-		
-		log.info("get......."+ rno);
-		return mapper.read(rno);
-	}
-
-	@Override
 	public int remove(Long rno) {
 		
 		log.info("remove...."+ rno);
@@ -52,4 +45,9 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.getList(cbBno);
 	}
 
+	@Override
+	public int getCount(int cbBno) {
+		
+		return 0;
+	}
 }
