@@ -35,6 +35,15 @@
 .Icon {
 	margin-right: 2px;
 }
+
+/* 파일 업로드 블로그 style */
+.inputArea {margin:10px 0px;}
+select {with:100px;}
+label {display:inline-block; width:70px; padding:5px; }
+label[for='gdsDes'] {display : block;}
+input {width : 150px;}
+textarea#gdsDes {width:400px; height:180px;}
+.select_img img {margin:20px 0px;}
 </style>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
@@ -47,7 +56,7 @@
 	</div>
 
 
-	<form action="/thunder/add" method="post" onsubmit="return inputCheck()">
+	<form action="/thunder/add" method="post" onsubmit="return inputCheck()" enctype="multipart/form-data">
 		<div>
 			<div>
 				모임명<br>
@@ -158,12 +167,39 @@
 		<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
 		<input type='hidden' name='cbCity'> <input type='hidden' name='cbDistrict'> <input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation'>
 
+
+<div class="inputArea">
+		<label for="gdsImg">이미지</label>
+		 <input type="file" id="gdsImg" name="file" />
+		<div class="select_img">
+			<img src="" />
+		</div>
+
+		<script>
+		/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+			$("#gdsImg").change(
+					function() {
+						if (this.files && this.files[0]) {
+							var reader = new FileReader;
+							reader.onload = function(data) {
+								$(".select_img img").attr("src",
+										data.target.result).width(500);
+							}
+							reader.readAsDataURL(this.files[0]);
+						}
+					});
+		</script>
+		<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
+		<%=request.getRealPath("/") %>
+	</div>
+	
+	
 	</form>
 
 
 
 
-
+	<!-- 카카오 맵 영역 -->
 	<div class="map_wrap">
 		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
@@ -186,6 +222,10 @@
 			<div id="pagination"></div>
 		</div>
 	</div>
+	<!-- 카카오 맵 END -->
+
+
+	
 
 
 </section>
@@ -206,42 +246,37 @@
 	let city = 'Seoul';
 	// var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
 	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
-	$
-			.ajax({
-				url : apiURI,
-				dataType : "json",
-				type : "GET",
-				async : "false",
-				success : function(resp) {					
-					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-					$('.City').append(resp.timezone.split('/')[1]);									
+	$.ajax({
+		url : apiURI,
+		dataType : "json",
+		type : "GET",
+		async : "false",
+		success : function(resp) {
+			console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+			$('.City').append(resp.timezone.split('/')[1]);
 
-					for ( let idx in resp.daily) {
-						let tmp = '<div class="weatherContent">';
-						let days = new Date();
-						days.setTime(resp.daily[idx].dt * 1000);
-						const today = moment(days);
-						console.log("날짜 : " + today.format('YYYY-MM-DD'));
-						tmp += '<div class="day">' + today.format('MM월 DD일')
-								+ '<div>';
+			for ( let idx in resp.daily) {
+				let tmp = '<div class="weatherContent">';
+				let days = new Date();
+				days.setTime(resp.daily[idx].dt * 1000);
+				const today = moment(days);
+				console.log("날짜 : " + today.format('YYYY-MM-DD'));
+				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
 
-						console.log("최고 기온 : " + resp.daily[idx].temp.max);
-						tmp += '<div class="Temp">'
-								+ Math.floor(resp.daily[idx].temp.min)
-								+ '&ordm/'
-								+ Math.floor(resp.daily[idx].temp.max)
-								+ '&ordm<div>';
+				console.log("최고 기온 : " + resp.daily[idx].temp.max);
+				tmp += '<div class="Temp">'
+						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
+						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
 
-						imgURL = "http://openweathermap.org/img/w/"
-								+ resp.daily[idx].weather[0].icon + ".png";
-						tmp += '<div class="Icon">' + "<img src="+imgURL+">"
-								+ '<div>';
-						tmp += "</div>"
+				imgURL = "http://openweathermap.org/img/w/"
+						+ resp.daily[idx].weather[0].icon + ".png";
+				tmp += '<div class="Icon">' + "<img src="+imgURL+">" + '<div>';
+				tmp += "</div>"
 
-						$('.weather').append(tmp);
-					}
-				}
-			})
+				$('.weather').append(tmp);
+			}
+		}
+	})
 </script>
 
 

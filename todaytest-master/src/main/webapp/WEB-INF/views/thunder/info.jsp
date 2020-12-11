@@ -20,6 +20,10 @@ section a:hover {
 	color: red;
 	text-decoration: none;
 }
+
+
+.oriImg { width:200; height:auto;}
+.thumbImg {width:200px;  height:auto;}
 </style>
 
 
@@ -32,12 +36,10 @@ section a:hover {
 
 	<div style="display: flex; margin-bottom: 30px">
 		<div style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-			<a class="info" href="#">정보</a>
-			<br>
+			<a class="info" href="#">정보</a> <br>
 		</div>
 		<div style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-			<a class="info" href="#">채팅</a>
-			<br>
+			<a class="info" href="#">채팅</a> <br>
 		</div>
 	</div>
 
@@ -50,7 +52,15 @@ section a:hover {
 	<div style="margin-left: 30px;">
 		<!-- 사진 왼쪽에 붙어있게 -->
 		<div style="float: left; padding-bottom: 200px; margin: 0px;">
-			<img src="/resources/img/thunderImg.png" width="170" height="170" alt="번개대표사진">
+			<!-- <img src="/resources/img/thunderImg.png" width="170" height="170" alt="번개대표사진"> -->
+			
+			
+			<div class="inputArea">
+				<label for="gdsImg">썸네일</label>				
+				<img src="${clubVO.cbThumbImg}" class="thumbImg" />
+			</div>
+			
+			
 		</div>
 
 
@@ -122,36 +132,26 @@ section a:hover {
 	</div>
 
 
-<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
-<c:if test="${usrNum != clubVO.cbLeaderNum}">
-	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
-	data-oper='join' id="join">		
-		<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-		<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
-		<c:choose>		
-		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-		<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
-		<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
-				
-		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>					
-		</c:choose>
-	</button>
-</c:if>	
+	<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
+	<c:if test="${usrNum != clubVO.cbLeaderNum}">
+		<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" data-oper='join' id="join">
+			<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+			<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
+			<c:choose>
+				<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+				<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
+				<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
+
+				<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
+			</c:choose>
+		</button>
+	</c:if>
 
 
 
 
 	<form id='operForm' action="/thunder/modify" method="get">
-		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'>
-		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-		<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
-		<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
-		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
-		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-
-		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
+		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'> <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'> <input type='hidden' name='category' value='<c:out value="${cri.category}"/>'> <input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'> <input type='hidden' name='city' value='<c:out value="${cri.city}"/>'> <input type='hidden' name='district' value='<c:out value="${cri.district}"/>'> <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> <input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 
 
@@ -263,15 +263,14 @@ section a:hover {
 		//모임에 참석 중이 아닐 때
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none';
-		
-	} 
-	else if ($("#join").text().trim() == '모임 가입불가' || $("#join").text().trim() =='모임 정원 초과') {
+
+	} else if ($("#join").text().trim() == '모임 가입불가'
+			|| $("#join").text().trim() == '모임 정원 초과') {
 		//모임에 가입이 불가능 할 때
 		document.getElementById('join').disabled = 'disabled';
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none'
 	}
-	
 
 	function viewPlus() {
 
