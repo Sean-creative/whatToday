@@ -29,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class AdminController {
 	
-	
+	//아 몰 랑
 	@Setter(onMethod_ = @Autowired)
 	private AdminService service;
 	
