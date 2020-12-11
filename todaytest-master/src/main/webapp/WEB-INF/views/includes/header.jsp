@@ -18,7 +18,7 @@
         <img src="/resources/img/logo.png" alt="logo">
       </a>
       	<form action="/index/searchlist" method="get" onsubmit="return inputCheck()">
-        <input type="text" placeholder="관심취미를 입력해주세요." name="subclass">
+        <input type="text" placeholder="관심분야를 입력해주세요." name="subclass">
         </form>
         
         <sec:authorize access="isAnonymous()">
@@ -64,7 +64,7 @@
 </div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<<<<<<< HEAD
+
 <script type="text/javascript">
 
 		var id = document.getElementById("user");
@@ -86,5 +86,4 @@
 			}
 	
 </script>
-=======
->>>>>>> master
+
