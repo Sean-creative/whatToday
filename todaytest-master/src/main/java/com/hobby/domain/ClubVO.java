@@ -62,12 +62,6 @@ public class ClubVO {
 	private String cbBdDate;
 	private Long cbBdView;	
 	
-<<<<<<< HEAD
-=======
-	private int replyCount;
-	
-	//CLUBBOARDCONTENT/////////////////////////////////////////////////
->>>>>>> dahye
 	
 	//CLUBBOARDCONTENT/////////////////////////////////////////////////	
 	private String cbBdContent;
