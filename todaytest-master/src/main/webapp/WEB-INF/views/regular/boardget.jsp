@@ -95,22 +95,19 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		var operForm = $("#operForm");
 
-				var operForm = $("#operForm");
+		$("button[data-oper='update']").on("click", function(e) {
+			operForm.attr("action", "/regular/boardupdate").submit();
+		});
 
-				$("button[data-oper='update']").on("click", function(e) {
-
-					operForm.attr("action", "/regular/boardupdate").submit();
-
-				});
-
-				$("button[data-oper='list']").on("click",function(e) {
-							console.log($("#cbNum").val())
-							operForm.find("#cbBno").remove();
-							operForm.attr("action", '/regular/board?cbNum='+ $("#cbNum").val());
-							operForm.submit();
-						});
-			});
+		$("button[data-oper='list']").on("click",function(e) {
+			console.log($("#cbNum").val())
+			operForm.find("#cbBno").remove();
+			operForm.attr("action", '/regular/board?cbNum='+ $("#cbNum").val());
+			operForm.submit();
+		});
+	});
 </script>
 <script>
 	//댓글
