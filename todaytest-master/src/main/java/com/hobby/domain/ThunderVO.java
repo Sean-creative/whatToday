@@ -68,6 +68,9 @@ public class ThunderVO {
 
 	// 첨부파일
 	private String cbFile;
+	
+	//썸네일
+	private String cbThumbImg;
 
 	// 모임상세테이블
 	private ThunderDetailVO thunderDetailVO;

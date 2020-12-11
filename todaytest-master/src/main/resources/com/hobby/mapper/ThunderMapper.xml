@@ -40,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbFinalState" property="cbFinalState" />
 		<result column="cbDetailContent" property="cbDetailContent" />
 		<result column="cbFile" property="cbFile" />
+		<result column="cbThumbImg" property="cbThumbImg" />
 
 
 
@@ -75,12 +76,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(cbNum, cbIntro, cbName, cbCategory,
 		cbMbnum, cbSubcat, cbHashtag ,cbCity,
 		cbDistrict, cbType, cbLeaderNum
-		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState)
+		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState, cbFile, cbThumbImg)
 		values(#{cbNum}, #{cbIntro}, #{cbName},
 		#{cbCategory}, #{cbMbnum},
 		#{cbSubcat}, #{cbHashtag}, #{cbCity},
 		#{cbDistrict}, #{cbType}, #{cbLeaderNum},
-		#{cbLeaderName}, #{cbCurMbnum}, sysdate, #{thunderDetailVO.cbDate}, #{cbFinalState});
+		#{cbLeaderName}, #{cbCurMbnum}, sysdate, #{thunderDetailVO.cbDate}, #{cbFinalState}, #{cbFile}, #{cbThumbImg});
 
 
 		insert
