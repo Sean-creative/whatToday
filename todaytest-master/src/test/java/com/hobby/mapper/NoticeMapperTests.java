@@ -16,34 +16,34 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class NoticeMapperTests {
-	@Setter(onMethod_=@Autowired)
-	private NoticeMapper mapper;
-	
-	//@Test
-	public void testRead() {
-		NoticeVO notice = mapper.getNotice(10L);
-		
-		log.info(notice);
-	}
-	
-	
-	@Test 
-	public void testDelete() {
-		log.info("deleteNotice count" + mapper.deleteNotice(69L));
-		//log.info("deleteNotiCon count" + mapper.deleteNotiCon(13L));
-	}
-	
-	@Test
-	public void testUpdate() {
-		NoticeVO notice = new NoticeVO();
-		notice.setNtNum(70L);
-		notice.setNtTitle("수정");
-		notice.setNtContent("수정내용 ");
-		notice.setNtDate("2020-10-09");
-		
-		int count = mapper.updateNotice(notice);
-		int count2 = mapper.updateNotiCon(notice);
-	}
+//	@Setter(onMethod_=@Autowired)
+//	private NoticeMapper mapper;
+//	
+//	//@Test
+//	public void testRead() {
+//		NoticeVO notice = mapper.getNotice(10L);
+//		
+//		log.info(notice);
+//	}
+//	
+//	
+//	@Test 
+//	public void testDelete() {
+//		log.info("deleteNotice count" + mapper.deleteNotice(69L));
+//		//log.info("deleteNotiCon count" + mapper.deleteNotiCon(13L));
+//	}
+//	
+//	@Test
+//	public void testUpdate() {
+//		NoticeVO notice = new NoticeVO();
+//		notice.setNtNum(70L);
+//		notice.setNtTitle("수정");
+//		notice.setNtContent("수정내용 ");
+//		notice.setNtDate("2020-10-09");
+//		
+//		int count = mapper.updateNotice(notice);
+//		int count2 = mapper.updateNotiCon(notice);
+//	}
 	
 //	@Setter(onMethod_ = {@Autowired}) 
 //	private WebApplicationContext ctx;
