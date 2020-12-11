@@ -5,7 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hobby.domain.Criteria;
+import com.hobby.domain.PageDTO;
+import com.hobby.service.ClubService;
 import com.hobby.service.MainService;
+import com.hobby.service.ThunderService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -17,6 +21,8 @@ import lombok.extern.log4j.Log4j;
 public class MainController {
 	
 	private MainService service;
+	private ThunderService thunderService;
+	private ClubService clubService;
 	
 	@GetMapping("/main")
 	//모델을통해서 뷰에 데이터 전달하기 
@@ -27,4 +33,26 @@ public class MainController {
 		//service.getListThunder(번개모임리스트)를 main2라는 이름을 통해서 뷰에 보내준다.
 		model.addAttribute("main2", service.getListThunder());
 	}
+	
+	//번개 검색결과 보여주기 
+	@GetMapping("/searchlist")
+	public void list( Criteria cri, Model model) {
+		
+		//번개 
+		log.info("/list - GET");
+		log.info("list - cri : " + cri);
+		
+		model.addAttribute("list", thunderService.getList(cri));
+		log.info("list : " + thunderService.getList(cri));
+		
+		//정기 		
+		log.info("clublist");
+	    log.info("list - cri : " + cri);
+	     // cri에 들어있는 조건 대로, club 정보를 가져온다.
+	    model.addAttribute("clublist", clubService.getList(cri));   
+	    log.info("list : " + clubService.getList(cri));
+	}
+	
+	
+	
 }

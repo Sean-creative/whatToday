@@ -14,7 +14,7 @@
 	<update id="updateBanUser">
 		update TBLUSER
 		set USRSTATE = '강퇴'
-		where USRID = #{id} 
+		where USRNUM = #{usrNum} 
 	</update>
 
 	<update id="shutClub">
@@ -36,7 +36,7 @@
 	</select>
 	
 	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB WHERE CBFINALSTATE != '폐쇄'
+		select * from CLUB WHERE CBFINALSTATE = '진행중'
 	</select>
 	
 	<select id="getClubMemberList" resultType="com.hobby.domain.ClubVO">
@@ -53,5 +53,11 @@
 		set  auth = 'ROLE_MEMBEROUT'
 		where  USRNUM = #{usrNum}
 	</update>
+	
+	<select id="getCloseClub" resultType="com.hobby.domain.ClubVO">
+	
+		select * from CLUB WHERE CBFINALSTATE = '폐쇄' OR CBFINALSTATE = '강제폐쇄' order by cbshutdate desc
+
+	</select>
 	
 </mapper>
