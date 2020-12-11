@@ -5,15 +5,16 @@
 
 <link rel="stylesheet" href="<c:url value='../resources/css/boardStyle2.css?after'/>">
 
+<div class="read">
 <h1>notice read</h1>
+</div>
 
 
-<table width="100%">
+<table class="tableread">
 	<thead>
 		<tr>
 			<th>제목</th>
 			<th>내용</th>
-			
 		</tr>
 	</thead>
 	<c:forEach items="${noticePage}" var="noticePage">
