@@ -26,4 +26,8 @@
 		where cbBno = #{cbBno} order by rno desc
 	</select>
 	
+	<select id="getCount" resultType="com.hobby.domain.ReplyVO">
+		select count (*) from CLUBBOARD_REPLY where cbBno = #{cbBno}
+	</select>
+	
 </mapper>

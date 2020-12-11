@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
+import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeVO;
 import com.hobby.mapper.FaqMapper;
 
@@ -42,16 +45,23 @@ public class FaqServiceImpl implements FaqService{
 	}
 
 	
+//	@Override
+//	public List<NoticeVO> noticeList() {
+//		log.info("noticelist...........");
+//		return mapper.noticeList();
+//	}
+	
 	@Override
-	public List<NoticeVO> noticeList() {
-		log.info("noticelist...........");
-		return mapper.noticeList();
+	public List<NoticeVO> noticeList(NoticeCri cri) {
+		log.info("noticelist with paging ...........");
+		return mapper.noticeListWithPaging(cri);
 	}
 
-
+	@Transactional(isolation =Isolation.READ_COMMITTED)
 	@Override
 	public List<NoticeVO> noticeContent(Long ntNum) {
 		log.info("noticeContent...........");
+		mapper.noticeReadCnt(ntNum);
 		return mapper.noticeContent(ntNum);
 	}
 
