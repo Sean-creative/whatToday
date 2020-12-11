@@ -84,14 +84,14 @@
 	</div>
 
 	<form id='actionForm' action="/regular/list" method='get'>
-		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'/>
+		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'/>
 
-		<input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'>
-		<input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'>
-		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'>
-		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+		<input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'/>
+		<input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'/>
+		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'/>
+		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'/>
+		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 	</form>
 
 </section>

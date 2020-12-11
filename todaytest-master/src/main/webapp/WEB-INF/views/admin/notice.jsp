@@ -20,19 +20,18 @@
 			<th>번호</th>
 			<th>제목</th>
 			<th>작성일</th>
-			<th>조회수</th>
+			
 		</tr>
 	</thead>
 	<c:forEach items="${noticeList}" var="notice">
 		<tr>
 			<td><c:out value="${notice.ntNum}" /></td>
 			<td>
-				<a href='/cs/noticepage?ntNum=<c:out value="${notice.ntNum }"/>'>
+				<a href='/admin/noticepage?ntNum=<c:out value="${notice.ntNum }"/>'>
 				<c:out value="${notice.ntTitle}" />
 				</a>
 			</td>
-			<td><c:out value="${notice.ntDate}" /></td>
-			<td><c:out value="${notice.readCnt }"/></td>
+			<td><c:out value="${notice.ntDate}" /></td>	
 		</tr>
 	</c:forEach>
 </table>

@@ -18,7 +18,8 @@
  
 </head>
 <body>
-    <button class = "btn btn-primary" id = "name">입장</button>
+
+    <button class = "btn btn-primary" id = "enter">입장</button>
     <div id = "chatroom" style = "width:400px; height: 600px; border:1px solid; background-color : gray"></div>
     <input type = "text" id = "message" style = "height : 30px; width : 340px" placeholder="내용을 입력하세요" autofocus>
     <button class = "btn btn-primary" id = "send">전송</button>
@@ -29,7 +30,8 @@
     <script>
         var webSocket;
         var nickname;
-        document.getElementById("name").addEventListener("click", function(){
+        document.getElementById("enter").addEventListener("click", function(){
+        	document.getElementById("enter").style.display="none";
             connect();
         })
         document.getElementById("send").addEventListener("click",function(){
