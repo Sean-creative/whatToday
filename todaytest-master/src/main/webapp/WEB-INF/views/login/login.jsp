@@ -47,7 +47,7 @@ http://localhost:8080/login/kakaoLogin&response_type=code">카카오 로그인</
 <script type="text/javascript">
 	// 모달창으로 변경 예정
 	if("${registerSuccessMsg }" != ""){
-		alert("회원가입 성공! ${registerSuccessMsg}님 반갑습니다.");
+		alert("메일로 본인 확인!!!!");
 	}
 	
 </script>

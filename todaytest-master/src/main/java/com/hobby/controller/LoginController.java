@@ -12,7 +12,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,6 @@ import com.hobby.sns.KakaoLoginApi;
 import com.hobby.sns.NaverLogin;
 
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -61,6 +59,7 @@ public class LoginController {
 	@GetMapping("/register")
 	public void register() {
 		log.info("##/register");
+
 	}
 
 	// 3-0-1. 아이디 중복  검사
@@ -80,8 +79,31 @@ public class LoginController {
 		// 입력한 핸드폰 번호와 같은게 있으면 해당 핸드폰 번호를 반환한다.
 		return phone == null ? null : phone;
 	}
-	
-	// 3. 회원가입 처리
+
+
+	//	// 3. 회원가입 처리 - 메일 본인확인 버전
+	//	@PostMapping("/registerAction")
+	//	public String registerAction(UserVO user, RedirectAttributes rtts) {
+	//		log.info("##/registerAction: " + user);
+	//		// DB에 회원정보가 정상적으로 입력되었는가
+	//		// 회원가입 정보 - 5개 테이블에 입력 됨   
+	//		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
+	//		if(service.register(user)) {
+	//			// 본인확인 메일 전송
+	//			if(service.sendRegisterMail(user.getUsrId(), user.getUsrState())){
+	//				// alert로 회원가입 성공 여부 알림
+	//				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
+	//				return "redirect:/login/login";
+	//				// 회원가입이 안되면 다시 회원가입 페이지로 이동
+	//			}
+	//			return "redirect:/login/login";
+	//		}else {
+	//			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+	//			return "redirect:/login/register";
+	//		}
+	//	}
+
+	// 3. 회원가입 처리 - test용 - 메일 확인 없이 그냥 회원가입되도록
 	@PostMapping("/registerAction")
 	public String registerAction(UserVO user, RedirectAttributes rtts) {
 		log.info("##/registerAction: " + user);
@@ -89,14 +111,22 @@ public class LoginController {
 		// 회원가입 정보 - 5개 테이블에 입력 됨   
 		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
 		if(service.register(user)) {
-			// alert로 회원가입 성공 여부 알림
-			rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
 			return "redirect:/login/login";
-			// 회원가입이 안되면 다시 회원가입 페이지로 이동
 		}else {
 			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
 			return "redirect:/login/register";
 		}
+	}
+
+	@GetMapping("/register/confirm")
+	public String registerConfirm(@RequestParam("usrId") String usrId, @RequestParam("authKey") String authKey) {
+		log.info("usrId: " + usrId);
+		log.info("authKey: " + authKey );
+		if(service.registerConfirm(usrId, authKey)) {
+			return "redirect:/login/login";
+
+		}
+		return "redirect:/login/register";
 	}
 
 	//	@GetMapping("/loginSuccess")
@@ -325,12 +355,12 @@ public class LoginController {
 	public String callback(Model model, @RequestParam String code)
 			throws IOException, InterruptedException, ExecutionException {
 		log.info("##/login/googleCallback");
-		
+
 		OAuth2AccessToken oauthToken = GoogleLogin.getAccessToken(code);
-		
+
 		//로그인 사용자 정보를 읽어온다.
 		String apiResult = GoogleLogin.getUserProfile(oauthToken);
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode userInfo = mapper.readTree(apiResult);
 
@@ -338,10 +368,10 @@ public class LoginController {
 
 		String googleEmail = userInfo.path("email").asText();
 		System.out.println(googleEmail);
-		
+
 		// 이름 정보를 가져오고 싶으면 GoogleLogin에서 scope 변경해서 가져와야함.
-//		String usrName = userInfo.path("name").asText();
-//		System.out.println(usrName);
+		//		String usrName = userInfo.path("name").asText();
+		//		System.out.println(usrName);
 
 		model.addAttribute("user", googleEmail);
 		return "/login/googleSuccess";

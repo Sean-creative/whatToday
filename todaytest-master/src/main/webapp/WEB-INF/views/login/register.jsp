@@ -19,6 +19,7 @@
 	<form name ="register" method="post" action="/login/registerAction" onsubmit="return inputCheck()"
 		style="max-width: 500px; margin: auto" >
         <h2>회원가입</h2>
+		<input type="hidden" name="usrType" value="일반회원가입" >
         
 		<div class="input-container">
 			<label>이메일(아이디) </label>
@@ -66,8 +67,6 @@
 			<label>생년월일 </label> <input class="input-field" id ="datefield"  type="date" min="1900-01-01" max="2020-01-01"
 				placeholder="Birthday" name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
 		</div>
-		
-		<input name="usrType" value="일반회원가입">
 		
 		<p>관심정보</p>
 		<p>관심정보는 선택사항이며 선택하지 않아도 회원가입이 가능합니다.</p>
@@ -127,7 +126,6 @@
 				value="Y"> <label for="agree">동의</label> <input type="radio"
 				name="usrEmailTerm" value="N"> <label for="disagree">비동의</label>
 		</div>
-
 
 		<button type="submit" class="btn">Register</button>
 
