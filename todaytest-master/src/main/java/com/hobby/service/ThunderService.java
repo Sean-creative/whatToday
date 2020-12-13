@@ -12,9 +12,7 @@ import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
 
 public interface ThunderService {
-	
-	
-	public List<ThunderVO> getList();
+		
 	
 	public ThunderVO get(long cbNum);
 	

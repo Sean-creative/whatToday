@@ -68,6 +68,7 @@
                   var sc = '${pageMaker.cri.subclass}';
                   var ct = '${pageMaker.cri.city}';
                   var dt = '${pageMaker.cri.district}';
+                  var searchBy = '${pageMaker.cri.searchBy}';                  
 			</script>
 
 
@@ -75,10 +76,7 @@
 				<select name='category' id='category' style="width: 220px; height: 40px; font-size: 20px;"></select>
 
 				<!-- DB의 컬럼명이 subclass에서 subcat으로 바뀌면서, 코드내에 Criteria를 사용하는 곳은 다 바꿔야함 -->
-				<select name='subclass' id='subcat' style="width: 220px; height: 40px; font-size: 20px;"></select>
-				<select name='city' id='city' style="width: 220px; height: 40px; font-size: 20px;" id="city"></select>
-
-				<select name='district' id='district' style="width: 220px; height: 40px; font-size: 20px;"></select>
+				<select name='subclass' id='subcat' style="width: 220px; height: 40px; font-size: 20px;"></select> <select name='city' id='city' style="width: 220px; height: 40px; font-size: 20px;" id="city"></select> <select name='district' id='district' style="width: 220px; height: 40px; font-size: 20px;"></select>
 
 			</div>
 
@@ -86,9 +84,15 @@
 
 			<div>
 				<div>
-					<input type="text" name='keyword' style="width: 600px; height: 30px; font-size: 20px;" value='<c:out value="${pageMaker.cri.keyword}"/>' />
 
-					<button style="width: 100px; height: 35px;">검색</button>
+					<select name='searchBy' id='searchBy' style="width: 150px; height: 35px; font-size: 20px;">
+						<option value='모임명' >모임명</option>
+						<option value='글작성자'>글작성자</option>
+						<option value='해시태그'>해시태그</option>
+
+					</select> <input type="text" name='keyword' style="width: 600px; height: 35px; font-size: 20px;" value='<c:out value="${pageMaker.cri.keyword}"/>' />
+
+					<button style="width: 100px; height: 35px; background-color: orange;">검색</button>
 				</div>
 			</div>
 		</div>
@@ -102,15 +106,13 @@
 
 
 				<c:forEach items="${list}" var="thunderItem" varStatus="status">
-					<div style="border: 1px solid black; width: 170px; height: 160px; cursor: pointer;" class='move' onclick='linkToInfo(${thunderItem.cbNum})'
-					id ='itemDiv${status.count}'>								
-						<br>		
-						[모임명] :
+					<div style="border: 1px solid black; width: 170px; height: 160px; cursor: pointer;" class='move' onclick='linkToInfo(${thunderItem.cbNum})' id='itemDiv${status.count}'>
+						<br> [모임명] :
 						<c:out value="${thunderItem.cbName}" />
-						<br> [일 정] :						
-						<fmt:parseDate var="dateString" value="${thunderItem.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />						
-						<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분"/>
-						
+						<br> [일 정] :
+						<fmt:parseDate var="dateString" value="${thunderItem.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+						<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" />
+
 						<br> [장 소] :
 						<c:out value="${thunderItem.cbDistrict}" />
 						<br> [인 원] :
@@ -123,6 +125,7 @@
 		</div>
 	</form>
 
+	<!-- 페이지 넘버링 -->
 	<div class='pull-right'>
 		<ul class="pagination">
 			<c:if test="${pageMaker.prev}">
@@ -141,14 +144,7 @@
 	</div>
 
 	<form id='actionForm' action="/thunder/list" method='get'>
-		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
-		<input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'>
-		<input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'>
-		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'>
-		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'> <input type='hidden' name='amount' value='${pageMaker.cri.amount}'> <input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'> <input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'> <input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'> <input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'> <input type='hidden' name='searchBy' value='<c:out value="${pageMaker.cri.searchBy}"/>'> <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 	</form>
 
 </section>
@@ -159,6 +155,8 @@
 
 <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
 <script type="text/javascript" src="/resources/js/thunderList.js"></script>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
@@ -180,11 +178,11 @@
 						let days = new Date();
 						days.setTime(resp.daily[idx].dt * 1000);
 						const today = moment(days);
-						console.log("날짜 : " + today.format('YYYY-MM-DD'));
+						
 						tmp += '<div class="day">' + today.format('MM월 DD일')
 								+ '<div>';
 
-						console.log("최고 기온 : " + resp.daily[idx].temp.max);
+						
 						tmp += '<div class="Temp">'
 								+ Math.floor(resp.daily[idx].temp.min)
 								+ '&ordm/'
@@ -201,6 +199,11 @@
 					}
 				}
 			})
+			
+			
+			
+			
+			
 </script>
 
 <%@include file="../includes/footer.jsp"%>

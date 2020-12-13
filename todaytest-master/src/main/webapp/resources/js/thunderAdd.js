@@ -257,7 +257,8 @@
 		return false;
 	}
     	
- 
-    	alert('개설되었습니다.');    	    
+		
+    	
+    	return true;
     }
     

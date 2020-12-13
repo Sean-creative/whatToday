@@ -1,7 +1,5 @@
-
 //문서가 모두 로드 되는 시점에 하는 것
 $(function() {
-
 
 	actionForm = $("#actionForm");
 
@@ -43,7 +41,7 @@ $(function() {
 	$("#subcat option[value='" + sc + "']").attr('selected', 'selected');
 
 	// 초기 지역 설정!!
-	const cityArr = [ "지역 선택", "서울특별시", "경기도" ];
+	const cityArr = [ "지역 선택", "서울", "경기도" ];
 
 	for (let j = 0; j < cityArr.length; j++) {
 
@@ -74,6 +72,13 @@ $(function() {
 	$('#city').change(function() {
 		region(this, $("#district"));
 	});
+
+	if (searchBy == null) {
+		$("#searchBy option[value='모임명']").attr('selected', 'selected');
+	} else {
+		$("#searchBy option[value='" + searchBy + "']").attr('selected',
+				'selected');
+	}
 
 });
 // 문서 로드 END
@@ -139,7 +144,7 @@ const region = function(o, d) {
 	d.empty();
 
 	// change(function(){$( ':selected', o).val() => this }
-	if ($(':selected', o).val() == "서울특별시") {
+	if ($(':selected', o).val() == "서울") {
 
 		district = seoul;
 	} else if ($(':selected', o).val() == "경기도") {
@@ -169,10 +174,9 @@ const linkToInfo = function(cbNum) {
 	actionForm.submit();
 }
 
-//테스트!!
+// 테스트!!
 
-
-const inputCheck = function(){
+const inputCheck = function() {
 	// 공백을 제거해한 뒤에 개수를 세던지 한다.
 	let keyword = $.trim($("[name=keyword]").val());
 	$('[name=keyword]').val(keyword);

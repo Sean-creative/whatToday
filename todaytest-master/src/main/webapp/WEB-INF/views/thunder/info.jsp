@@ -21,9 +21,50 @@ section a:hover {
 	text-decoration: none;
 }
 
+.oriImg {
+	width: 200;
+	height: auto;
+}
 
-.oriImg { width:200; height:auto;}
-.thumbImg {width:200px;  height:auto;}
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+/* .del-btn {
+          font-size: 12px;
+          font-weight: bold;
+          cursor: pointer;
+          margin-left: 8px;
+      } */
 </style>
 
 
@@ -36,10 +77,12 @@ section a:hover {
 
 	<div style="display: flex; margin-bottom: 30px">
 		<div style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-			<a class="info" href="#">정보</a> <br>
+			<a class="info" href="#">정보</a>
+			<br>
 		</div>
 		<div style="text-align: center; margin: 0px; width: 50%; padding: 15px; background-color: orange; color: white; font-size: 40px; border: 1px solid;">
-			<a class="info" href="#">채팅</a> <br>
+			<a class="info" href="#">채팅</a>
+			<br>
 		</div>
 	</div>
 
@@ -51,16 +94,15 @@ section a:hover {
 
 	<div style="margin-left: 30px;">
 		<!-- 사진 왼쪽에 붙어있게 -->
-		<div style="float: left; padding-bottom: 200px; margin: 0px;">
+		<div style="float: left; padding-bottom: 20px; margin: 0px;">
 			<!-- <img src="/resources/img/thunderImg.png" width="170" height="170" alt="번개대표사진"> -->
-			
-			
+
+
 			<div class="inputArea">
-				<label for="gdsImg">썸네일</label>				
-				<img src="${clubVO.cbThumbImg}" class="thumbImg" />
+				<label for="gdsImg">썸네일</label> <img src="${clubVO.cbThumbImg}" class="thumbImg" />
 			</div>
-			
-			
+
+
 		</div>
 
 
@@ -70,10 +112,7 @@ section a:hover {
 				<c:out value="${clubVO.cbIntro}" />
 			</div>
 
-			<div style="font-size: 20px; margin-bottom: 20px;">
-				<b> <c:out value="${clubVO.cbHashtag}" />
-				</b>
-			</div>
+
 
 			<!-- 지정된 포맷으로 보내기 위해, JS단에서 값을 넣어준다. -->
 			<div style="font-size: 20px; margin-bottom: 20px;" id="date">
@@ -103,22 +142,34 @@ section a:hover {
 
 
 	<div style="margin-bottom: 30px; margin-left: 10px;">
-		개설자 정보<br> <br>
+		개설자 정보<br>
+		<div style="border: 1px solid; width: 120px; height: 130px; float: left;">
 
-		<div style="border: 1px solid; float: left">
 			<img src="../resources/img/thunderHuman.png">
 		</div>
 
-		<div>
+		<div style="position: relative; left: 20px;">
 			<c:out value="${userVO.usrName}" />
 			<br>
 			<c:out value="${userVO.usrId}" />
 		</div>
-		<div style="width: 500px; height: 50px; border: 1px solid; text-align: center;" id="period">
+
+		<div style="width: 500px; height: 50px; position: relative; left: 130px; border: 1px solid; text-align: center;" id="period">
 			<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
 			<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 까지 신청" />
 		</div>
 	</div>
+
+
+	<!-- 해시태그 구현 -->
+	<br>
+	<div style="font-size: 20px; margin-bottom: 20px;">
+		<div style="float: left;">해시태그 :</div>
+		<ul id="tag-list">
+		</ul>
+	</div>
+
+
 
 	<div style="float: right">
 		<!-- 지금 로그인된 유저의 정보와 개설자의 번호가 일치하면(=같은사람 이라면) modify 버튼을 보여준다.-->
@@ -151,7 +202,16 @@ section a:hover {
 
 
 	<form id='operForm' action="/thunder/modify" method="get">
-		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'> <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'> <input type='hidden' name='category' value='<c:out value="${cri.category}"/>'> <input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'> <input type='hidden' name='city' value='<c:out value="${cri.city}"/>'> <input type='hidden' name='district' value='<c:out value="${cri.district}"/>'> <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> <input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
+		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'>
+		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+		<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
+		<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
+		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
+		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 
 
@@ -281,6 +341,15 @@ section a:hover {
 			document.getElementById("plus").style.display = 'none';
 			document.getElementById("pulsButton").innerHTML = "🐵";
 		}
+	}
+
+	/* 해시태그 구현관련!! */
+	let stringHash = '${clubVO.cbHashtag}';
+
+	let arrayHash = stringHash.split(',');
+
+	for ( let i in arrayHash) {
+		$("#tag-list").append("<li class='tag-item'>" + arrayHash[i] + "</li>");
 	}
 </script>
 

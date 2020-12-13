@@ -37,13 +37,82 @@
 }
 
 /* 파일 업로드 블로그 style */
-.inputArea {margin:10px 0px;}
-select {with:100px;}
-label {display:inline-block; width:70px; padding:5px; }
-label[for='gdsDes'] {display : block;}
-input {width : 150px;}
-textarea#gdsDes {width:400px; height:180px;}
-.select_img img {margin:20px 0px;}
+.inputArea {
+	margin: 10px 0px;
+}
+
+select {
+	with: 100px;
+}
+
+label {
+	display: inline-block;
+	width: 70px;
+	padding: 5px;
+}
+
+label[for='gdsDes'] {
+	display: block;
+}
+
+input {
+	width: 150px;
+}
+
+textarea#gdsDes {
+	width: 400px;
+	height: 180px;
+}
+
+.select_img img {
+	margin: 20px 0px;
+}
+
+/* 해시태그 구현 */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul {
+	padding: 16px 0;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: #777;
+	color: #000;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+.del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+
 </style>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
@@ -55,8 +124,8 @@ textarea#gdsDes {width:400px; height:180px;}
 		<div class='City'></div>
 	</div>
 
-
-	<form action="/thunder/add" method="post" onsubmit="return inputCheck()" enctype="multipart/form-data">
+<!-- onsubmit="return inputCheck()" -->
+	<form action="/thunder/add" method="post" id="tag-form"  enctype="multipart/form-data">
 		<div>
 			<div>
 				모임명<br>
@@ -66,16 +135,37 @@ textarea#gdsDes {width:400px; height:180px;}
 
 		</div>
 
-
-		<div style="float: left; margin-right: 50px">
-			<div style="margin: 2px 0px">
-				<img src="/resources/img/thunderImg.png" width="110" height="110" alt="번개대표사진">
+<div class="inputArea" style="float: left; margin-right: 50px">
+			
+			<div class="select_img" style="margin: 2px 0px">
+				<img class="thumbImg" src="/resources/img/logo.png" style="margin:0px;" />
+				<br>
+				<!-- <label for="gdsImg" >이미지 선택</label> -->
+				<input type="file" id="gdsImg" name="file" style="width:200px;" />
 			</div>
-			<br>
 
-			<button type="button">사진변경</button>
-
+			<script>
+				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+				$("#gdsImg").change(
+						function() {
+							if (this.files && this.files[0]) {
+								var reader = new FileReader;
+								reader.onload = function(data) {
+									$(".select_img img").attr("src",
+											data.target.result).width(200).height(144);
+								}
+								reader.readAsDataURL(this.files[0]);
+							}
+						});
+			</script>
+			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
+			<%-- <%=request.getRealPath("/")%> --%>
 		</div>
+		
+		
+
+
+
 
 
 		<div>
@@ -108,8 +198,14 @@ textarea#gdsDes {width:400px; height:180px;}
 			</div>
 
 			<div>
-				해시태그<br> <input type="text" name='cbHashtag'>
-			</div>
+				해시태그<br> <input type="hidden" value="" name="cbHashtag" id="rdTag" />
+
+
+				<div>
+					<input type="text" id="tag" size="7" value="#" />
+				</div>
+				<ul id="tag-list"></ul>
+			</div>			
 		</div>
 
 
@@ -168,32 +264,9 @@ textarea#gdsDes {width:400px; height:180px;}
 		<input type='hidden' name='cbCity'> <input type='hidden' name='cbDistrict'> <input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation'>
 
 
-<div class="inputArea">
-		<label for="gdsImg">이미지</label>
-		 <input type="file" id="gdsImg" name="file" />
-		<div class="select_img">
-			<img src="" />
-		</div>
+		
 
-		<script>
-		/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
-			$("#gdsImg").change(
-					function() {
-						if (this.files && this.files[0]) {
-							var reader = new FileReader;
-							reader.onload = function(data) {
-								$(".select_img img").attr("src",
-										data.target.result).width(500);
-							}
-							reader.readAsDataURL(this.files[0]);
-						}
-					});
-		</script>
-		<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
-		<%=request.getRealPath("/") %>
-	</div>
-	
-	
+
 	</form>
 
 
@@ -225,7 +298,7 @@ textarea#gdsDes {width:400px; height:180px;}
 	<!-- 카카오 맵 END -->
 
 
-	
+
 
 
 </section>
@@ -277,6 +350,112 @@ textarea#gdsDes {width:400px; height:180px;}
 			}
 		}
 	})
+
+	$(document)
+			.ready(
+					function() {
+
+						var tag = {};
+						var counter = 0;
+						var maxHash = 0;
+						
+						// 태그를 추가한다.
+						function addTag(value) {
+							tag[counter] = value; // 태그를 Object 안에 추가
+							counter++; // counter 증가 삭제를 위한 del-btn 의 고유 id 가 된다.
+							maxHash++;
+						}
+
+						// 최종적으로 서버에 넘길때 tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+						function marginTag() {
+							return Object.values(tag).filter(function(word) {
+								return word !== "";
+							});
+						}
+
+						// 서버에 넘기기
+						$("#tag-form").on("submit", function(e) {
+							var value = marginTag(); // return array
+							$("#rdTag").val(value);
+						
+							
+							if(inputCheck() == true){
+								alert('개설되었습니다.');														
+							}
+							else {
+								e.preventDefault();											
+							}													
+						});
+
+						// 처음 부터 #이 달려있고
+						// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
+						// 5개까지 밖에 입력하지 못한다.
+						$("#tag").keyup(function(e) {
+							let text = $(this).val();
+
+							if (text.length == 0) {
+								$(this).val("#");
+							}
+						});
+
+						$("#tag")
+								.on(
+										"keypress",
+										function(e) {
+
+											var self = $(this);
+
+											// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+											if (e.key === "Enter"
+													|| e.keyCode == 32
+													|| e.keyCode == 35) {
+
+												if (maxHash >= 5) {
+													alert("5개가 최대입니다.");
+													self.val("#");
+												} else {
+													var tagValue = self.val(); // 값 가져오기
+
+													// 값이 없으면 동작 안함
+													if (tagValue !== "") {
+
+														// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
+														var result = Object
+																.values(tag)
+																.filter(
+																		function(
+																				word) {
+																			return word === tagValue;
+																		})
+
+														// 태그 중복 검사
+														if (result.length == 0) {															
+															$("#tag-list")
+																	.append(
+																			"<li class='tag-item'>"
+																					+ tagValue
+																					+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+															addTag(tagValue);
+															self.val("#");
+														} else {
+															alert("태그값이 중복됩니다.");
+														}
+													}
+												}
+												e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
+
+											}
+										});
+
+						// 삭제 버튼
+						// 삭제 버튼은 비동기적 생성이므로 document 최초 생성시가 아닌 검색을 통해 이벤트를 구현시킨다.
+						$(document).on("click", ".del-btn", function(e) {
+							var index = $(this).attr("idx");
+							tag[index] = "";
+							$(this).parent().remove();
+							maxHash--;
+						});
+					})
 </script>
 
 

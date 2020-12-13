@@ -26,11 +26,6 @@ public class ThunderServiceImpl implements ThunderService {
 	//Service단에서 log.info가 찍히지 않는다.
 	private ThunderMapper mapper;
 
-	@Override
-	public List<ThunderVO> getList() {
-		log.info("get List ");
-		return mapper.getList();
-	}
 
 	@Override
 	public List<ThunderVO> getList(Criteria cri) {
@@ -174,5 +169,7 @@ public class ThunderServiceImpl implements ThunderService {
 		
 		return mapper.readCbMemByUsrNum(usrNum, cbNum);
 	}
+
+
 
 }

@@ -63,8 +63,8 @@ public class ThunderController {
 
 		log.info("/info(GET) - ");
 		// 들어온 파라미터 값 확인
-		log.info("/info- cri : " + cri);
-		log.info("/info- cbNum : " + cbNum);
+		log.info("/info(GET) - cri : " + cri);
+		log.info("/info(GET) - cbNum : " + cbNum);
 
 		// 유저정보를 가져와서, 개설자 번호와 현재 로그인된 사람의 Key가 일치하는지 봐야함
 		// --info에서는 jsp단에서 해결하기 위해 로그인한 유저의 번호만 전송한다.
@@ -73,18 +73,18 @@ public class ThunderController {
 
 		// 로그인한 사람의 번호도 뿌려줘서, jsp단에서 로그인 되어있는 사람들에게만 modify 버튼 보여주기 (신청하기도 해야함 - 개선사항)
 		model.addAttribute("usrNum", loginUser.getUsrNum());
-		log.info("/info - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
+		log.info("/info(GET) - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
 
 		// A. view 단에 뿌려줘야 하는 것들
 		// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.
 		ThunderVO clubVO = service.get(cbNum);
 
-		log.info("/info- clubVO : " + clubVO);
+		log.info("/info(GET)- clubVO : " + clubVO);
 
 		// A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
 		UserVO userVO = userService.get((long) clubVO.getCbLeaderNum());
 
-		log.info("/info- userVO : " + userVO);
+		log.info("/info(GET) - userVO : " + userVO);
 
 		// A.3 개설자와 모임에 대한 정보를 view단에 뿌려준다.
 		model.addAttribute("userVO", userVO);
@@ -163,32 +163,35 @@ public class ThunderController {
 		return "/thunder/info";
 	}
 
+	
+	
+	
+	
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri,
 			Model model) {
 		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
 		if (!service.isLogin(auth))
-			return "redirect:/login/login";
-
-		log.info("/modify - GET");
+			return "redirect:/login/login";		
+		
 		// 들어온 파라미터 값 확인
-		log.info("/modify - cri : " + cri);
-		log.info("/modify - cbNum : " + cbNum);
+		log.info("/modify(GET) - cri : " + cri);
+		log.info("/modify(GET) - cbNum : " + cbNum);
 
 		// 유저정보를 가져와서, 개설자 번호와 현재 로그인된 사람의 Key가 일치하는지 봐야한다.
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO loginUser = customUser.getUser();
-		log.info("/modify - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
+		log.info("/modify(GET) - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
 
 		// A. view 단에 뿌려줘야 하는 것들
 		// A.1 list에서 특정 모임을 클릭했을 때 모임의 상세페이지로 이동이 되면서, 파마리터 형식으로 cl_number(cbNum)이 붙는다.
 		ThunderVO clubVO = service.get(cbNum);
-		log.info("/modify- clubVO : " + clubVO);
+		log.info("/modify(GET)- clubVO : " + clubVO);
 
 		// A.2 파라미터로 넘어온 값인, cbNum를 통해서 개설자의 정보를 가져온다.
 		UserVO userVO = userService.get((long) clubVO.getCbLeaderNum());
 
-		log.info("/modify- clubUserNum : " + userVO.getUsrNum());
+		log.info("/modify(GET) - clubUserNum : " + userVO.getUsrNum());
 
 		// A.3 해당 모임에 대한 정보를 view단에 뿌려준다. userVO.getUsrNum()
 		model.addAttribute("clubVO", clubVO);
@@ -200,6 +203,50 @@ public class ThunderController {
 		// modify로 넘어가는 데이터 - 1.club의 정보, 2. criteria
 		return "/thunder/modify";
 	}
+	
+	@PostMapping("/modify")
+public String modify(ThunderVO Club, @ModelAttribute("cri") Criteria cri, MultipartFile file, RedirectAttributes rttr) throws Exception {
+		
+		log.info("modify(POST) - club " + Club);
+		log.info("modify(POST) - file " + file);
+		log.info("modify(POST) - file.getOriginalFilename() " + file.getOriginalFilename());
+		
+			
+		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
+				// 저장한 뒤,
+				// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
+
+				String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+				String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
+				String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
+
+				if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+					// 파일 인풋박스에 첨부된 파일이 있다면
+
+					fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+
+					// file에 원본 파일 경로 + 파일명 저장
+					Club.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+					// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+					Club.setCbThumbImg(
+							File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+					
+				} 
+				//첨부된 파일이 없으면 기존의것 그대로 가면 됨!!
+				
+				
+
+		if (service.modify(Club)) {
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 수정되었습니다..");
+		} else {
+			rttr.addFlashAttribute("result", "모임 정보가 수정되지 않았습니다.");
+		}
+
+		return "redirect:/thunder/list" + cri.getListLink();
+	}
+	
 
 	@PostMapping("/join")
 	// join 할때도 cri가 유지되어 있어야 하나???
@@ -214,7 +261,7 @@ public class ThunderController {
 		log.info("/join(POST) - joinState : " + joinState);
 
 		ThunderVO clubVO = service.get(cbNum);
-		log.info("/join - ThunderVO : " + clubVO);
+		log.info("/join(POST) - ThunderVO : " + clubVO);
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO loginUser = customUser.getUser();
@@ -232,27 +279,12 @@ public class ThunderController {
 		return "redirect:/thunder/info" + cri.getListLink();
 	}
 
-	@PostMapping("/modify")
-	public String modify(ThunderVO Club, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		log.info("/modify - POST");
-
-		log.info("modify - club " + Club);
-
-		if (service.modify(Club)) {
-			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
-			rttr.addFlashAttribute("result", "모임 정보가 수정되었습니다..");
-		} else {
-			rttr.addFlashAttribute("result", "모임 정보가 수정되지 않았습니다.");
-		}
-
-		return "redirect:/thunder/list" + cri.getListLink();
-	}
+	
 
 	@PostMapping("/remove")
 	public String remove(@RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri,
-			RedirectAttributes rttr) {
-		log.info("/remove - POST");
-		log.info("remove - cbNum : " + cbNum);
+			RedirectAttributes rttr) {		
+		log.info("/remove(POST) - cbNum : " + cbNum);
 
 		if (service.remove(cbNum)) {
 			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
@@ -309,7 +341,7 @@ public class ThunderController {
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
-		log.info("add - usrNum : POST-add 회원번호" + usrNum);
+		log.info("/add(POST) - usrNum : POST-add 회원번호" + usrNum);
 
 		// 현재 로그인 되어있는 유저의 번호와 이름으로 club을 만든다.
 		clubVO.setCbLeaderNum(usrNum);
@@ -318,7 +350,7 @@ public class ThunderController {
 		clubVO.setCbCurMbnum((long) 1);
 		clubVO.setCbFinalState("진행중");
 
-		log.info("add - clubVO : " + clubVO);
+		log.info("/add(POST) - clubVO : " + clubVO);
 
 		if (service.register(clubVO, customUser.getUser(), "가입승인")) { // 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
 			rttr.addFlashAttribute("result", "모임 정보가 등록되었습니다.");
@@ -334,7 +366,7 @@ public class ThunderController {
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
 	public String add(Authentication auth, Model model) {
-		log.info("/add - GET");
+		log.info("/add(GET)");
 
 		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
 		if (service.isLogin(auth))
@@ -344,19 +376,82 @@ public class ThunderController {
 	}
 
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
-		log.info("/list - GET");
+	public void list(Criteria cri, Model model, String userLatitude, String userLongitude) {		
+		log.info("list(GET) - cri : " + cri);
+		log.info("list(GET) - userlatitude : " + userLatitude);
+		log.info("list(GET) - userlongitude : " + userLongitude);
+		
+					
+		double distanceKiloMeter =
+	            distance(Double.parseDouble(userLatitude), Double.parseDouble(userLongitude), 37.866764754746505, 127.73852771655136, "kilometer");
+		
+		
+		log.info("list(GET) - distanceKiloMeter : " + distanceKiloMeter);
 
-		log.info("list - cri : " + cri);
+		
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.
 		model.addAttribute("list", service.getList(cri));
-
-		log.info("list : " + service.getList(cri));
-
+		log.info("list(GET) : " + service.getList(cri));
+		
 		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri);
-		log.info("list - total : " + total);
+		log.info("list(GET) - total : " + total);
 
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+							
 	}
+	
+	
+	@GetMapping("/gps")
+	public void gps() {		
+		log.info("gps(GET)");		
+	}
+	
+	
+	
+	
+	
+	/**
+     * 두 지점간의 거리 계산
+     *
+     * @param lat1 지점 1 위도
+     * @param lon1 지점 1 경도
+     * @param lat2 지점 2 위도
+     * @param lon2 지점 2 경도
+     * @param unit 거리 표출단위
+     * @return
+     */
+    private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+         
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") {
+            dist = dist * 1.609344;
+        } else if(unit == "meter"){
+            dist = dist * 1609.344;
+        }
+ 
+        return (dist);
+    }
+     
+ 
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }	
+	
 }
+
+
+
+

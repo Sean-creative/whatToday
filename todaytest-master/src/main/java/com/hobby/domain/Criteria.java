@@ -22,6 +22,9 @@ public class Criteria {
 	private String city;
 	private String district;
 	
+	//searchBy가 어떤거냐에 따라서 쿼리문이 달라져야한다.
+	private String searchBy;
+	
 	private String keyword;
 		
 				
@@ -46,7 +49,8 @@ public class Criteria {
 	  .queryParam("category", this.getCategory()) 
 	  .queryParam("subclass", this.getSubclass()) 
 	  .queryParam("city", this.getCity()) 
-	  .queryParam("district", this.getDistrict()) 
+	  .queryParam("district", this.getDistrict())
+	  .queryParam("searchBy", this.getSearchBy())
 	  .queryParam("keyword",this.getKeyword()); 
 	  return builder.toUriString(); }
 	 
