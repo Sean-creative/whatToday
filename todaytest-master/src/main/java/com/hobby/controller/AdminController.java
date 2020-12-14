@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hobby.domain.ClubVO;
+import com.hobby.domain.NoticeVO;
 import com.hobby.domain.UserVO;
 import com.hobby.service.AdminService;
 
@@ -57,6 +59,11 @@ public class AdminController {
 	@GetMapping("/closeClub")
 	public void closeClub(Model model) {
 		model.addAttribute("clubVO",service.getCloseClub());
+	}
+	
+	@GetMapping("/noticemanage")
+	public void noticemanage() {
+		
 	}
 
 	
@@ -129,6 +136,45 @@ public class AdminController {
 						: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@RequestMapping(value = "/noticemanage/noticelist.json", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<NoticeVO>> noticeList() {
 	
-
+		return new ResponseEntity<>(service.noticeList(),HttpStatus.OK);
+	}
+	@RequestMapping(method = {RequestMethod.POST}, value="/noticemanage/writeNotice",
+			consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+			public ResponseEntity<String> writeNotice(@RequestBody NoticeVO noticeVO){
+				
+				System.out.println("noticeInsert" + noticeVO);
+				
+				return service.writeNotice(noticeVO) == 2
+						? new ResponseEntity<>("success", HttpStatus.OK)
+								: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+	
+	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+			value = "/noticemanage/updateNotice", consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateNotice(
+			@RequestBody NoticeVO noticeVO) {
+		
+		System.out.println(noticeVO);
+	
+	return service.updateNotice(noticeVO) == 2
+			? new ResponseEntity<>("success",HttpStatus.OK)
+					:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
+	
+	 @DeleteMapping(value= "/noticemanage/deleteNotice/{ntNum}" ,produces = { MediaType.TEXT_PLAIN_VALUE })
+	 public ResponseEntity<String> deleteNotice(@PathVariable("ntNum") Long ntNum) {
+	  
+	  log.info("delete notice: " + ntNum);
+	  
+	  return service.deleteNotice(ntNum) == 2
+		  ? new ResponseEntity<>("success", HttpStatus.OK)
+		  : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	 }
+	
 }
