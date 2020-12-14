@@ -6,8 +6,14 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 <bean id="customAccessDenied" class="com.hobby.security.CustomAccessDeniedHandler"></bean>
 <bean id="customLoginSuccess" class="com.hobby.security.CustomLoginSuccessHandler"></bean>
-<bean id="customPasswordEncoder" class="com.hobby.security.CustomNoOpPasswordEncoder"></bean>
-<!--<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />-->
+<!-- 비밀번호 암호화 -->
+<!-- <bean id="customPasswordEncoder" class="com.hobby.security.CustomNoOpPasswordEncoder"></bean> -->
+<!-- customPasswordEncoder : SHA메서드 구현 -->
+<!--<bean id="customPasswordEncoder" class="com.hobby.security.CustomPasswordEncoder"></bean>-->
+<!-- StandardPasswordEncoder :  SHA-256 + salt / Deprecated -->
+<!--<bean id="standardPasswordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder" />-->
+<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
 <bean id="customUserDetailsService" class="com.hobby.security.CustomUserDetailsService"></bean>
 <security:http>
 	<!-- <security:access-denied-handler error-page ="/accessError"/>-->
@@ -27,7 +33,7 @@
 
 <security:authentication-manager>
 	<security:authentication-provider user-service-ref ="customUserDetailsService">
-		<security:password-encoder ref="customPasswordEncoder" /> 
+		<security:password-encoder ref="bcryptPasswordEncoder" /> 
 	</security:authentication-provider>
 </security:authentication-manager>
 

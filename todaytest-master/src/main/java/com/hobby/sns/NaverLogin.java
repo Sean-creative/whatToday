@@ -1,12 +1,12 @@
 package com.hobby.sns;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.util.StringUtils;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
@@ -14,9 +14,16 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
-
-public class NaverLoginDTO {
- 
+/**
+ * 네이버 로그인 인증 URL 생성/ 사용자 프로필 API 호출 
+ * @author jiyeong
+ *
+ */
+public class NaverLogin {
+	
+	// security로 로그인 과정 한 번 더 거치니까 session 처리 과정 필요없을 것 같은데..
+	// google이랑 네이버 합칠 떄 삭제 하기!!!!!!!!!!!!
+	
     /* 인증 요청문을 구성하는 파라미터 */
     //client_id: 애플리케이션 등록 후 발급받은 클라이언트 아이디
     //response_type: 인증 과정에 대한 구분값. code로 값이 고정돼 있습니다.
@@ -38,8 +45,7 @@ public class NaverLoginDTO {
         setSession(session,state);        
  
         /* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
-        OAuth20Service oauthService = new ServiceBuilder()                                                   
-                .apiKey(CLIENT_ID)
+        OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)                                                   
                 .apiSecret(CLIENT_SECRET)
                 .callback(REDIRECT_URI)
                 .state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
@@ -49,14 +55,13 @@ public class NaverLoginDTO {
     }
  
     /* 네이버아이디로 Callback 처리 및  AccessToken 획득 Method */
-    public static OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException{
+    public static OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException, InterruptedException, ExecutionException{
  
         /* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
         String sessionState = getSession(session);
         if(StringUtils.pathEquals(sessionState, state)){
  
-            OAuth20Service oauthService = new ServiceBuilder()
-                    .apiKey(CLIENT_ID)
+            OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)
                     .apiSecret(CLIENT_SECRET)
                     .callback(REDIRECT_URI)
                     .state(state)
@@ -84,17 +89,17 @@ public class NaverLoginDTO {
         return (String) session.getAttribute(SESSION_STATE);
     }
     /* Access Token을 이용하여 네이버 사용자 프로필 API를 호출 */
-    public static String getUserProfile(OAuth2AccessToken oauthToken) throws IOException{
+    public static String getUserProfile(OAuth2AccessToken oauthToken) throws IOException, InterruptedException, ExecutionException{
  
-        OAuth20Service oauthService =new ServiceBuilder()
-                .apiKey(CLIENT_ID)
+        OAuth20Service oauthService =new ServiceBuilder(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
                 .callback(REDIRECT_URI).build(NaverLoginApi.instance());
  
-            OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
+       
+        OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL);
         oauthService.signRequest(oauthToken, request);
-        Response response = request.send();
-      
+        Response response = oauthService.execute(request);
+        
         return response.getBody();
     }
  
