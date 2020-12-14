@@ -129,6 +129,7 @@ public class AdminController {
 	produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertUserHistory(@RequestBody UserVO userVO){
 		
+		System.out.println("히스토리인서트" + userVO);
 		
 		return service.insertUserHistory(userVO) == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
@@ -175,6 +176,5 @@ public class AdminController {
 		  ? new ResponseEntity<>("success", HttpStatus.OK)
 		  : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	 }
-
-
+	
 }

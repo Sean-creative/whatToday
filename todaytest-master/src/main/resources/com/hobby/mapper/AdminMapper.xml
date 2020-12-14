@@ -60,7 +60,6 @@
 
 	</select>
 	
-
 	<select id="noticeList" resultType="com.hobby.domain.NoticeVO">
    	<![CDATA[
       select * from notice,noticecontent where notice.ntNum > 0 and notice.ntnum = noticecontent.ntnum order by notice.ntNum desc
@@ -105,6 +104,5 @@
 	<delete id="deleteNotiCon">
 	   delete from noticeContent where ntNum = #{ntNum}
 	</delete> 
-
 	
 </mapper>

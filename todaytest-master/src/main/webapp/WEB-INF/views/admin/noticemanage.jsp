@@ -85,37 +85,21 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
-<<<<<<< HEAD
-                        <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
-=======
->>>>>>> master
                         </div>
                     </div>
                 </li>
                 <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
                  	aria-expanded="true" aria-controls="collapsePages">
-<<<<<<< HEAD
-                    <i class="fas fa-fw fa-folder"></i>
-=======
                     <i class="fas fa-fw fa-table"></i>
->>>>>>> master
                     <span>공지사항</span></a>
                     <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">공지사항:</h6>
-<<<<<<< HEAD
-                        <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
-                        </div>
-                    </div>
-                </li>
-                
-=======
                         <a class="collapse-item" href="/admin/noticemange">공지사항관리</a>
                         </div>
                     </div>
                 </li>
->>>>>>> master
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -328,11 +312,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-<<<<<<< HEAD
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
-=======
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#noticeInfoModal">
->>>>>>> master
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -357,54 +337,17 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-<<<<<<< HEAD
-                                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>최근로그인일시</th>
-                                            <th>상태</th> 
-                                            <th>경로</th> 
-                                            <th>이미지</th> 
-=======
                                 <table class="table table-bordered" id="noticeTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
                                             <th>제목</th>
                                             <th>날짜</th>
->>>>>>> master
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>번호</th>
-<<<<<<< HEAD
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>최근로그인일시</th>
-                                            <th>상태</th> 
-                                            <th>경로</th> 
-                                            <th>이미지</th> 
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-=======
                                             <th>제목</th>
                                             <th>날짜</th>
                                         </tr>
@@ -417,7 +360,6 @@
                                 </div>
                                 </div>
                                 </div>
->>>>>>> master
                 <!-- /.container-fluid -->
 
             </div>
@@ -444,18 +386,12 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-<<<<<<< HEAD
-    <!-- Logout Modal-->
-    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-=======
     <!-- 글쓰기 모달 -->
     <div class="modal fade" id="noticeWriteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
->>>>>>> master
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-
                     <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -493,7 +429,6 @@
                 	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
                 	<button class="btn btn-danger" id="delete" type="button" data-dismiss="modal">삭제</button>
                     <button class="btn btn-primary" id="modify" type='button' data-dismiss="modal">수정</button>
-
                 </div>
             </div>
         </div>
@@ -521,17 +456,6 @@
 		
 			var table;
 			var data;
-<<<<<<< HEAD
-			table = $('#userTable').DataTable({
-			 "createdRow": function( row, data, dataIndex ) {
-		        	$(row).attr("data-toggle","modal");
-		        	$(row).attr("data-target","#userInfoModal");
-		        	
-		        },
-			
-		     ajax: {
-		        'url':'/admin/usermanage/userlist.json',
-=======
 			table = $('#noticeTable').DataTable({
 			 "createdRow": function( row, data, dataIndex ) {
 		        	$(row).attr("data-toggle","modal");
@@ -542,84 +466,11 @@
 			
 		     ajax: {
 		        'url':'/admin/noticemanage/noticelist.json',
->>>>>>> master
 		        
 		        //'type': 'POST',
 		        'dataSrc':''
 		     },
 		    columns: [
-<<<<<<< HEAD
-		        {"data": "usrNum"},
-		        {"data": "usrId"},
-		        {"data": "usrName"}, 
-		        {"data": "usrPhone"},
-		        {"data": "usrGender"},
-		        {"data": "usrBirth"},
-		        {"data": "usrJoinDate"},
-		        {"data": "usrLoginDate"},
-		        {"data": "usrState"},
-		        {"data": "usrImgPath"},
-		        {"data": "usrImg"}
-		        
-		    ],
-		    "columnDefs":[{
-		    	"targets":[9,10],
-		    	"searchable":false,
-		    	"visible":false
-		    }]
-		});
-		 
-		 $('#userTable tbody').on('click', 'tr', function (){
-			data = table.row(this).data();
-			console.log(data);
-			
-			let usrImgPath = data.usrImgPath
-			let usrImg = data.usrImg
-			let imgAdress = "\\resources\\img\\upload\\"+usrImgPath+"\\"+usrImg;
-			
-			$("#usrImg").attr("src",imgAdress);
-			$("input[name=usrId]").val(data.usrId);
-			$("#usrName").val(data.usrName);
-			$("#usrPhone").val(data.usrPhone);	
-			$("#usrGender").val(data.usrGender);
-			$("#usrBirth").val(data.usrBirth);
-			$("#usrJoinDate").val(data.usrJoinDate);
-			$("#usrLoginDate").val(data.usrLoginDate);
-			$("#usrState").val(data.usrState);
-			
-		 });
-		 
-		 $('#banUser').on('click',function(){
-			 
-			 console.log(data);
-			  $.ajax({
-				 url: "/admin/usermanage/updateBanUser/",
-				 type:"PUT",
-				 data: JSON.stringify({usrNum:data.usrNum}),
-				 dataType: "json",
-				 contentType : "application/json; charset=utf-8",
-				 success: function(data){ 
-					 console.log(data);
-					 
-					 },
-			 	 complete : function(com){
-			 		 console.log("끝")
-			 		insertUserHistory(data);
-					},
-				 });  
-			 
-			 
-			 });
-		 
-		 let insertUserHistory = function(data){
-			 console.log("히스토리");
-			 console.log(data);
-			 let usrState = "강퇴";
-			 $.ajax({
-				 type : 'post',
-				 url : "/admin/usermanage/insertUserHistory/",
-				 data : JSON.stringify({usrNum:data.usrNum,usrName:data.usrName,usrState:usrState}),
-=======
 		        {"data": "ntNum"},
 		        {"data": "ntTitle"},
 		        {"data": "ntDate"},    
@@ -672,7 +523,6 @@
 				 type : 'post',
 				 url : "/admin/noticemanage/writeNotice/",
 				 data : JSON.stringify({ntTitle:ntTitle,ntContent:ntContent}),
->>>>>>> master
 				 dataType: "json",
 				 contentType: "application/json; charset=utf-8",
 				 success : function(result, status, xhr){
@@ -686,10 +536,6 @@
 					}
 			 })
 		 }
-<<<<<<< HEAD
-		 $('#userInfoModal').on('hidden.bs.modal', function () {
-			
-=======
 		 
 		 const deleteNotice = function(){
 			 
@@ -720,7 +566,6 @@
 		 $('#noticeWriteModal').on('hidden.bs.modal', function () {
 			 let ntTitle = $('input[name=ntTitle]').val("");
 			 let ntContent = $('textarea[name=ntContent]').val("");
->>>>>>> master
 			 
 		 })
 		
