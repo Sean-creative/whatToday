@@ -96,9 +96,9 @@
 	<select id="readclub" resultType="com.hobby.domain.ClubVO">
 		select
 		cbNum, cbName, cbType, cbLeaderNum, cbCategory, cbSubcat, cbCity,
-		cbDistrict, cbMbNum,
+		cbDistrict, cbMbNum, cbLeaderName,
 		cbCurMbNum, cbHashtag, cbIntro, cbMakeDate, cbShutDate, cbFinalState,
-		cbDetailContent cbFile
+		cbDetailContent, cbFile
 		from club
 		where cbNum = #{cbNum}
 	</select>

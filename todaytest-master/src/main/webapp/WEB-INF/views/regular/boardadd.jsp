@@ -14,7 +14,7 @@
 		</ul>
 	</div><div id=bodymain>
 			
-			<form role="form" action="/regular/boardadd" method="post">
+			<form name="newadd" role="form" action="/regular/boardadd" method="post" onsubmit="return inputCheck();">
 				<div class="form-group">
 					<label>제목</label> <input class="form-control" name='cbBdTitle'>
 				</div>
@@ -39,4 +39,16 @@
 </div>	
 </body>
 
+<script type="text/javascript">
+
+	//유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
+	function inputCheck(){
+		let title = document.newadd.cbBdTitle;
+		
+		if(!title.value || title.value.length > 30) {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+	}
+</script>		
 <%@include file="../includes/footer.jsp" %>
