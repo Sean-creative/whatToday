@@ -85,23 +85,37 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
+<<<<<<< HEAD
                         <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
+=======
+>>>>>>> master
                         </div>
                     </div>
                 </li>
                 <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
                  	aria-expanded="true" aria-controls="collapsePages">
+<<<<<<< HEAD
                     <i class="fas fa-fw fa-folder"></i>
+=======
+                    <i class="fas fa-fw fa-table"></i>
+>>>>>>> master
                     <span>공지사항</span></a>
                     <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">공지사항:</h6>
+<<<<<<< HEAD
                         <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
                         </div>
                     </div>
                 </li>
                 
+=======
+                        <a class="collapse-item" href="/admin/noticemange">공지사항관리</a>
+                        </div>
+                    </div>
+                </li>
+>>>>>>> master
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -314,7 +328,11 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
+<<<<<<< HEAD
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
+=======
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#noticeInfoModal">
+>>>>>>> master
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -339,6 +357,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+<<<<<<< HEAD
                                 <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -353,11 +372,20 @@
                                             <th>상태</th> 
                                             <th>경로</th> 
                                             <th>이미지</th> 
+=======
+                                <table class="table table-bordered" id="noticeTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>날짜</th>
+>>>>>>> master
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>번호</th>
+<<<<<<< HEAD
                                             <th>아이디</th>
                                             <th>이름</th>
                                             <th>전화번호</th>
@@ -376,6 +404,20 @@
                     </div>
 
                 </div>
+=======
+                                            <th>제목</th>
+                                            <th>날짜</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="float-right">
+                                <button class="btn btn-primary" id="writeNotice" data-toggle='modal' data-target='#noticeWriteModal'>글쓰기</button>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+>>>>>>> master
                 <!-- /.container-fluid -->
 
             </div>
@@ -402,35 +444,56 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+<<<<<<< HEAD
     <!-- Logout Modal-->
     <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+=======
+    <!-- 글쓰기 모달 -->
+    <div class="modal fade" id="noticeWriteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+>>>>>>> master
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">유저 정보</h5>
+
+                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
-                	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
-                	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
-                	전화번호 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
-                	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
-                	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
-                	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
-                	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
-                	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
-
+                제목 <br> <input id="writeNtTitle" name="ntTitle"> <br>
+                내용 <br> <textarea id="writeNtContent" name="ntContent"rows="5" cols="33"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <!-- <form action="/admin/banAction">
-                    <input type="hidden" name="usrId"> -->
-                    <button class="btn btn-primary" id="banUser" type='button' data-dismiss="modal">강퇴</button>
-                    <!-- </form> -->
+                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+                    <button class="btn btn-primary" id="write" type='button' data-dismiss="modal">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- 글 수정 모달 -->
+    <div class="modal fade" id="noticeModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                제목 <br> <input id="modifyNtTitle" name="ntTitle"> <br>
+                내용 <br> <textarea id="modifyNtContent" name="ntContent"rows="5" cols="33"></textarea>
+                <input type="hidden" name="ntNum">
+                </div>
+                <div class="modal-footer">
+                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+                	<button class="btn btn-danger" id="delete" type="button" data-dismiss="modal">삭제</button>
+                    <button class="btn btn-primary" id="modify" type='button' data-dismiss="modal">수정</button>
+
                 </div>
             </div>
         </div>
@@ -458,6 +521,7 @@
 		
 			var table;
 			var data;
+<<<<<<< HEAD
 			table = $('#userTable').DataTable({
 			 "createdRow": function( row, data, dataIndex ) {
 		        	$(row).attr("data-toggle","modal");
@@ -467,11 +531,24 @@
 			
 		     ajax: {
 		        'url':'/admin/usermanage/userlist.json',
+=======
+			table = $('#noticeTable').DataTable({
+			 "createdRow": function( row, data, dataIndex ) {
+		        	$(row).attr("data-toggle","modal");
+		        	$(row).attr("data-target","#noticeModifyModal");
+		        	
+		        },
+		        "order": [],
+			
+		     ajax: {
+		        'url':'/admin/noticemanage/noticelist.json',
+>>>>>>> master
 		        
 		        //'type': 'POST',
 		        'dataSrc':''
 		     },
 		    columns: [
+<<<<<<< HEAD
 		        {"data": "usrNum"},
 		        {"data": "usrId"},
 		        {"data": "usrName"}, 
@@ -542,6 +619,60 @@
 				 type : 'post',
 				 url : "/admin/usermanage/insertUserHistory/",
 				 data : JSON.stringify({usrNum:data.usrNum,usrName:data.usrName,usrState:usrState}),
+=======
+		        {"data": "ntNum"},
+		        {"data": "ntTitle"},
+		        {"data": "ntDate"},    
+		    ]
+		});
+		 
+		 $('#noticeTable tbody').on('click', 'tr', function (){
+			data = table.row(this).data();
+			console.log(data);
+			$("#modifyNtTitle").val(data.ntTitle);
+			$("#modifyNtContent").val(data.ntContent);
+			
+		 });
+		 
+		 const modifyNotice = function(){
+			 
+			
+			 let ntTitle = $('#modifyNtTitle').val();
+			 let ntContent = $('#modifyNtContent').val();
+			 
+			 console.log(ntTitle);
+			 
+			  $.ajax({
+					 url: "/admin/noticemanage/updateNotice/",
+					 type:"PUT",
+					 data: JSON.stringify({ntTitle:ntTitle,ntContent:ntContent,ntNum:data.ntNum}),
+					 dataType: "json",
+					 contentType : "application/json; charset=utf-8",
+					 success: function(data){ 
+						 console.log(data);
+						 
+						 },
+				 	 complete : function(com){
+				 		table.ajax.reload();
+						},
+					 }); 
+		 
+		 }
+		 
+
+		 const writeNotice = function(){
+
+			 let ntTitle = $('#writeNtTitle').val();
+			 let ntContent = $('#writeNtContent').val();
+			 
+			 console.log(ntTitle);
+			 console.log(ntContent);
+			 
+			 $.ajax({
+				 type : 'post',
+				 url : "/admin/noticemanage/writeNotice/",
+				 data : JSON.stringify({ntTitle:ntTitle,ntContent:ntContent}),
+>>>>>>> master
 				 dataType: "json",
 				 contentType: "application/json; charset=utf-8",
 				 success : function(result, status, xhr){
@@ -555,8 +686,41 @@
 					}
 			 })
 		 }
+<<<<<<< HEAD
 		 $('#userInfoModal').on('hidden.bs.modal', function () {
 			
+=======
+		 
+		 const deleteNotice = function(){
+			 
+		
+			  $.ajax({
+				   type : 'delete',
+				   url : "/admin/noticemanage/deleteNotice/" + data.ntNum,
+				   success : function(result, status, xhr) {
+				    
+				   },
+				   complete : function(result, status, xhr){
+					   table.ajax.reload();
+					   }
+				   })
+			  }
+
+		 $('#write').on("click",function(){
+			 writeNotice();
+		 })
+		 $('#modify').on("click",function(){
+			 modifyNotice();
+		 })
+		 $('#delete').on("click",function(){
+			 deleteNotice();
+		 })
+		 
+		 
+		 $('#noticeWriteModal').on('hidden.bs.modal', function () {
+			 let ntTitle = $('input[name=ntTitle]').val("");
+			 let ntContent = $('textarea[name=ntContent]').val("");
+>>>>>>> master
 			 
 		 })
 		

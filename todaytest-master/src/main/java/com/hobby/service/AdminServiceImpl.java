@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.hobby.domain.ClubVO;
+import com.hobby.domain.NoticeVO;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.AdminMapper;
 
@@ -88,5 +89,51 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.getCloseClub();
 	}
 
+	@Override
+	public List<NoticeVO> noticeList() {
+		return mapper.noticeList();
+	}
+	
+	@Transactional
+	@Override
+	public int writeNotice(NoticeVO noticeVO) {
+		int cnt = 0;
+		cnt += mapper.insertNotice(noticeVO);
+		cnt += mapper.insertNotiCon(noticeVO);
+		if(cnt != 2) {
+			//2가 아니라면 강제롤백
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
+	}
+
+	@Override 
+	@Transactional 
+	public int updateNotice(NoticeVO notice) { 
+		int cnt = 0;
+      
+		cnt += mapper.updateNotice(notice);
+		cnt += mapper.updateNotiCon(notice);
+		
+		if(cnt != 2) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		return cnt;
+      }
+
+	@Override
+	@Transactional 
+	public int deleteNotice(Long ntNum) {
+		
+		int cnt = 0;
+	      
+		cnt += mapper.deleteNotiCon(ntNum);
+		cnt += mapper.deleteNotice(ntNum);
+		
+		if(cnt != 2) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		return cnt;
+	}
 	
 }
