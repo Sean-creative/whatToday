@@ -8,6 +8,7 @@
     <result property="usrId" column="usrId"/>
     <result property="usrPwd" column="usrPwd"/>
     <result property="usrName" column="usrName"/>
+    <result property="usrState" column="usrState"/>
     <collection property="authList" resultMap="authMap">
     </collection> 
 </resultMap>
@@ -17,19 +18,17 @@
     <result property="auth" column="auth"/>
 </resultMap>
 
-<select id="idDuplicateCheck" resultType="string">
-	<!-- rownum = 1 : 이미 중복해서 들어간 값들이 있어서 쿼리 결과 값을  한개로 만들어 주기 위해
-	1차 리뷰 : distict 넣기 -->
-	SELECT usrId FROM tbluser where usrId = #{usrId} and rownum = 1
+<select id="idDuplicateCheck" resultType="string"> 
+	SELECT distinct usrId FROM tbluser where usrId = #{usrId}
 </select>
 
 <select id="phoneDuplicateCheck" resultType="string">
-	SELECT usrPhone FROM tbluser where usrPhone = #{usrPhone} and rownum = 1
+	SELECT distinct usrPhone FROM tbluser where usrPhone = #{usrPhone}
 </select>
 
 <insert id="insert">
 	insert into tbluser(usrNum, usrClassification, usrId, usrPwd, usrName, usrPhone, usrGender, usrBirth, usrJoinDate, usrType, usrState, usrLoginDate, usrImg, usrChangePwdDate)  
-	values(tbluser_seq.nextval, '회원', #{usrId}, #{usrPwd},#{usrName}, #{usrPhone}, #{usrGender}, #{usrBirth}, sysdate, #{usrType}, '회원', sysdate, '이미지', sysdate)
+	values(tbluser_seq.nextval, '회원', #{usrId}, #{usrPwd},#{usrName}, #{usrPhone}, #{usrGender}, #{usrBirth}, sysdate, #{usrType}, #{usrState}, sysdate, '이미지', sysdate)
 </insert>   
 
 <insert id="insertUserInfo">
@@ -68,11 +67,17 @@
 
 <select id="read" resultMap="userMap">
 SELECT
-    usr.usrNum, usrId, usrPwd, usrName, auth
+    usr.usrNum, usrId, usrPwd, usrName, usrState, auth
 FROM 
   tbluser usr LEFT OUTER JOIN userAuth auth on usr.usrNum = auth.usrNum
 WHERE usr.usrId = #{usrId} 
 </select>
+
+<update id = "updateUsrState">
+update tbluser
+set usrState = #{usrState}
+where usrId = #{usrId} 
+</update>
 
 </mapper>
 

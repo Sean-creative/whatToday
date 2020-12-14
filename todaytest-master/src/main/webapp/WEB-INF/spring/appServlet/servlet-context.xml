@@ -41,7 +41,10 @@
         </websocket:handlers>
 	<beans:bean id="echoHandler" class="com.hobby.controller.EchoHandler" />
 	
-	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
-	<beans:bean id="naverLoginDTO" class="com.hobby.sns.NaverLoginDTO" />
+	<!-- NaverLogin Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLogin" class="com.hobby.sns.NaverLogin" />
+	
+	<!-- GoogleLogin Class에 대한 Bean설정 추가 -->
+	<beans:bean id="googleLogin" class="com.hobby.sns.GoogleLogin" />
 	
 </beans:beans>
