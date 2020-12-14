@@ -12,7 +12,7 @@
 		<!--a태그의 페이지이동 기능 무효화 -->
 		<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li>
 		<!--cbNum(모임번호)을 가지고 게시판페이지이동-->
-		<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li>
+		<li><a href="/regular/chat?cbNum=<c:out value="${club.cbNum}" />">채팅</a></li>
 		<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 	</ul>
 </div>

@@ -2,6 +2,7 @@ package com.hobby.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -186,5 +187,19 @@ public class ClubServiceImpl implements ClubService {
 		
 		return mapper.getJoinList(cbNum, cbMbStResult);
 	}
+	
+	
+	
+	
+	
+	// 정기모임에 가입한 사람 - 지영
+	@Override
+	public Long getCbMember(Long cbNum, Long usrNum) {
+		Long result = mapper.getCbMember(cbNum, usrNum);
+		System.out.println("result: " + result);
+		return result;
+	}
+	
+	
 
 }

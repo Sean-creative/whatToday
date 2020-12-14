@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../includes/header.jsp"%>
+<!-- 모임을 가입한 사람만 채팅창에 참여할 수 있음.  -->
+<!-- 작성자 : 김지영 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,23 +21,22 @@
  
 </head>
 <body>
-    <input type="text" id="nickname" class="form-inline" placeholder="닉네임을 입력해주세요" required autofocus>
-    <button class = "btn btn-primary" id = "name">확인</button>
+    <button class = "btn btn-primary" id = "enter">입장</button>
     <div id = "chatroom" style = "width:400px; height: 600px; border:1px solid; background-color : gray"></div>
     <input type = "text" id = "message" style = "height : 30px; width : 340px" placeholder="내용을 입력하세요" autofocus>
     <button class = "btn btn-primary" id = "send">전송</button>
-    <script>
- 
-    </script>
 </body>
     <script>
         var webSocket;
         var nickname;
-        document.getElementById("name").addEventListener("click", function(){
-            nickname = document.getElementById("nickname").value;
-            document.getElementById("nickname").style.display="none";
-            document.getElementById("name").style.display="none";
-            connect();
+        document.getElementById("enter").addEventListener("click", function(){
+        	if("${msg }" != ""){
+    			alert("${msg}");
+    			return false;
+    		}else{
+        		document.getElementById("enter").style.display="none";
+            	connect();
+    		}
         })
         document.getElementById("send").addEventListener("click",function(){
             send();
@@ -45,16 +48,16 @@
             webSocket.onmessage = onMessage;
         }
         function disconnect(){
-            webSocket.send(nickname + "님이 퇴장하셨습니다");
+            webSocket.send("${usrName} 님이 퇴장하셨습니다");
             webSocket.close();
         }
         function send(){
             msg = document.getElementById("message").value;
-            webSocket.send(nickname + " : " + msg);
+            webSocket.send("${usrName} : " + msg);
             document.getElementById("message").value = "";
         }
         function onOpen(){
-            webSocket.send(nickname + "님이 입장하셨습니다.");
+            webSocket.send("${usrName} 님이 입장하셨습니다.");
         }
         function onMessage(e){
             data = e.data;

@@ -67,4 +67,8 @@ public interface ClubMapper {
 	public String readCbMemByUsrNum(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
 	public List<ClubMemberVO> getJoinList(@Param("cbNum") Long cbNum, @Param("cbMbStResult") String cbMbStResult);
 	
+	
+	// 정기모임에 가입한 사람 - 지영
+	public Long getCbMember(@Param("cbNum") Long cbNum, @Param("usrNum") Long usrNum);
+	
 }
