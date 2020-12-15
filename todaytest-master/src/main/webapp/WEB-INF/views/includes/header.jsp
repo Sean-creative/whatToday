@@ -12,13 +12,13 @@
 <body>
 
 <!-- Masthead-->
-    <header id=header>
+    <header id="header">
 
       <a href="/index/main">
         <img src="/resources/img/logo.png" alt="logo">
       </a>
       	<form action="/index/searchlist" method="get" onsubmit="return inputCheck()">
-        <input type="text" placeholder="관심분야를 입력해주세요." name="subclass">
+        	<input type="text" placeholder="관심분야를 입력해주세요." name="subclass">
         </form>
         
         <sec:authorize access="isAnonymous()">
@@ -66,7 +66,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
-
+	$(document).ready(function() {
 		var id = document.getElementById("user");
 		console.log("userId: " +id);
 		
@@ -74,7 +74,7 @@
 			$(".main").css("display","none");
 		}
 		
-		const inputCheck = function(){
+		const inputCheck = function() {
 			// 공백을 제거해한 뒤에 개수를 세던지 한다.
 			let keyword = $.trim($("[name=keyword]").val());
 			$('[name=keyword]').val(keyword);
@@ -84,6 +84,7 @@
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
-	
+		};
+	});
 </script>
 
