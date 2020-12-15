@@ -57,9 +57,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>차트</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
@@ -71,7 +71,7 @@
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">회원:</h6>
-                        <a class="collapse-item" href="#">회원목록</a>
+                        <a class="collapse-item" href="/admin/usermanage">회원목록</a>
                         <a class="collapse-item" href="/admin/banLeaveUser">강퇴/탈퇴회원</a>
                         </div>
                     </div>
@@ -85,9 +85,23 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
+                        <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
                         </div>
                     </div>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
+                 	aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>공지사항</span></a>
+                    <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">공지사항:</h6>
+                        <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
+                        </div>
+                    </div>
+                </li>
+                
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -409,7 +423,6 @@
                 	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
                 	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
                 	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
@@ -526,9 +539,7 @@
 			 let usrState = "강퇴";
 			 $.ajax({
 				 type : 'post',
-				 url : "/admin/usermanage/insertUserHistory/",
-				 data : JSON.stringify({usrNum:data.usrNum,usrName:data.usrName,usrState:usrState}),
-				 dataType: "json",
+				 url : "/admin/usermanage/userlist.json/",
 				 contentType: "application/json; charset=utf-8",
 				 success : function(result, status, xhr){
 					if(callback){
