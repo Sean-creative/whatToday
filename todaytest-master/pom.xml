@@ -233,6 +233,7 @@
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
+		</dependency>
 
 		<!-- 구글 소셜 로그인 구현 -->
 		<dependency>
@@ -246,7 +247,6 @@
 			<groupId>com.github.scribejava</groupId>
 			<artifactId>scribejava-core</artifactId>
 			<version>5.6.0</version>
-
 		</dependency>
 
 		<dependency>
