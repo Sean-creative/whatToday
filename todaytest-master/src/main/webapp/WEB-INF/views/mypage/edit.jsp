@@ -82,9 +82,7 @@
 				</span><input type="text" name="usrPhone"
 					value="<c:out value="${userVO.usrPhone }"/>"><br> <input
 					type="hidden" name="usrNum"
-					value="<c:out value="${userVO.usrNum }"/>"> <input
-					type="hidden" name="usrPwd"
-					value="<c:out value="${userVO.usrPwd }"/>"> <input
+					value="<c:out value="${userVO.usrNum }"/>"><input
 					type="hidden" name="usrState"
 					value="<c:out value="${userVO.usrState }"/>">
 					<input

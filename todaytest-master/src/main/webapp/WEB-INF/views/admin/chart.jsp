@@ -56,14 +56,14 @@
 
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>차트</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-table"></i>
@@ -76,8 +76,7 @@
                         </div>
                     </div>
                 </li>
-                
-            <li class="nav-item">
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -86,7 +85,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
-                        <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
+						<a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
                         </div>
                     </div>
                 </li>
@@ -314,7 +313,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#noticeInfoModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -330,61 +329,57 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">UserTables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">ChartPage</h1>
+                    
+                              <div class="row">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">User</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>상태</th>  
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>상태</th>  
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    
-                                     <c:forEach var="userVO" items="${userVO}">
-                                    <tr>
-                                    	<td>${userVO.usrNum }</td>
-                                    	<td>${userVO.usrId }</td>
-                                    	<td>${userVO.usrName }</td>
-                                    	<td>${userVO.usrPhone }</td>
-                                    	<td>${userVO.usrGender }</td>
-                                    	<td>${userVO.usrBirth }</td>
-                                    	<td>${userVO.usrJoinDate }</td>
-                                    	<td>${userVO.usrState }</td>
-                                    </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-xl-8 col-lg-7">
 
+              <!-- Area Chart -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">남/녀 회원비율</h6>
                 </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <div id="piechart" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  회원가입된 사람들의 남자/여자 비율
+                </div>
+              </div>
+              
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">일별 가입 인원</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <div id="columnchart_values" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  일주일간 가입한 사람 인원
+                </div>
+              </div>
+              </div>
+                   
+                    <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">오늘 로그인한 인원</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <div id="columnchart_values2" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  오늘 로그인한 인원
+                </div>
+              </div>
+            </div>
+                    
                 <!-- /.container-fluid -->
 
             </div>
@@ -411,44 +406,12 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">유저 정보</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
-                	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
-                	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
-                	휴대전화 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
-                	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
-                	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
-                	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
-                	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
-                	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="/admin/banAction">
-                    <button class="btn btn-primary">강퇴</button>
-                    <input type="hidden" id="usrNum" name="usrNum">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/resources/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+	
     <!-- Core plugin JavaScript-->
     <script src="/resources/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -462,10 +425,168 @@
     <!-- Page level custom scripts -->
     <script src="/resources/admin/js/demo/datatables-demo.js"></script>
 	<script src="/resources/admin/js/list.js"></script>
+	
+	<!-- 구글 차트 scripts -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		google.charts.load('current', {'packages':['corechart']});
+	    google.charts.setOnLoadCallback(drawChartPie);
+	    
+	      function drawChartPie() {  	
+	    	let womanCnt = 0;
+	    	let manCnt = 0;
+
+	    	for(let i = 0; i < getUserList().length; i ++){
+	    		if(getUserList()[i].usrGender == 'm'){
+	    			manCnt++;
+	    		}else if(getUserList()[i].usrGender == 'f'){
+	    			womanCnt++;
+	    		}
+	    		
+	    	} 
+	    	
+	        let data = google.visualization.arrayToDataTable([
+	          ['GENDER', 'COUNT'],
+	          ['남자',     manCnt],
+	          ['여자',   womanCnt]
+	        ]);
+
+	        let options = {
+	        		width: '100%',
+	        		height: '100%',
+	        };
+
+	        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+	        chart.draw(data, options);
+	        window.addEventListener('resize',drawChartPie,false);
+	      }
+	      
+	      google.charts.load("current", {packages:['corechart']});
+	      google.charts.setOnLoadCallback(drawChartBar);
+	      function drawChartBar() {
+	    	let date = new Date();
+	    	let dateArr = [];
+	    	let countArr = [0,0,0,0,0,0,0];
+	    	let joinCountList =	getJoinWeek();
+	    	
+	    	
+	    	
+	    	for(let x = 0; x<7; x++){
+	    		
+	    		date.setDate(date.getDate()-x);
+	    		dateArr.push(getDateStr(date))
+	    		date.setDate(date.getDate()+x);
+	    		
+	    		for(let y = 0; y<joinCountList.length; y++){
+	    			if(dateArr[x] == joinCountList[y].weekDate){
+	    				countArr[x] = joinCountList[y].memberCount;
+	    				break;
+	    			}
+	    			
+	    		}
+	    	}
+	    	console.log(dateArr);
+	    	
+	        let data = google.visualization.arrayToDataTable([
+	          ["Element", "명", { role: "style" } ],
+	          [dateArr[6], countArr[6], "red"],
+	          [dateArr[5], countArr[5], "orange"],
+	          [dateArr[4], countArr[4], "yellow"],
+	          [dateArr[3], countArr[3], "green"],
+	          [dateArr[2], countArr[2], "blue"],
+	          [dateArr[1], countArr[1], "indigo"],
+	          [dateArr[0], countArr[0], "purple"]
+	        ]);
+
+	        let view = new google.visualization.DataView(data);
+	        view.setColumns([0, 1,
+	                         { calc: "stringify",
+	                           sourceColumn: 1,
+	                           type: "string",
+	                           role: "annotation" },
+	                         2]);
+
+	        let options = {
+	          width: '100%',
+      		 height: '100%',
+	          bar: {groupWidth: "95%"},
+	          legend: { position: "none" },
+	        };
+	        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+	        chart.draw(view, options);
+	        window.addEventListener('resize',drawChartBar,false);
+	    }
+	      google.charts.load("current", {packages:['corechart']});
+	      google.charts.setOnLoadCallback(drawChartBar2);
+	      function drawChartBar2() {
+		    	
+		    	
+		        let data = google.visualization.arrayToDataTable([
+		          ["Element", "명", { role: "style" } ],
+		          ['${userVO.usrLoginDate}', ${userVO.memberCount}, "red"]
+		        ]);
+
+		        let view = new google.visualization.DataView(data);
+		        view.setColumns([0, 1,
+		                         { calc: "stringify",
+		                           sourceColumn: 1,
+		                           type: "string",
+		                           role: "annotation" },
+		                         2]);
+
+		        let options = {
+		          width: '100%',
+	      		 height: '100%',
+		          bar: {groupWidth: "95%"},
+		          legend: { position: "none" },
+		        };
+		        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values2"));
+		        chart.draw(view, options);
+		        window.addEventListener('resize',drawChartBar2,false);
+		    }
+	      
+	      const getUserList = function(){
+	    	let userInfo;
+			 $.ajax({
+				 type : 'get',
+				 url : "/admin/usermanage/userlist.json",
+				 async: false,
+				 success : function(list){
+					 userInfo = list;
+					}
+			 })
+			 return userInfo;
+			 
+		 }
+	      const getJoinWeek = function(){
+	    	let joinCountList;
+			 $.ajax({
+				 type : 'get',
+				 url : "/admin/chart/getJoinWeek.json",
+				 async: false,
+				 success : function(list){
+					joinCountList = list;
+				 }
+			 })
+			 return joinCountList;
+			 
+		 }
+  
+	      const getDateStr = function(myDate){
+	    
+	    	  var year;
+	    	  var month = (myDate.getMonth() + 1);
+	    	  var day = myDate.getDate();
+	    	  
+	    	  year = myDate.getFullYear().toString().substring(2,4);
+	    	  month = (month < 10) ? "0" + String(month) : month;
+	    	  day = (day < 10) ? "0" + String(day) : day;
+	    	  
+	    	  return  (year + '/' + month + '/' + day );
+	}
 		
- 	
 		
 	
 
