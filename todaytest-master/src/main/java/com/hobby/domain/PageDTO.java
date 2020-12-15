@@ -5,6 +5,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
+// 페이지들의 넘버링과, 이전+이후가 표시 되도록 해주는 DTO
 public class PageDTO {
 	
 	private int startPage;
