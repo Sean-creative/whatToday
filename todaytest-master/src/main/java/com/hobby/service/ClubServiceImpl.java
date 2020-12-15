@@ -54,6 +54,7 @@ public class ClubServiceImpl implements ClubService {
 	public ClubVO getClub(Long cbNum) {
 		
 		log.info("getclub......"+ cbNum);
+		mapper.boardViews(cbNum);
 		return mapper.readclub(cbNum);
 	}
 
