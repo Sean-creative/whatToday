@@ -235,7 +235,8 @@ public class MypageController {
 				
 				userVO.setUsrPwd(newPassword);
 				
-				if(service.updateUserInfo(userVO) == 1) {
+				
+				if(service.updateUserPwd(userVO) == 1) {
 					rtts.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
 					url = "redirect:/mypage/main";
 				}else {

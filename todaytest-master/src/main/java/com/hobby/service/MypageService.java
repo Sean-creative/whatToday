@@ -26,7 +26,7 @@ public interface MypageService {
 	public List<RegionVO> getCityList();
 	public List<RegionVO> getDistrictList(String rgName);
 	
-	
+	public int updateUserPwd(UserVO userVO);
 	public int updateUserInfo(UserVO userVO);
 	public int updateUserDetail(UserVO userVO);
 	public int insertUserHistory(UserVO userVO);
