@@ -28,6 +28,6 @@ public interface LoginMapper {
 
 	public String phoneDuplicateCheck(String us_phone);
 	
-	
+	public int updateUsrState(UserVO user);
 	
 }

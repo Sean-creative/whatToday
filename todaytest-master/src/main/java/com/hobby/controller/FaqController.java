@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hobby.domain.NoticeCri;
+import com.hobby.domain.NoticeDTO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.FaqService;
@@ -32,7 +34,7 @@ public class FaqController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-// 자주묻는 질문 	
+	//자주묻는 질문 	
 	@GetMapping("/faq")
 	public void faq(Model model) {
 		log.info("faq");
@@ -45,7 +47,7 @@ public class FaqController {
 		log.info("servcie.faqContent: \n\n"+ service.faqContent());
 	}
 	  
-//	///문의사항////
+	///문의사항////
 	@GetMapping("/inquire")
 	public String inquireRegister(Authentication auth,Model model) {
 		
@@ -93,20 +95,25 @@ public class FaqController {
 	}
 	
 	// 공지사항 	
-	@GetMapping("/notice")
-	public void noticeRead( Model model) {
-		
-		log.info("##notice");
-		
-		//공지사항을 notice라는 이름으로 화면에 보낸다. 
-		model.addAttribute("noticeList", service.noticeList());
-		log.info("servcie.noticeList: \n\n"+ service.noticeList());
+//	@GetMapping("/notice")
+//	public void noticeRead( Model model) {
 //		
-		System.out.println("model###"+model);
+//		log.info("##notice");
+//		
+//		//공지사항을 notice라는 이름으로 화면에 보낸다. 
+//		model.addAttribute("noticeList", service.noticeList());
+//		log.info("servcie.noticeList: \n\n"+ service.noticeList());
+//
+//		System.out.println("model###"+model);
+//	}
+	
+	// 공지사항 + 페이징처리 
+	@GetMapping("/notice")
+	public void noticeRead(NoticeCri cri, Model model) {
 		
-		//자주묻는 질문 내용을 noticecontent라는 이름으로 화면에 보내준다. 
-//		model.addAttribute("noticeList", service.noticeContent());
-//		log.info("servcie.noticeContent: \n\n"+ service.noticeContent());
+		log.info("###paging:"+cri);
+		model.addAttribute("noticeList",service.noticeList(cri));
+		model.addAttribute("pageMaker", new NoticeDTO(cri,123));
 	}
 	
 	@GetMapping("/noticepage")

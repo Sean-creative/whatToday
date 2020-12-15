@@ -1,7 +1,7 @@
 package com.hobby.sns;
 
 /**
- * 카카오 로그인 : 카카오 토큰 얻어오기 / 사용자 정보 얻어오기 / 로그아웃
+ * 카카오 로그인 : 카카오 토큰 얻어오기 / 사용자 정보 얻어오기
  * @author jiyeong
  */
 
@@ -100,40 +100,41 @@ public class KakaoLoginApi {
  
         return returnNode;
     }
-	
-	public static JsonNode logout(String autorize_code) {
-		// 카카오 계정에 로그인 되어 있으면 자동 로그인
-		//	    	final String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
-		//	    	// unlink: 다시 가입
-		final String RequestUrl = "https://kapi.kakao.com/v1/user/unlink";
 
-		final HttpClient client = HttpClientBuilder.create().build();
-
-		final HttpPost post = new HttpPost(RequestUrl);
-
-		System.out.println("autorize_code: " + autorize_code);
-		post.addHeader("Authorization", "Bearer " + autorize_code);
-
-		JsonNode returnNode = null;
-
-		try {
-
-			final HttpResponse response = client.execute(post);
-
-			ObjectMapper mapper = new ObjectMapper();
-			returnNode = mapper.readTree(response.getEntity().getContent());
-			System.out.println("return : " + returnNode);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-		}
-
-		return returnNode;
-
-	}
+//  security로 로그아웃 구현 -> sns로그아웃처리 별도로 필요 없을 듯
+//	public static JsonNode logout(String autorize_code) {
+//		// 카카오 계정에 로그인 되어 있으면 자동 로그인
+//		//	    	final String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
+//		//	    	// unlink: 다시 가입
+//		final String RequestUrl = "https://kapi.kakao.com/v1/user/unlink";
+//
+//		final HttpClient client = HttpClientBuilder.create().build();
+//
+//		final HttpPost post = new HttpPost(RequestUrl);
+//
+//		System.out.println("autorize_code: " + autorize_code);
+//		post.addHeader("Authorization", "Bearer " + autorize_code);
+//
+//		JsonNode returnNode = null;
+//
+//		try {
+//
+//			final HttpResponse response = client.execute(post);
+//
+//			ObjectMapper mapper = new ObjectMapper();
+//			returnNode = mapper.readTree(response.getEntity().getContent());
+//			System.out.println("return : " + returnNode);
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		} catch (ClientProtocolException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//		}
+//
+//		return returnNode;
+//
+//	}
 	
 }

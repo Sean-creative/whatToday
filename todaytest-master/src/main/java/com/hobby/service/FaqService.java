@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hobby.domain.FaqVO;
 import com.hobby.domain.InquireVO;
+import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeVO;
 
 public interface FaqService {
@@ -20,8 +21,12 @@ public interface FaqService {
 	
 //========공지사항==========// 
 	//공지사항 제목 
-	public List<NoticeVO> noticeList();
+	//public List<NoticeVO> noticeList();
+	public List<NoticeVO> noticeList(NoticeCri cri);
 	//공지사항 내용  
 	public List<NoticeVO> noticeContent(Long ntNum);
+
+	
+
 	
 }
