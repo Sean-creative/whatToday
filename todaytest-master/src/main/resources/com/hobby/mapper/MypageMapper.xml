@@ -55,11 +55,18 @@
 	<update id="updateUserInfo">
 		update TBLUSER
 		set USRPHONE = #{usrPhone},
-		USRPWD = #{usrPwd},
 		USRSTATE = #{usrState},
 		USRIMG = #{usrImg},
 		USRIMGPATH = #{usrImgPath}
-		where USRNUM = #{usrNum} 
+		where USRNUM = #{usrNum}
+	</update>
+	
+	<update id="updateUserPwd">
+		update TBLUSER
+		set 
+		USRPWD = #{usrPwd},
+		USRCHANGEPWDDATE = sysdate
+		where USRNUM = #{usrNum}
 	</update>
 	
 	<insert id="insertUserHistory">
@@ -153,5 +160,5 @@
 		values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
 	</insert>
 	
-	
+
 </mapper>

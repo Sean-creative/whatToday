@@ -42,7 +42,7 @@
 	<textarea name="cbDetailContent" rows="10" cols="100"
 		style="resize: none" placeholder="30자이내로 작성하세요"></textarea><br> 
 	<input type="file" name="cbFile">
-	<button type="submit" onclick="alert('모임이 개설되었습니다.')">개설하기</button>
+	<input type="button" value="개설하기" onclick="alert('모임이 개설되었습니다.')"/>
 </form>
 
 <script type="text/javascript">
@@ -70,8 +70,8 @@
 			return false;
 		}
 		//모임정원 빈문자열체크,정원 제한(1~200명)
-		if(!number.value || (number.value <= 0) || (number.value > 201)) {
-			alert("모임정원을 입력해주세요.(최대정원:200명)");
+		if(!number.value || (number.value <= 0) || (number.value > 50)) {
+			alert("모임정원을 입력해주세요.(최대정원:50명)");
 			return false;
 		}
 		//한줄소개 빈문자열 체크, 글자수 제한 

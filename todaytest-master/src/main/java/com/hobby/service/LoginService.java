@@ -20,4 +20,7 @@ public interface LoginService {
 
 	public boolean sendPassword(String email, String pwd);
 	
+	public boolean sendRegisterMail(String email, String authKey);
+	
+	public boolean registerConfirm(String usrId, String authKey);
 }

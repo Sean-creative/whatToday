@@ -10,6 +10,7 @@
 </head>
 <body>
 
+
 	<!-- Masthead-->
 	<header id=header>
 
@@ -28,6 +29,7 @@
 
 		<!-- 로그인되면 보여지는 페이지 -->
 		<sec:authorize access="isAuthenticated()">
+
 			<ul>
 				<a href="/" id="user"><sec:authentication property="principal.user.usrName" />님</a>
 				<a href="/login/logout">로그아웃</a>
@@ -63,7 +65,9 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 		
 
-	<script type="text/javascript">
+
+<script type="text/javascript">
+	$(document).ready(function() {
 
 		var id = document.getElementById("user");
 		console.log("userId: " +id);
@@ -72,7 +76,9 @@
 			$(".main").css("display","none");
 		}
 		
+
 		const inputCheckMain = function(){
+
 			// 공백을 제거해한 뒤에 개수를 세던지 한다.
 			let keyword = $.trim($("[name=keyword]").val());
 			$('[name=keyword]').val(keyword);
@@ -82,5 +88,9 @@
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
-		}
-			</script>
+
+		};
+	});
+</script>
+
+

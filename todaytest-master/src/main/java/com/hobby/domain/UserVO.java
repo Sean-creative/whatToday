@@ -77,8 +77,9 @@ public class UserVO {
     private Long usrHistoryNum;
     // 상태변경날짜
     private Date usrStateUpdateDate;
-    
-    
+    // 차트에 사용할 이용자 숫자와 날짜
+    private int memberCount;
+    private String weekDate;
     
     
 }

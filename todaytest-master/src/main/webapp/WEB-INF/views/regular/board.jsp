@@ -25,7 +25,7 @@
 				<tr>
 					<td><c:out value="${club.cbBno}" /></td>
 					<td>
-					<a href='/regular/boardget?cbNum=<c:out value="${cbNum}"/>&cbBno=<c:out value="${club.cbBno }"/>'> 
+					<a class='move' href='<c:out value="${club.cbBno }"/>'> 
 					<c:out value="${club.cbBdTitle }" /></a>(${club.replyCount})</td>
 					<td><c:out value="${club.cbBdWriter}" /></td>
 					<td><c:out value="${club.cbBdDate}" /></td>
@@ -33,6 +33,8 @@
 				</tr>
 				</c:forEach>
 			</table>
+			
+			
 			</div> 
 		
  		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
@@ -56,6 +58,7 @@
 			<!--  end Pagination --> 
 		</div>
 		    <form id='actionForm' action="/regular/board" method='get'>
+		    	<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 			</form>		
@@ -81,7 +84,15 @@
 						$("#createBtn").on("click", function() {
 							
 							self.location = "/regular/boardadd?cbNum=<c:out value="${cbNum}" />";
-						});				
+						});		
+						
+						$(".move").on("click", function(e) {
+							e.preventDefault();
+							actionForm.append("<input type='hidden' name='cbBno' value='" + $(this).attr("href")+"'>");
+							actionForm.attr("action", "/regular/boardget");
+							actionForm.submit();
+							 
+						});
 				});
 </script>
 
