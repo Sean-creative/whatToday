@@ -2,6 +2,7 @@ package com.hobby.mapper;
 
 import java.util.List;
 
+import com.hobby.domain.Criteria;
 import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeVO;
 
@@ -20,6 +21,8 @@ public interface NoticeMapper {
 		
 	// 공지사항 페이징처리
 	public List<NoticeVO> noticeListWithPaging(NoticeCri cri);
+
+	public int getTotalCount();
 //=======공지사항 삭제 ==========//
 	//공지사항
 	public int deleteNotice(Long ntNum);
