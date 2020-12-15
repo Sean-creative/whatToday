@@ -92,8 +92,8 @@ form {
 
 ul li.tag-item {
 	padding: 4px 8px;
-	background-color: #777;
-	color: #000;
+	background-color: orange;
+	color: white;
 }
 
 .tag-item:hover {
@@ -112,7 +112,6 @@ ul li.tag-item {
 	width: 200px;
 	height: auto;
 }
-
 </style>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
@@ -124,8 +123,8 @@ ul li.tag-item {
 		<div class='City'></div>
 	</div>
 
-<!-- onsubmit="return inputCheck()" -->
-	<form action="/thunder/add" method="post" id="tag-form"  enctype="multipart/form-data">
+	<!-- onsubmit="return inputCheck()" -->
+	<form action="/thunder/add" method="post" id="tag-form" enctype="multipart/form-data">
 		<div>
 			<div>
 				모임명<br>
@@ -135,13 +134,12 @@ ul li.tag-item {
 
 		</div>
 
-<div class="inputArea" style="float: left; margin-right: 50px">
-			
+		<div class="inputArea" style="float: left; margin-right: 50px">
+
 			<div class="select_img" style="margin: 2px 0px">
-				<img class="thumbImg" src="/resources/img/logo.png" style="margin:0px;" />
-				<br>
+				<img class="thumbImg" src="/resources/img/logo.png" style="margin: 0px;" /> <br>
 				<!-- <label for="gdsImg" >이미지 선택</label> -->
-				<input type="file" id="gdsImg" name="file" style="width:200px;" />
+				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 			</div>
 
 			<script>
@@ -152,7 +150,8 @@ ul li.tag-item {
 								var reader = new FileReader;
 								reader.onload = function(data) {
 									$(".select_img img").attr("src",
-											data.target.result).width(200).height(144);
+											data.target.result).width(200)
+											.height(144);
 								}
 								reader.readAsDataURL(this.files[0]);
 							}
@@ -161,8 +160,8 @@ ul li.tag-item {
 			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
 			<%-- <%=request.getRealPath("/")%> --%>
 		</div>
-		
-		
+
+
 
 
 
@@ -174,14 +173,16 @@ ul li.tag-item {
 				<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
 					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
 				<!-- JS로 MIN과 MAX를 찍어주자 -->
-				<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' style="width: 200px; border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 			<div>
-				카테고리/분야<br> <select name="cbCategory" required="required" id='category' style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
+				카테고리/분야<br>
+				<select name="cbCategory" required="required" id='category' style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
 			</div>
 
 			<div>
-				모임<br> <select name="cbSubcat" required="required" id="subcat" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임<br>
+				<select name="cbSubcat" required="required" id="subcat" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 					<option value="모임 선택" selected>모임 선택
 				</select>
 			</div>
@@ -190,41 +191,29 @@ ul li.tag-item {
 
 		<div>
 			<div>
-				모임 인원<br> <input type="number" required="required" name='cbMbnum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 인원<br>
+				<input type="number" required="required" name='cbMbnum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				모임 마감기간<br> <input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 마감기간<br>
+				<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' style="width: 200px; border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				해시태그<br> <input type="hidden" value="" name="cbHashtag" id="rdTag" />
+				해시태그<br>
+				<input type="hidden" value="" name="cbHashtag" id="rdTag" />
 
 
 				<div>
 					<input type="text" id="tag" size="7" value="#" />
 				</div>
 				<ul id="tag-list"></ul>
-			</div>			
+			</div>
 		</div>
 
 
-		<!--   <div>
-                <div>
-                  지역 <br>
-                  <select name="cbCity" id="city">
-                  <option value="지역 선택" >지역 선택</option>                  
-                  <option value="서울특별시" >서울특별시</option>                  
-                  <option value="경기도" >경기도</option>                  
-                  </select>
-                </div>
-                <div>
-                  세부지역<br>
-                  <select name="cbDistrict" id="district">
-                  <option value="세부지역 선택">세부지역 선택</option> 
-                  </select>
-                </div>
-          </div> -->
+
 
 
 
@@ -240,11 +229,13 @@ ul li.tag-item {
 
 		<div>
 			<div>
-				모임 장소 <br> <input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				모임 장소 <br>
+				<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' style="border: 1px solid #ff9f40; padding: 3px 0px;">
 			</div>
 
 			<div>
-				모임 준비물<br> <input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50">
+				모임 준비물<br>
+				<input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50">
 			</div>
 		</div>
 
@@ -261,10 +252,14 @@ ul li.tag-item {
 
 
 		<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
-		<input type='hidden' name='cbCity'> <input type='hidden' name='cbDistrict'> <input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation'>
+		<input type='hidden' name='cbCity'>
+		<input type='hidden' name='cbDistrict'>
+
+		<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude'>
+		<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude'>
 
 
-		
+
 
 
 	</form>
@@ -281,7 +276,8 @@ ul li.tag-item {
 				<div>
 
 					<form role="form" onsubmit="searchPlaces(); return false;">
-						모임 장소 : <input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+						모임 장소 :
+						<input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 						<button type="submit">검색하기</button>
 
 
@@ -333,10 +329,8 @@ ul li.tag-item {
 				let days = new Date();
 				days.setTime(resp.daily[idx].dt * 1000);
 				const today = moment(days);
-				console.log("날짜 : " + today.format('YYYY-MM-DD'));
 				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
 
-				console.log("최고 기온 : " + resp.daily[idx].temp.max);
 				tmp += '<div class="Temp">'
 						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
 						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
@@ -358,7 +352,7 @@ ul li.tag-item {
 						var tag = {};
 						var counter = 0;
 						var maxHash = 0;
-						
+
 						// 태그를 추가한다.
 						function addTag(value) {
 							tag[counter] = value; // 태그를 Object 안에 추가
@@ -377,26 +371,35 @@ ul li.tag-item {
 						$("#tag-form").on("submit", function(e) {
 							var value = marginTag(); // return array
 							$("#rdTag").val(value);
-						
-							
-							if(inputCheck() == true){
-								alert('개설되었습니다.');														
+
+							if (inputCheck() == true) {
+								alert('개설되었습니다.');
+							} else {
+								e.preventDefault();
 							}
-							else {
-								e.preventDefault();											
-							}													
 						});
 
 						// 처음 부터 #이 달려있고
 						// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
 						// 5개까지 밖에 입력하지 못한다.
-						$("#tag").keyup(function(e) {
-							let text = $(this).val();
+						$("#tag")
+								.keyup(
+										function(e) {
+											let text = $(this).val();
 
-							if (text.length == 0) {
-								$(this).val("#");
-							}
-						});
+											if (text.length == 0) {
+												$(this).val("#");
+											}
+
+											//#은 제외
+											var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+											// test() ㅡ 찾는 문자열이 들어있는지 확인
+											if (regExp.test(text)) {
+												text = text.replace(regExp, ""); // 찾은 특수 문자를 제거													
+											}
+											$(this).val(text);
+										});
 
 						$("#tag")
 								.on(
@@ -415,9 +418,20 @@ ul li.tag-item {
 													self.val("#");
 												} else {
 													var tagValue = self.val(); // 값 가져오기
+													console.log(tagValue);
 
-													// 값이 없으면 동작 안함
-													if (tagValue !== "") {
+													//사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌, #은 제외
+													var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+													 													 
+													// test() ㅡ 찾는 문자열이 들어있는지 확인
+													if(regExp.test(tagValue)){													 
+													tagValue = tagValue.replace(regExp, ""); // 찾은 특수 문자를 제거													
+													}
+													
+
+													// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
+													if (tagValue !== ""
+															&& tagValue !== "#") {
 
 														// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
 														var result = Object
@@ -429,7 +443,7 @@ ul li.tag-item {
 																		})
 
 														// 태그 중복 검사
-														if (result.length == 0) {															
+														if (result.length == 0) {
 															$("#tag-list")
 																	.append(
 																			"<li class='tag-item'>"

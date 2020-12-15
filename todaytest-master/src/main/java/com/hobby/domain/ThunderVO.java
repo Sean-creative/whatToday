@@ -69,6 +69,9 @@ public class ThunderVO {
 	// 첨부파일
 	private String cbFile;
 	
+	// 조회수
+	private Long cbView;
+	
 	//썸네일
 	private String cbThumbImg;
 

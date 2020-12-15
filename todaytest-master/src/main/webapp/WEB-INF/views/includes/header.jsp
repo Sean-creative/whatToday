@@ -43,7 +43,7 @@
 			<ul>
 				<a href="">三</a>
 				<a href="/regular/list">정기</a>
-				<a href="/thunder/gps">번개</a>
+				<a href="/thunder/list">번개</a>
 				<a href="">베스트</a>
 				<a href="">추천</a>
 				<div class="dropdown">

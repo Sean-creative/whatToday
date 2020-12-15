@@ -23,9 +23,9 @@ public interface ThunderService {
 	
 	//로그인된 유저의 번호로, 지금 가입하려고하는 모임이 가입되어 있는지 상태를 조사
 	//반환값은 cbmbstresult
-	public String getCbMemByUsrNum(Long usrNum, Long cbNum);
+	public String getCbMemByUsrNum(Long usrNum, Long cbNum);	
 	
-	public List<ThunderVO> getList(Criteria cri);
+	public List<ThunderVO> getListWithPaging(Criteria cri);
 	
 	public int getTotal(Criteria cri);
 		

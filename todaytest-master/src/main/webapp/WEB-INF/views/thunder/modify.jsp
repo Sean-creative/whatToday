@@ -136,13 +136,12 @@ ul li.tag-item {
 		</div>
 
 
-	<div class="inputArea" style="float: left; margin-right: 50px">
-			
+		<div class="inputArea" style="float: left; margin-right: 50px">
+
 			<div class="select_img" style="margin: 2px 0px">
-				<img class="thumbImg" src="${clubVO.cbThumbImg}" style="margin:0px;" />
-				<br>
+				<img class="thumbImg" src="${clubVO.cbThumbImg}" style="margin: 0px;" /> <br>
 				<!-- <label for="gdsImg" >이미지 선택</label> -->
-				<input type="file" id="gdsImg" name="file" style="width:200px;" />
+				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 			</div>
 
 			<script>
@@ -153,7 +152,8 @@ ul li.tag-item {
 								var reader = new FileReader;
 								reader.onload = function(data) {
 									$(".select_img img").attr("src",
-											data.target.result).width(200).height(144);
+											data.target.result).width(200)
+											.height(144);
 								}
 								reader.readAsDataURL(this.files[0]);
 							}
@@ -207,12 +207,12 @@ ul li.tag-item {
 			<div>
 				해시태그<br>
 				<!-- 해시태그 수정 안하면 이값 그대로 가면 됨 -->
-				<input type="hidden"  name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />'/>
+				<input type="hidden" name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />' />
 
 
 				<div>
-				<!-- value="#" -->
-					<input type="text" id="tag" size="7"  value='#' />
+					<!-- value="#" -->
+					<input type="text" id="tag" size="7" value='#' />
 				</div>
 				<ul id="tag-list"></ul>
 			</div>
@@ -278,7 +278,7 @@ ul li.tag-item {
 		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
 		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-		
+
 		<!-- 사진 첨부 안했을 시 사용해야함 -->
 		<input type='hidden' name='cbFile' value='<c:out value="${clubVO.cbFile}"/>'>
 		<input type='hidden' name='cbThumbImg' value='<c:out value="${clubVO.cbThumbImg}"/>'>
@@ -286,7 +286,9 @@ ul li.tag-item {
 		<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
 		<input type='hidden' name='cbCity' value='<c:out value="${clubVO.cbCity}"/>'>
 		<input type='hidden' name='cbDistrict' value='<c:out value="${clubVO.cbDistrict}"/>'>
-		<input type='hidden' name='thunderDetailVO.cbLocation' id='cbLocation' value='<c:out value="${clubVO.thunderDetailVO.cbLocation}"/>'>
+
+		<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude' value='<c:out value="${clubVO.thunderDetailVO.cbLatitude}"/>'>
+		<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude' value='<c:out value="${clubVO.thunderDetailVO.cbLongitude}"/>'>
 
 		<!-- 업데이트가 되어있어야 하기때문에, mapper.xml의 update에 있는 속성은 전달해야함-->
 		<input type='hidden' name='cbCurMbnum' value='<c:out value="${clubVO.cbCurMbnum}"/>'>
@@ -355,15 +357,13 @@ ul li.tag-item {
 				let days = new Date();
 				days.setTime(resp.daily[idx].dt * 1000);
 				const today = moment(days);
-				
+
 				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
 
-				
 				tmp += '<div class="Temp">'
 						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
 						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
 
-						
 				imgURL = "http://openweathermap.org/img/w/"
 						+ resp.daily[idx].weather[0].icon + ".png";
 				tmp += '<div class="Icon">' + "<img src="+imgURL+">" + '<div>';
@@ -396,31 +396,38 @@ ul li.tag-item {
 							});
 						}
 
-						
 						// 서버에 넘기기
-// 						$("#tag-form").on("submit", function(e) {
-// 							var value = marginTag(); // return array
-// 							$("#rdTag").val(value);
-					
-// 							if (inputCheck() == true) {
-// 								alert('개설되었습니다.');								
-// 							} else {
-// 								e.preventDefault();
-// 							}
-// 						});
-						
-						
+						// 						$("#tag-form").on("submit", function(e) {
+						// 							var value = marginTag(); // return array
+						// 							$("#rdTag").val(value);
+
+						// 							if (inputCheck() == true) {
+						// 								alert('개설되었습니다.');								
+						// 							} else {
+						// 								e.preventDefault();
+						// 							}
+						// 						});
 
 						// 처음 부터 #이 달려있고
 						// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
 						// 5개까지 밖에 입력하지 못한다.
-						$("#tag").keyup(function(e) {
-							let text = $(this).val();
+						$("#tag")
+								.keyup(
+										function(e) {
+											let text = $(this).val();
 
-							if (text.length == 0) {
-								$(this).val("#");
-							}
-						});
+											if (text.length == 0) {
+												$(this).val("#");
+											}
+											//#은 제외
+											var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+											// test() ㅡ 찾는 문자열이 들어있는지 확인
+											if (regExp.test(text)) {
+												text = text.replace(regExp, ""); // 찾은 특수 문자를 제거													
+											}
+											$(this).val(text);
+										});
 
 						$("#tag")
 								.on(
@@ -439,9 +446,18 @@ ul li.tag-item {
 													self.val("#");
 												} else {
 													var tagValue = self.val(); // 값 가져오기
+													
+													//사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌, #은 제외
+													var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+													 													 
+													// test() ㅡ 찾는 문자열이 들어있는지 확인
+													if(regExp.test(tagValue)){													 
+													tagValue = tagValue.replace(regExp, ""); // 찾은 특수 문자를 제거													
+													}
 
-													// 값이 없으면 동작 안함
-													if (tagValue !== "") {
+													// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
+													if (tagValue !== ""
+															&& tagValue !== "#") {
 
 														// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
 														var result = Object
@@ -453,7 +469,7 @@ ul li.tag-item {
 																		})
 
 														// 태그 중복 검사
-														if (result.length == 0) {															
+														if (result.length == 0) {
 															$("#tag-list")
 																	.append(
 																			"<li class='tag-item'>"
@@ -476,90 +492,84 @@ ul li.tag-item {
 						$(document).on("click", ".del-btn", function(e) {
 							var index = $(this).attr("idx");
 							tag[index] = "";
-							$(this).parent().remove();			
+							$(this).parent().remove();
 							maxHash--;
 						});
-						
-					
+
+						//초기에 로딩이 되면 해시태그 데이터를 넣어준다!
 						let stringHash = '${clubVO.cbHashtag}';
-						let arrayHash = stringHash.split(',');					
-						for (let i in arrayHash) {
-							$("#tag-list").append("<li class='tag-item'>" + arrayHash[i] + "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-				            addTag(arrayHash[i]);
+						let arrayHash = stringHash.split(',');
+						for ( let i in arrayHash) {
+							if (arrayHash[i] != "") {
+							$("#tag-list")
+									.append(
+											"<li class='tag-item'>"
+													+ arrayHash[i]
+													+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+							addTag(arrayHash[i]);
+							}
 						}
-						
-						
-						
-						
-						
-						
 
 						// Modify, Remove, List 중 버튼을 누른다면,
 						let formObj = $("#modifyForm");
 
-						$('.btn-default').on("click", function(e) {
-							e.preventDefault();
+						$('.btn-default').on(
+								"click",
+								function(e) {
+									e.preventDefault();
 
-							let operation = $(this).data("oper");
+									let operation = $(this).data("oper");
 
-							console.log(operation);
+									console.log(operation);
 
-							if (operation === 'remove') {
-								alert('삭제되었습니다');
-								formObj.attr("action", "/thunder/remove");
+									if (operation === 'remove') {
+										alert('삭제되었습니다');
+										formObj.attr("action",
+												"/thunder/remove");
 
-							} else if (operation === 'list') {
-								// move to list
-								formObj.attr("action", "/thunder/list").attr("method", "get");
+									} else if (operation === 'list') {
+										// move to list
+										formObj.attr("action", "/thunder/list")
+												.attr("method", "get");
 
-//								let pageNumTag = $("input[name='pageNum']").clone();
-//								let amountTag = $("input[name = 'amount']").clone();
-					//
-//								let categoryTag = $("input[name = 'category']").clone();
-//								let subclassTag = $("input[name = 'subclass']").clone();
-//								let cityTag = $("input[name = 'city']").clone();
-//								let districtTag = $("input[name = 'district']").clone();
-//								let searchByTag = $("input[name = 'searchBy']").clone();
-//								let keywordTag = $("input[name = 'keyword']").clone();
-					//
-//								formObj.empty();
-					//
-//								formObj.append(pageNumTag);
-//								formObj.append(amountTag);
-					//
-//								formObj.append(categoryTag);
-//								formObj.append(subclassTag);
-//								formObj.append(cityTag);
-//								formObj.append(districtTag);
-//								formObj.append(searchByTag);
-//								formObj.append(keywordTag);
+										//								let pageNumTag = $("input[name='pageNum']").clone();
+										//								let amountTag = $("input[name = 'amount']").clone();
+										//
+										//								let categoryTag = $("input[name = 'category']").clone();
+										//								let subclassTag = $("input[name = 'subclass']").clone();
+										//								let cityTag = $("input[name = 'city']").clone();
+										//								let districtTag = $("input[name = 'district']").clone();
+										//								let searchByTag = $("input[name = 'searchBy']").clone();
+										//								let keywordTag = $("input[name = 'keyword']").clone();
+										//
+										//								formObj.empty();
+										//
+										//								formObj.append(pageNumTag);
+										//								formObj.append(amountTag);
+										//
+										//								formObj.append(categoryTag);
+										//								formObj.append(subclassTag);
+										//								formObj.append(cityTag);
+										//								formObj.append(districtTag);
+										//								formObj.append(searchByTag);
+										//								formObj.append(keywordTag);
 
-							}
-							// Modify 라고 한다면
-							else {
-								if (inputCheck()) {
-									var value = marginTag(); // return array
-									$("#rdTag").val(value);
-									console.log("true");
-								} else {
-									console.log("false");
-									return;
-								}
-							}
-							formObj.submit();
-						});
-						
-						
-						
-						
+									}
+									// Modify 라고 한다면
+									else {
+										if (inputCheck()) {
+											var value = marginTag(); // return array
+											$("#rdTag").val(value);
+											console.log("true");
+										} else {
+											console.log("false");
+											return;
+										}
+									}
+									formObj.submit();
+								});
+
 					})
-					
-	
-					
-					
-					
-				
-					  
 </script>
 <%@include file="../includes/footer.jsp"%>
 

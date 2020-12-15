@@ -17,8 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbPlace" property="cbPlace" />
 		<result column="cbSupplies" property="cbSupplies" />
 
-		<result column="cbLocation" property="cbLocation" />
+		<result column="cbLatitude" property="cbLatitude" />
+		<result column="cbLongitude" property="cbLongitude" />
+		
 		<result column="cbAddress" property="cbAddress" />
+		
+		<result column="distance" property="distance" />
 	</resultMap>
 	<resultMap type="com.hobby.domain.ThunderVO" id="ThunderVO">
 		<result column="cbNum" property="cbNum" />
@@ -41,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbDetailContent" property="cbDetailContent" />
 		<result column="cbFile" property="cbFile" />
 		<result column="cbThumbImg" property="cbThumbImg" />
+		<result column="cbView" property="cbView" />
 
 
 
@@ -87,12 +92,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		thunderDetail
 		(cbNum,cbDate,
 		cbAppPeriod, cbPlace, cbSupplies,
-		cbLocation, cbAddress)
+		cbLatitude, cbLongitude, cbAddress)
 		values(#{cbNum}, #{thunderDetailVO.cbDate},
 		#{thunderDetailVO.cbAppPeriod},
 		#{thunderDetailVO.cbPlace},
 		#{thunderDetailVO.cbSupplies},
-		#{thunderDetailVO.cbLocation},
+		#{thunderDetailVO.cbLatitude},
+		#{thunderDetailVO.cbLongitude},
 		#{thunderDetailVO.cbAddress} );
 
 
@@ -197,8 +203,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		cbAppPeriod=#{thunderDetailVO.cbAppPeriod},
 		cbPlace=#{thunderDetailVO.cbPlace},
 		cbSupplies=#{thunderDetailVO.cbSupplies},
-
-		cbLocation=#{thunderDetailVO.cbLocation},
+		
+		cbLatitude=#{thunderDetailVO.cbLatitude},
+		cbLongitude=#{thunderDetailVO.cbLongitude},
 		cbAddress=#{thunderDetailVO.cbAddress}
 		where cbNum = #{cbNum};
 
@@ -277,7 +284,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<!-- List 화면에 보여줄 값들만 찾아오면 된다.... -->
-	<select id="getListWithPaging" resultMap="ThunderVO">
+<!-- 	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[
 	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate
 	from ( 	
@@ -298,17 +305,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where rownum<= #{pageNum} * #{amount}
 			)				
 	 where rn > (#{pageNum}-1) * #{amount} ]]>
+	</select> -->
+	
+	
+	<!-- 거리제한 두고 리스트 페이징 처리 -->
+	<select id="getListWithPaging" resultMap="ThunderVO">
+	<![CDATA[
+	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance , cbView, cbappperiod
+	from ( 	
+				select rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance, cbView,cbappperiod
+				from
+				(
+							select  c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate,    ROUND(DISTNACE_WGS84(#{userLatitude}, #{userLongitude}, cblatitude, cblongitude) ,2) distance, c.cbView, td.cbappperiod
+							from club c, thunderDetail td				
+							where  
+								]]>
+
+		<include refid="criteria"></include>
+							
+							<![CDATA[  
+							c.cbNum = td.cbNum AND c.cbType='번개모임' 
+							order by ${orderBy}	        	       		     
+				 )
+				where distance < 20 AND rownum<= #{pageNum} * #{amount}
+			)				
+	 where rn > (#{pageNum}-1) * #{amount} ]]>
 	</select>
 
 
 
-
+<!-- 거리제한 둔 것 개수 세기 -->
 	<select id="getTotalCount" resultType="int">
+	<![CDATA[	select  count(*)
+				from
+				(
+							select   ROUND(DISTNACE_WGS84(37.537623499999995, 127.1580072, cblatitude, cblongitude) ,2) distance
+							from club c, thunderDetail td				
+							where ]]>
+                            <include refid="criteria"></include>
+	<![CDATA[				c.cbNum = td.cbNum AND c.cbType='번개모임' 							
+				 )                 
+				where distance <20 ]]>
+	</select>
+
+
+<!-- <select id="getTotalCount" resultType="int">
 		select count(*) from club where
 		<include refid="criteria"></include>
 		cbType='번개모임'
-	</select>
-
+	</select> -->
 
 </mapper>
 

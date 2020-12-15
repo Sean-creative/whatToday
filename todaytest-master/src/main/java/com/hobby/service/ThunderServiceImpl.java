@@ -24,15 +24,15 @@ import lombok.extern.log4j.Log4j;
 public class ThunderServiceImpl implements ThunderService {
 
 	//Service단에서 log.info가 찍히지 않는다.
-	private ThunderMapper mapper;
+	private ThunderMapper mapper;	
 
-
+	
 	@Override
-	public List<ThunderVO> getList(Criteria cri) {
-		log.info("get List with criteria: " + cri);
+	public List<ThunderVO> getListWithPaging(Criteria cri) {
+
 		return mapper.getListWithPaging(cri);
 	}
-
+	
 	@Override
 	public ThunderVO get(long cbNum) {
 		log.info("get ...." + cbNum);
@@ -169,6 +169,8 @@ public class ThunderServiceImpl implements ThunderService {
 		
 		return mapper.readCbMemByUsrNum(usrNum, cbNum);
 	}
+
+	
 
 
 

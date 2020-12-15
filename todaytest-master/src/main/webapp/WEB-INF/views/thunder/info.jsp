@@ -345,11 +345,15 @@ ul li.tag-item {
 
 	/* 해시태그 구현관련!! */
 	let stringHash = '${clubVO.cbHashtag}';
+	console.log(stringHash);
 
 	let arrayHash = stringHash.split(',');
-
+	console.log(arrayHash);
+	
 	for ( let i in arrayHash) {
-		$("#tag-list").append("<li class='tag-item'>" + arrayHash[i] + "</li>");
+		if (arrayHash[i] != "") {
+		$("#tag-list").append("<li class='tag-item'>" + arrayHash[i] + "</li>");		
+		}
 	}
 </script>
 

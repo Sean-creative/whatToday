@@ -76,7 +76,9 @@
 				<select name='category' id='category' style="width: 220px; height: 40px; font-size: 20px;"></select>
 
 				<!-- DB의 컬럼명이 subclass에서 subcat으로 바뀌면서, 코드내에 Criteria를 사용하는 곳은 다 바꿔야함 -->
-				<select name='subclass' id='subcat' style="width: 220px; height: 40px; font-size: 20px;"></select> <select name='city' id='city' style="width: 220px; height: 40px; font-size: 20px;" id="city"></select> <select name='district' id='district' style="width: 220px; height: 40px; font-size: 20px;"></select>
+				<select name='subclass' id='subcat' style="width: 220px; height: 40px; font-size: 20px;"></select>
+				<select name='city' id='city' style="width: 220px; height: 40px; font-size: 20px;" id="city"></select>
+				<select name='district' id='district' style="width: 220px; height: 40px; font-size: 20px;"></select>
 
 			</div>
 
@@ -86,11 +88,12 @@
 				<div>
 
 					<select name='searchBy' id='searchBy' style="width: 150px; height: 35px; font-size: 20px;">
-						<option value='모임명' >모임명</option>
+						<option value='모임명'>모임명</option>
 						<option value='글작성자'>글작성자</option>
 						<option value='해시태그'>해시태그</option>
 
-					</select> <input type="text" name='keyword' style="width: 600px; height: 35px; font-size: 20px;" value='<c:out value="${pageMaker.cri.keyword}"/>' />
+					</select>
+					<input type="text" name='keyword' style="width: 600px; height: 35px; font-size: 20px;" value='<c:out value="${pageMaker.cri.keyword}"/>' />
 
 					<button style="width: 100px; height: 35px; background-color: orange;">검색</button>
 				</div>
@@ -101,7 +104,16 @@
 
 
 		<div style="padding: 20px;">
-			<div style="font-size: 20px; margin: 0px;">최신순 인기순 마감임박순</div>
+		
+			<div style="font-size: 20px; margin: 0px;">
+			<ul class="pagination">
+				<li class="order_button ${pageMaker.cri.orderBy eq 'cbnum desc'? "active":""} "><a href="cbnum desc">최신순</a></li>
+				<li class="order_button ${pageMaker.cri.orderBy eq 'cbView desc'? "active":""} "><a href="cbView desc">인기순</a></li>
+				<li class="order_button ${pageMaker.cri.orderBy eq 'cbappperiod desc'? "active":""} "><a href="cbappperiod desc">마감임박순</a></li>
+				<li class="order_button ${pageMaker.cri.orderBy eq 'distance'? "active":""} "><a href="distance">거리순</a></li>
+			</ul>
+						
+			</div>
 			<div style="margin-top: 20px; display: flex; justify-content: space-between;">
 
 
@@ -129,7 +141,7 @@
 	<div class='pull-right'>
 		<ul class="pagination">
 			<c:if test="${pageMaker.prev}">
-				<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+				<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">🦄</a></li>
 			</c:if>
 
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
@@ -137,14 +149,27 @@
 			</c:forEach>
 
 			<c:if test="${pageMaker.next}">
-				<li class="paginate_button next"><a href="${pageMaker.endPage+1}"> Next</a></li>
+				<li class="paginate_button next"><a href="${pageMaker.endPage+1}"> 🍉</a></li>
 			</c:if>
 
 		</ul>
 	</div>
 
 	<form id='actionForm' action="/thunder/list" method='get'>
-		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'> <input type='hidden' name='amount' value='${pageMaker.cri.amount}'> <input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'> <input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'> <input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'> <input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'> <input type='hidden' name='searchBy' value='<c:out value="${pageMaker.cri.searchBy}"/>'> <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+		<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+		<input type='hidden' name='category' value='<c:out value="${pageMaker.cri.category}"/>'>
+		<input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'>
+		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'>
+		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'>
+		<input type='hidden' name='searchBy' value='<c:out value="${pageMaker.cri.searchBy}"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+		
+		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'>
+		
+		<!-- list.jsp로 어디서 오는지를 몰라서, 리스트 올 떄마다 값을 전달하는 방식으로! -->
+		<input type="hidden" name="userLatitude" >    
+    	<input type="hidden" name="userLongitude" >
 	</form>
 
 </section>

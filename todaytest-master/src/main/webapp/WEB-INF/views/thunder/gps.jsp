@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,12 +10,25 @@
 </head>
 <body>
     
-    <form action="/thunder/list" id="gpsForm" method="get">
-    
-    	<input type="hidden" name="userLatitude" id="userGps"/>    
-    	<input type="hidden" name="userLongitude" id="userGps"/>
+    <form action="/thunder/list" id="gpsForm" method="get">    
+    	<input type="hidden" name="userLatitude" >    
+    	<input type="hidden" name="userLongitude">
     	
-    	<!-- <button type="submit">제출 </button> -->
+    	
+    	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+    	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>    	    
+    	
+    	<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
+    	<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
+    	<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+    	<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
+    	
+    	
+    	<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
+    	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+    	<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
+		
+		  	    
     </form>
     
     
