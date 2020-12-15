@@ -63,7 +63,7 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-table"></i>
@@ -76,8 +76,7 @@
                         </div>
                     </div>
                 </li>
-                
-            <li class="nav-item">
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -90,7 +89,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -98,7 +97,7 @@
                     <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">공지사항:</h6>
-                        <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
+                        <a class="collapse-item" href="/admin/noticemange">공지사항관리</a>
                         </div>
                     </div>
                 </li>
@@ -314,7 +313,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userInfoModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#noticeInfoModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -330,61 +329,38 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">UserTables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">NoticeTables</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Notice</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="noticeTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>상태</th>  
+                                            <th>제목</th>
+                                            <th>날짜</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>번호</th>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>전화번호</th>
-                                            <th>성별</th>
-                                            <th>생일</th>
-                                            <th>가입일</th>
-                                            <th>상태</th>  
+                                            <th>제목</th>
+                                            <th>날짜</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                    
-                                     <c:forEach var="userVO" items="${userVO}">
-                                    <tr>
-                                    	<td>${userVO.usrNum }</td>
-                                    	<td>${userVO.usrId }</td>
-                                    	<td>${userVO.usrName }</td>
-                                    	<td>${userVO.usrPhone }</td>
-                                    	<td>${userVO.usrGender }</td>
-                                    	<td>${userVO.usrBirth }</td>
-                                    	<td>${userVO.usrJoinDate }</td>
-                                    	<td>${userVO.usrState }</td>
-                                    </tr>
-                                    </c:forEach>
-                                    </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                                <div class="float-right">
+                                <button class="btn btn-primary" id="writeNotice" data-toggle='modal' data-target='#noticeWriteModal'>글쓰기</button>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -411,35 +387,49 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- 글쓰기 모달 -->
+    <div class="modal fade" id="noticeWriteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">유저 정보</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                	<img id="usrImg" name="usrImg" alt="없어" style="width: 100px; height: 100px"><br>
-                	아이디 <input type="text" id="usrId" name="usrId" style="border:none" readonly="readonly"><br>
-                	이름 <input type="text" id="usrName" name="usrName" style="border:none" readonly="readonly"><br>
-                	휴대전화 <input type="text" id="usrPhone" name="usrPhone" style="border:none" readonly="readonly"><br>
-                	성별 <input type="text" id="usrGender" name="usrGender" style="border:none" readonly="readonly"><br>
-                	생일 <input type="text" id="usrBirth" name="usrBirth" style="border:none" readonly="readonly"><br>
-                	가입일 <input type="text" id="usrJoinDate" name="usrJoinDate" style="border:none" readonly="readonly"><br>
-                	최근 로그인<input type="text" id="usrLoginDate" name="usrLoginDate" style="border:none" readonly="readonly"><br>
-                	회원상태<input type="text" id="usrState" name="usrState" style="border:none" readonly="readonly"><br>
-
+                제목 <br> <input id="writeNtTitle" name="ntTitle"> <br>
+                내용 <br> <textarea id="writeNtContent" name="ntContent"rows="5" cols="33"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <form action="/admin/banAction">
-                    <button class="btn btn-primary">강퇴</button>
-                    <input type="hidden" id="usrNum" name="usrNum">
-                    </form>
+                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+                    <button class="btn btn-primary" id="write" type='button' data-dismiss="modal">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- 글 수정 모달 -->
+    <div class="modal fade" id="noticeModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                제목 <br> <input id="modifyNtTitle" name="ntTitle"> <br>
+                내용 <br> <textarea id="modifyNtContent" name="ntContent"rows="5" cols="33"></textarea>
+                <input type="hidden" name="ntNum">
+                </div>
+                <div class="modal-footer">
+                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+                	<button class="btn btn-danger" id="delete" type="button" data-dismiss="modal">삭제</button>
+                    <button class="btn btn-primary" id="modify" type='button' data-dismiss="modal">수정</button>
                 </div>
             </div>
         </div>
@@ -465,7 +455,121 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
- 	
+			var table;
+			var data;
+			table = $('#noticeTable').DataTable({
+			 "createdRow": function( row, data, dataIndex ) {
+		        	$(row).attr("data-toggle","modal");
+		        	$(row).attr("data-target","#noticeModifyModal");
+		        	
+		        },
+		        "order": [],
+			
+		     ajax: {
+		        'url':'/admin/noticemanage/noticelist.json',
+		        
+		        //'type': 'POST',
+		        'dataSrc':''
+		     },
+		    columns: [
+		        {"data": "ntNum"},
+		        {"data": "ntTitle"},
+		        {"data": "ntDate"},    
+		    ]
+		});
+		 
+		 $('#noticeTable tbody').on('click', 'tr', function (){
+			data = table.row(this).data();
+			console.log(data);
+			$("#modifyNtTitle").val(data.ntTitle);
+			$("#modifyNtContent").val(data.ntContent);
+			
+		 });
+		 
+		 const modifyNotice = function(){
+			 
+			
+			 let ntTitle = $('#modifyNtTitle').val();
+			 let ntContent = $('#modifyNtContent').val();
+			 
+			 console.log(ntTitle);
+			 
+			  $.ajax({
+					 url: "/admin/noticemanage/updateNotice/",
+					 type:"PUT",
+					 data: JSON.stringify({ntTitle:ntTitle,ntContent:ntContent,ntNum:data.ntNum}),
+					 dataType: "json",
+					 contentType : "application/json; charset=utf-8",
+					 success: function(data){ 
+						 console.log(data);
+						 
+						 },
+				 	 complete : function(com){
+				 		table.ajax.reload();
+						},
+					 }); 
+		 
+		 }
+		 
+
+		 const writeNotice = function(){
+
+			 let ntTitle = $('#writeNtTitle').val();
+			 let ntContent = $('#writeNtContent').val();
+			 
+			 console.log(ntTitle);
+			 console.log(ntContent);
+			 
+			 $.ajax({
+				 type : 'post',
+				 url : "/admin/noticemanage/writeNotice/",
+				 data : JSON.stringify({ntTitle:ntTitle,ntContent:ntContent}),
+				 dataType: "json",
+				 contentType: "application/json; charset=utf-8",
+				 success : function(result, status, xhr){
+					if(callback){
+					 callback(result);
+					}
+					
+				 },
+				 complete : function(result, status, xhr){
+					 table.ajax.reload();
+					}
+			 })
+		 }
+		 
+		 const deleteNotice = function(){
+			 
+		
+			  $.ajax({
+				   type : 'delete',
+				   url : "/admin/noticemanage/deleteNotice/" + data.ntNum,
+				   success : function(result, status, xhr) {
+				    
+				   },
+				   complete : function(result, status, xhr){
+					   table.ajax.reload();
+					   }
+				   })
+			  }
+
+		 $('#write').on("click",function(){
+			 writeNotice();
+		 })
+		 $('#modify').on("click",function(){
+			 modifyNotice();
+		 })
+		 $('#delete').on("click",function(){
+			 deleteNotice();
+		 })
+		 
+		 
+		 $('#noticeWriteModal').on('hidden.bs.modal', function () {
+			 let ntTitle = $('input[name=ntTitle]').val("");
+			 let ntContent = $('textarea[name=ntContent]').val("");
+			 
+		 })
+		
 		
 	
 
