@@ -65,13 +65,25 @@ public class AdminController {
 	public void noticemanage() {
 		
 	}
+	@GetMapping("/chart")
+	public void chart(Model model) {
+		System.out.println(service.getTodayLoginNum());
+		model.addAttribute("userVO",service.getTodayLoginNum());
+	}
 
+	
+	@RequestMapping(value = "/chart/getJoinWeek.json", produces = { MediaType.TEXT_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<UserVO>> getJoinWeek() {
+	
+	return new ResponseEntity<>(service.getJoinWeek(),HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/usermanage/userlist.json", produces = { MediaType.TEXT_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<UserVO>> getUserList() {
-	
-	return new ResponseEntity<>(service.getUserList(),HttpStatus.OK);
+		
+		return new ResponseEntity<>(service.getUserList(),HttpStatus.OK);
 	}
 	@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
 			value = "/usermanage/updateBanUser", consumes = "application/json",

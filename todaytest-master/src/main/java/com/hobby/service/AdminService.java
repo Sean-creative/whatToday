@@ -8,7 +8,11 @@ import com.hobby.domain.UserVO;
 
 public interface AdminService {
 
+	public List<UserVO> getJoinWeek();
+	
 	public List<UserVO> getUserList();
+	
+	public UserVO getTodayLoginNum();
 	
 	public UserVO getUser(String id);
 	
@@ -36,4 +40,6 @@ public interface AdminService {
 	public int deleteNotice(Long ntNum);
 	//======= 공지사항 수정 =======//	
 	public int updateNotice(NoticeVO noticeVO);
+	
+	
 }

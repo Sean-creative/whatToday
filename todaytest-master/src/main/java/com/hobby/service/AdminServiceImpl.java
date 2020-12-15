@@ -135,5 +135,15 @@ public class AdminServiceImpl implements AdminService{
 			}
 		return cnt;
 	}
+
+	@Override
+	public List<UserVO> getJoinWeek() {
+		return mapper.getJoinWeek();
+	}
+
+	@Override
+	public UserVO getTodayLoginNum() {
+		return mapper.getTodayLoginNum();
+	}
 	
 }

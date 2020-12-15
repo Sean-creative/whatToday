@@ -56,7 +56,7 @@
 
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>차트</span></a>
@@ -85,11 +85,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">모임:</h6>
                         <a class="collapse-item" href="/admin/clubmanage">모임목록</a>
-                        <a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
+						<a class="collapse-item" href="/admin/closeClub">폐쇄모임목록</a>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
                  	aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -97,7 +97,7 @@
                     <div id="collapsePages3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">공지사항:</h6>
-                        <a class="collapse-item" href="/admin/noticemange">공지사항관리</a>
+                        <a class="collapse-item" href="/admin/noticemanage">공지사항관리</a>
                         </div>
                     </div>
                 </li>
@@ -329,38 +329,57 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">NoticeTables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">ChartPage</h1>
+                    
+                              <div class="row">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Notice</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="noticeTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>제목</th>
-                                            <th>날짜</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>제목</th>
-                                            <th>날짜</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                <div class="float-right">
-                                <button class="btn btn-primary" id="writeNotice" data-toggle='modal' data-target='#noticeWriteModal'>글쓰기</button>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
+            <div class="col-xl-8 col-lg-7">
+
+              <!-- Area Chart -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">남/녀 회원비율</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <div id="piechart" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  회원가입된 사람들의 남자/여자 비율
+                </div>
+              </div>
+              
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">일별 가입 인원</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <div id="columnchart_values" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  일주일간 가입한 사람 인원
+                </div>
+              </div>
+              </div>
+                   
+                    <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">오늘 로그인한 인원</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <div id="columnchart_values2" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <hr>
+                  오늘 로그인한 인원
+                </div>
+              </div>
+            </div>
+                    
                 <!-- /.container-fluid -->
 
             </div>
@@ -387,58 +406,12 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- 글쓰기 모달 -->
-    <div class="modal fade" id="noticeWriteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                제목 <br> <input id="writeNtTitle" name="ntTitle"> <br>
-                내용 <br> <textarea id="writeNtContent" name="ntContent"rows="5" cols="33"></textarea>
-                </div>
-                <div class="modal-footer">
-                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                    <button class="btn btn-primary" id="write" type='button' data-dismiss="modal">등록</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
-        <!-- 글 수정 모달 -->
-    <div class="modal fade" id="noticeModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                제목 <br> <input id="modifyNtTitle" name="ntTitle"> <br>
-                내용 <br> <textarea id="modifyNtContent" name="ntContent"rows="5" cols="33"></textarea>
-                <input type="hidden" name="ntNum">
-                </div>
-                <div class="modal-footer">
-                	<button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                	<button class="btn btn-danger" id="delete" type="button" data-dismiss="modal">삭제</button>
-                    <button class="btn btn-primary" id="modify" type='button' data-dismiss="modal">수정</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/resources/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+	
     <!-- Core plugin JavaScript-->
     <script src="/resources/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -452,123 +425,167 @@
     <!-- Page level custom scripts -->
     <script src="/resources/admin/js/demo/datatables-demo.js"></script>
 	<script src="/resources/admin/js/list.js"></script>
+	
+	<!-- 구글 차트 scripts -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		
-			var table;
-			var data;
-			table = $('#noticeTable').DataTable({
-			 "createdRow": function( row, data, dataIndex ) {
-		        	$(row).attr("data-toggle","modal");
-		        	$(row).attr("data-target","#noticeModifyModal");
-		        	
-		        },
-		        "order": [],
-			
-		     ajax: {
-		        'url':'/admin/noticemanage/noticelist.json',
-		        
-		        //'type': 'POST',
-		        'dataSrc':''
-		     },
-		    columns: [
-		        {"data": "ntNum"},
-		        {"data": "ntTitle"},
-		        {"data": "ntDate"},    
-		    ]
-		});
-		 
-		 $('#noticeTable tbody').on('click', 'tr', function (){
-			data = table.row(this).data();
-			console.log(data);
-			$("#modifyNtTitle").val(data.ntTitle);
-			$("#modifyNtContent").val(data.ntContent);
-			
-		 });
-		 
-		 const modifyNotice = function(){
-			 
-			
-			 let ntTitle = $('#modifyNtTitle').val();
-			 let ntContent = $('#modifyNtContent').val();
-			 
-			 console.log(ntTitle);
-			 
-			  $.ajax({
-					 url: "/admin/noticemanage/updateNotice/",
-					 type:"PUT",
-					 data: JSON.stringify({ntTitle:ntTitle,ntContent:ntContent,ntNum:data.ntNum}),
-					 dataType: "json",
-					 contentType : "application/json; charset=utf-8",
-					 success: function(data){ 
-						 console.log(data);
-						 
-						 },
-				 	 complete : function(com){
-				 		table.ajax.reload();
-						},
-					 }); 
-		 
-		 }
-		 
+		google.charts.load('current', {'packages':['corechart']});
+	    google.charts.setOnLoadCallback(drawChartPie);
+	    
+	      function drawChartPie() {  	
+	    	let womanCnt = 0;
+	    	let manCnt = 0;
 
-		 const writeNotice = function(){
+	    	for(let i = 0; i < getUserList().length; i ++){
+	    		if(getUserList()[i].usrGender == 'm'){
+	    			manCnt++;
+	    		}else if(getUserList()[i].usrGender == 'f'){
+	    			womanCnt++;
+	    		}
+	    		
+	    	} 
+	    	
+	        let data = google.visualization.arrayToDataTable([
+	          ['GENDER', 'COUNT'],
+	          ['남자',     manCnt],
+	          ['여자',   womanCnt]
+	        ]);
 
-			 let ntTitle = $('#writeNtTitle').val();
-			 let ntContent = $('#writeNtContent').val();
-			 
-			 console.log(ntTitle);
-			 console.log(ntContent);
-			 
+	        let options = {
+	        		width: '100%',
+	        		height: '100%',
+	        };
+
+	        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+	        chart.draw(data, options);
+	        window.addEventListener('resize',drawChartPie,false);
+	      }
+	      
+	      google.charts.load("current", {packages:['corechart']});
+	      google.charts.setOnLoadCallback(drawChartBar);
+	      function drawChartBar() {
+	    	let date = new Date();
+	    	let dateArr = [];
+	    	let countArr = [0,0,0,0,0,0,0];
+	    	let joinCountList =	getJoinWeek();
+	    	
+	    	
+	    	
+	    	for(let x = 0; x<7; x++){
+	    		
+	    		date.setDate(date.getDate()-x);
+	    		dateArr.push(getDateStr(date))
+	    		date.setDate(date.getDate()+x);
+	    		
+	    		for(let y = 0; y<joinCountList.length; y++){
+	    			if(dateArr[x] == joinCountList[y].weekDate){
+	    				countArr[x] = joinCountList[y].memberCount;
+	    				break;
+	    			}
+	    			
+	    		}
+	    	}
+	    	console.log(dateArr);
+	    	
+	        let data = google.visualization.arrayToDataTable([
+	          ["Element", "명", { role: "style" } ],
+	          [dateArr[6], countArr[6], "red"],
+	          [dateArr[5], countArr[5], "orange"],
+	          [dateArr[4], countArr[4], "yellow"],
+	          [dateArr[3], countArr[3], "green"],
+	          [dateArr[2], countArr[2], "blue"],
+	          [dateArr[1], countArr[1], "indigo"],
+	          [dateArr[0], countArr[0], "purple"]
+	        ]);
+
+	        let view = new google.visualization.DataView(data);
+	        view.setColumns([0, 1,
+	                         { calc: "stringify",
+	                           sourceColumn: 1,
+	                           type: "string",
+	                           role: "annotation" },
+	                         2]);
+
+	        let options = {
+	          width: '100%',
+      		 height: '100%',
+	          bar: {groupWidth: "95%"},
+	          legend: { position: "none" },
+	        };
+	        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+	        chart.draw(view, options);
+	        window.addEventListener('resize',drawChartBar,false);
+	    }
+	      google.charts.load("current", {packages:['corechart']});
+	      google.charts.setOnLoadCallback(drawChartBar2);
+	      function drawChartBar2() {
+		    	
+		    	
+		        let data = google.visualization.arrayToDataTable([
+		          ["Element", "명", { role: "style" } ],
+		          ['${userVO.usrLoginDate}', ${userVO.memberCount}, "red"]
+		        ]);
+
+		        let view = new google.visualization.DataView(data);
+		        view.setColumns([0, 1,
+		                         { calc: "stringify",
+		                           sourceColumn: 1,
+		                           type: "string",
+		                           role: "annotation" },
+		                         2]);
+
+		        let options = {
+		          width: '100%',
+	      		 height: '100%',
+		          bar: {groupWidth: "95%"},
+		          legend: { position: "none" },
+		        };
+		        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values2"));
+		        chart.draw(view, options);
+		        window.addEventListener('resize',drawChartBar2,false);
+		    }
+	      
+	      const getUserList = function(){
+	    	let userInfo;
 			 $.ajax({
-				 type : 'post',
-				 url : "/admin/noticemanage/writeNotice/",
-				 data : JSON.stringify({ntTitle:ntTitle,ntContent:ntContent}),
-				 dataType: "json",
-				 contentType: "application/json; charset=utf-8",
-				 success : function(result, status, xhr){
-					if(callback){
-					 callback(result);
-					}
-					
-				 },
-				 complete : function(result, status, xhr){
-					 table.ajax.reload();
+				 type : 'get',
+				 url : "/admin/usermanage/userlist.json",
+				 async: false,
+				 success : function(list){
+					 userInfo = list;
 					}
 			 })
+			 return userInfo;
+			 
 		 }
-		 
-		 const deleteNotice = function(){
+	      const getJoinWeek = function(){
+	    	let joinCountList;
+			 $.ajax({
+				 type : 'get',
+				 url : "/admin/chart/getJoinWeek.json",
+				 async: false,
+				 success : function(list){
+					joinCountList = list;
+				 }
+			 })
+			 return joinCountList;
 			 
-		
-			  $.ajax({
-				   type : 'delete',
-				   url : "/admin/noticemanage/deleteNotice/" + data.ntNum,
-				   success : function(result, status, xhr) {
-				    
-				   },
-				   complete : function(result, status, xhr){
-					   table.ajax.reload();
-					   }
-				   })
-			  }
-
-		 $('#write').on("click",function(){
-			 writeNotice();
-		 })
-		 $('#modify').on("click",function(){
-			 modifyNotice();
-		 })
-		 $('#delete').on("click",function(){
-			 deleteNotice();
-		 })
-		 
-		 
-		 $('#noticeWriteModal').on('hidden.bs.modal', function () {
-			 let ntTitle = $('input[name=ntTitle]').val("");
-			 let ntContent = $('textarea[name=ntContent]').val("");
-			 
-		 })
+		 }
+  
+	      const getDateStr = function(myDate){
+	    
+	    	  var year;
+	    	  var month = (myDate.getMonth() + 1);
+	    	  var day = myDate.getDate();
+	    	  
+	    	  year = myDate.getFullYear().toString().substring(2,4);
+	    	  month = (month < 10) ? "0" + String(month) : month;
+	    	  day = (day < 10) ? "0" + String(day) : day;
+	    	  
+	    	  return  (year + '/' + month + '/' + day );
+	}
 		
 		
 	

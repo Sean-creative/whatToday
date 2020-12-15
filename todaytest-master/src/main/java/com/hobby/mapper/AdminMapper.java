@@ -10,6 +10,7 @@ import com.hobby.domain.UserVO;
  */
 public interface AdminMapper {
 	
+	public List<UserVO> getJoinWeek();
 	public List<UserVO> getUserList();
 	public List<UserVO> getBanLeaveUser();
 	public List<ClubVO> getClubList();
@@ -17,6 +18,7 @@ public interface AdminMapper {
 	public List<ClubVO> getCloseClub();
 	//공지사항 제목들 
 	public List<NoticeVO> noticeList();
+	public UserVO getTodayLoginNum();
 	
 	//=======공지사항 등록  =======//	
 	//공지사항

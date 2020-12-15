@@ -57,9 +57,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>차트</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
@@ -351,6 +351,7 @@
                                             <th>세부카테고리</th>
                                             <th>지역</th>
                                             <th>세부지역</th>
+                                            <th>상태</th>
                                             <th>폐쇄일</th>  
                                         </tr>
                                     </thead>
@@ -364,6 +365,7 @@
                                             <th>세부카테고리</th>
                                             <th>지역</th>
                                             <th>세부지역</th>
+                                            <th>상태</th>
                                             <th>폐쇄일</th>    
                                         </tr>
                                     </tfoot>
@@ -379,6 +381,7 @@
                                     	<td>${clubVO.cbSubcat }</td>
                                     	<td>${clubVO.cbCity }</td>
                                     	<td>${clubVO.cbDistrict }</td>
+                                    	<td>${clubVO.cbFinalState }</td>
                                     	<td>${clubVO.cbShutDate }</td>
                                     </tr>
                                     </c:forEach>
