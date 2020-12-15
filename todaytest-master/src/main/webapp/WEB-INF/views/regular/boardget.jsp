@@ -44,8 +44,10 @@
 				<button data-oper='list' class="btn btn-info">목록으로 이동</button>
 				
 				<form id='operForm' action="/regular/boardupdate" method="get">
-					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'>
+					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
 					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
 				</form>
 				
 				</div>

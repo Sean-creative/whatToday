@@ -16,7 +16,11 @@
 	<div id="bodymain">
 				
 		<form id="formBoardUpdate" role="form" action="/regular/boardupdate" method="post">
-				
+			
+			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
+			<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
+			<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
+			
 			<div class="form-group">
 				<label>게시판 번호</label> 
 				<input class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly"/>
@@ -43,7 +47,6 @@
 			<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 			<button type="submit" data-oper="list" class="btn btn-info">목록으로 이동</button>
 			
-			<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
 		</form>
 			
 	</div>
@@ -60,9 +63,20 @@
 			console.log(operation);
 			
 			if (operation === 'delete') {
+				
 				formObj.attr("action", "/regular/boarddelete");
+				
 			} else if (operation === 'list') {
-				formObj.attr("action", "/regular/board?cbNum="+$("#cbNum")).attr("method", "get");
+				
+				formObj.attr("action", "/regular/board").attr("method", "get");
+				var cbNumTag = $("input[name='cbNum']").clone();
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				
+				formObj.empty();
+				formObj.append(cbNumTag);
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
 			}
 			formObj.submit();
 		});
