@@ -230,6 +230,12 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.insertClubMember(clubVO);
 	}
 
+	@Override
+	public int updateUserPwd(UserVO userVO) {
+		
+		return mapper.updateUserPwd(userVO);
+	}
+
 
 
 
