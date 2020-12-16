@@ -18,6 +18,7 @@ import com.hobby.domain.NoticeDTO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.FaqService;
+import com.hobby.service.NoticeService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -29,6 +30,7 @@ import lombok.extern.log4j.Log4j;
 public class FaqController {
 	
 	private FaqService service;
+	private NoticeService noticeService;
 	
 	//메일 
 	@Autowired
@@ -112,8 +114,13 @@ public class FaqController {
 	public void noticeRead(NoticeCri cri, Model model) {
 		
 		log.info("###paging:"+cri);
+		
+		int total = noticeService.getTotal(); 
+		log.info("list - total : " + total);
+		
+		
 		model.addAttribute("noticeList",service.noticeList(cri));
-		model.addAttribute("pageMaker", new NoticeDTO(cri,123));
+		model.addAttribute("pageMaker", new NoticeDTO(cri,total));
 	}
 	
 	@GetMapping("/noticepage")

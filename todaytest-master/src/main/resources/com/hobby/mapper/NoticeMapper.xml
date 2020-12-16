@@ -77,4 +77,8 @@
     select * from notice where ntNum =#{ntNum}
 </select>
 
+<select id="getTotalCount" resultType="int">
+		select count(*) from notice
+</select>
+
 </mapper>

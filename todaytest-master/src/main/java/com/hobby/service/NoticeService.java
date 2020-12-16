@@ -14,6 +14,8 @@ public interface NoticeService {
 	public List<NoticeVO> noticeList(NoticeCri cri);
 	//공지사항 내용  
 	public List<NoticeVO> noticeContent(Long ntNum);
+	
+	public int getTotal();
 //=======공지사항 삭제 =======//
 	public boolean deleteNotice(Long ntNum);
 //=======공지사항 수정 =======//	
