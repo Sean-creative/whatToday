@@ -5,6 +5,7 @@ import java.util.List;
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.NoticeCri;
 import com.hobby.domain.UserVO;
 
 public interface ClubService {
@@ -21,11 +22,17 @@ public interface ClubService {
 	//정기모임 상세정보
 	public ClubVO getClub(Long cbNum);
 	
+	//정기모임 목록 상세검색 (페이징)
+	public List<ClubVO> getList(Criteria cri);
+	
 	//정기모임 게시판 - 목록list
-	public List<ClubVO> getList(Long cbNum);
+	//public List<ClubVO> getList(Long cbNum);
 	
 	//정기모임 게시판 - 목록list (페이징)
-	public List<ClubVO> getList(Criteria cri);
+	public List<ClubVO> boardgetList(NoticeCri cri, Long cbNum);
+	
+	//정기모임 게시판 총 갯수 
+	public int boardgetTotal(NoticeCri cri, Long cbNum);
 	
 	//정기모임 게시판 - 조회
 	public ClubVO get(Long cbBno);
