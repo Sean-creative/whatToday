@@ -145,7 +145,7 @@ public class LoginController {
 
 	// 4-1. 아이디 찾기
 	@ResponseBody
-	@RequestMapping(value = "/find_id", produces="text/plane")
+	@RequestMapping(value = "/find_id", produces="text/plain")
 	public String find_id(@RequestBody Map<String, String> map) {
 		log.info("##/find_id");
 
@@ -163,7 +163,7 @@ public class LoginController {
 
 	// 4-2. 비밀번호 찾기
 	@ResponseBody
-	@RequestMapping(value = "/find_pwd", produces="text/plane")
+	@RequestMapping(value = "/find_pwd", produces="text/plain")
 	public String find_pwd(@RequestBody String inputEmail) {
 
 		log.info("##/find_pwd");

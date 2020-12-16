@@ -281,6 +281,7 @@ public class ClubController {
 		if(result==null) {
 			model.addAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
 		}else {
+			model.addAttribute("cbNum", cbNum);
 			model.addAttribute("usrName", name);
 		}
 	}

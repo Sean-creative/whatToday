@@ -24,6 +24,7 @@
     <button class = "btn btn-primary" id = "enter">입장</button>
     <div id = "chatroom" style = "width:400px; height: 600px; border:1px solid; background-color : gray"></div>
     <input type = "text" id = "message" style = "height : 30px; width : 340px" placeholder="내용을 입력하세요" autofocus>
+    <input type="text" id="to" value="${cbNum }" placeholder="모임 번호"/>
     <button class = "btn btn-primary" id = "send">전송</button>
 </body>
     <script>
@@ -52,12 +53,17 @@
             webSocket.close();
         }
         function send(){
-            msg = document.getElementById("message").value;
-            webSocket.send("${usrName} : " + msg);
+        	let message={};
+            message.message = document.getElementById("message").value;
+            message.to = document.getElementById("to").value;
+            webSocket.send(JSON.stringify(message));
+            
+//            msg = document.getElementById("message").value;
+//            webSocket.send("{${cbNum}} ${usrName} : " + msg);
             document.getElementById("message").value = "";
         }
         function onOpen(){
-            webSocket.send("${usrName} 님이 입장하셨습니다.");
+            webSocket.send("{${cbNum}} ${usrName} 님이 입장하셨습니다.");
         }
         function onMessage(e){
             data = e.data;

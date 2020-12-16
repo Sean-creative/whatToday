@@ -37,6 +37,8 @@
             	
             	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
+           		<a href="/pay/pointPayment">포인트 결제</a>
+           		<a href="/pay/pointPayment222">포인트 결제 test!!!</a>
        	 	</ul>
 		</sec:authorize>
 		
@@ -84,6 +86,7 @@
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
+		}
 	
 </script>
 
