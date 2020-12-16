@@ -23,12 +23,18 @@ public class ThunderMapperTests {
 	private ThunderMapper mapper;
 		
 		
-//	@Test
-	public void testGetList() {
+	@Test
+	public void testgetListWithPaging() {
 		Criteria cri = new Criteria();
 		cri.setPageNum(1);
 		cri.setAmount(5);
 		
+		cri.setUserLatitude(37.537623499999995);
+		cri.setUserLongitude(127.1580072);
+//		cri.setOrderBy("cbnum desc");
+//		cri.setOrderBy("cbView desc");
+//		cri.setOrderBy("cbappperiod desc");
+		cri.setOrderBy("distance");
 		
 		mapper.getListWithPaging(cri).forEach(club -> log.info(club));		
 	}

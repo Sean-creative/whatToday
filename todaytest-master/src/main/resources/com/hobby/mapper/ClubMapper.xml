@@ -68,7 +68,8 @@
 			</if>
 		</trim>
 	</sql>
-
+	
+	<!--정기모임 목록 상세검색 (페이징)-->
 	<select id="getListWithPaging"
 		resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
@@ -96,9 +97,9 @@
 	<select id="readclub" resultType="com.hobby.domain.ClubVO">
 		select
 		cbNum, cbName, cbType, cbLeaderNum, cbCategory, cbSubcat, cbCity,
-		cbDistrict, cbMbNum,
+		cbDistrict, cbMbNum, cbLeaderName,
 		cbCurMbNum, cbHashtag, cbIntro, cbMakeDate, cbShutDate, cbFinalState,
-		cbDetailContent cbFile
+		cbDetailContent, cbFile
 		from club
 		where cbNum = #{cbNum}
 	</select>
@@ -111,7 +112,8 @@
 	]]>
 </select> -->
 
-<select id="getList" resultType="com.hobby.domain.ClubVO">
+<!-- 정기모임 게시판 - 목록 (댓글 수 총합 추가) -->
+<!-- <select id="getList" resultType="com.hobby.domain.ClubVO">
   	select 
 	  	cb.cbbno,
 	    cb.cbnum,
@@ -127,17 +129,39 @@
        		group by cbbno) cbr
     	on cb.cbbno = cbr.cbbno
     where cbNum = #{cbNum} order by cbBno desc
-</select>
+</select> -->
+
 <!-- 정기모임 게시판 - 목록(페이징) -->
-<!-- <select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
+<select id="boardListWithPaging" resultType="com.hobby.domain.ClubVO">
+
 	<![CDATA[
 	select 
-		cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView from
-		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView
-		from clubboard where rownum <= #{pageNum} * #{amount} and cbNum = #{cbNum}) 
-	where rn > (#{pageNum} -1) * #{amount} 
+	  	cb.cbbno,
+	    cb.cbnum,
+	    cb.cbbdwriter,
+	    cb.cbbdtitle,
+	    cb.cbbddate,
+	    NVL(cb.cbbdview, 0) cbbdview,
+	    NVL(cbr.reply_count, 0) replyCount
+	from 
+		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, 
+		cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView
+		from clubboard where rownum <= #{cri.pageNum} * #{cri.amount} and cbNum = #{cbNum}) cb
+    left outer join
+      	(select cbbno, count(cbbno) reply_count
+       	from CLUBBOARD_REPLY
+       	group by cbbno) cbr
+    	on cb.cbbno = cbr.cbbno
+    where (rn > (#{cri.pageNum} -1) * #{cri.amount}) and cbNum = #{cbNum} order by cbBno desc
+    
 	]]>
-</select> -->
+</select>
+
+<!-- 정기모임 게시판 총 갯수 -->
+<select id="boardgetTotalCount" resultType="int">
+	select count(*) from CLUBBOARD where cbNum = #{cbNum}
+</select>
+
 
 <!-- 정기모임 게시판 - 조회 -->
 <select id="read" resultType="com.hobby.domain.ClubVO">

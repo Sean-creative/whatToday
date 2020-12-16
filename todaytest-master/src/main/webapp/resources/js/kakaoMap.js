@@ -149,8 +149,11 @@
 		function clickMap(place, marker ) {
 			//name에 속성접근자가 들어가 있어서, 이것은 id로 해결 
 			$("#cbPlace").val(place.place_name);	        
-			$("#cbAddress").val(place.address_name);	            				        					            				        					            								
-			$("#cbLocation").val(marker.getPosition().Ma+","+marker.getPosition().La);
+			$("#cbAddress").val(place.address_name);	            				      
+			
+			//위도, 경도 나눠서 들어갈 것!
+			$("#cbLatitude").val(marker.getPosition().Ma);
+			$("#cbLongitude").val(marker.getPosition().La);
 		    
 		    					    
 		    

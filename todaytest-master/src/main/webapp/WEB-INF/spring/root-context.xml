@@ -31,7 +31,7 @@
 		<property name="dataSource" ref="dataSource" />
 		
 		
-		<property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
 				
 	</bean>
 
@@ -44,9 +44,11 @@
 	<tx:annotation-driven/>
 	<task:annotation-driven/>
 	
+	<!-- 추가한 패키지들을 scan하게함 -->
 	<mybatis-spring:scan base-package="com.hobby.mapper" />
 	<context:component-scan base-package="com.hobby.service" />
 	<context:component-scan base-package="com.hobby.task" />
+	<context:component-scan base-package="com.hobby.utils" />
 	
 	<context:component-scan
 		base-package="com.hobby.aop"></context:component-scan>
