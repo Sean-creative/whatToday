@@ -15,6 +15,7 @@ public class EchoHandler2 extends TextWebSocketHandler {
       @Override
       public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessionList.add(session); 
+        
         System.out.println("{} 연결됨"+ session.getId());
       }
      

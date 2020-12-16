@@ -88,9 +88,9 @@ function connectWS(){
 
   socket = ws;
 
-  ws.open = function(message){
+  ws.onopen = function(message){
 
-   console.log(message);
+	  ws.send("My name is John");
 
   };
 
