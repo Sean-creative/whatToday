@@ -114,21 +114,19 @@ public class ClubController {
 
 			log.info("###usrnum:" + userVO);
 			
-			
 			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
 			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
 			model.addAttribute("joinState", joinState);
 
 			model.addAttribute("usrNum", userVO.getUsrNum());
-
-			//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
-			List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
-			for (ClubMemberVO club : joinList) {
-				log.info("/info(GET) - joinList : " + club);				
-			}
-
-			model.addAttribute("joinList", joinList);
 		}
+
+		//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
+		List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
+		for (ClubMemberVO club : joinList) {
+			log.info("/info(GET) - joinList : " + club);				
+		}
+		model.addAttribute("joinList", joinList);
 
 		log.info("/info");
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
