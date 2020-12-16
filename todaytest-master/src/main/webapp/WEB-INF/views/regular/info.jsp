@@ -33,9 +33,17 @@
 		<c:out value="${club.cbDetailContent}" />
 	</div>
 	<div>
-		개설자 -
-		<c:out value="${club.cbLeaderName }" />
+		개설자 - 
+		<c:out value="${club.cbLeaderName }" /><br>
+		
+		가입한 회원  
+		<div style="border: 1px solid black; width: 170px; height: 140px;">
+		<c:forEach items="${joinList}" var="joinList"> 
+				<li><c:out value="${joinList.usrName}" /></li>
+		</c:forEach>
+		</div>
 	</div>
+
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
 

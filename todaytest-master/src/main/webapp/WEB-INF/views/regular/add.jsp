@@ -8,7 +8,7 @@
 
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheck();">
+<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();">
 
 	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" /> 
 	<input type="hidden" id="cbType" name="cbType" value="정기모임" /> 
@@ -42,13 +42,13 @@
 	<textarea name="cbDetailContent" rows="10" cols="100"
 		style="resize: none" placeholder="30자이내로 작성하세요"></textarea><br> 
 	<input type="file" name="cbFile">
-	<input type="button" value="개설하기" onclick="alert('모임이 개설되었습니다.')"/>
+	<button type="submit">개설하기</button>
 </form>
 
 <script type="text/javascript">
 
 	//유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
-	function inputCheck(){
+	function inputCheckclub(){
 		
 		let club = document.register.cbName;
 		let number = document.register.cbMbNum;
@@ -84,6 +84,7 @@
 			alert("30자 이내로 상세내용을 입력해주세요.");
 			return false;
 		}
+		alert('모임이 개설되었습니다.');   
 	}
 
 	//카테고리/분야 선택, 지역 선택 

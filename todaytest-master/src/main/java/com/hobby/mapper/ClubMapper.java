@@ -22,7 +22,10 @@ public interface ClubMapper {
 	
 	//정기모임 목록 (검색 추가 및 검색조건에 맞는 모임 총 갯수)
 	public int getTotalCount(Criteria cri);
-		
+	
+	//정기모임 조회수 
+	public void clubViews(Long cbNum);
+	
 	//정기모임 상세정보
 	public ClubVO readclub(Long cbNum);
 	
