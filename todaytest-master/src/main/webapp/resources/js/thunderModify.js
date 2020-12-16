@@ -46,53 +46,9 @@ $(function() {
 
 	
 
-	// Modify, Remove, List 중 버튼을 누른다면,
-	let formObj = $("#modifyForm");
-
-	$('.btn btn-default').on("click", function(e) {
-		e.preventDefault();
-
-		let operation = $(this).data("oper");
-
-		console.log(operation);
-
-		if (operation === 'remove') {
-			alert('삭제되었습니다');
-			formObj.attr("action", "/thunder/remove");
-
-		} else if (operation === 'list') {
-			// move to list
-			formObj.attr("action", "/thunder/list").attr("method", "get");
-
-			let pageNumTag = $("input[name='pageNum']").clone();
-			let amountTag = $("input[name = 'amount']").clone();
-
-			let categoryTag = $("input[name = 'category']").clone();
-			let subclassTag = $("input[name = 'subclass']").clone();
-			let cityTag = $("input[name = 'city']").clone();
-			let districtTag = $("input[name = 'district']").clone();
-			let keywordTag = $("input[name = 'keyword']").clone();
-
-			formObj.empty();
-
-			formObj.append(pageNumTag);
-			formObj.append(amountTag);
-
-			formObj.append(categoryTag);
-			formObj.append(subclassTag);
-			formObj.append(cityTag);
-			formObj.append(districtTag);
-			formObj.append(keywordTag);
-
-		}
-		// Modify 라고 한다면
-		else {
-			if (!inputCheck()) {
-				return;
-			}
-		}
-		formObj.submit();
-	});
+	
+	
+	
 });
 
 const cate = function(o, d) {
@@ -155,13 +111,11 @@ const dating = function(o, d) {
 	let nowDate = today.toISOString().slice(0, 16);
 
 	if ($(o).val()) {
-		// 값을 입력한 후 일 때 Value는 냅둬야함
-		console.log("값이 있다.");
+		// 값을 입력한 후 일 때 Value는 냅둬야함		
 
 	} else if (!($(o).val())) {
 		// date의 값이 아무것도 없을 때 (초기 설정일 때)는 초기 설정을 해준다
-		// 초기 설정
-		console.log("값이 없다.");
+		// 초기 설정		
 
 		$('#cbDate').val(nowDate);
 		$('#cbAppPeriod').val(nowDate);
@@ -269,7 +223,6 @@ const inputCheck = function(){
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
-    	
 
 	alert('수정되었습니다.');
 

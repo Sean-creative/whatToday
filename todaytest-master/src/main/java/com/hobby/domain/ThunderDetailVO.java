@@ -36,11 +36,17 @@ public class ThunderDetailVO {
 	private String cbSupplies;
 	
 	
-	//모임좌표 -> 위도, 경도 
-	private String cbLocation;
+	//모임위도 
+	private Double cbLatitude;
+	//모임경도
+	private Double cbLongitude;
+	
+	private Double distance;
+	 
 		
 	//모임주소
 	private String cbAddress;
 
+	
 	
 }
