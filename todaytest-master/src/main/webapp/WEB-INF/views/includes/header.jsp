@@ -70,7 +70,16 @@
 var socket = null;  //전역 변수로 선언
 
 $(document).ready(function(){
-  connectWS();
+	
+	let loginCheck = null;
+	
+	<sec:authorize access="isAuthenticated()">			
+		loginCheck = true
+	</sec:authorize>
+	if(loginCheck == true){
+		connectWS();
+	}
+  
 });
 
 function connectWS(){
