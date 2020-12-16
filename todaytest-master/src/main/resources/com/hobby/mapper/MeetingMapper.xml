@@ -6,53 +6,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 작성자 : 김선우 -->
 
 
-<mapper namespace="com.hobby.mapper.ThunderMapper">
+<mapper namespace="com.hobby.mapper.MeetingMapper">
 
 
-	<resultMap type="com.hobby.domain.ThunderDetailVO" id="ThunderDetailVO">
-		<result column="cbNum" property="cbNum" />
-		<result column="cbDate" property="cbDate" />
-		<result column="cbAppPeriod" property="cbAppPeriod" />
-		<result column="cbPlace" property="cbPlace" />
-		<result column="cbSupplies" property="cbSupplies" />
-
-		<result column="cbLatitude" property="cbLatitude" />
-		<result column="cbLongitude" property="cbLongitude" />
-
-		<result column="cbAddress" property="cbAddress" />
-
-		<result column="distance" property="distance" />
-	</resultMap>
-	<resultMap type="com.hobby.domain.ThunderVO" id="ThunderVO">
-		<result column="cbNum" property="cbNum" />
-		<result column="cbName" property="cbName" />
-		<result column="cbIntro" property="cbIntro" />
-		<result column="cbCategory" property="cbCategory" />
-		<result column="cbSubcat" property="cbSubcat" />
-		<result column="cbMbnum" property="cbMbnum" />
-		<result column="cbHashtag" property="cbHashtag" />
-		<result column="cbCity" property="cbCity" />
-		<result column="cbDistrict" property="cbDistrict" />
-		<result column="cbLeaderNum" property="cbLeaderNum" />
-		<result column="cbCurMbnum" property="cbCurMbnum" />
-
-		<result column="cbLeaderName" property="cbLeaderName" />
-		<result column="cbMakeDate" property="cbMakeDate" />
-		<result column="cbShutDate" property="cbShutDate" />
-		<result column="cbType" property="cbType" />
-		<result column="cbFinalState" property="cbFinalState" />
-		<result column="cbDetailContent" property="cbDetailContent" />
-		<result column="cbFile" property="cbFile" />
-		<result column="cbThumbImg" property="cbThumbImg" />
-		<result column="cbView" property="cbView" />
+<insert id="insert">
+		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
+		<selectKey keyProperty="mtNum" resultType="long" order="BEFORE">
+			select MEETING_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		insert into meeting
+		(cbNum, mtNum, cbName, mtName, mtStartDate, mtEndDate, mtMbNum, mtCurMbNum, mtAddress, mtPlace, mtIntro, mtMakeDate, mtSupplies
+		,mtFinalState)
+		values(#{cbNum}, #{mtNum}, #{cbName},
+		#{mtName}, #{mtStartDate},
+		#{mtEndDate}, #{mtMbNum}, 0,
+		#{mtAddress}, #{mtPlace}, #{mtIntro},
+		TO_CHAR(sysdate, 'yyyy/mm/dd hh24:mi:ss'), #{mtSupplies}, '진행중' )		
+	</insert>
 
 
+<!-- 
 
-		<collection property="thunderDetailVO" resultMap="ThunderDetailVO"></collection>
-	</resultMap>
-
-
-<!-- 해당 모임에 대한 정보를 가져올 때 사용 -->
+해당 모임에 대한 정보를 가져올 때 사용
 	<select id="read" resultMap="ThunderVO">
 		select * from club c, thunderDetail
 		td
@@ -61,53 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-
-	<insert id="insert">
-		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
-		<selectKey keyProperty="cbNum" resultType="long" order="BEFORE">
-			select club_seq.nextval FROM DUAL
-		</selectKey>
-
-		{
-		CALL
-		begin
-		insert into club
-		(cbNum, cbIntro, cbName, cbCategory,
-		cbMbnum, cbSubcat, cbHashtag ,cbCity,
-		cbDistrict, cbType, cbLeaderNum
-		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState,
-		cbFile, cbThumbImg)
-		values(#{cbNum}, #{cbIntro}, #{cbName},
-		#{cbCategory}, #{cbMbnum},
-		#{cbSubcat}, #{cbHashtag}, #{cbCity},
-		#{cbDistrict}, #{cbType}, #{cbLeaderNum},
-		#{cbLeaderName},
-		#{cbCurMbnum}, TO_CHAR(sysdate, 'yyyy/mm/dd hh24:mi:ss'),
-		#{thunderDetailVO.cbDate}, #{cbFinalState},
-		#{cbFile}, #{cbThumbImg});
-
-
-		insert
-		into
-		thunderDetail
-		(cbNum,cbDate,
-		cbAppPeriod, cbPlace, cbSupplies,
-		cbLatitude, cbLongitude, cbAddress)
-		values(#{cbNum},
-		#{thunderDetailVO.cbDate},
-		#{thunderDetailVO.cbAppPeriod},
-		#{thunderDetailVO.cbPlace},
-		#{thunderDetailVO.cbSupplies},
-		#{thunderDetailVO.cbLatitude},
-		#{thunderDetailVO.cbLongitude},
-		#{thunderDetailVO.cbAddress} );
-
-
-		END
-		}
-		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, #{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, cl_place, cl_supplies, cl_file) values(#{cl_number}, #{club_detailVO.cl_date}, #{club_detailVO.cl_app_date} ,#{club_detailVO.cl_place}, #{club_detailVO.cl_supplies}, #{club_detailVO.cl_file}) select * from dual -->
-	</insert>
-
+	
 
 	<insert id="insertJoin">
 		insert into clubmember(usrnum, cbnum, cbtype, cbname,
@@ -136,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-<!-- 로그인한 유저가 해당 모임에 대해서 어떤 상태인지 반환 ex) 가입승인, 승인대기중 -->
+로그인한 유저가 해당 모임에 대해서 어떤 상태인지 반환 ex) 가입승인, 승인대기중
 	<select id='readCbMemByUsrNum' resultType="String">
 		select cbmbstresult
 		from clubmember where usrnum=#{usrNum}
@@ -144,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		cbnum=#{cbNum}
 	</select>
 
-	<!-- 해당 클럽에 대한 멤버들의 가입 정보를 가져오는 SQL -->
+	해당 클럽에 대한 멤버들의 가입 정보를 가져오는 SQL
 	<select id='getJoinList' resultType="com.hobby.domain.ClubMemberVO">
 		select usrnum, cbnum, cbtype, cbname, usrname,
 		cbmbstresult,CBAPPDATE
@@ -155,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<!-- 모임삭제는 모임의 상태가 변경되어야 한다. -->
+	모임삭제는 모임의 상태가 변경되어야 한다.
 	<update id="delete">
 		update club set
 		cbFinalState = '폐쇄'
@@ -163,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-	<!-- 바뀔 수 있는 부분만 바꿀 것!! -->
+	바뀔 수 있는 부분만 바꿀 것!!
 	<update id="update">
 		{
 		CALL
@@ -257,7 +187,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 
 
-	<!-- 거리제한 두고 리스트 페이징 처리 -->
+	거리제한 두고 리스트 페이징 처리
 	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[
 	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance , cbView, cbappperiod
@@ -283,7 +213,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<!-- 거리제한 둔 것 개수 세기 -->
+	거리제한 둔 것 개수 세기
 	<select id="getTotalCount" resultType="int">
 	<![CDATA[	select  count(*)
 				from
@@ -296,9 +226,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 )                 
 				where distance <20 ]]>
 	</select>
+ -->
 
-
-	<!-- <select id="getTotalCount" resultType="int"> select count(*) from club where <include refid="criteria"></include> cbType='번개모임' </select> -->
+	
 
 </mapper>
 
