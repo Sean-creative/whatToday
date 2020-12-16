@@ -42,8 +42,9 @@ public class MainController {
 		log.info("/list - GET");
 		log.info("list - cri : " + cri);
 		
-		model.addAttribute("list", thunderService.getList(cri));
-		log.info("list : " + thunderService.getList(cri));
+		model.addAttribute("list", thunderService.getListWithPaging(cri));
+		
+		log.info("list : " + thunderService.getListWithPaging(cri));
 		
 		//정기 		
 		log.info("clublist");

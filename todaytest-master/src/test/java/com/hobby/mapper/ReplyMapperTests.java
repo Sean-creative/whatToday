@@ -1,3 +1,4 @@
+
 //package com.hobby.mapper;
 //
 //import java.util.stream.IntStream;
@@ -46,6 +47,7 @@
 //		});
 //	}
 //	
+
 //	@Test
 //	public void testRead() {
 //		
@@ -54,6 +56,7 @@
 //		
 //		log.info(vo);
 //	}
+
 //	
 //	@Test
 //	public void testDelete() {
@@ -63,6 +66,7 @@
 //		mapper.delete(targetRno);
 //	}
 //	
+
 //	@Test
 //	public void testUpdate() {
 //		
@@ -77,4 +81,5 @@
 //		log.info("UPDATE COUNT: " + count);
 //		
 //	}
+
 //}

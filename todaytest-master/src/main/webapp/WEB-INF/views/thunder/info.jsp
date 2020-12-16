@@ -20,6 +20,51 @@ section a:hover {
 	color: red;
 	text-decoration: none;
 }
+
+.oriImg {
+	width: 200;
+	height: auto;
+}
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+/* .del-btn {
+          font-size: 12px;
+          font-weight: bold;
+          cursor: pointer;
+          margin-left: 8px;
+      } */
 </style>
 
 
@@ -49,8 +94,15 @@ section a:hover {
 
 	<div style="margin-left: 30px;">
 		<!-- 사진 왼쪽에 붙어있게 -->
-		<div style="float: left; padding-bottom: 200px; margin: 0px;">
-			<img src="/resources/img/thunderImg.png" width="170" height="170" alt="번개대표사진">
+		<div style="float: left; padding-bottom: 20px; margin: 0px;">
+			<!-- <img src="/resources/img/thunderImg.png" width="170" height="170" alt="번개대표사진"> -->
+
+
+			<div class="inputArea">
+				<label for="gdsImg">썸네일</label> <img src="${clubVO.cbThumbImg}" class="thumbImg" />
+			</div>
+
+
 		</div>
 
 
@@ -60,10 +112,7 @@ section a:hover {
 				<c:out value="${clubVO.cbIntro}" />
 			</div>
 
-			<div style="font-size: 20px; margin-bottom: 20px;">
-				<b> <c:out value="${clubVO.cbHashtag}" />
-				</b>
-			</div>
+
 
 			<!-- 지정된 포맷으로 보내기 위해, JS단에서 값을 넣어준다. -->
 			<div style="font-size: 20px; margin-bottom: 20px;" id="date">
@@ -93,22 +142,34 @@ section a:hover {
 
 
 	<div style="margin-bottom: 30px; margin-left: 10px;">
-		개설자 정보<br> <br>
+		개설자 정보<br>
+		<div style="border: 1px solid; width: 120px; height: 130px; float: left;">
 
-		<div style="border: 1px solid; float: left">
 			<img src="../resources/img/thunderHuman.png">
 		</div>
 
-		<div>
+		<div style="position: relative; left: 20px;">
 			<c:out value="${userVO.usrName}" />
 			<br>
 			<c:out value="${userVO.usrId}" />
 		</div>
-		<div style="width: 500px; height: 50px; border: 1px solid; text-align: center;" id="period">
+
+		<div style="width: 500px; height: 50px; position: relative; left: 130px; border: 1px solid; text-align: center;" id="period">
 			<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
 			<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 까지 신청" />
 		</div>
 	</div>
+
+
+	<!-- 해시태그 구현 -->
+	<br>
+	<div style="font-size: 20px; margin-bottom: 20px;">
+		<div style="float: left;">해시태그 :</div>
+		<ul id="tag-list">
+		</ul>
+	</div>
+
+
 
 	<div style="float: right">
 		<!-- 지금 로그인된 유저의 정보와 개설자의 번호가 일치하면(=같은사람 이라면) modify 버튼을 보여준다.-->
@@ -122,21 +183,20 @@ section a:hover {
 	</div>
 
 
-<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
-<c:if test="${usrNum != clubVO.cbLeaderNum}">
-	<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" 
-	data-oper='join' id="join">		
-		<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-		<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
-		<c:choose>		
-		<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-		<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
-		<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
-				
-		<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>					
-		</c:choose>
-	</button>
-</c:if>	
+	<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
+	<c:if test="${usrNum != clubVO.cbLeaderNum}">
+		<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" data-oper='join' id="join">
+			<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+			<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
+			<c:choose>
+				<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+				<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
+				<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
+
+				<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
+			</c:choose>
+		</button>
+	</c:if>
 
 
 
@@ -149,8 +209,8 @@ section a:hover {
 		<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
 		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
 		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
+		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-
 		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 
@@ -263,15 +323,14 @@ section a:hover {
 		//모임에 참석 중이 아닐 때
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none';
-		
-	} 
-	else if ($("#join").text().trim() == '모임 가입불가' || $("#join").text().trim() =='모임 정원 초과') {
+
+	} else if ($("#join").text().trim() == '모임 가입불가'
+			|| $("#join").text().trim() == '모임 정원 초과') {
 		//모임에 가입이 불가능 할 때
 		document.getElementById('join').disabled = 'disabled';
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none'
 	}
-	
 
 	function viewPlus() {
 
@@ -281,6 +340,19 @@ section a:hover {
 		} else {
 			document.getElementById("plus").style.display = 'none';
 			document.getElementById("pulsButton").innerHTML = "🐵";
+		}
+	}
+
+	/* 해시태그 구현관련!! */
+	let stringHash = '${clubVO.cbHashtag}';
+	console.log(stringHash);
+
+	let arrayHash = stringHash.split(',');
+	console.log(arrayHash);
+	
+	for ( let i in arrayHash) {
+		if (arrayHash[i] != "") {
+		$("#tag-list").append("<li class='tag-item'>" + arrayHash[i] + "</li>");		
 		}
 	}
 </script>

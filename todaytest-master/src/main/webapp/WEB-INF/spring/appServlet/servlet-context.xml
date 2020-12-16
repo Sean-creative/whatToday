@@ -59,4 +59,27 @@
 	<!-- GoogleLogin Class에 대한 Bean설정 추가 -->
 	<beans:bean id="googleLogin" class="com.hobby.sns.GoogleLogin" />
 	
+	
+
+	
+<!-- uploadPath는 업로드할 패스를 빈(bean)에 저장하여 의존주입하여 사용하는 역할입니다.
+업로드 경로는 주소가 /imgUpload/** 로 접속될 때, 실제 처리는 /resources/imgUpload/ 로 처리합니다. 긴 문자를 짧게 줄일 수 있으며 실제 경로를 숨길 수 있습니다. -->
+<!-- 업로드 패스 설정 --> 
+<beans:bean class="java.lang.String" id="uploadPath">
+ <beans:constructor-arg value="E:\whatTodayGit\whatToday\todaytest-master\src\main\webapp\resources" />
+ 
+</beans:bean>
+
+<!-- 일반 파일 업로드 경로 -->
+<resources mapping="/imgUpload/**" location="/resources/imgUpload/" />
+
+<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+ <beans:property name="maxUploadSize" value="10485760"/>
+</beans:bean>
+
+
+<!-- 대체 이미지 경로 -->
+<resources mapping="/img/**" location="/resources/img/" />
+	
+	
 </beans:beans>
