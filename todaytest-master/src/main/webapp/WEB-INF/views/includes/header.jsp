@@ -38,6 +38,7 @@
             	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
        	 	</ul>
+				<div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 		</sec:authorize>
 		
 <!-- Navigation-->
@@ -66,7 +67,44 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
+var socket = null;  //전역 변수로 선언
 
+$(document).ready(function(){
+  connectWS();
+});
+
+function connectWS(){
+
+  var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
+
+  socket = ws;
+
+  ws.open = function(message){
+
+   console.log(message);
+
+  };
+
+  ws.onmessage = function(event){
+
+    $("#socketAlert").text(event.data);
+
+    $("#socketAlert").css("display", "block");
+
+  };
+
+  ws.onclose = function(event){
+
+    console.log("Server disConnect");
+
+  };
+
+  ws.onerror = function(event){
+
+    console.log("Server Error");
+
+  };
+}
 		var id = document.getElementById("user");
 		console.log("userId: " +id);
 		
@@ -84,6 +122,7 @@
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
+		}
 	
 </script>
 

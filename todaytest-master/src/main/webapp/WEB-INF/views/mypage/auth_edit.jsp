@@ -69,9 +69,27 @@
         </form>
     </div>
 </div>
+
+<input id="btnSend" value="Send" type="button"> 
+<input type="text" id="msg" value="1212테스트test" class="form-control" />
 </section>
 
 <script type="text/javascript">
+$(document).ready(function(){
+
+    $("#btnSend").on("click", function(evt){
+
+      evt.preventDefault();
+
+      if(socket.readyState != 1) return;
+
+      let msg = $("#msg").val();
+
+      socket.send(msg); //소켓에 입력된 메시지를 보낸다
+
+    });
+})
+
 if("${msg}" != ""){
 	alert("${msg}");
 }
@@ -84,6 +102,7 @@ let blankCheck = function(){
     }
     return true;
 }
+
 </script>
 
 

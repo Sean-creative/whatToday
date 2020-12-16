@@ -117,10 +117,14 @@
 	</select>
 	
 	<select id="getTodayLoginNum" resultType="com.hobby.domain.UserVO">
-	select TO_CHAR(sysdate, 'yy/mm/dd') as usrlogindate, COUNT(*) as memberCount
-	from tbluser
-	where usrlogindate = TO_CHAR(sysdate, 'yy/mm/dd')
-	group by usrlogindate
+	SELECT 
+	    TO_CHAR(usrLoginDate, 'yy/mm/dd') as usrLoginDate,
+	    COUNT(*) as memberCount
+		FROM tbluser
+        where usrstate = '회원'
+		GROUP BY 
+		TO_CHAR(usrLoginDate, 'yy/mm/dd')
+        having TO_CHAR(usrLoginDate, 'yy/mm/dd') =  TO_CHAR(sysdate, 'yy/mm/dd')
 	</select>
 	
 </mapper>

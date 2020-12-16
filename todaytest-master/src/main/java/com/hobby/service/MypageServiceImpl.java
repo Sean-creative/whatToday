@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -27,6 +28,9 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MypageMapper mapper;
+	
+	@Setter(onMethod_=@Autowired)
+	private PasswordEncoder pwencoder;
 
 	@Override
 	public UserVO getUser(String id) {
@@ -66,7 +70,7 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Override
 	public boolean comparePwdDB(String password, String password2) {
-		return password.equals(password2);
+		return pwencoder.matches(password, password2);
 	}
 
 	@Override
@@ -232,6 +236,9 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public int updateUserPwd(UserVO userVO) {
+		
+		String updatePwd = userVO.getUsrPwd();
+		userVO.setUsrPwd(pwencoder.encode(updatePwd));
 		
 		return mapper.updateUserPwd(userVO);
 	}
