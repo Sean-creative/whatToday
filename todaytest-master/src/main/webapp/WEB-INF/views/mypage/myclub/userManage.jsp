@@ -190,6 +190,12 @@ $(document).ready(function() {
 					
 				},
 				complete : function(list) {
+					
+					if(socket.readyState != 1)
+						return;
+					
+				    socket.send(e.usrId+","+e.cbName+"에 가입되셨습니다."); //타겟 , 모임이름, 내용
+				    
 		           }
 				});
 			};

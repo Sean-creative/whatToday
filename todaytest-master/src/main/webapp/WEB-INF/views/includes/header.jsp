@@ -33,8 +33,6 @@
 			<ul>
         		<a href ="/" id="user"><sec:authentication property="principal.user.usrName"/>님</a>
             	<a href="/login/logout">로그아웃</a>
-            	
-            	
             	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
        	 	</ul>
@@ -70,28 +68,28 @@
 var socket = null;  //전역 변수로 선언
 
 $(document).ready(function(){
-	
+	let msgId;
 	let loginCheck = null;
 	
 	<sec:authorize access="isAuthenticated()">			
 		loginCheck = true
+		msgNum =  <sec:authentication property="principal.user.usrNum"/>;
 	</sec:authorize>
 	if(loginCheck == true){
-		connectWS();
+		connectWS(msgNum);
 	}
   
 });
 
-function connectWS(){
+function connectWS(msgNum){
 
   var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
 
   socket = ws;
-
+  let Num = msgNum;
   ws.onopen = function(message){
-
-	  ws.send("My name is John");
-
+	  
+	  ws.send(Num);
   };
 
   ws.onmessage = function(event){

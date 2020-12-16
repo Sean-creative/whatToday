@@ -75,21 +75,6 @@
 </section>
 
 <script type="text/javascript">
-$(document).ready(function(){
-
-    $("#btnSend").on("click", function(evt){
-
-      evt.preventDefault();
-
-      if(socket.readyState != 1) return;
-
-      let msg = $("#msg").val();
-
-      socket.send(msg); //소켓에 입력된 메시지를 보낸다
-
-    });
-})
-
 if("${msg}" != ""){
 	alert("${msg}");
 }
