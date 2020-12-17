@@ -21,27 +21,39 @@
  
 </head>
 <body>
-    <button class = "btn btn-primary" id = "enter">입장</button>
+	<button class = "btn btn-primary" id = "enter">입장</button>
+     <!--<button class = "btn btn-primary" id = "enter">입장</button>
+   	<input type="text" id="nickname" class="form-inline" placeholder="닉네임을 입력해주세요" required autofocus>
+    <button class = "btn btn-primary" id = "name">확인</button>-->
     <div id = "chatroom" style = "width:400px; height: 600px; border:1px solid; background-color : gray"></div>
     <input type = "text" id = "message" style = "height : 30px; width : 340px" placeholder="내용을 입력하세요" autofocus>
-    <input type="text" id="to" value="${cbNum }" placeholder="모임 번호"/>
+    <input type="hidden" id="cbNum" value="${cbNum }" placeholder="모임 번호"/>
     <button class = "btn btn-primary" id = "send">전송</button>
 </body>
     <script>
+   		let cbNum= document.getElementById('cbNum').value;
+   		
+    	document.getElementById("enter").addEventListener("click", function(){
+    		document.getElementById("enter").style.display="none";
+    		connect();
+    		onOpen();
+    	})
+    
         var webSocket;
         var nickname;
-        document.getElementById("enter").addEventListener("click", function(){
-        	if("${msg }" != ""){
-    			alert("${msg}");
-    			return false;
-    		}else{
-        		document.getElementById("enter").style.display="none";
-            	connect();
-    		}
-        })
+
+//        document.getElementById("name").addEventListener("click", function(){
+//        	nickname = document.getElementById("nickname").value;
+//           document.getElementById("nickname").style.display="none";
+//           document.getElementById("name").style.display="none";
+//           connect();
+//            onOpen();
+//       })
+        
         document.getElementById("send").addEventListener("click",function(){
             send();
         })
+        
         function connect(){
             webSocket = new WebSocket("ws://localhost:8080/echo");
             webSocket.onopen = onOpen;
@@ -49,24 +61,26 @@
             webSocket.onmessage = onMessage;
         }
         function disconnect(){
-            webSocket.send("${usrName} 님이 퇴장하셨습니다");
             webSocket.close();
         }
         function send(){
-        	let message={};
-            message.message = document.getElementById("message").value;
-            message.to = document.getElementById("to").value;
-            webSocket.send(JSON.stringify(message));
-            
-//            msg = document.getElementById("message").value;
-//            webSocket.send("{${cbNum}} ${usrName} : " + msg);
+        	let cbNum= document.getElementById('cbNum').value;
+        	nickname = document.getElementById("nickname").value;
+        	let msg = document.getElementById("message").value;
+        	
+        	webSocket.send("채팅,"+cbNum+","+msg); //타겟, 내용.
             document.getElementById("message").value = "";
+
         }
         function onOpen(){
-            webSocket.send("{${cbNum}} ${usrName} 님이 입장하셨습니다.");
+        	let cbNum= document.getElementById('cbNum').value;
+        	nickname = document.getElementById("nickname").value;
+        	webSocket.send("입장," + cbNum+",방만들기.");
         }
+        
         function onMessage(e){
             data = e.data;
+            
             chatroom = document.getElementById("chatroom");
             chatroom.innerHTML = chatroom.innerHTML + "<br>" + data;
         }
