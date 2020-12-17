@@ -180,6 +180,8 @@ $(document).ready(function() {
 			};
 			
 		const insertClubJoinHistory = function(e){
+			console.log(e);
+			let socData = e;
 			$.ajax({
 				url: "/mypage/clubmanage/insertClubJoinHistory",
 				type:"POST",
@@ -190,11 +192,14 @@ $(document).ready(function() {
 					
 				},
 				complete : function(list) {
+					console.log(socData.usrId);
+					console.log(socData.cbName);
 					
-					if(socket.readyState != 1)
+					if(socket.readyState != 1){
 						return;
+					}
 					
-				    socket.send(e.usrId+","+e.cbName+"에 가입되셨습니다."); //타겟 , 모임이름, 내용
+				    socket.send(socData.userVO.usrId+","+"["+socData.cbType+"]"+socData.cbName+"에 가입되셨습니다."); //타겟, 내용.
 				    
 		           }
 				});

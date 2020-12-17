@@ -231,7 +231,18 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public int insertClubMember(ClubVO clubVO) {
-		return mapper.insertClubMember(clubVO);
+		System.out.println("++++++++++++"+clubVO);
+		System.out.println("++++++++++++"+clubVO.getUsrNum()+clubVO.getCbNum());
+		System.out.println("+++++++++++++++"+findClubMem(clubVO.getUsrNum(), clubVO.getCbNum()));
+		if(findClubMem(clubVO.getUsrNum(), clubVO.getCbNum()) == null) {
+			
+			return mapper.insertClubMember(clubVO);
+			
+		}else
+			return 1;
+		
+		
+		
 	}
 
 	@Override
@@ -241,6 +252,12 @@ public class MypageServiceImpl implements MypageService {
 		userVO.setUsrPwd(pwencoder.encode(updatePwd));
 		
 		return mapper.updateUserPwd(userVO);
+	}
+
+	@Override
+	public ClubVO findClubMem(Long usrNum, Long cbNum) {
+		
+		return mapper.findClubMem(usrNum,cbNum);
 	}
 
 

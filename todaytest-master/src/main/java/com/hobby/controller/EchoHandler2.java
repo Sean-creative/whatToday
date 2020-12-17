@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.socket.CloseStatus;
@@ -17,8 +18,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.hobby.service.MypageService;
+
+import lombok.Setter;
+
 public class EchoHandler2 extends TextWebSocketHandler {
 
+	
+	@Setter(onMethod_ = @Autowired)
+	private MypageService service;
+	
 	private Map<String, WebSocketSession> socketMap = new ConcurrentHashMap<>();
 
 	// 클라이언트와 연결 이후에 실행되는 메서드
@@ -37,24 +46,22 @@ public class EchoHandler2 extends TextWebSocketHandler {
 	// 클라이언트가 서버로 메시지를 전송했을 때 실행되는 메서드
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String senderId = getMemberId(session);
+		
 		// 특정 유저에게 보내기
 		String msg = message.getPayload();
 
 		if (msg != null) {
 			
 			String[] strs = msg.split(",",2);
-
-			if (strs != null && strs.length == 4) {
+			if (strs != null && strs.length == 2) {
 				String target = strs[0];
 
 				String content = strs[1];
 
 				WebSocketSession targetSession = socketMap.get(target); // 메시지를 받을 세션 조회
 
-				// 실시간 접속시
+				// 접속안하면 못받아요
 				if (targetSession != null) {
-					// ex: [&분의일] 신청이 들어왔습니다.
 					TextMessage tmpMsg = new TextMessage(content);
 					targetSession.sendMessage(tmpMsg);
 				}
