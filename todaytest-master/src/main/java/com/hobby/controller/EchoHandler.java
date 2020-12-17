@@ -27,12 +27,12 @@ public class EchoHandler extends TextWebSocketHandler {
 		String msg = message.getPayload();
 		System.out.println("@@@inputMsg: " + msg);
 
-		// 입장or채팅, 모임번호, msg
+		// 입장or채팅, 모임번호, nickname, msg
 		if (msg != null) {
 			// 사용자가 메시지에 ,를 붙일 수 있음
 			// json 형태로 주고 받고 싶은데 나중에..
-			String[] strs = msg.split(",",3);
-			if (strs != null && strs.length == 3) {
+			String[] strs = msg.split(",",4);
+			if (strs != null && strs.length == 4) {
 				
 				// 입장 or 채팅
 				String enter = strs[0];
@@ -40,8 +40,11 @@ public class EchoHandler extends TextWebSocketHandler {
 				// 방번호
 				String target = strs[1];
 				
+				//nickname
+				String nickname = strs[2];
+				
 				// msg
-				String content = strs[2];
+				String content = strs[3];
 
 				if(enter.equals("입장")) {
 					// 현재 소켓맵에 채팅방이 없을 경우 채팅창을 만든다.
@@ -62,8 +65,11 @@ public class EchoHandler extends TextWebSocketHandler {
 					 // 현재 채팅방을 찾아 현재 채팅창에 접속한 사람들에게만 메시지를 전송한다. 
 					 List<WebSocketSession> llist222 = socketMap.get(target);
 					 for (WebSocketSession sess : llist222) {
-						 	// sessionid 사용자이름 받아와서 바꾸기
-						 	sess.sendMessage(new TextMessage(session.getId() + " : " + content));
+						 System.out.println("1session: " + session.getId());
+						 System.out.println("1sess: " + sess.getId());
+						 // 나한테는 메시지 보낼 필요없음.
+						 // if(!session.getId().equals(sess.getId()))
+						 	sess.sendMessage(new TextMessage(nickname + " : " + content));
 					 }
 				}
 			}
