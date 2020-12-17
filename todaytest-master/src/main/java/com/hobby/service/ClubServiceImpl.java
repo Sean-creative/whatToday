@@ -10,7 +10,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
-import com.hobby.domain.ThunderVO;
+import com.hobby.domain.NoticeCri;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.ClubMapper;
 
@@ -55,10 +55,11 @@ public class ClubServiceImpl implements ClubService {
 	public ClubVO getClub(Long cbNum) {
 		
 		log.info("getclub......"+ cbNum);
+		mapper.clubViews(cbNum);
 		return mapper.readclub(cbNum);
 	}
 
-	//정기모임 게시판 - 목록list (페이징) -- 정기모임 목록 상세검색에 같이 사용
+	//정기모임 목록 상세검색 (페이징)
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
@@ -67,11 +68,19 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	//정기모임 게시판 - 목록list
+//	@Override
+//	public List<ClubVO> getList(Long cbNum) {
+//		
+//		log.info("getList........");
+//		return mapper.getList(cbNum);
+//	}
+	
+	//정기모임 게시판 - 목록list (페이징)
 	@Override
-	public List<ClubVO> getList(Long cbNum) {
+	public List<ClubVO> boardgetList(NoticeCri cri, Long cbNum) {
 		
-		log.info("getList........");
-		return mapper.getList(cbNum);
+		log.info("get boardList with page:" + cri);
+		return mapper.boardListWithPaging(cri, cbNum);
 	}
 	
 	//정기모임 게시판 - 조회 + 조회수
@@ -201,5 +210,14 @@ public class ClubServiceImpl implements ClubService {
 	}
 	
 	
+
+	//정기모임 게시판 총 갯수 
+	@Override
+	public int boardgetTotal(NoticeCri cri, Long cbNum) {
+		
+		log.info("get total board count");
+		return mapper.boardgetTotalCount(cri, cbNum);
+	}
+
 
 }

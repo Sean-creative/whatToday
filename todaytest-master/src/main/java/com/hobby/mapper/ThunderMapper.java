@@ -13,8 +13,7 @@ import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
 
 public interface ThunderMapper {
-	
-	public List<ThunderVO> getList();
+		
 	
 	public List<ThunderVO> getListWithPaging(Criteria cri);
 	

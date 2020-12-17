@@ -33,9 +33,17 @@
 		<c:out value="${club.cbDetailContent}" />
 	</div>
 	<div>
-		개설자 -
-		<c:out value="${club.cbLeaderName }" />
+		개설자 - 
+		<c:out value="${club.cbLeaderName }" /><br>
+		
+		가입한 회원  
+		<div style="border: 1px solid black; width: 170px; height: 140px;">
+		<c:forEach items="${joinList}" var="joinList"> 
+				<li><c:out value="${joinList.usrName}" /></li>
+		</c:forEach>
+		</div>
 	</div>
+
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
 
@@ -55,7 +63,25 @@
 			</c:choose>
 		</button>
 	</c:if>
+
+
+<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;" >
+	<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
+	<c:if test="${usrNum == club.cbLeaderNum}">
+	</c:if>
+	
+	<form action="/meeting/add" method="get" id="tag-form">
+		<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+		<input type="hidden" name="cbName" value="${club.cbName }" />
+		<button style="padding: 5px 80px;" class="btn btn-info" data-oper='addMeeting' id="addMeeting">만남 추가</button>
+		<button style="padding: 5px 80px;" class="btn btn-info" data-oper='modifyMeeting' id="modifyMeeting">만남 수정</button>
+	</form>
 </div>
+
+
+</div>
+
+
 
 
 
@@ -65,7 +91,16 @@
 	<form class="modal-content" action="/regular/clubjoin" method="post">
 		<div class="container">
 			<h2>가입인사</h2>
-			<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" /> <input type="hidden" name="usrNum" value="<c:out value="${usrNum}" />" /> <input type="hidden" name="cbType" value="정기모임" /> <input type="hidden" name="cbName" value="${club.cbName }" /> <input type="hidden" name="cbJoinStateResult" value="승인대기" /> <label><b>가입일자</b></label> <input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="true"><br> <label><b>이름</b></label> <input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true"><br> <label><b>가입인사</b></label>
+			<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+			<input type="hidden" name="usrNum" value="<c:out value="${usrNum}" />" />
+			<input type="hidden" name="cbType" value="정기모임" />
+			<input type="hidden" name="cbName" value="${club.cbName }" />
+			<input type="hidden" name="cbJoinStateResult" value="승인대기" />
+			<label><b>가입일자</b></label>
+			<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="true">
+			<br> <label><b>이름</b></label>
+			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true">
+			<br> <label><b>가입인사</b></label>
 			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea>
 			<br>
 			<div class="clearfix">

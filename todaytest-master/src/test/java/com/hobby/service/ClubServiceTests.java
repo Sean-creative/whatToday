@@ -27,11 +27,6 @@ public class ClubServiceTests {
 		assertNotNull(service);
 	}
 			
-//	@Test
-	public void testGetList() {
-		service.getList().forEach(club -> log.info(club));
-				
-	}
 	
 //	@Test
 	public void testGet() {                    

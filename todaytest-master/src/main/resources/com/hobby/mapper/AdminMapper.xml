@@ -60,4 +60,67 @@
 
 	</select>
 	
+	<select id="noticeList" resultType="com.hobby.domain.NoticeVO">
+   	<![CDATA[
+      select * from notice,noticecontent where notice.ntNum > 0 and notice.ntnum = noticecontent.ntnum order by notice.ntNum desc
+   	]]>
+	</select>
+	
+	<!--==========공지사항 등록 ===============  -->
+	<!-- 공지사항   --> 
+	<insert id="insertNotice">
+	    <selectKey  order="BEFORE" keyProperty="ntNum" resultType="long">
+	      select notice_seq.nextval from dual 
+	   </selectKey>
+	   insert into notice (ntNum, ntUsrClassification, ntTitle, ntDate)
+	   values (#{ntNum}, 0, #{ntTitle}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')) 
+	</insert> 
+	<!-- 공지사항 내용   -->
+	<insert id="insertNotiCon">
+		<selectKey  order="BEFORE" keyProperty="ntNum" resultType="long">
+	      select notice_seq.currval from dual 
+	   </selectKey>
+	   insert into noticeContent (ntNum, ntContent)
+	   values (#{ntNum}, #{ntContent}) 
+	</insert>
+	<!--==========공지사항 수정 ===============  -->
+	<update id="updateNotice">
+		update notice
+		set ntTitle=#{ntTitle},ntDate= TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+		where ntNum = #{ntNum}
+	</update>
+
+	<update id="updateNotiCon">
+	   update noticeContent
+	   set ntContent=#{ntContent} 
+	   where ntNum=#{ntNum}
+	</update> 
+	
+	<!--==========공지사항 삭제 ===============  -->
+	<delete id="deleteNotice">
+   		delete from notice where ntNum = #{ntNum}
+	</delete> 
+
+	<delete id="deleteNotiCon">
+	   delete from noticeContent where ntNum = #{ntNum}
+	</delete>
+	
+	<!-- 일주일간 가입한 사람의 숫자 -->
+	<select id="getJoinWeek" resultType="com.hobby.domain.UserVO">
+		SELECT 
+	    TO_CHAR(usrjoindate, 'yy/mm/dd') as weekDate,
+	    COUNT(*) as memberCount
+		FROM tbluser
+		GROUP BY 
+		TO_CHAR(usrjoindate, 'yy/mm/dd')
+		having TO_CHAR(usrjoindate, 'yy/mm/dd') between sysdate-7 and sysdate order by TO_CHAR(usrjoindate, 'yy/mm/dd') desc
+	</select>
+	
+	<select id="getTodayLoginNum" resultType="com.hobby.domain.UserVO">
+	select TO_CHAR(sysdate, 'yy/mm/dd') as usrlogindate, COUNT(*) as memberCount
+	from tbluser
+	where usrlogindate = TO_CHAR(sysdate, 'yy/mm/dd')
+	group by usrlogindate
+	</select>
+	
 </mapper>
