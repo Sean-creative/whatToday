@@ -51,4 +51,5 @@ public class ClubMapperTests {
 		
 		log.info("delete count: " + mapper.boardDelete(77L));
 	}
+
 }
