@@ -104,11 +104,12 @@
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    	    		window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');
+    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=#, height=#');
+    				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
     			}else{
     				// 포인트 결제 창으로 
     				// 모달로 바꾸기
-					// 결제 완료하면 바로됨.. 수정필요..    				
+					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
     				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
     				document.getElementById('register').submit();
     			}

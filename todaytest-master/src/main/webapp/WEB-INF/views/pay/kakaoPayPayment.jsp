@@ -66,7 +66,11 @@
                 	type: 'POST',  
             	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
             	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
-                    data: money
+            	    data: money,
+                    success: function(){ 
+                    	window.close(); 
+                    },
+        		 	error: function (){ }
                 });
             } else {
                 var msg = '결제에 실패하였습니다.';
