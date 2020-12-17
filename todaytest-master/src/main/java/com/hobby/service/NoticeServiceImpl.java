@@ -77,4 +77,11 @@ public class NoticeServiceImpl implements NoticeService{
       
       return mapper.getNotice(ntNum);
    }
+
+
+@Override
+public int getTotal() {
+	// TODO Auto-generated method stub
+	return mapper.getTotalCount();
+}
 }

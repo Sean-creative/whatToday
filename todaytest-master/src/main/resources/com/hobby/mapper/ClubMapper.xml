@@ -278,8 +278,12 @@
 		update club set
 		cbCurMbNum=#{cbCurMbNum}
 		where cbNum = #{cbNum}
-
 	</update>
 
+<select id="getCbMember" resultType="long">
+select usrnum
+from CLUBMEMBER
+where cbNum = #{cbNum} and usrNum = #{usrNum} and cbmbstresult ='가입승인'
+</select>
 
 </mapper>

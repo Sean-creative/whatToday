@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
@@ -263,5 +267,40 @@ public class ClubController {
 
 		return "redirect:/index/main";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정기모임 채팅창 - 지영
+//	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public void chat(@RequestParam("cbNum") Long cbNum, Model model) {
+		log.info("##/chat");
+	
+//		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		String name = customUser.getUser().getUsrName();
+//		Long usrNum = customUser.getUser().getUsrNum();
+		
+		System.out.println("cbNum: " + cbNum);
+//		System.out.println("usrNum: " + usrNum);
+
+//		// 모임에 가입한 사람(+가입승인)만 채팅창 입장버튼을 누를 수 있음. 
+//		Long result = service.getCbMember(cbNum, usrNum);
+//		System.out.println(result);
+//
+//		if(result==null) {
+//			model.addAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
+//		}else {
+//			model.addAttribute("cbNum", cbNum);
+//			model.addAttribute("usrName", name);
+//		}
+		model.addAttribute("cbNum", cbNum);
+	}
+	
 
 }
