@@ -70,19 +70,21 @@
 	</sql>
 	
 	<!--정기모임 목록 상세검색 (페이징)-->
-	<select id="getListWithPaging"
-		resultType="com.hobby.domain.ClubVO">
+	<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
 		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
-		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbMakeDate, cbView
 		from club where ]]>
 
 		<include refid="criteria"></include>
 							
 	<![CDATA[  		     
-	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
-	where rn > (#{pageNum}-1) * #{amount} ]]>
+		cbType='정기모임'
+	and rownum <= #{pageNum} * #{amount})
+	where rn > (#{pageNum}-1) * #{amount} 
+	]]>
+	order by ${orderBy}
 	</select>
 
 	<!-- 정기모임 목록 :모임 총 갯수 -->

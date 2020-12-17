@@ -62,7 +62,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
-		log.info("get List with criteria:" + cri);
+		log.info("========= get List with criteria:" + cri);
 		return mapper.getListWithPaging(cri);
 	}
 

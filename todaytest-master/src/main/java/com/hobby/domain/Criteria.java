@@ -43,7 +43,7 @@ public class Criteria {
 		this.amount = amount;
 //		orderBy = new String[]{"cbnum desc", "cbView desc", "cbappperiod desc", "distance"};
 		//디폴트로 최신순으로 해놓자.
-		orderBy = "cbnum desc";
+		orderBy = "CBMAKEDATE desc";
 	}
 	
 	
@@ -58,7 +58,8 @@ public class Criteria {
 	  .queryParam("city", this.getCity()) 
 	  .queryParam("district", this.getDistrict())
 	  .queryParam("searchBy", this.getSearchBy())
-	  .queryParam("keyword",this.getKeyword()); 
+	  .queryParam("keyword",this.getKeyword())
+	  .queryParam("orderBy",this.getOrderBy()); 
 	  return builder.toUriString(); }
 	 
 }
