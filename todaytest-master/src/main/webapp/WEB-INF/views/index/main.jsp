@@ -11,7 +11,7 @@
         <div class="foto"></div>
         <h1>오늘 뭐하지?</h1>
         <h3>당신의 즐거운 취미를 <br> 찾아드립니다!</h3>
-        <div class="hobbytest"><a href="">취미테스트</a></div>
+        <div class="hobbytest"><a href="/hobbyTest/test">취미테스트</a></div>
         <div class="hobbytest hbtn"><a href="/regular/list">정기모임</a></div> 
     </div>
     <!--  정기모임 -->
