@@ -9,16 +9,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.hobby.mapper.ThunderMapper">
 
 
-	<resultMap type="com.hobby.domain.ThunderDetailVO"
-		id="ThunderDetailVO">
+	<resultMap type="com.hobby.domain.ThunderDetailVO" id="ThunderDetailVO">
 		<result column="cbNum" property="cbNum" />
 		<result column="cbDate" property="cbDate" />
 		<result column="cbAppPeriod" property="cbAppPeriod" />
 		<result column="cbPlace" property="cbPlace" />
 		<result column="cbSupplies" property="cbSupplies" />
 
-		<result column="cbLocation" property="cbLocation" />
+		<result column="cbLatitude" property="cbLatitude" />
+		<result column="cbLongitude" property="cbLongitude" />
+
 		<result column="cbAddress" property="cbAddress" />
+
+		<result column="distance" property="distance" />
 	</resultMap>
 	<resultMap type="com.hobby.domain.ThunderVO" id="ThunderVO">
 		<result column="cbNum" property="cbNum" />
@@ -30,9 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbHashtag" property="cbHashtag" />
 		<result column="cbCity" property="cbCity" />
 		<result column="cbDistrict" property="cbDistrict" />
-		<result column="cbLeaderNum" property="cbLeaderNum" />		
+		<result column="cbLeaderNum" property="cbLeaderNum" />
 		<result column="cbCurMbnum" property="cbCurMbnum" />
-		
+
 		<result column="cbLeaderName" property="cbLeaderName" />
 		<result column="cbMakeDate" property="cbMakeDate" />
 		<result column="cbShutDate" property="cbShutDate" />
@@ -40,31 +43,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="cbFinalState" property="cbFinalState" />
 		<result column="cbDetailContent" property="cbDetailContent" />
 		<result column="cbFile" property="cbFile" />
+		<result column="cbThumbImg" property="cbThumbImg" />
+		<result column="cbView" property="cbView" />
 
 
 
-		<collection property="thunderDetailVO"
-			resultMap="ThunderDetailVO"></collection>
+		<collection property="thunderDetailVO" resultMap="ThunderDetailVO"></collection>
 	</resultMap>
 
 
-	<select id="getList" resultMap="ThunderVO">
-<![CDATA[  select * from club c, thunderDetail td
-		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum} ]]>
-	</select>
-
-
+<!-- 해당 모임에 대한 정보를 가져올 때 사용 -->
 	<select id="read" resultMap="ThunderVO">
-		select * from club c, thunderDetail td
-		where c.cbNum = td.cbNum AND c.cbNum=#{cbNum}
+		select * from club c, thunderDetail
+		td
+		where c.cbNum =
+		td.cbNum AND c.cbNum=#{cbNum} AND c.cbFinalState = '진행중'
 	</select>
 
 
 
 	<insert id="insert">
 		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
-		<selectKey keyProperty="cbNum" resultType="long"
-			order="BEFORE">
+		<selectKey keyProperty="cbNum" resultType="long" order="BEFORE">
 			select club_seq.nextval FROM DUAL
 		</selectKey>
 
@@ -75,34 +75,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(cbNum, cbIntro, cbName, cbCategory,
 		cbMbnum, cbSubcat, cbHashtag ,cbCity,
 		cbDistrict, cbType, cbLeaderNum
-		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState)
+		,cbLeaderName, cbCurMbnum, cbMakeDate, cbShutDate, cbFinalState,
+		cbFile, cbThumbImg)
 		values(#{cbNum}, #{cbIntro}, #{cbName},
 		#{cbCategory}, #{cbMbnum},
 		#{cbSubcat}, #{cbHashtag}, #{cbCity},
 		#{cbDistrict}, #{cbType}, #{cbLeaderNum},
-		#{cbLeaderName}, #{cbCurMbnum}, sysdate, #{thunderDetailVO.cbDate}, #{cbFinalState});
+		#{cbLeaderName},
+		#{cbCurMbnum}, TO_CHAR(sysdate, 'yyyy/mm/dd hh24:mi:ss'),
+		#{thunderDetailVO.cbDate}, #{cbFinalState},
+		#{cbFile}, #{cbThumbImg});
 
 
 		insert
 		into
 		thunderDetail
-		(cbNum,cbDate, cbAppPeriod, cbPlace, cbSupplies,
-		cbLocation, cbAddress)
-		values(#{cbNum}, #{thunderDetailVO.cbDate},
+		(cbNum,cbDate,
+		cbAppPeriod, cbPlace, cbSupplies,
+		cbLatitude, cbLongitude, cbAddress)
+		values(#{cbNum},
+		#{thunderDetailVO.cbDate},
 		#{thunderDetailVO.cbAppPeriod},
 		#{thunderDetailVO.cbPlace},
 		#{thunderDetailVO.cbSupplies},
-		#{thunderDetailVO.cbLocation},
+		#{thunderDetailVO.cbLatitude},
+		#{thunderDetailVO.cbLongitude},
 		#{thunderDetailVO.cbAddress} );
 
 
 		END
 		}
-		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, 
-			#{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, 
-			cl_place, cl_supplies, cl_file) values(#{cl_number}, #{club_detailVO.cl_date}, 
-			#{club_detailVO.cl_app_date} ,#{club_detailVO.cl_place}, #{club_detailVO.cl_supplies}, 
-			#{club_detailVO.cl_file}) select * from dual -->
+		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, #{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, cl_place, cl_supplies, cl_file) values(#{cl_number}, #{club_detailVO.cl_date}, #{club_detailVO.cl_app_date} ,#{club_detailVO.cl_place}, #{club_detailVO.cl_supplies}, #{club_detailVO.cl_file}) select * from dual -->
 	</insert>
 
 
@@ -112,7 +115,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CBAPPDATE)
 		values(#{loginUser.usrNum},
 		#{clubVO.cbNum}, #{clubVO.cbType}, #{clubVO.cbName},
-		#{loginUser.usrName}, #{joinState}, sysdate)
+		#{loginUser.usrName}, #{joinState}, TO_CHAR(sysdate, 'yyyy/mm/dd
+		hh24:mi:ss'))
 	</insert>
 
 	<insert id="insertJoinHistory">
@@ -121,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CBJOINSTATERESULT, CBJOINSTATEUPDATEDATE)
 		values(CLUBJOINHISTORY_SEQ.NEXTVAL, #{loginUser.usrNum},
 		#{clubVO.cbNum}, #{clubVO.cbType}, #{clubVO.cbName}, #{joinState},
-		sysdate)
+		TO_CHAR(sysdate, 'yyyy/mm/dd hh24:mi:ss'))
 	</insert>
 
 	<update id="updateJoin">
@@ -132,16 +136,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-
+<!-- 로그인한 유저가 해당 모임에 대해서 어떤 상태인지 반환 ex) 가입승인, 승인대기중 -->
 	<select id='readCbMemByUsrNum' resultType="String">
 		select cbmbstresult
-		from clubmember where usrnum=#{usrNum} AND
+		from clubmember where usrnum=#{usrNum}
+		AND
 		cbnum=#{cbNum}
 	</select>
 
-	<!-- 해당 클럽에 대한 가입 정보를 가져오는 SQL -->
-	<select id='getJoinList'
-		resultType="com.hobby.domain.ClubMemberVO">
+	<!-- 해당 클럽에 대한 멤버들의 가입 정보를 가져오는 SQL -->
+	<select id='getJoinList' resultType="com.hobby.domain.ClubMemberVO">
 		select usrnum, cbnum, cbtype, cbname, usrname,
 		cbmbstresult,CBAPPDATE
 		from clubmember
@@ -151,50 +155,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<!-- 일단은, 아예 상태가 변하지 않고, 아예 사라지는 걸로 만들자. -->
-	<delete id="delete">
-		{
-		CALL
-		begin
-		delete from thunderDetail where cbNum=
-		#{cbNum};
-
-		delete from club where cbNum= #{cbNum};
-		END
-		}
-	</delete>
+	<!-- 모임삭제는 모임의 상태가 변경되어야 한다. -->
+	<update id="delete">
+		update club set
+		cbFinalState = '폐쇄'
+		where cbNum= #{cbNum}
+	</update>
 
 
-<!-- 바뀔 수 있는 부분만 바꿀 것!! -->
+	<!-- 바뀔 수 있는 부분만 바꿀 것!! -->
 	<update id="update">
 		{
 		CALL
 		begin
-		
-		update club set 
+
+		update club set
 		cbIntro=#{cbIntro},
 		cbName=#{cbName},
 		cbCategory=#{cbCategory},
 		cbSubcat=#{cbSubcat},
 
-		cbMbnum=#{cbMbnum},		
-		cbHashtag=#{cbHashtag}, 
+		cbMbnum=#{cbMbnum},
+		cbHashtag=#{cbHashtag},
 		cbCity=#{cbCity},
 		cbDistrict=#{cbDistrict},
 		cbCurMbnum=#{cbCurMbnum},
-		
-		cbShutDate=#{thunderDetailVO.cbDate}
+
+		cbShutDate=#{thunderDetailVO.cbDate},
+
+		cbFile = #{cbFile},
+		cbThumbImg =
+		#{cbThumbImg}
 		where cbNum = #{cbNum};
 
 
 
-		update thunderDetail set
+		update
+		thunderDetail set
 		cbDate=#{thunderDetailVO.cbDate},
 		cbAppPeriod=#{thunderDetailVO.cbAppPeriod},
 		cbPlace=#{thunderDetailVO.cbPlace},
 		cbSupplies=#{thunderDetailVO.cbSupplies},
 
-		cbLocation=#{thunderDetailVO.cbLocation},
+		cbLatitude=#{thunderDetailVO.cbLatitude},
+		cbLongitude=#{thunderDetailVO.cbLongitude},
 		cbAddress=#{thunderDetailVO.cbAddress}
 		where cbNum = #{cbNum};
 
@@ -204,7 +208,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="clubViews">
 		update club set cbView = cbView + 1
-		where cbNum = #{cbNum}
+		where cbNum =
+		#{cbNum}
 	</update>
 
 
@@ -212,13 +217,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
 
-			<if
-				test="category != null  and category != '관심분야 선택' and category != '' ">
+			<if test="category != null  and category != '관심분야 선택' and category != '' ">
 				AND cbCategory = #{category}
 			</if>
 
-			<if
-				test="subclass != null and subclass != '모임 선택' and subclass != ''">
+			<if test="subclass != null and subclass != '모임 선택' and subclass != ''">
 				AND cbSubcat = #{subclass}
 			</if>
 
@@ -226,70 +229,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND cbCity = #{city}
 			</if>
 
-			<if
-				test="district != null and district != '세부지역 선택' and district != ''">
+			<if test="district != null and district != '세부지역 선택' and district != ''">
 				AND cbDistrict = #{district}
 			</if>
 
-			<if test="keyword != null and keyword!= ''">
-				AND cbName like '%'||#{keyword}||'%'
-			</if>
+
+			<choose>
+				<when test="'모임명'.equals(searchBy)">
+					<if test="keyword != null and keyword!= ''">
+						AND cbName like '%'||#{keyword}||'%'
+					</if>
+				</when>
+				<when test="'글작성자'.equals(searchBy)">
+					<if test="keyword != null and keyword!= ''">
+						AND cbLeaderName like '%'||#{keyword}||'%'
+					</if>
+				</when>
+				<when test="'해시태그'.equals(searchBy)">
+					<if test="keyword != null and keyword!= ''">
+						AND cbHashtag like '%'||#{keyword}||'%'
+					</if>
+				</when>
+
+			</choose>
+
 		</trim>
 	</sql>
 
 
-
-<!-- 
-	<select id="getListWithPaging" resultMap="ThunderVO"> 
-	<![CDATA[ select 
-* from ( select /*+INDEX_DESC(c club_pk)*/ rownum rn, c.cbNum, c.cbname, 
-		td.cbDate from club c,thunderDetail td where c.cbNum = td.cbNum AND c.cbType='번개모임' 
-		order by c.cbNum DESC ) where rn<= 5 ]]>
-	</select> -->
-
-
-	<!-- <select id="getListWithPaging" resultMap="ThunderVO"> <![CDATA[ select 
-		cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate from ( 
-		select /*+INDEX_DESC(c club_pk)*/ rownum rn, c.cbNum, c.cbName, c.cbMakeDate, 
-		c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate from club c, thunderDetail 
-		td where c.cbNum = td.cbNum AND c.cbType='번개모임' AND rownum<= #{pageNum} * 
-		#{amount} order by c.cbNum desc ) where rn > (#{pageNum}-1) * #{amount} ]]> 
-		</select> -->
-
-
-<!-- List 화면에 보여줄 값들만 찾아오면 된다.... -->
+	<!-- 거리제한 두고 리스트 페이징 처리 -->
 	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[
-	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate
+	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance , cbView, cbappperiod
 	from ( 	
-				select   rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate
+				select rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance, cbView,cbappperiod
 				from
 				(
-							select  c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate
+							select  c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate,    ROUND(DISTNACE_WGS84(#{userLatitude}, #{userLongitude}, cblatitude, cblongitude) ,2) distance, c.cbView, td.cbappperiod
 							from club c, thunderDetail td				
-							where 
+							where  
 								]]>
 
 		<include refid="criteria"></include>
 							
 							<![CDATA[  
-							c.cbNum = td.cbNum AND c.cbType='번개모임' 
-							order by c.cbNum desc			     
+							c.cbNum = td.cbNum AND c.cbType='번개모임' AND c.cbFinalState = '진행중'
+							order by ${orderBy}	        	       		     
 				 )
-				where rownum<= #{pageNum} * #{amount}
+				where distance < 20 AND rownum<= #{pageNum} * #{amount}
 			)				
 	 where rn > (#{pageNum}-1) * #{amount} ]]>
 	</select>
 
 
 
-
+	<!-- 거리제한 둔 것 개수 세기 -->
 	<select id="getTotalCount" resultType="int">
-		select count(*) from club where
+	<![CDATA[	select  count(*)
+				from
+				(
+							select   ROUND(DISTNACE_WGS84(37.537623499999995, 127.1580072, cblatitude, cblongitude) ,2) distance
+							from club c, thunderDetail td				
+							where ]]>
 		<include refid="criteria"></include>
-		cbType='번개모임'
+	<![CDATA[				c.cbNum = td.cbNum AND c.cbType='번개모임'  AND c.cbFinalState = '진행중' 							
+				 )                 
+				where distance <20 ]]>
 	</select>
 
+
+	<!-- <select id="getTotalCount" resultType="int"> select count(*) from club where <include refid="criteria"></include> cbType='번개모임' </select> -->
 
 </mapper>
 

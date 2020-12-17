@@ -137,6 +137,8 @@
 		
 		// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함		
 		let nowDate = today.toISOString().slice(0, 16);
+		/*console.log(nowDate);
+		console.log(today.getDate());*/
 		
 		if ($(o).val()) { 
 			// 값을 입력한 후 일 때 Value는 냅둬야함
@@ -257,7 +259,8 @@
 		return false;
 	}
     	
- 
-    	alert('개설되었습니다.');    	    
+		
+    	
+    	return true;
     }
     

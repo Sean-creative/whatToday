@@ -46,6 +46,9 @@ public class NoticeController {
 	public void noticeRead(NoticeCri cri, Model model) {
 			
 		log.info("###paging:"+cri);
+		
+		
+		
 		model.addAttribute("noticeList",service.noticeList(cri));
 		model.addAttribute("pageMaker", new NoticeDTO(cri,123));
 	}
