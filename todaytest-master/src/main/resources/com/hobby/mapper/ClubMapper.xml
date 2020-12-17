@@ -84,7 +84,7 @@
 	and rownum <= #{pageNum} * #{amount})
 	where rn > (#{pageNum}-1) * #{amount} 
 	]]>
-	order by ${orderBy}
+	order by ${orderBy} DESC
 	</select>
 
 	<!-- 정기모임 목록 :모임 총 갯수 -->

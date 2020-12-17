@@ -35,15 +35,15 @@ public class Criteria {
 	
 	public Criteria() {
 		//한번에 5개 정도만 보여준다.
-		this(1,5);		
+		this(1,5, "cbmakedate");		
 	}
 	
-	public Criteria(int pageNum, int amount) {
+	public Criteria(int pageNum, int amount, String orderBy) {
 		this.pageNum = pageNum;
 		this.amount = amount;
 //		orderBy = new String[]{"cbnum desc", "cbView desc", "cbappperiod desc", "distance"};
 		//디폴트로 최신순으로 해놓자.
-		orderBy = "CBMAKEDATE desc";
+		this.orderBy = orderBy;
 	}
 	
 	
