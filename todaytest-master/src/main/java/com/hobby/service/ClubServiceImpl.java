@@ -218,15 +218,4 @@ public class ClubServiceImpl implements ClubService {
 		log.info("get total board count");
 		return mapper.boardgetTotalCount(cri, cbNum);
 	}
-
-
-	//정기모임 게시판 총 갯수 
-	@Override
-	public int boardgetTotal(NoticeCri cri, Long cbNum) {
-		
-		log.info("get total board count");
-		return mapper.boardgetTotalCount(cri, cbNum);
-	}
-
-
 }
