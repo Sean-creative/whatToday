@@ -27,4 +27,8 @@ public class PayServiceImpl implements PayService{
 		return mapper.pointInsert(usrNum, usrPoint) == 1;
 	}
 	
+	@Override
+	public Long getUserPoint(Long usrNum) {
+		return mapper.getUserPoint(usrNum);
+	}
 }

@@ -37,8 +37,8 @@
             	
             	<a href="/mypage/main">마이페이지</a>
            		<a href="/cs/faq">고객센터</a>
-           		<a href="/pay/pointPayment">포인트 결제</a>
-           		<a href="/pay/pointPayment222">포인트 결제 test!!!</a>
+           		<a href="/pay/kakaoPayPayment">카카오 페이 결제</a>
+           		<a href="/pay/kakaoPayPayment222">카카오 페이 결제 test!!!</a>
        	 	</ul>
 		</sec:authorize>
 		

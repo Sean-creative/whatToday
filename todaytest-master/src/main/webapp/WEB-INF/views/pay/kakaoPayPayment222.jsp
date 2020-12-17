@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 포인트 결제 페이지 -->
+<!-- 카카오 포인트 결제 페이지 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +28,13 @@
              	type: 'POST',  
          	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
          	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
-                data: money
+                data: money,
+                success: function(){ 
+                	window.close(); 
+                },
+    		 	error: function (){ }
              });
+    		
         });
     
 </script>

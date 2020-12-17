@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -8,41 +8,40 @@
 
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();">
+<form id="register" name="register" action="/regular/add" method="post"
+	onsubmit="return inputCheckclub();">
 
-   <input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" /> 
-   <input type="hidden" id="cbType" name="cbType" value="정기모임" /> 
-   <input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" /> <label for="cbCategory">카테고리/분야</label>
-   <select id="cbCategory" name="cbCategory">
-      <option value="아웃도어/여행">아웃도어/여행</option>
-      <option value="문화/공연/축제">문화/공연/축제</option>
-      <option value="운동/스포츠">운동/스포츠</option>
-      <option value="음악/악기">음악/악기</option>
-      <option value="외국/언어">외국/언어</option>
-      <option value="게임/오락">게임/오락</option>
-      <option value="기타">기타</option>
-   </select> 
-   <label for="cbSubcat">모임</label> 
-   <select id="cbSubcat" name="cbSubcat"></select><br>
-   <label for="cbName">모임명</label> 
-   <input type="text" id="club" name="cbName"><br> 
-   <label for="cbCity">지역 </label> 
-   <select name="cbCity" id="cbCity">
-      <option value="서울특별시">서울특별시</option>
-      <option value="경기도">경기도</option>
-   </select> <select name="cbDistrict" id="cbDistrict"></select> 
-   <label for="cbMbNum">정원</label> 
-   <input type="number" id="num" name="cbMbNum" min="1" max="200"><br> <input type="hidden" name="cbMakeDate">
-   <!--개설일자 : sysdate로 기본설정 -->
-   <label for="cbHashtag">해시태그</label> 
-   <input type="text" id="hash" name="cbHashtag" value="#"><br> 
-   <label for="cbIntro">한줄소개</label>
-   <input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요"><br>
-   <label for="cbDetailContent">모임 상세내용(필수)</label><br>
-   <textarea name="cbDetailContent" rows="10" cols="100"
-      style="resize: none" placeholder="30자이내로 작성하세요"></textarea><br> 
-   <input type="file" name="cbFile">
-   <button type="submit">개설하기</button>
+	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum"
+		value="${usrNum}" /> <input type="hidden" id="cbType" name="cbType"
+		value="정기모임" /> <input type="hidden" id="cbLeaderName"
+		name="cbLeaderName" value="${usrName}" /> <label for="cbCategory">카테고리/분야</label>
+	<select id="cbCategory" name="cbCategory">
+		<option value="아웃도어/여행">아웃도어/여행</option>
+		<option value="문화/공연/축제">문화/공연/축제</option>
+		<option value="운동/스포츠">운동/스포츠</option>
+		<option value="음악/악기">음악/악기</option>
+		<option value="외국/언어">외국/언어</option>
+		<option value="게임/오락">게임/오락</option>
+		<option value="기타">기타</option>
+	</select> <label for="cbSubcat">모임</label> <select id="cbSubcat" name="cbSubcat"></select><br>
+	<label for="cbName">모임명</label> <input type="text" id="club"
+		name="cbName"><br> <label for="cbCity">지역 </label> <select
+		name="cbCity" id="cbCity">
+		<option value="서울특별시">서울특별시</option>
+		<option value="경기도">경기도</option>
+	</select> <select name="cbDistrict" id="cbDistrict"></select> <label
+		for="cbMbNum">정원</label> <input type="number" id="num" name="cbMbNum"
+		min="1" max="200"><br> <input type="hidden"
+		name="cbMakeDate">
+	<!--개설일자 : sysdate로 기본설정 -->
+	<label for="cbHashtag">해시태그</label> <input type="text" id="hash"
+		name="cbHashtag" value="#"><br> <label for="cbIntro">한줄소개</label>
+	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요"><br>
+	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
+	<textarea name="cbDetailContent" rows="10" cols="100"
+		style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+	<br> <input type="file" name="cbFile">
+	<button type="submit">개설하기</button>
 </form>
 
 <script type="text/javascript">
@@ -55,6 +54,7 @@
       let date = document.register.cbMakeDate;
       let info = document.register.cbIntro;
       let infodetail = document.register.cbDetailContent;
+      let cbMbNum = document.register.cbMbNum;
       
       //모임명의 앞뒤 공백 체크 
       let inputValue = club.value.replace(/^(\s|\.)*|(\s|\.)*$/g, ""); //replace:공백,.을 ""(제거)해준다.
@@ -70,10 +70,11 @@
          return false;
       }
       //모임정원 빈문자열체크,정원 제한(1~200명)
-      if(!number.value || (number.value <= 0) || (number.value > 50)) {
-         alert("모임정원을 입력해주세요.(최대정원:50명)");
+      if(!number.value || (number.value <= 0) || (number.value > 200)) {
+         alert("모임정원을 입력해주세요.(최대정원:200명)");
          return false;
       }
+      
       //한줄소개 빈문자열 체크, 글자수 제한 
       if(!info.value || info.value.length > 30) {
          alert("한줄소개를 입력해주세요.");
@@ -84,7 +85,42 @@
          alert("30자 이내로 상세내용을 입력해주세요.");
          return false;
       }
-      alert('모임이 개설되었습니다.');   
+     
+      
+   // 50명이상일경우 포인트 결제 창으로 이동 (지영)
+      if(!number.value || (number.value <= 0) || (number.value > 50)){
+    	  console.log("모임 정원: " + number.value);
+		  // 현재 개설자가 포인트가 있는 지 확인한다.
+		  let usrNum = document.register.cbLeaderNum.value;
+    	  $.ajax({
+    		url: "/pay/check/userpoint", 
+           	type: 'POST',  
+       	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
+       	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+            data: usrNum,
+            success: function(userPoint){
+    	    	console.log("userPoint: " + userPoint);
+    	    	// 모임 개설 = 만원
+    			// 포인트가 만원이하 있을 경우
+    			// 카카오 페이 포인트 결제 창으로 
+    			if(userPoint<'10000'){
+    	    		window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');
+    			}else{
+    				// 포인트 결제 창으로 
+    				// 모달로 바꾸기
+					// 결제 완료하면 바로됨.. 수정필요..    				
+    				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
+    				document.getElementById('register').submit();
+    			}
+    	    },
+    	    error: function (){        
+    	                      
+    	    }
+		
+       	    
+           });
+		return false;
+	  }
    }
 
    //카테고리/분야 선택, 지역 선택 
