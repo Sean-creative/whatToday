@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="header">
+        <div id="head">
+            <div class="menu1">
+                <img src="img/logo.png" alt="">
+                <form>
+                    <input type="text" name="search" placeholder="관심분야를 입력해주세요:)">
+                </form>
+            </div>
+            <div class="menu2">
+                <li><a href="">로그인</a></li>
+                <li><a href="">고객센터</a></li>
+            </div>
+        </div>
+        <div id="nav">
+            <div id="myNav" class="overlay">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="overlay-content">
+                    <div class="tab">
+                        <button class="tablinks" onclick="openMix(event, 'Regular')" id="defaultOpen">정기모임</button>
+                        <button class="tablinks" onclick="openMix(event, 'Thunder')">번개모임</button>
+                    </div>
+                    <div id="Regular" class="tabcontent">
+                        <a href="#hello">정기모임1</a>
+                        <a href="">정기모임2</a>
+                        <a href="">정기모임3</a>
+                    </div>
+                      
+                    <div id="Thunder" class="tabcontent">
+                        <a href="">번개모임1</a>
+                        <a href="">번개모임2</a>
+                        <a href="">번개모임3</a>
+                    </div>
+                </div>
+            </div>
+            <span class="menubtn" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            <a class="submenu" href="">정기모임</a>
+            <a class="submenu" href="">번개모임</a>
+            <a class="submenu" href="">베스트</a>
+            <a class="submenu" href="">취미Test</a>
+            <a class="submenu" href="">모임개설</a>
+        </div>
+    </div>
+    <script>
+        
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        //   document.getElementById("myDropdown").classList.toggle("hide");
+        }
+        function closeNav() {
+        document.getElementById("myDropdown").classList.toggle("hide");
+        }
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+// ver2
+function openNav() {
+  document.getElementById("myNav").style.height = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.height = "0%";
+}
+
+function openMix(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+document.getElementById("defaultOpen").click();
+ </script>
+</body>
+</html>

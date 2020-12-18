@@ -217,6 +217,7 @@ public class ClubServiceImpl implements ClubService {
 		log.info("get total board count");
 		return mapper.boardgetTotalCount(cri, cbNum);
 	}
+
 	//정기모임 수정
 	@Override
 	public boolean updateClub(ClubVO club) {
@@ -231,7 +232,6 @@ public class ClubServiceImpl implements ClubService {
 		log.info("deleteclub......"+ cbNum);
 		return mapper.deleteClub(cbNum) == 1;
 	}
-
 
 
 
