@@ -50,8 +50,11 @@
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
 	
 	<div style="display:flex; flex-direction: row; justify-content: flex-end;">
-		<button data-oper='modify' class="btn btn-default">모임 수정</button>
-		<button data-oper='list' class="btn btn-info">List</button>
+		<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
+		<c:if test="${usrNum == club.cbLeaderNum}">
+			<button data-oper='modify' class="btn btn-default">모임 수정</button>
+		</c:if>
+			<button data-oper='list' class="btn btn-info">List</button>
 	</div>
 	<form id='operForm' action="/regular/update" method="get">
 		<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
@@ -75,9 +78,6 @@
 
 
 <div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;" >
-	<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
-	<c:if test="${usrNum == club.cbLeaderNum}">
-	</c:if>
 	
 	<form action="/meeting/add" method="get" id="tag-form">
 		<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
