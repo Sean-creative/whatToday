@@ -530,30 +530,7 @@ ul li.tag-item {
 									} else if (operation === 'list') {
 										// move to list
 										formObj.attr("action", "/thunder/list")
-												.attr("method", "get");
-
-										//								let pageNumTag = $("input[name='pageNum']").clone();
-										//								let amountTag = $("input[name = 'amount']").clone();
-										//
-										//								let categoryTag = $("input[name = 'category']").clone();
-										//								let subclassTag = $("input[name = 'subclass']").clone();
-										//								let cityTag = $("input[name = 'city']").clone();
-										//								let districtTag = $("input[name = 'district']").clone();
-										//								let searchByTag = $("input[name = 'searchBy']").clone();
-										//								let keywordTag = $("input[name = 'keyword']").clone();
-										//
-										//								formObj.empty();
-										//
-										//								formObj.append(pageNumTag);
-										//								formObj.append(amountTag);
-										//
-										//								formObj.append(categoryTag);
-										//								formObj.append(subclassTag);
-										//								formObj.append(cityTag);
-										//								formObj.append(districtTag);
-										//								formObj.append(searchByTag);
-										//								formObj.append(keywordTag);
-
+												.attr("method", "get");										
 									}
 									// Modify 라고 한다면
 									else {
