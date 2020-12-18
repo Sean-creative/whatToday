@@ -1,58 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 작성자: 김지영 -->
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/registerStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/login.css">
+    <title>Login</title>
 </head>
 <body>
-	<div style="max-width: 500px; margin: auto"></div>
+    <div id="login">
+        <div class="loginbx">
+            <h1>LOGIN</h1>
+            <hr>
+            <form method="post" action="/login">
+                <div>
+                    <input type="text" name="username" value="${username }" placeholder="아이디 입력">
+                </div>
+                <div>
+                    <input type="text" name="password" value="${password }" placeholder="비밀번호 입력(영문,숫자,특수문자조합)">
+                </div>
+                <div>
+                	<button type="submit">로그인</button>
+                	 <!--<input type="submit" value="로그인">--> 
+                </div>
 
-	<form method="post" action="/login"
-		style="max-width: 500px; margin: auto">
-		<h2>회원 로그인 </h2>
-		<div class="input-container">
-			<label>이메일(아이디) </label>
-			<!-- type="email" test하고  바꾸기 -->
-			<input class="input-field" type="text" placeholder="Email"
-				name="username" value = "${username }">
-		</div>
+                <div class="check">
+                    <input type="checkbox" id="cb1" name='remember-me'>
+                    <span>아이디 저장</span>
+                </div>
+                <hr>
 
-		<div class="input-container">
-			<label>비밀번호 </label> <input class="input-field" type="password"
-				placeholder="Password" name="password" value = "${password }">
-		</div>
-		
-		<div>
-			<!-- security-context.xml에서 태그security:remember-me로 쿠키 생성  // 데이터 베이스 이용 -->
-			<input type='checkbox' name='remember-me'>로그인 유지 
-		</div>
-	
-		<a href="/login/register">회원가입</a>
-		<a href="/login/find">아이디/비밀번호 찾기</a>
-		<br>
-		<a href="https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=	
-http://localhost:8080/login/kakaoLogin&response_type=code">카카오 로그인</a><br>
+                <div id="sns">
+                    <div OnClick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=http://localhost:8080/login/kakaoLogin&response_type=code'">
+                        <div class="kakao"></div>
+                        <p>카카오<br>로그인</p>
+                    </div>
 
-		<a href="/login/naverLogin">네이버 로그인</a>
-		<!--  <a href="/login/googleLogin">구글 로그인</a>-->
+                    <div OnClick="location.href='/login/naverLogin'">
+                        <div class="naver"></div>
+                        <p>네이버<br>로그인</p>
+                    </div>
+                    <div>
+                        <div class="google"></div>
+                        <!-- 아직 적용 안됨 -->
+                        <p>구글<br>로그인</p>
+                    </div>
+                </div>
+                <!-- <hr> -->
+                <div id="idpass">
+                    <a href="/login/find">아이디 찾기 | 비밀번호 찾기</a>
+                </div>
 
-
-		<button type="submit" class="btn">LOG IN</button>
-	</form>
-
-<script type="text/javascript">
-	// 모달창으로 변경 예정
-	if("${registerSuccessMsg }" != ""){
-		alert("메일로 본인 확인!!!!");
-	}
-	
-</script>
- 
-
+                <div id="membership" OnClick="location.href='/login/register'">
+                    <p>아직 회원이 아니세요?</p>
+                    <p>회원가입 ></p>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 <%@ include file="../includes/footer.jsp"%>

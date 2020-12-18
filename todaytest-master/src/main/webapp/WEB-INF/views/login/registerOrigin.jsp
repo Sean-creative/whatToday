@@ -2,148 +2,134 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../includes/header.jsp"%>
 <!-- 작성자: 김지영 -->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/resources/css/member.css">
-    <title>회원가입</title>
+<style>
+    .hide {
+    font-size: 15px;
+    color: blue;
+}
+</style>
+<link rel="stylesheet" href="/resources/css/registerStyle.css">
 </head>
 <body>
-    <form>
-        <div id="member">
-            <div id="memberform">
-            	<a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"></a>
-                <!--<img src="/resources/css/img/logo.png" alt="">-->
-                <!-- <h2>오늘뭐하지 회원가입을 환영합니다!</h2> -->
-	
-                <div>
-                    <label for="id">아이디(이메일)</label><br>
-                    <input type="text" placeholder="이메일(아이디)를 입력해주세요." id="email" name="usrId">
-                    <button>중복확인</button>
-                </div>
-				<span id ="emailResult" class="hide"></span>
-				
-                <div>
-                    <label for="password">비밀번호</label><br>
-                    <input type="text" placeholder="비밀번호(영문,숫자,특수문자 8-16자)" id="pwd" name="usrPwd">
-                </div>
-                <span id="pwdResult" class="hide"></span>
+	<form name ="register" method="post" action="/login/registerAction" onsubmit="return inputCheck()"
+		style="max-width: 500px; margin: auto" >
+        <h2>회원가입</h2>
+		<input type="hidden" name="usrType" value="일반회원가입" >
+        
+		<div class="input-container">
+			<label>이메일(아이디) </label>
+			<!--type="email" 나중에 바꾸기  -->
+			<input class="input-field" type="email" placeholder="이메일(아이디)를 입력해주세요"
+				id="email" name="usrId">
+            <button id="idDuplicateCheck" type="button" onclick="idDuplicate();">중복체크</button>
+		</div>
+		<span id ="emailResult" class="hide"></span>
 
-                <div>
-                    <label for="password">비밀번호 재입력</label><br>
-                    <input type="text" placeholder="비밀번호 재입력" id="pwdRe" name="usrPwdRe">
-                </div>
-                <span id="pwdReResult" class="hide"></span>	
+		<div class="input-container">
+			<label>비밀번호 </label> <input class="input-field" type="password"
+                placeholder="영어+특수문자+숫자를 섞어서 (8~16)자리"  id="pwd" name="usrPwd">
+		</div>
+		<span id="pwdResult" class="hide"></span>
+		
+		<div class="input-container">
+			<label>비밀번호 확인 </label> <input class="input-field" type="password"
+				placeholder="비밀번호를 다시 입력해주세요" id="pwdRe" name="usrPwdRe">
+		</div>
+		<span id="pwdReResult" class="hide"></span>	
+		
+		<div class="input-container">
+			<label>이름 </label> <input class="input-field" type="text"
+                placeholder="이름을 입력해주세요" id="name" name="usrName">
+		</div>
+		<span id="nameResult" class="hide"></span>
 
-                <div>
-                    <label for="name">이름</label><br>
-                    <input type="text" placeholder="이름 입력" id="name" name="usrName">
-                </div>
+		<div class="input-container">
+			<label>휴대전화 번호 </label> <input class="input-field" type="text"
+                placeholder="핸드폰번호를 '-'없이 입력해주세요" id="phone" name="usrPhone">
+            <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">핸드폰번호 체크</button>
+		</div>
+        <span id ="phoneResult" class="hide"></span>
 
-                <div>
-                    <label for="phone">휴대폰 번호</label><br>
-                    <input type="text" placeholder="휴대폰 전호('-'없이 입력)">
-                    <button>중복 확인</button>
-                </div>
-	
-                <div>
-                    <label for ="date">생년월일 </label><br> 
-                    <input type="date">
-                </div>
+		<div class="input-container">
+			<label>성별 </label> <input type="radio" name="usrGender" value ="m"> 
+			<label for="male">남자</label> 
+			<input type="radio" id="female" name="usrGender" value ="f"> 
+			<label for="female">여자</label><br>
+		</div>
+		
+ 		<!--text -> Date(DB타입)으로 변환-->
+		<div class="input-container">
+			<label>생년월일 </label> <input class="input-field" id ="datefield"  type="date" min="1900-01-01" max="2020-01-01"
+				placeholder="Birthday" name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
+		</div>
+		
+		<p>관심정보</p>
+		<p>관심정보는 선택사항이며 선택하지 않아도 회원가입이 가능합니다.</p>
+		<div class="input-container">
+			<label>관심 지역1 </label> <select class="input-field" name="usrCity1"
+				id="city1">
+				<option value="시/도 선택">시/도 선택</option>
+				<option value="서울특별시">서울특별시</option>
+				<option value="경기도">경기도</option>
+			</select> <select class="input-field" name="usrDistrict1" id="district1">
+				<option value="군/구 선택">군/구 선택</option>
+			</select>
+		</div>
 
-                <div class="gender">
-                    <label for ="genter" >성별 </label>
-                    <input type="radio"> 
-                    <label for="male" class="especi">남자</label> 
-                    <input type="radio"> 
-                    <label for="female" class="especi">여자</label>
-                </div>
+		<div class="input-container">
+			<label>관심 지역2 </label> <select class="input-field" name="usrCity2"
+				id="city2">
+				<option value="시/도 선택">시/도 선택</option>
+				<option value="서울특별시">서울특별시</option>
+				<option value="경기도">경기도</option>
+			</select> <select class="input-field" name="usrDistrict2" id="district2">
+				<option value="군/구 선택">군/구 선택</option>
+			</select>
+		</div>
+		<div class="input-container">
+			<label>카테고리/분야 </label> <select class="input-field"
+				name="usrCategory1" id="category1">
+				<option value="관심분야">관심분야 선택1</option>
+			</select>
+		</div>
 
-                <p>* 관심정보<br>
-                <span>관심정보는 선택사항이며, 선택하지 않아도 회원가입이 가능합니다.</span>
-                </p>
+		<div class="input-container">
+			<label>카테고리/분야 </label> <select class="input-field"
+				name="usrCategory2" id="category2">
+				<option value="관심분야">관심분야 선택2</option>
+			</select>
 
-                
-                <div>
-                    <label for="interest">관심지역1</label><br>
-                    <select>
-                        <option>시/도선택</option>
-                        <option>서울특별시</option>
-                        <option>경기도</option>
-                    </select>
-                    <select>
-                        <option>구/군선택</option>
-                        <option>종로구</option>
-                        <option>서대문구</option>
-                        <option>성북구</option>
-                    </select>
-                </div>
+		</div>
 
-                <div>
-                    <label for="interest">관심지역2</label><br>
-                    <select>
-                        <option>시/도선택</option>
-                        <option>서울특별시</option>
-                        <option>경기도</option>
-                    </select>
-                    <select>
-                        <option>구/군선택</option>
-                        <option>종로구</option>
-                        <option>서대문구</option>
-                        <option>성북구</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="category">카테고리/분야1</label><br>
-                    <select class="cate">
-                        <option>관심분야선택</option>
-                        <option>아웃도어/여행</option>
-                        <option>축구</option>
-                        <option>농구</option>
-                    </select>
-                </div>
+		<div class="input-container">이용약관 / 개인정보 수집 및 이용 동의</div>
+		<div class="input-container">
+			<label>이용약관 동의</label> 
+			<input type="radio" name="usrTerm"
+				value="Y"> <label for="agree">동의</label> <input type="radio"
+				name="usrTerm" value="N"> <label for="disagree">비동의</label>
+		</div>
 
-                <div>
-                    <label for="category">카테고리/분야2</label><br>
-                    <select class="cate">
-                        <option>관심분야선택</option>
-                        <option>아웃도어/여행</option>
-                        <option>축구</option>
-                        <option>농구</option>
-                    </select>
-                </div>
+		<div class="input-container">
+			<label>개인정보 수집 동의</label> <input type="radio"
+				name="usrPersonalTerm" value="Y"> <label for="agree">동의</label>
+			<input type="radio" name="usrPersonalTerm" value="N">
+			<label for="disagree">비동의</label>
+		</div>
 
-                <p>이용약관 / 개인정보 수집 및 이용 동의</p>
-                <div id="agreeform">
-                    <div>
-                        <label class="agre">이용약관 동의</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
-                    </div>
+		<div class="input-container">
+			<label>이메일 수신</label> <input type="radio" name="usrEmailTerm"
+				value="Y"> <label for="agree">동의</label> <input type="radio"
+				name="usrEmailTerm" value="N"> <label for="disagree">비동의</label>
+		</div>
 
-                    <div>
-                        <label class="agre">개인정보 수집 동의</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
-                    </div>
+		<button type="submit" class="btn">Register</button>
 
-                    <div>
-                        <label class="agre">메일수신</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
-                    </div>
-                </div>
-
-                <div id="regiform">
-                    <input type="submit" class="btn" value="가입하기">
-                </div>
-            </div>
-        </div>
-    </form>
+	</form>
 
 	<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 	<script>

@@ -44,6 +44,15 @@ input[type=submit]{
     font-size:16px;
     color:#999;
 }
+button[type=submit]{
+    width:480px;
+    height:50px;
+    border:none;
+    /* border:1px solid #999; */
+    border-radius: 5px;
+    font-size:16px;
+    color:#999;
+}
 ::placeholder{
     font-size:16px;
     color:#888;
@@ -62,21 +71,21 @@ input[type=submit]{
 .kakao{
     width:45px;
     height:45px;
-    background:url(../img/kakao.png)no-repeat center center;
+    background:url(/resources/img/kakao.png)no-repeat center center;
     background-size: cover;
     border-radius: 50%;
 }
 .naver{
     width:45px;
     height:45px;
-    background:url(../img/naver.png)no-repeat center center;
+    background:url(/resources/img/naver.png)no-repeat center center;
     background-size: cover;
     border-radius: 50%;
 }
 .google{
     width:45px;
     height:45px;
-    background:url(../img/sns02.png)no-repeat center center;
+    background:url(/resources/img/sns02.png)no-repeat center center;
     background-size: cover;
     border-radius: 50%;
 }
@@ -90,9 +99,6 @@ input[type=submit]{
     list-style: none;
     text-decoration: none;
     color:#666;
-}
-#idpass a:nth-child(1){
-    border-right:1px solid #000;
 }
 
 #membership{
@@ -110,12 +116,4 @@ input[type=submit]{
 }
 #membership p{
     padding:0 20px;
-}
-
-a{
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
