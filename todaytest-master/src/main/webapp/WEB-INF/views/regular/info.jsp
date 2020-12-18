@@ -27,27 +27,36 @@
 		<c:out value="${club.cbName}" />
 	</div>
 	<div id=dow>
-		<img src="/resources/img/clubsample.jpg" alt='sample' align="left"> 한줄소개 -
-		<c:out value="${club.cbIntro}" />
-		<br> 상세내용 -
-		<c:out value="${club.cbDetailContent}" />
+		<img src="/resources/img/clubsample.jpg" alt='sample' align="left"> 
+		한줄소개 -
+		<c:out value="${club.cbIntro}" /><br> 
+		
+		상세내용 -
+		<c:out value="${club.cbDetailContent}" /><br> 
+		
+		가입한 회원  
+		<div style="border: 1px solid black; width: 170px; height: 140px; display: flex;">
+			<c:forEach items="${joinList}" var="joinList"> 
+				<li><c:out value="${joinList.usrName}" /></li>
+			</c:forEach>
+		</div>
 	</div>
 	<div>
 		개설자 - 
 		<c:out value="${club.cbLeaderName }" /><br>
-		
-		가입한 회원  
-		<div style="border: 1px solid black; width: 170px; height: 140px;">
-		<c:forEach items="${joinList}" var="joinList"> 
-				<li><c:out value="${joinList.usrName}" /></li>
-		</c:forEach>
-		</div>
 	</div>
 
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
-
-
+	
+	<div style="display:flex; flex-direction: row; justify-content: flex-end;">
+		<button data-oper='modify' class="btn btn-default">모임 수정</button>
+		<button data-oper='list' class="btn btn-info">List</button>
+	</div>
+	<form id='operForm' action="/regular/update" method="get">
+		<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+	</form>
+	
 	<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
 	<c:if test="${usrNum != club.cbLeaderNum}">
 		<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" data-oper='join' id="join">
@@ -168,5 +177,22 @@
 	
 	
 	
+</script>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var operForm = $("#operForm");
+
+		$("button[data-oper='modify']").on("click", function(e) {
+			operForm.attr("action", '/regular/update').submit();
+		}); 
+
+		$("button[data-oper='list']").on("click",function(e) {
+			operForm.find("#cbNum").remove();
+			operForm.attr("action", '/regular/list')
+			operForm.submit();
+		});
+	});
 </script>
 <%@include file="../includes/footer.jsp"%>

@@ -5,17 +5,14 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
@@ -134,6 +131,7 @@ public class ClubController {
 
 		log.info("/info");
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
+		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
 	}
 
@@ -217,7 +215,7 @@ public class ClubController {
 
 	// 정기모임 게시판 - 수정
 	@PostMapping("/boardupdate")
-	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) {
+	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) { 
 
 		log.info("boardmodify: " + club);
 
@@ -302,5 +300,33 @@ public class ClubController {
 		model.addAttribute("cbNum", cbNum);
 	}
 	
-
+	
+	//정기모임 수정
+	@GetMapping("/update")
+	public void updateClub(@RequestParam("cbNum") Long cbNum, Model model) {
+		log.info("##getClub:"+service.getClub(cbNum));
+		model.addAttribute("cbNum", cbNum);
+		model.addAttribute("club", service.getClub(cbNum));
+	}
+	@PostMapping("/update")
+	public String updateClub(ClubVO club, RedirectAttributes rttr) { 
+	
+		log.info("##updateclub:"+club);
+		
+		if (service.updateClub(club) ) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/regular/list";
+	}
+	//정기모임 삭제(폐쇄)
+	@PostMapping("/delete")
+	public String deleteClub(@RequestParam("cbNum") Long cbNum, RedirectAttributes rttr) {
+		
+		log.info("##delete:" + cbNum);
+		
+		if (service.deleteClub(cbNum)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/regular/list";
+	}
 }

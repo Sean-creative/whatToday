@@ -50,7 +50,7 @@
 		<div style="padding: 20px;">
 			<div style="font-size: 20px; margin: 0px;">
 				<select class="pagination">
-					<option value="CBMAKEDATE" <c:if test="${pageMaker.cri.orderBy eq 'CBMAKEDATE'}">selected</c:if>>최신순</option> <!-- DB 필드명을 넣어야함, java vo는 DB가 인식을 못하지 (cbMakeDate : X) -->
+					<option value="CBNUM" <c:if test="${pageMaker.cri.orderBy eq 'CBNUM'}">selected</c:if>>최신순</option> <!-- DB 필드명을 넣어야함, java vo는 DB가 인식을 못하지 (cbNum : X) -->
 					<option value="CBVIEW" <c:if test="${pageMaker.cri.orderBy eq 'CBVIEW'}">selected</c:if>>인기순</option>
 				</select> 
 			</div>
