@@ -5,6 +5,58 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
+<style>
+section a:link {
+	color: white;
+	text-decoration: none;
+}
+
+section a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+section a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+</style>
+
 
 <div id="banner">
 	<ul>
@@ -27,7 +79,12 @@
 		<c:out value="${club.cbName}" />
 	</div>
 	<div id=dow>
-		<img src="/resources/img/clubsample.jpg" alt='sample' align="left"> 
+	
+		<!-- 썸네일! -->
+		<div class="inputArea">
+				<label for="gdsImg">썸네일</label> <img src="${club.cbThumbImg}" class="thumbImg" />
+			</div>
+		 
 		한줄소개 -
 		<c:out value="${club.cbIntro}" /><br> 
 		
