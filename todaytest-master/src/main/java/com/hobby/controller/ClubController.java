@@ -302,5 +302,10 @@ public class ClubController {
 		model.addAttribute("cbNum", cbNum);
 	}
 	
+	@RequestMapping(value = "/chat22")
+	public void chatt() {
+		log.info("###test");
+	}
+	
 
 }
