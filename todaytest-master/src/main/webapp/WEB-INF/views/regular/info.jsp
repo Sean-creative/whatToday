@@ -50,7 +50,7 @@
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
 	
 	<div style="display:flex; flex-direction: row; justify-content: flex-end;">
-		<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
+		<!-- 로그인 유저가 모임장이면 모임수정하기 버튼을 보여준다. -->
 		<c:if test="${usrNum == club.cbLeaderNum}">
 			<button data-oper='modify' class="btn btn-default">모임 수정</button>
 		</c:if>
