@@ -103,6 +103,13 @@
 		from club
 		where cbNum = #{cbNum}
 	</select>
+	
+	
+<!-- 정기모임 조회수 -->
+<update id="clubViews">
+	update CLUB set cbView = cbView + 1 
+	where cbNum = #{cbNum}
+</update>
 
 <!-- 정기모임 게시판 - 목록 -->
 <!-- <select id="getList" resultType="com.hobby.domain.ClubVO">
@@ -269,8 +276,12 @@
 		update club set
 		cbCurMbNum=#{cbCurMbNum}
 		where cbNum = #{cbNum}
-
 	</update>
 
+<select id="getCbMember" resultType="long">
+select usrnum
+from CLUBMEMBER
+where cbNum = #{cbNum} and usrNum = #{usrNum} and cbmbstresult ='가입승인'
+</select>
 
 </mapper>

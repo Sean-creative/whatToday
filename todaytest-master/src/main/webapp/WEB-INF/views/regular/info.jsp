@@ -12,7 +12,7 @@
 		<!--a태그의 페이지이동 기능 무효화 -->
 		<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li>
 		<!--cbNum(모임번호)을 가지고 게시판페이지이동-->
-		<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li>
+		<li><a href="/regular/chat?cbNum=<c:out value="${club.cbNum}" />">채팅</a></li>
 		<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 	</ul>
 </div>
@@ -33,9 +33,17 @@
 		<c:out value="${club.cbDetailContent}" />
 	</div>
 	<div>
-		개설자 -
-		<c:out value="${club.cbLeaderName }" />
+		개설자 - 
+		<c:out value="${club.cbLeaderName }" /><br>
+		
+		가입한 회원  
+		<div style="border: 1px solid black; width: 170px; height: 140px;">
+		<c:forEach items="${joinList}" var="joinList"> 
+				<li><c:out value="${joinList.usrName}" /></li>
+		</c:forEach>
+		</div>
 	</div>
+
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
 

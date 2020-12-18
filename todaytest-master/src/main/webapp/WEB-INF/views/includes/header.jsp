@@ -61,6 +61,7 @@
 
 					<div id="Thunder" class="tabcontent">
 						<a href="">번개모임1</a> <a href="">번개모임2</a> <a href="">번개모임3</a>
+	
 					</div>
 				</div>
 			</div>
@@ -154,8 +155,8 @@ ws.onopen = function(message){
 };
 
 ws.onmessage = function(event){
-
-$("#socketAlert").text(event.data);
+console.log(event.data);
+$("#socketAlert").prepend(event.data);
 
 };
 
@@ -190,6 +191,7 @@ console.log("Server Error");
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
+
 
 		};
 </script>
