@@ -22,6 +22,7 @@
 					 <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="5">
 						<li>
 							<div class="regm">
+								
 								<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
 								<p>위치 : <c:out value="${club.cbCity}" /></p>
 								<p>현재정원 : <c:out value="${club.cbCurMbNum}" /></p>
