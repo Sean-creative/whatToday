@@ -233,8 +233,10 @@ public class MypageServiceImpl implements MypageService {
 	public int insertClubMember(ClubVO clubVO) {
 		System.out.println("++++++++++++"+clubVO);
 		System.out.println("++++++++++++"+clubVO.getUsrNum()+clubVO.getCbNum());
-		System.out.println("+++++++++++++++"+findClubMem(clubVO.getUsrNum(), clubVO.getCbNum()));
-		if(findClubMem(clubVO.getUsrNum(), clubVO.getCbNum()) == null) {
+		Long usrNum = clubVO.getUsrNum();
+		Long cbNum = clubVO.getCbNum();
+
+		if(findClubMem(usrNum, cbNum) == null) {
 			
 			return mapper.insertClubMember(clubVO);
 			
