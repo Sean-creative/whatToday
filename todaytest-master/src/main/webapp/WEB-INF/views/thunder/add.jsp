@@ -156,9 +156,7 @@ ul li.tag-item {
 								reader.readAsDataURL(this.files[0]);
 							}
 						});
-			</script>
-			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
-			<%-- <%=request.getRealPath("/")%> --%>
+			</script>			
 		</div>
 
 

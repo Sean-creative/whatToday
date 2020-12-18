@@ -4,11 +4,90 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
+
+<style>
+/* 파일 업로드 블로그 style */
+.inputArea {
+	margin: 10px 0px;
+}
+
+select {
+	with: 100px;
+}
+
+label {
+	display: inline-block;
+	width: 70px;
+	padding: 5px;
+}
+
+label[for='gdsDes'] {
+	display: block;
+}
+
+input {
+	width: 150px;
+}
+
+textarea#gdsDes {
+	width: 400px;
+	height: 180px;
+}
+
+.select_img img {
+	margin: 20px 0px;
+}
+
+/* 해시태그 구현 */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul {
+	padding: 16px 0;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+.del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+</style>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 <h1 style="text-align: center">정기모임 수정</h1>
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-<form role="form" id="formclubUpdate" action="/regular/update" method="post">
+<form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
 	<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
 	
@@ -42,7 +121,40 @@
 	<input type="text" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'><br>
 	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
 	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}"/></textarea><br> 
-	<input type="file" name="cbFile"><br>
+	
+	
+	<div class="inputArea" style="float: left; margin-right: 50px">
+
+			<div class="select_img" style="margin: 2px 0px">
+				<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
+				<!-- <label for="gdsImg" >이미지 선택</label> -->
+				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
+			</div>
+<!-- 사진 첨부 안했을 시 사용해야함 -->
+		<input type='hidden' name='cbFile' value='<c:out value="${club.cbFile}"/>'>
+		<input type='hidden' name='cbThumbImg' value='<c:out value="${club.cbThumbImg}"/>'>
+
+
+			<script>
+				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+				$("#gdsImg").change(
+						function() {
+							if (this.files && this.files[0]) {
+								var reader = new FileReader;
+								reader.onload = function(data) {
+									$(".select_img img").attr("src",
+											data.target.result).width(200)
+											.height(144);
+								}
+								reader.readAsDataURL(this.files[0]);
+							}
+						});
+			</script>
+			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
+			<%-- <%=request.getRealPath("/")%> --%>
+		</div>
+	
+	
 	
 	<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
 	<button type="submit" data-oper='remove' class="btn btn-danger">모임 폐쇄하기</button>
