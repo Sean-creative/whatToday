@@ -70,19 +70,24 @@
 	</sql>
 	
 	<!--정기모임 목록 상세검색 (페이징)-->
-	<select id="getListWithPaging"
-		resultType="com.hobby.domain.ClubVO">
+	<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
 		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
-		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		(select /*+INDEX_DESC(club club_pk) */ 
+			rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbView, CBFINALSTATE
 		from club where ]]>
 
 		<include refid="criteria"></include>
 							
 	<![CDATA[  		     
-	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
-	where rn > (#{pageNum}-1) * #{amount} ]]>
+		cbType='정기모임'
+		and (CBFINALSTATE = '진행중' or CBFINALSTATE is null))
+	where 
+	rn BETWEEN (((#{pageNum} - 1) * #{amount}) + 1) AND #{pageNum} * #{amount}
+	
+	]]>
+	order by ${orderBy} DESC
 	</select>
 
 	<!-- 정기모임 목록 :모임 총 갯수 -->
@@ -283,5 +288,24 @@ select usrnum
 from CLUBMEMBER
 where cbNum = #{cbNum} and usrNum = #{usrNum} and cbmbstresult ='가입승인'
 </select>
+
+
+
+<!-- 정기모임 수정  -->
+<update id="updateClub">
+	update CLUB 
+	set cbCategory = #{cbCategory}, cbSubcat=#{cbSubcat}, cbName=#{cbName}, cbCity=#{cbCity}, 
+	cbDistrict=#{cbDistrict}, cbMbNum=#{cbMbNum}, cbMakeDate=sysdate, cbHashtag=#{cbHashtag}, 
+	cbIntro=#{cbIntro}, cbDetailContent=#{cbDetailContent}
+	where CBNUM = #{cbNum} 		
+</update>
+<!-- 정기모임 삭제(폐쇄)  -->
+<update id="deleteClub">
+	update CLUB
+	set CBFINALSTATE = '폐쇄',
+	CBSHUTDATE = sysdate
+	where CBNUM = #{cbNum} 
+</update>
+
 
 </mapper>

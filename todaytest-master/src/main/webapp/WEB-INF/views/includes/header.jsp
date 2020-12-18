@@ -191,7 +191,9 @@ console.log("Server Error");
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
+			
+			
 
-
-		};
+		}
+	});	
 </script>

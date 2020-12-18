@@ -61,4 +61,10 @@ public interface ClubService {
 	// 정기모임에 가입한 사람 - 지영
 	public Long getCbMember(Long cbNum, Long usrNum);
 	
+	
+	// 정기모임 수정
+	public boolean updateClub(ClubVO club);
+	// 정기모임 삭제 (폐쇄)
+	public boolean deleteClub(Long cbNum);
+	
 }

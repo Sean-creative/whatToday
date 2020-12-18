@@ -2,7 +2,6 @@ package com.hobby.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -63,7 +62,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
-		log.info("get List with criteria:" + cri);
+		log.info("========= get List with criteria:" + cri);
 		return mapper.getListWithPaging(cri);
 	}
 
@@ -218,6 +217,23 @@ public class ClubServiceImpl implements ClubService {
 		log.info("get total board count");
 		return mapper.boardgetTotalCount(cri, cbNum);
 	}
+
+	//정기모임 수정
+	@Override
+	public boolean updateClub(ClubVO club) {
+		
+		log.info("updateclub......"+club);
+		return mapper.updateClub(club) == 1;
+	}
+	//정기모임 삭제(폐쇄)
+	@Override
+	public boolean deleteClub(Long cbNum) {
+		
+		log.info("deleteclub......"+ cbNum);
+		return mapper.deleteClub(cbNum) == 1;
+	}
+
+
 
 
 }

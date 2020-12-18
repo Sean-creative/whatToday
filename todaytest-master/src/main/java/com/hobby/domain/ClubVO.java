@@ -24,6 +24,7 @@ public class ClubVO {
 	private String cbDetailContent;
 	private String cbFile;
 	private String cbLeaderName;
+	private Long cbView;
 	
 	
 	///////////////////////////////////////////CLUBMEMBER
