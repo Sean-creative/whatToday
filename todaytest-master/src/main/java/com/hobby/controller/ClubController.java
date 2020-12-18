@@ -1,7 +1,11 @@
 package com.hobby.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
@@ -27,6 +32,7 @@ import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
 import com.hobby.service.MeetingService;
+import com.hobby.utils.UploadFileUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -39,13 +45,44 @@ public class ClubController {
 
 	private ClubService service;
 	private MeetingService meetingservice;
+	
+//	servlet-context.xml에서 설정했던 uploadPath를 추가
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 
+	
 	// 정기모임 개설
 	@PostMapping("/add")
-	public String registerClub(Authentication auth, ClubVO club, RedirectAttributes rttr) {
+	public String registerClub(Authentication auth, MultipartFile file, ClubVO club, RedirectAttributes rttr) throws Exception {
 		// 개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를
 		// 파라미터로 지정
-		log.info("add(POST)");
+		log.info("/add(POST) - file : " + file);
+		
+		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
+		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
+
+		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+			// 파일 인풋박스에 첨부된 파일이 없다면(=첨부된 파일이 이름이 없다면)
+
+			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+
+			// file에 원본 파일 경로 + 파일명 저장
+			club.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			club.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+		} else { // 첨부된 파일이 없으면
+			fileName = File.separator + "img" + File.separator + "none.png";
+			// 미리 준비된 none.png파일을 대신 출력함
+
+			// file에 원본 파일 경로 + 파일명 저장
+			club.setCbFile(fileName);
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			club.setCbThumbImg(fileName);
+		}
+
+		
 
 		club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); // 유효성검사
 
@@ -154,6 +191,9 @@ public class ClubController {
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
+		
+		
+		log.info(service.getClub(cbNum));
 
 		// 로그인한유저가 해당 모임에 대해서, 만남참석정보를 가져온다. -> 문제는 만남참석정보가 여러개다..;;
 
@@ -325,10 +365,26 @@ public class ClubController {
 	}
 
 	@PostMapping("/update")
-	public String updateClub(ClubVO club, RedirectAttributes rttr) {
+	public String updateClub(ClubVO club, MultipartFile file, RedirectAttributes rttr) throws Exception {
 
 		log.info("##updateclub:" + club);
 
+		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
+		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
+
+		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+			// 파일 인풋박스에 첨부된 파일이 있다면
+
+			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+
+			// file에 원본 파일 경로 + 파일명 저장
+			club.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			club.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+		}
+		// 첨부된 파일이 없으면 기존의것 그대로 가면 됨!!
 		if (service.updateClub(club)) {
 			rttr.addFlashAttribute("result", "success");
 		}

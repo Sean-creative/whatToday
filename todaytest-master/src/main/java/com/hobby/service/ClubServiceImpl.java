@@ -233,6 +233,7 @@ public class ClubServiceImpl implements ClubService {
 	public boolean updateClub(ClubVO club) {
 		
 		log.info("updateclub......"+club);
+		System.out.println("updateclub......"+club);
 		return mapper.updateClub(club) == 1;
 	}
 	//정기모임 삭제(폐쇄)

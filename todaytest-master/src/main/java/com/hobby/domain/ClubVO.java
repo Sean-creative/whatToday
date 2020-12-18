@@ -27,6 +27,11 @@ public class ClubVO {
 	private Long cbView;
 	
 	
+	//썸네일!!!!!!!!!!
+	private String cbThumbImg;
+	
+	
+	
 	///////////////////////////////////////////CLUBMEMBER
 	private String usrName;
 	private Long usrNum;
