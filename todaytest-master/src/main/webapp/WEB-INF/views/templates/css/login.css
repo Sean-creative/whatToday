@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600;700&display=swap');
+
+
+#login{
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.loginbx{
+    width:520px;
+    height:670px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align:center;    
+}
+h1{
+    font-family: 'Baloo Tamma 2', cursive;
+}
+hr{
+    border: 1px solid #ffaf31;
+}
+form>div{
+    margin:20px 0;
+}
+
+form>div:first-child{
+    margin-top:40px;
+}
+
+input[type=text]{
+    width:480px;
+    height:50px;
+    border:1px solid #e0e0e0;
+    border-radius: 5px;
+}
+input[type=submit]{
+    width:480px;
+    height:50px;
+    border:none;
+    /* border:1px solid #999; */
+    border-radius: 5px;
+    font-size:16px;
+    color:#999;
+}
+::placeholder{
+    font-size:16px;
+    color:#888;
+    padding-left:10px;
+}
+
+.check{
+    text-align:left;
+    margin-left:20px;
+}
+
+#sns{
+    display:flex;
+    justify-content:space-evenly;
+}
+.kakao{
+    width:45px;
+    height:45px;
+    background:url(../img/kakao.png)no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+}
+.naver{
+    width:45px;
+    height:45px;
+    background:url(../img/naver.png)no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+}
+.google{
+    width:45px;
+    height:45px;
+    background:url(../img/sns02.png)no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+#idpass{
+    display:flex;
+    justify-content: center;
+}
+#idpass a{
+    padding:0 10px;
+    list-style: none;
+    text-decoration: none;
+    color:#666;
+}
+#idpass a:nth-child(1){
+    border-right:1px solid #000;
+}
+
+#membership{
+    width:480px;
+    height:35px;
+    text-align:center;
+    border:1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-left:20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top:30px;
+    padding:5px 0;
+}
+#membership p{
+    padding:0 20px;
+}

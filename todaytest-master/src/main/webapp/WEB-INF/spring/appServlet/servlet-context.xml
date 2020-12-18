@@ -37,9 +37,21 @@
 	        <websocket:handshake-interceptors>
 	                <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 	        </websocket:handshake-interceptors>
-	        <!-- <websocket:sockjs /> -->
+	        <websocket:sockjs />	
         </websocket:handlers>
+        
+        <websocket:handlers>
+		<websocket:mapping handler="echoHandler2" path="/echo2"/>
+	        <!-- WebSocket Handshake : 웹소켓 핸들러 클래스(echoHandler)가 호출되기전에 HttpSession에 접속하여  -->
+	        <!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정 -->
+	        <websocket:handshake-interceptors>
+	                <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	        </websocket:handshake-interceptors>
+	        <websocket:sockjs />	
+        </websocket:handlers>
+        
 	<beans:bean id="echoHandler" class="com.hobby.controller.EchoHandler" />
+	<beans:bean id="echoHandler2" class="com.hobby.controller.EchoHandler2" />
 	
 	<!-- NaverLogin Class에 대한 Bean설정 추가 -->
 	<beans:bean id="naverLogin" class="com.hobby.sns.NaverLogin" />

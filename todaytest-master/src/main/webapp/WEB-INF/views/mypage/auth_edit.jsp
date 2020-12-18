@@ -69,6 +69,9 @@
         </form>
     </div>
 </div>
+
+<input id="btnSend" value="Send" type="button"> 
+<input type="text" id="msg" value="1212테스트test" class="form-control" />
 </section>
 
 <script type="text/javascript">
@@ -84,6 +87,7 @@ let blankCheck = function(){
     }
     return true;
 }
+
 </script>
 
 
