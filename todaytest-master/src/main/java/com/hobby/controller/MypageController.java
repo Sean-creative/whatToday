@@ -241,7 +241,6 @@ public class MypageController {
 					url = "redirect:/mypage/main";
 				}else {
 					rtts.addFlashAttribute("msg", "비밀번호 수정에 실패했습니다");
-					userVO.setUsrPwd(currentPassword);
 					url = "redirect:/mypage/main";
 				}
 				

@@ -2,6 +2,8 @@ package com.hobby.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hobby.domain.CategoryVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.RegionVO;
@@ -13,7 +15,7 @@ public interface MypageMapper {
 	public UserVO getUser(String id);
 	public ClubVO getClub(ClubVO clubVO);
 	public ClubVO getJoinClub(Long usrNum);
-
+	public ClubVO findClubMem(@Param("usrNum")Long usrNum, @Param("cbNum")Long cbNum);
 	
 	public List<UserVO> getUserList();
 	public List<UserVO> getOldFiles();
@@ -23,6 +25,9 @@ public interface MypageMapper {
 	public List<ClubVO> getLeaderClubList(Long usrNum);
 	public List<ClubVO> getMyCreateTypeClubList(Long usrNum);
 	public List<ClubVO> getClubManageMemList(Long cbNum);
+	
+	
+	
 	public List<RegionVO> getCityList();
 	public List<RegionVO> getDistrictList(String rgName);
 	
