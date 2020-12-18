@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <style>
+
+footer{
+	width:100%;
+	height:200px;
+	background:#ccd4d6;
+	text-align:center;
+}
+address{
+	font-style:normal;
+	/* padding-top:90px; */
+}
+.foot_text{
+	font-size:50px;
+	padding-top:70px;
+	font-weight:500;
+	background: linear-gradient(to right bottom, #ffd800, #fa3841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width:0px;
+}
+.bd{font-weight:bold;color:#333;}
+    </style>
+</head>
+<body>
+    <footer>
+        <p class="foot_text" id="typing2"></p>
+        <address>Copyright &copy; 2020 <span class="bd">WHAT TODAY</span> All Rights Reserved.</address>
+    </footer>
+    <script src="js/typeit.min.js"></script>
+    <script>
+        window.instance = new TypeIt("#typing1", {
+            speed: 100
+          })
+            .type("")
+            .pause(500)
+            .delete(4)
+            .pause(500)
+            .type("ring.")
+            .pause(500)
+            .delete()
+            .pause(500)
+            .options({
+              speed: 25
+            })
+            .type("")
+            .go();
+    
+            new TypeIt("#typing2", {
+            speed: 150,
+            strings:
+              "오늘 뭐하지? ",
+            waitUntilVisible: true,
+            loop: true
+          }).go();
+    
+    </script>    
+</body>
+</html>

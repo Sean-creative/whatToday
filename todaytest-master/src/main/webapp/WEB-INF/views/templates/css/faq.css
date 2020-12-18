@@ -1,0 +1,132 @@
+*{
+    margin:0;
+    padding:0;
+}
+.s-visual{
+	width:100%;
+	height:400px;
+	background:url(../img/visual3.png) no-repeat center center;
+	background-size:cover;
+}
+.s-visual-in{
+	width:1100px;
+	margin:0 auto;
+	padding-top:140px;
+}
+.s-visual-in h2{
+	text-align:center;
+	font-size:70px;
+	color:#333;
+	line-height:90px;
+	letter-spacing:10px;
+	text-shadow:5px 5px 10px #666;
+}
+.s-visual-in h4{
+	text-align:center;
+	font-size:25px;
+	color:#666;
+	font-weight:100;
+	letter-spacing:10px;
+}
+
+/* =======menu  */
+.notimenu{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px dotted #333;
+    padding:15px 0;
+    margin-bottom: 60px;
+}
+.notisubmenu{
+    width:800px;
+}
+.notisubmenu a{
+    color:#333;
+    text-decoration: none;
+    margin-right: 30px;
+    font-size:15px;
+}
+.notisubmenu a:nth-child(2){
+    color: #ffaf31;
+    border-bottom:2px solid #ffaf31;
+    padding-bottom: 15px;
+}
+
+/* 아코디언  */
+#faq{
+    width:1000px;
+    margin:0 auto;
+}
+.accordion {
+    background:#fff;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 1000px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    /* transition: 0.4s; */
+    border-top: 1px solid #999;
+    border-left:3px solid #fff;
+  }
+
+  /* .accordion:nth-child(1){
+    border-bottom:1px solid #999;
+  } */
+  
+  .question{
+      width:30px;
+      height:30px;
+      background:#ffaf31;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
+      float:left;
+      margin-right:10px;
+  }
+  .accordion span{
+      margin-top:15px;
+      line-height: 30px;
+  }
+  .active{
+    border-left:3px solid #ffaf31;
+  }
+
+  .accordion:hover{
+      background:#fff;
+  }
+  
+  .accordion:after {
+    content: '\002B';
+    color: #ffaf31;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    line-height: 30px;
+    
+  }
+  
+  .active:after {
+    content: "\2212";
+   
+  }
+  
+  .panel {
+    background-color:#fff;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    border-left:3px solid #ffaf31;
+    box-shadow: 0px 8px 30px 0px rgba(0,0,0,0.2);
+  }
+
+  .panel p{
+      padding:20px;
+  }
