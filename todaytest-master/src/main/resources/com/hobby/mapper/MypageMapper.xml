@@ -5,6 +5,7 @@
 
 <resultMap id="cbMem" type="com.hobby.domain.ClubVO">
  	<result property="usrNum" column="usrNum" />
+ 
     <result property="usrName" column="usrName" />
     <result property="cbMemIntro" column="cbMemIntro" />
     <result property="cbAppDate" column="cbAppDate" />  
@@ -15,8 +16,9 @@
     <result property="cbJoinStateUpdateDate" column="cbJoinStateUpdateDate" />  
     <result property="cbJoinStateResult" column="cbJoinStateResult" />  
     <association property="userVO" javaType="com.hobby.domain.UserVO">
-    	<id column="usrGender" property="usrGender"/>
+    	<id column="usrId" property="usrId"/>
 		<result column="usrBirth" property="usrBirth"/>
+		<result column="usrGender" property="usrGender"/>
     </association>
 </resultMap>
 
@@ -159,6 +161,10 @@
 		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE)  
 		values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
 	</insert>
+	
+	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">
+		select * from clubmember where usrNum = #{usrNum} and cbNum = #{cbNum}
+	</select>
 	
 
 </mapper>
