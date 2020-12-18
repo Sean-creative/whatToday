@@ -1,15 +1,25 @@
 package com.hobby.controller;
 
+import java.io.File;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hobby.domain.Criteria;
 import com.hobby.domain.MeetingVO;
+import com.hobby.domain.ThunderVO;
+import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.MeetingService;
+import com.hobby.utils.UploadFileUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -21,131 +31,147 @@ import lombok.extern.log4j.Log4j;
 public class MeetingController {
 
 	private MeetingService service;
-		
 
 // 만남을 개설 할 떄는, cbNum만 있으면 된다. 		 
-		@GetMapping("/add")	
-//		Authentication auth
-		public String registerClub(Model model, @ModelAttribute("cbNum") Long cbNum, @ModelAttribute("cbName") String cbName) {
-			
-			log.info("/add(GET)");
-//			log.info("/add(GET) - cri : " + cri);
+	@GetMapping("/add")
+	public String registerClub(Authentication auth, Model model, @ModelAttribute("cbNum") Long cbNum, @ModelAttribute("cbName") String cbName) {
 
-			// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
-//			CustomUser customUser = (CustomUser) auth.getPrincipal();
-//			UserVO userVO = customUser.getUser();
-//			
-//			model.addAttribute("usrName", userVO.getUsrName());
-//			model.addAttribute("usrNum", userVO.getUsrNum());
-//
-//			log.info("##/add 회원번호는 :" + userVO.getUsrNum());
-//			log.info("##/add 회원이름는 :" + userVO.getUsrName());
+		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
+		if (auth == null)
+			return "redirect:/login/login";
 
-			return "/meeting/add";
-		}
-		
-		
+		log.info("/add(GET)");
+		log.info("/add(GET) cbNum : " + cbNum);
+		log.info("/add(GET) cbName : " + cbName);
+
+		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO loginUser = customUser.getUser();
+		model.addAttribute("loginUser", loginUser);
+
+		log.info("/add(GET) userNum : " + loginUser.getUsrNum());
+		log.info("/add(GET) userName : " + loginUser.getUsrName());
+
+		return "/meeting/add";
+	}
+	
+	
+	
+//만남이 개설 되는 것 
 	@PostMapping("/add")
-	//Authentication auth,
-	public String registerClub(MeetingVO meeting, RedirectAttributes rttr) {
+	public String registerClub(Authentication auth, MeetingVO meeting, RedirectAttributes rttr) {
 
 		log.info("/add(POST) - meeting : " + meeting);
-		
+
 		service.register(meeting);
-		
-		
+
 		rttr.addAttribute("cbNum", meeting.getCbNum());
 
 		return "redirect:/regular/info";
 	}
 
-	
-//	
-//
-//	// 정기모임 목록
-//	@GetMapping("/list")
-//	public void clublist(Criteria cri, Model model) {
-//
-//		log.info("clublist");
-//		log.info("list - cri : " + cri);
-//
-//		// cri에 들어있는 조건 대로, club 정보를 가져온다.
-//		model.addAttribute("clublist", service.getList(cri));
-//
-//		log.info("list : " + service.getList(cri));
-//
-//		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
-//		int total = service.getTotal(cri);
-//		log.info("list - total : " + total);
-//
-//		model.addAttribute("pageMaker", new PageDTO(cri, total));
-//
-//		// 파라미터 model을 통해 clubserviceImpl 객체의 getClubList 결과를 담아 전달 한다.
-//		// model.addAttribute("clublist", service.getClubList());
-//	}
-//
-//	// 정기모임 상세정보
-//	@GetMapping("/info")
-//	public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
-//
-//		UserVO userVO;
-//
-//		if (auth != null) {
-//			CustomUser customUser = (CustomUser) auth.getPrincipal();
-//			userVO = customUser.getUser();
-//			LocalDate onlyDate = LocalDate.now();
-//			// 파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
-//			model.addAttribute("usrName", userVO.getUsrName());
-//			model.addAttribute("toDate", onlyDate);
-//
-//			log.info("###usrnum:" + userVO);
-//			
-//			
-//			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
-//			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-//			model.addAttribute("joinState", joinState);
-//
-//			model.addAttribute("usrNum", userVO.getUsrNum());
-//
-//			//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
-//			List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
-//			for (ClubMemberVO club : joinList) {
-//				log.info("/info(GET) - joinList : " + club);				
-//			}
-//
-//			model.addAttribute("joinList", joinList);
-//		}
-//
-//		log.info("/info");
-//		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
-//		model.addAttribute("club", service.getClub(cbNum));
-//	}
-//
-//
-//	// 정기모임 가입
-//	@PostMapping("/clubjoin")
-//	public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr) {
-//
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-//		UserVO userVO = customUser.getUser();
-//
-//		String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), club.getCbNum());
-//		log.info("/clubjoin(POST) - joinState : " + joinState); // joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-//		
-//		log.info(service.join(club, userVO, joinState));
-//
-//		rttr.addFlashAttribute("usrName", userVO.getUsrName());
-//		rttr.addFlashAttribute("usrNum", userVO.getUsrNum());
-//		rttr.addFlashAttribute("cbType", club.getCbType());
-//		rttr.addFlashAttribute("cbName", club.getCbName());
-//		// 일회성으로 데이터를 전달하는 용도 (전달된 값은 url뒤에 붙지 않는다.)
-//		rttr.addFlashAttribute("cbNum", club.getCbNum());
-//
-//		log.info("##/add 회원번호는 :" + userVO.getUsrNum());
-//		log.info("##/add 회원이름는 :" + userVO.getUsrName());
-//		log.info("###clubjoin: " + club);
-//
-//		return "redirect:/index/main";
-//	}
 
+	
+	@GetMapping("/modify")
+	public String modify(Authentication auth, Long cbNum, Long mtNum, Model model) {
+		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
+		if (auth == null)
+			return "redirect:/login/login";
+
+		// 들어온 파라미터 값 확인
+		log.info("/modify(GET) - cbNum : " + cbNum);
+		log.info("/modify(GET) - mtNum : " + mtNum);
+
+		// 유저정보를 가져와서, 개설자 번호와 현재 로그인된 사람의 Key가 일치하는지 봐야한다.
+//		CustomUser customUser = (CustomUser) auth.getPrincipal();
+//		UserVO loginUser = customUser.getUser();
+//		log.info("/modify(GET) - 로그인 한 유저의 Num : " + loginUser.getUsrNum());
+
+		MeetingVO meeting = service.getMeeting(mtNum);
+		log.info("/modify(GET)- meeting : " + meeting);
+				
+		model.addAttribute("meeting", meeting);
+		
+		return "/meeting/modify";
+	}
+	
+	
+	@PostMapping("/modify")
+	public String modify(MeetingVO meeting,RedirectAttributes rttr) {
+
+		log.info("modify(POST) - meeting " + meeting);
+			
+
+		if (service.modify(meeting)) {
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 수정되었습니다..");
+		} else {
+			rttr.addFlashAttribute("result", "모임 정보가 수정되지 않았습니다.");
+		}
+
+		return "redirect:/regular/list";
+	}
+	
+	
+	
+	@PostMapping("/remove")
+	public String remove(Long mtNum, RedirectAttributes rttr) {
+		log.info("/remove(POST) - mtNum : " + mtNum);
+
+		if (service.remove(mtNum)) {
+			// 모달창으로 수정이되거나 삭제되면 버튼이 구현되면, 사용할 메세지
+			rttr.addFlashAttribute("result", "모임 정보가 삭제되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "모임 정보가 삭제되지 않았습니다.");
+		}
+		
+		return "redirect:/regular/list";
+	}
+	
+	
+	
+	
+	
+	
+	// 만남에 참석하는 것 
+	@PostMapping("/join")
+	public String join(Authentication auth, Long mtNum, RedirectAttributes rttr) {
+
+		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
+		if (auth == null)
+			return "redirect:/login/login";
+		log.info("/join(POST) - mtNum : " + mtNum);
+
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO loginUser = customUser.getUser();
+		log.info("/join(POST) -loginUser : " + loginUser);
+
+				
+		
+		// 1.regular - info에서 참석하기를 누르면, mtNum만 받아와서 get 하는걸로!!
+		// (info에서 input 다 써주는것 보다 효율적일듯)
+		MeetingVO meeting = service.getMeeting(mtNum);
+		log.info("/join(POST) - MeetingVO : " + meeting);
+
+		//	로그인한 유저를 기준으로 해당 모임의, 만남에 대한 상태를 넣어준다.
+		String mtAttendState = service.getMtStateByUsrNum(loginUser.getUsrNum(), meeting.getCbNum(), mtNum);
+		log.info("/join(POST) - mtAttendState : " + mtAttendState);
+
+		// join메서드에 주어야 하는 것 -> 1.loginUser 2.meeting 3.mtAttendState
+				
+		if (service.attend(meeting, loginUser, mtAttendState)) {
+			// 모달창으로 신청되었는지 알려줘야함!!
+			rttr.addFlashAttribute("result", "처리되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "처리되지 않았습니다.");
+		}
+
+		
+		
+		
+		rttr.addAttribute("cbNum", meeting.getCbNum());
+		return "redirect:/regular/info";
+	}
+
+	
 }

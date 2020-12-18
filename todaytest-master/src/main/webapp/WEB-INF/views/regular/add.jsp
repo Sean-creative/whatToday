@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -10,9 +9,10 @@
 
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheck();">
 
-	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" /> 
-	<input type="hidden" id="cbType" name="cbType" value="정기모임" /> 
-	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" /> <label for="cbCategory">카테고리/분야</label>
+	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
+	<input type="hidden" id="cbType" name="cbType" value="정기모임" />
+	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
+	<label for="cbCategory">카테고리/분야</label>
 	<select id="cbCategory" name="cbCategory">
 		<option value="아웃도어/여행">아웃도어/여행</option>
 		<option value="문화/공연/축제">문화/공연/축제</option>
@@ -21,28 +21,31 @@
 		<option value="외국/언어">외국/언어</option>
 		<option value="게임/오락">게임/오락</option>
 		<option value="기타">기타</option>
-	</select> 
-	<label for="cbSubcat">모임</label> 
-	<select id="cbSubcat" name="cbSubcat"></select><br>
-	<label for="cbName">모임명</label> 
-	<input type="text" id="club" name="cbName"><br> 
-	<label for="cbCity">지역 </label> 
+	</select>
+	<label for="cbSubcat">모임</label>
+	<select id="cbSubcat" name="cbSubcat"></select>
+	<br> <label for="cbName">모임명</label>
+	<input type="text" id="club" name="cbName">
+	<br> <label for="cbCity">지역 </label>
 	<select name="cbCity" id="cbCity">
 		<option value="서울특별시">서울특별시</option>
 		<option value="경기도">경기도</option>
-	</select> <select name="cbDistrict" id="cbDistrict"></select> 
-	<label for="cbMbNum">정원</label> 
-	<input type="number" id="num" name="cbMbNum" min="1" max="200"><br> <input type="hidden" name="cbMakeDate">
+	</select>
+	<select name="cbDistrict" id="cbDistrict"></select>
+	<label for="cbMbNum">정원</label>
+	<input type="number" id="num" name="cbMbNum" min="1" max="200">
+	<br>
+	<input type="hidden" name="cbMakeDate">
 	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag">해시태그</label> 
-	<input type="text" id="hash" name="cbHashtag" value="#"><br> 
-	<label for="cbIntro">한줄소개</label>
-	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요"><br>
-	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
-	<textarea name="cbDetailContent" rows="10" cols="100"
-		style="resize: none" placeholder="30자이내로 작성하세요"></textarea><br> 
+	<label for="cbHashtag">해시태그</label>
+	<input type="text" id="hash" name="cbHashtag" value="#">
+	<br> <label for="cbIntro">한줄소개</label>
+	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요">
+	<br> <label for="cbDetailContent">모임 상세내용(필수)</label><br>
+	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+	<br>
 	<input type="file" name="cbFile">
-	<input type="button" value="개설하기" onclick="alert('모임이 개설되었습니다.')"/>
+	<button type="submit"> 개설하기</button>
 </form>
 
 <script type="text/javascript">
@@ -84,6 +87,8 @@
 			alert("30자 이내로 상세내용을 입력해주세요.");
 			return false;
 		}
+		alert("모임이 개설되었습니다.")		
+		return true;
 	}
 
 	//카테고리/분야 선택, 지역 선택 
@@ -100,6 +105,7 @@
 		});
 	});
 	
+	
 	let hobbyCategory = {
 		"아웃도어/여행" : ["등산","산책/트래킹","캠핑/백패킹","낚시","기타"],
 		"문화/공연/축제" : ["뮤지컬/오페라", "공연/연극", "전시회", "파티/페스티벌", "기타"],
@@ -109,6 +115,7 @@
 		"게임/오락" : ["다트", "보드게임", "온라인게임", "마술", "바둑", "기타"],
 		"기타" : ["기타"]
 	}
+	
 	
 	function selectHobby(targetVal) { //e.target.value를 targetVal로 받아온다. 
 		Object.keys(hobbyCategory).filter(item1 => { //object.keys: hobbycategory array에서 key만 리스트로 뽑아오기 //filter: 가지고있는 값을 반복
@@ -125,6 +132,8 @@
 		})
 	}
 	
+		
+		
 	let city = {
 		"서울특별시" : [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
 			"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
@@ -136,6 +145,8 @@
 			"파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "연천군" ]
 	}
 		
+	
+	
 	function selectCity(targetValCity) {
 		Object.keys(city).filter(item1 => { //city array에 있는 key만 반복한다. 
 			if (targetValCity === item1) { //선택한 값과 city에 있는 값이 일치하면, 
@@ -147,6 +158,8 @@
 			}
 		})
 	}
+	
+	
 </script>
 
 <%@include file="../includes/footer.jsp"%>

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.MeetingVO;
 import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeDTO;
 import com.hobby.domain.PageDTO;
@@ -24,6 +25,7 @@ import com.hobby.domain.ReplyVO;
 import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
+import com.hobby.service.MeetingService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -35,12 +37,14 @@ import lombok.extern.log4j.Log4j;
 public class ClubController {
 
 	private ClubService service;
+	private MeetingService meetingservice;
 
 	// 정기모임 개설
 	@PostMapping("/add")
 	public String registerClub(Authentication auth, ClubVO club, RedirectAttributes rttr) {
 		// 개설(등록)작업이 완료되면 목록화면으로 이동 및 새로 개설된 모임의 모임번호를 같이 전달하기 위해 Redirect Attributes를
 		// 파라미터로 지정
+		log.info("add(POST)");
 
 		club.setCbName(club.getCbName().replaceAll("^(\\s|\\.)*|(\\s|\\.)*$", "")); // 유효성검사
 
@@ -102,7 +106,7 @@ public class ClubController {
 	@GetMapping("/info")
 	public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
 
-		UserVO userVO;
+		UserVO userVO =null;
 
 		if (auth != null) {
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
@@ -128,12 +132,49 @@ public class ClubController {
 			}
 
 			model.addAttribute("joinList", joinList);
+			
+			
+			
+			
+			
+			//해당 모임에 대한 만남리스트를 가져온다.
+			List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+			for (MeetingVO meeting : meetingList) {
+				
+				meetingservice.updateMtCurMbNum(meeting);
+								
+				//모임리스트의 각각의 모임에다가, 로그인한 유저를 기준으로 각각의 만남에 대한 상태를 넣어준다.
+				String mtAttendState = meetingservice.getMtStateByUsrNum(userVO.getUsrNum(), cbNum, meeting.getMtNum());
+				log.info("/info(GET) - mtAttendState : " + mtAttendState);
+				
+				meeting.setUsrMtState(mtAttendState);
+				log.info("/info(GET) - meetingList : " + meeting);								
+			}
+
+			model.addAttribute("meetingList", meetingList);
+				
+			
 		}
 
 		log.info("/info");
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("club", service.getClub(cbNum));
+		
+		
+		//로그인한유저가 해당 모임에 대해서, 만남참석정보를 가져온다. -> 문제는 만남참석정보가 여러개다..;;
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
+	
+	
+	
 
 	// 정기모임 게시판 - 목록list
 //	@GetMapping("/board")

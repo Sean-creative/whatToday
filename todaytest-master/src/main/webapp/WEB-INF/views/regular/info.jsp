@@ -57,22 +57,52 @@
 	</c:if>
 
 
-<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;" >
-	<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
-	<c:if test="${usrNum == club.cbLeaderNum}">
-	</c:if>
-	
-	<form action="/meeting/add" method="get" id="tag-form">
+	<form action="#" method="get" id="meeting-form">
+		<%-- <c:choose>
+						<c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+						<c:otherwise>모임원</c:otherwise>
+					</c:choose> --%>
+		<div id="plus" style="float: right; border: 1px solid; margin: 30px auto;">
+			<c:forEach items="${meetingList}" var="MeetingVO">
+				<div style="text-align: center; border: 1px solid; margin: 0px; padding: 10px; font-size: 30px;">
+
+					<br> ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명) <br>
+					<fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+					<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " />
+
+					<br> ${MeetingVO.mtAddress} ${MeetingVO.mtPlace} <br> ${MeetingVO.mtName} <br> ${MeetingVO.mtSupplies}
+
+					<button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+						<c:choose>
+							<c:when test="${MeetingVO.usrMtState eq '참석중'}">만남 참석 취소</c:when>
+							<c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">만남 참석</c:when>
+						</c:choose>
+					</button>
+
+
+					<c:if test="${usrNum == club.cbLeaderNum}">
+						<button class="btn-meeting" data-oper='modifyMeeting' value="${MeetingVO.mtNum}">만남 수정</button>
+					</c:if>
+
+				</div>
+			</c:forEach>
+		</div>
+
+
+		<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;">
+			<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
+			<c:if test="${usrNum == club.cbLeaderNum}">
+				<button style="padding: 5px 80px;" class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+			</c:if>
+		</div>
+
 		<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
 		<input type="hidden" name="cbName" value="${club.cbName }" />
-		<button style="padding: 5px 80px;" class="btn btn-info" data-oper='addMeeting' id="addMeeting">만남 추가</button>
-		<button style="padding: 5px 80px;" class="btn btn-info" data-oper='modifyMeeting' id="modifyMeeting">만남 수정</button>
 	</form>
-</div>
 
 
 </div>
-
+<!-- body end -->
 
 
 
@@ -157,6 +187,51 @@
 			modal.style.display = "block";
 		}
 	}
+	
+	
+	
+	
+	// Meeting에 관련된 것들 중에서 -> 참석하기, 개설하기, 수정하기 중 버튼을 누른다면
+	let formObj = $("#meeting-form");
+		
+	$('.btn-meeting').on(
+			"click",
+			function(e) {
+				e.preventDefault();
+
+				let operation = $(this).data("oper");
+				console.log(operation);
+				
+				//만남 참석하기 버튼 눌렀을 때
+				if (operation === 'joinMeeting') {
+					if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석취소')
+						alert('만남 참석취소합니다');
+					else if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석')
+						alert('만남 참석합니다');
+	
+					formObj.attr("action","/meeting/join").attr("method", "post");
+					formObj.append("<input type='hidden' name='mtNum' value='" + $(this).val() + "'>");
+				} 
+				// 만남 추가하기 버튼 눌렀을 때
+				else if (operation === 'addMeeting') {
+					alert('만남 추가합니다');
+					formObj.attr("action","/meeting/add");
+				}
+				// 만남 수정하기 버튼 눌렀을 때
+				else if (operation === 'modifyMeeting') {
+					alert('만남 수정합니다');
+					formObj.attr("action", "/meeting/modify");
+					formObj.append("<input type='hidden' name='mtNum' value='" + $(this).val() + "'>");
+				}
+				formObj.submit();
+			});
+	
+	
+	// 사용자의 참석상태(joinState)가 '가입승인'이라면 버튼을 활성화 해주고, 그게 아니라면 버튼을 비활성화한다.
+	if ('${joinState}' !== '가입승인') {
+		$("button[data-oper='joinMeeting']").attr("disabled", "disabled");
+	}
+		
 	
 	
 	

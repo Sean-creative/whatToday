@@ -21,25 +21,26 @@ public interface MeetingService {
 //	public ThunderVO get(long cbNum);
 //						
 //	//번개모임에 가입하는 메소드
-//	public boolean join(ThunderVO clubVO, UserVO loginUser, String joinState);
+	public boolean attend(MeetingVO meeting, UserVO loginUser, String mtAttendState);
 //	
-//	//로그인된 유저의 번호로, 지금 가입하려고하는 모임이 가입되어 있는지 상태를 조사
-//	//반환값은 cbmbstresult
-//	public String getCbMemByUsrNum(Long usrNum, Long cbNum);	
-//	
-//	public List<ThunderVO> getListWithPaging(Criteria cri);
-//	
-//	public int getTotal(Criteria cri);
-//		
-//	
-//	public List<ClubMemberVO> getJoinList(Long cbnum, String cbmbstresult);
-//	
-//	
-//	
-//	public boolean modify(ThunderVO clubVO);
-//	
-//	public boolean remove(long cbNum);
-//	
+//	//로그인된 유저의 번호로, 지금 참석하려고하는 만남에 가입되어 있는지 상태를 조사
+//	//반환값은 mtAttendState
+	public String getMtStateByUsrNum(Long usrNum, Long cbNum, Long mtNum);	
+	
+	//해당 모임에 대한 만남리스트를 가져온다.
+	public List<MeetingVO> getMeetingList(Long cbNum);
+	
+	
+	//해당 만남에 대한 정보를 가져온다
+	public MeetingVO getMeeting(Long mtNum);	
+
+	public boolean modify(MeetingVO meeting);
+
+	public boolean remove(Long mtNum);
+	
+	public boolean updateMtCurMbNum(MeetingVO meeting);
+	
+
 //	
 //	//로그인이 되어있는지 알려주는 메소드
 //	public boolean isLogin(Authentication auth);
