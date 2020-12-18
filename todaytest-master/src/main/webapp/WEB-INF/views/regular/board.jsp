@@ -10,7 +10,7 @@
 		<ul>
 			<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
 			<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
-			<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li> <!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
+			<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
 		</ul>
 	</div><div id=bodymain>
 			<table id="clubboard">

@@ -103,7 +103,7 @@
     
     setTimeout(function() {
     	formObj.submit();	  
-    	}, 500);
+    	}, 2000);
 
            
     </script>

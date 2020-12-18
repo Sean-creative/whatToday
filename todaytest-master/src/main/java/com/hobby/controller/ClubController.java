@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -118,12 +119,12 @@ public class ClubController {
 
 			log.info("###usrnum:" + userVO);
 			
-			
 			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
 			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
 			model.addAttribute("joinState", joinState);
 
 			model.addAttribute("usrNum", userVO.getUsrNum());
+		}
 
 			//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
 			List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
@@ -155,9 +156,11 @@ public class ClubController {
 				
 			
 		}
+		model.addAttribute("joinList", joinList);
 
 		log.info("/info");
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
+		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
 		
 		
@@ -256,7 +259,7 @@ public class ClubController {
 
 	// 정기모임 게시판 - 수정
 	@PostMapping("/boardupdate")
-	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) {
+	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) { 
 
 		log.info("boardmodify: " + club);
 
@@ -306,5 +309,68 @@ public class ClubController {
 
 		return "redirect:/index/main";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정기모임 채팅창 - 지영
+//	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public void chat(@RequestParam("cbNum") Long cbNum, Model model) {
+		log.info("##/chat");
+	
+//		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		String name = customUser.getUser().getUsrName();
+//		Long usrNum = customUser.getUser().getUsrNum();
+		
+		System.out.println("cbNum: " + cbNum);
+//		System.out.println("usrNum: " + usrNum);
 
+//		// 모임에 가입한 사람(+가입승인)만 채팅창 입장버튼을 누를 수 있음. 
+//		Long result = service.getCbMember(cbNum, usrNum);
+//		System.out.println(result);
+//
+//		if(result==null) {
+//			model.addAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
+//		}else {
+//			model.addAttribute("cbNum", cbNum);
+//			model.addAttribute("usrName", name);
+//		}
+		model.addAttribute("cbNum", cbNum);
+	}
+	
+	
+	//정기모임 수정
+	@GetMapping("/update")
+	public void updateClub(@RequestParam("cbNum") Long cbNum, Model model) {
+		log.info("##getClub:"+service.getClub(cbNum));
+		model.addAttribute("cbNum", cbNum);
+		model.addAttribute("club", service.getClub(cbNum));
+	}
+	@PostMapping("/update")
+	public String updateClub(ClubVO club, RedirectAttributes rttr) { 
+	
+		log.info("##updateclub:"+club);
+		
+		if (service.updateClub(club) ) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/regular/list";
+	}
+	//정기모임 삭제(폐쇄)
+	@PostMapping("/delete")
+	public String deleteClub(@RequestParam("cbNum") Long cbNum, RedirectAttributes rttr) {
+		
+		log.info("##delete:" + cbNum);
+		
+		if (service.deleteClub(cbNum)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/regular/list";
+	}
 }

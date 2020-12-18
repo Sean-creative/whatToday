@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
+    <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+    <div id="bgpic">
+        <div id="detail">
+            <div id="leftinfo">
+                <img src="img/mount.jpg" alt="">
+                <div id="error">
+                    정보
+                </div>
+                <div id="orange">
+                    게시판
+                </div>
+                <div id="ab1111">
+                    채팅
+                </div>
+            </div>
+            <div id="rightinfo" class="rightinfo">
+                <div class="content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var right = document.getElementById("rightinfo");
+var sticky = rightinfo.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    rightinfo.classList.add("sticky");
+  } else {
+    rightinfo.classList.remove("sticky");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/faq.css">
+</head>
+<body>
+    <div class="s-visual">
+		<div class="s-visual-in">
+			<h2>자주묻는질문</h2>
+			<h4>FAQ</h4>
+		</div>
+    </div>
+    
+    <div class="notimenu">
+        <div class="notisubmenu">
+            <a href="">공지사항 </a>
+            <a href="">자주묻는질문 </a>
+            <a href="">문의사항 </a>
+        </div>
+    </div>
+
+    <div id="faq">
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당?</span></button>
+        <div class="panel">
+        <p>asdfasdfasdfasdfasdfasdfafdasdfasdfasdfasdf,asdfasdfklas;dfkjasdfkajs;dfkjas;dfkjas;dfkja;sdkfj;lkj;lkj;lkasdfasdf</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">
+            <div class="question">Q</div><span>질문일번입니당??</span></button>
+        <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+
+    </div>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+
+            } 
+          });
+        }
+
+        </script>
+</body>
+</html>

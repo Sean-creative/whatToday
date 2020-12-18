@@ -25,13 +25,20 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+
+/**
+ * 
+ * @author 국민성
+ *
+ */
+
 @Controller
 @RequestMapping("/admin/*")
 @AllArgsConstructor
 @Log4j
 public class AdminController {
 	
-	//아 몰 랑
+
 	@Setter(onMethod_ = @Autowired)
 	private AdminService service;
 	

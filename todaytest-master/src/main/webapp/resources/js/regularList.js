@@ -11,6 +11,11 @@ $(function() {
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionForm.submit();
 	});
+	
+	$(".pagination").change(function(e) {
+		$("input[name='orderBy']").val(e.target.value);
+		$("#actionForm").submit();
+	});
 
 	// 내부 JS에서 설정한 변수 값들 확인
 	// 카테고리, 모임, 지역, 지역상세

@@ -58,6 +58,7 @@ public class ClubServiceImpl implements ClubService {
 	public ClubVO getClub(Long cbNum) {
 		
 		log.info("getclub......"+ cbNum);
+		mapper.clubViews(cbNum);
 		return mapper.readclub(cbNum);
 	}
 
@@ -65,7 +66,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
-		log.info("get List with criteria:" + cri);
+		log.info("========= get List with criteria:" + cri);
 		return mapper.getListWithPaging(cri);
 	}
 
@@ -204,6 +205,20 @@ public class ClubServiceImpl implements ClubService {
 		
 		return mapper.getJoinList(cbNum, cbMbStResult);
 	}
+	
+	
+	
+	
+	
+	// 정기모임에 가입한 사람 - 지영
+	@Override
+	public Long getCbMember(Long cbNum, Long usrNum) {
+		Long result = mapper.getCbMember(cbNum, usrNum);
+		System.out.println("result: " + result);
+		return result;
+	}
+	
+	
 
 	//정기모임 게시판 총 갯수 
 	@Override
@@ -212,6 +227,23 @@ public class ClubServiceImpl implements ClubService {
 		log.info("get total board count");
 		return mapper.boardgetTotalCount(cri, cbNum);
 	}
+
+	//정기모임 수정
+	@Override
+	public boolean updateClub(ClubVO club) {
+		
+		log.info("updateclub......"+club);
+		return mapper.updateClub(club) == 1;
+	}
+	//정기모임 삭제(폐쇄)
+	@Override
+	public boolean deleteClub(Long cbNum) {
+		
+		log.info("deleteclub......"+ cbNum);
+		return mapper.deleteClub(cbNum) == 1;
+	}
+
+
 
 
 }
