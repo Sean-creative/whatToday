@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.google.common.util.concurrent.ServiceManager;
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.NoticeCri;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.ClubMapper;
+import com.hobby.mapper.MeetingMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -22,6 +24,8 @@ import lombok.extern.log4j.Log4j;
 public class ClubServiceImpl implements ClubService {
 
 	private ClubMapper mapper;
+	private MeetingMapper meetingMapper;
+	
 	
 	//정기모임 개설 
 	@Override
@@ -152,8 +156,7 @@ public class ClubServiceImpl implements ClubService {
 			chagneJoinState = "승인대기";
 			System.out.println("chagneJoinState : " + chagneJoinState);
 									
-			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
-			System.out.println("Service-join...... result : " + result);						
+			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);								
 	    }		
 		else if(joinState.equals("모임탈퇴")) {
 			//'모임탈퇴'일 때 -> 승인대기 되어야 함
@@ -161,6 +164,8 @@ public class ClubServiceImpl implements ClubService {
 			System.out.println("chagneJoinState : " + chagneJoinState);			
 						
 			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
+			
+			
 		} 
 		else if(joinState.equals("가입승인")) {			
 	    	//'가입승인'일 때 -> 가입이 취소되어야함
@@ -170,6 +175,11 @@ public class ClubServiceImpl implements ClubService {
 			
 			result += mapper.updateJoin(club, loginUser,chagneJoinState);
 			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
+			
+			//모임을 탈퇴하게 되면, 해당 사용자는 해당 모임에서 가입한 모든 만남을 탈퇴해야한다.	
+			System.out.println(club.getCbNum() + "  "+ loginUser.getUsrNum());
+			meetingMapper.updateMtOut(club.getCbNum(), loginUser.getUsrNum());
+			
 	    }
 		
 			    

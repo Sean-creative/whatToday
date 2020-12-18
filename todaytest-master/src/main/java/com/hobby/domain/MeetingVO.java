@@ -55,5 +55,10 @@ public class MeetingVO {
 	
 	//만남 최종상태
 	private String mtFinalState;
+	
+	
+	// 로그인 유저의 해당 만남에 대한 상태정보
+	// DB에는 없는 속성이다.
+	private String usrMtState;
 }
 
