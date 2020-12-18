@@ -107,7 +107,7 @@ public class ClubController {
 	@GetMapping("/info")
 	public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
 
-		UserVO userVO =null;
+		UserVO userVO = null;
 
 		if (auth != null) {
 			CustomUser customUser = (CustomUser) auth.getPrincipal();
@@ -118,43 +118,35 @@ public class ClubController {
 			model.addAttribute("toDate", onlyDate);
 
 			log.info("###usrnum:" + userVO);
-			
+
 			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
 			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
 			model.addAttribute("joinState", joinState);
 
 			model.addAttribute("usrNum", userVO.getUsrNum());
-		}
 
-			//해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
-			List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");			            
-			for (ClubMemberVO club : joinList) {
-				log.info("/info(GET) - joinList : " + club);				
-			}
-
-			model.addAttribute("joinList", joinList);
 			
-			
-			
-			
-			
-			//해당 모임에 대한 만남리스트를 가져온다.
+			// 해당 모임에 대한 만남리스트를 가져온다.
 			List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
 			for (MeetingVO meeting : meetingList) {
-				
+
 				meetingservice.updateMtCurMbNum(meeting);
-								
-				//모임리스트의 각각의 모임에다가, 로그인한 유저를 기준으로 각각의 만남에 대한 상태를 넣어준다.
+
+				// 모임리스트의 각각의 모임에다가, 로그인한 유저를 기준으로 각각의 만남에 대한 상태를 넣어준다.
 				String mtAttendState = meetingservice.getMtStateByUsrNum(userVO.getUsrNum(), cbNum, meeting.getMtNum());
 				log.info("/info(GET) - mtAttendState : " + mtAttendState);
-				
+
 				meeting.setUsrMtState(mtAttendState);
-				log.info("/info(GET) - meetingList : " + meeting);								
+				log.info("/info(GET) - meetingList : " + meeting);
 			}
 
 			model.addAttribute("meetingList", meetingList);
-				
-			
+		}
+
+		// 해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
+		List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");
+		for (ClubMemberVO club : joinList) {
+			log.info("/info(GET) - joinList : " + club);
 		}
 		model.addAttribute("joinList", joinList);
 
@@ -162,22 +154,10 @@ public class ClubController {
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
-		
-		
-		//로그인한유저가 해당 모임에 대해서, 만남참석정보를 가져온다. -> 문제는 만남참석정보가 여러개다..;;
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+		// 로그인한유저가 해당 모임에 대해서, 만남참석정보를 가져온다. -> 문제는 만남참석정보가 여러개다..;;
+
 	}
-	
-	
-	
 
 	// 정기모임 게시판 - 목록list
 //	@GetMapping("/board")
@@ -188,22 +168,22 @@ public class ClubController {
 //		model.addAttribute("cbNum", cbNum);
 //		model.addAttribute("list", service.getList(cbNum));
 //	}
-	
+
 	// 정기모임 게시판 - 목록list (페이징)
-   @GetMapping("/board")
-   public void list(@RequestParam("cbNum") Long cbNum, NoticeCri cri, Model model) {
-      
-      log.info("#list page cbNum:" + cbNum);
-      log.info("#list page :" + cri);
-      
-      model.addAttribute("cbNum", cbNum);
-      model.addAttribute("list", service.boardgetList(cri, cbNum));
-      //model.addAttribute("pageMaker", new NoticeDTO(cri, 123));
-      
-      int total = service.boardgetTotal(cri, cbNum);
-      log.info("#board total:" + total);
-      model.addAttribute("pageMaker", new NoticeDTO(cri, total));
-   }
+	@GetMapping("/board")
+	public void list(@RequestParam("cbNum") Long cbNum, NoticeCri cri, Model model) {
+
+		log.info("#list page cbNum:" + cbNum);
+		log.info("#list page :" + cri);
+
+		model.addAttribute("cbNum", cbNum);
+		model.addAttribute("list", service.boardgetList(cri, cbNum));
+		// model.addAttribute("pageMaker", new NoticeDTO(cri, 123));
+
+		int total = service.boardgetTotal(cri, cbNum);
+		log.info("#board total:" + total);
+		model.addAttribute("pageMaker", new NoticeDTO(cri, total));
+	}
 
 	// 정기모임 게시판 - 조회
 	@GetMapping({ "/boardget", "/boardupdate" })
@@ -236,7 +216,7 @@ public class ClubController {
 		log.info("#boardRegister");
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
-		//model.addAttribute("boardRegister", service.getList(cbNum));
+		// model.addAttribute("boardRegister", service.getList(cbNum));
 		model.addAttribute("boardRegister", service.boardgetList(cri, cbNum));
 	}
 
@@ -250,16 +230,16 @@ public class ClubController {
 
 			rttr.addFlashAttribute("result", "success");
 		}
-		
+
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-		
+
 		return "redirect:/regular/board?cbNum=" + club.getCbNum();
 	}
 
 	// 정기모임 게시판 - 수정
 	@PostMapping("/boardupdate")
-	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) { 
+	public String boardModify(ClubVO club, @ModelAttribute("cri") NoticeCri cri, RedirectAttributes rttr) {
 
 		log.info("boardmodify: " + club);
 
@@ -267,10 +247,10 @@ public class ClubController {
 
 			rttr.addFlashAttribute("result", "success");
 		}
-		
+
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-		
+
 		return "redirect:/regular/board?cbNum=" + club.getCbNum();
 	}
 
@@ -293,7 +273,7 @@ public class ClubController {
 
 		String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), club.getCbNum());
 		log.info("/clubjoin(POST) - joinState : " + joinState); // joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-		
+
 		log.info(service.join(club, userVO, joinState));
 
 		rttr.addFlashAttribute("usrName", userVO.getUsrName());
@@ -309,25 +289,17 @@ public class ClubController {
 
 		return "redirect:/index/main";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// 정기모임 채팅창 - 지영
 //	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
 	public void chat(@RequestParam("cbNum") Long cbNum, Model model) {
 		log.info("##/chat");
-	
+
 //		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		String name = customUser.getUser().getUsrName();
 //		Long usrNum = customUser.getUser().getUsrNum();
-		
+
 		System.out.println("cbNum: " + cbNum);
 //		System.out.println("usrNum: " + usrNum);
 
@@ -343,31 +315,32 @@ public class ClubController {
 //		}
 		model.addAttribute("cbNum", cbNum);
 	}
-	
-	
-	//정기모임 수정
+
+	// 정기모임 수정
 	@GetMapping("/update")
 	public void updateClub(@RequestParam("cbNum") Long cbNum, Model model) {
-		log.info("##getClub:"+service.getClub(cbNum));
+		log.info("##getClub:" + service.getClub(cbNum));
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
 	}
+
 	@PostMapping("/update")
-	public String updateClub(ClubVO club, RedirectAttributes rttr) { 
-	
-		log.info("##updateclub:"+club);
-		
-		if (service.updateClub(club) ) {
+	public String updateClub(ClubVO club, RedirectAttributes rttr) {
+
+		log.info("##updateclub:" + club);
+
+		if (service.updateClub(club)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/regular/list";
 	}
-	//정기모임 삭제(폐쇄)
+
+	// 정기모임 삭제(폐쇄)
 	@PostMapping("/delete")
 	public String deleteClub(@RequestParam("cbNum") Long cbNum, RedirectAttributes rttr) {
-		
+
 		log.info("##delete:" + cbNum);
-		
+
 		if (service.deleteClub(cbNum)) {
 			rttr.addFlashAttribute("result", "success");
 		}
