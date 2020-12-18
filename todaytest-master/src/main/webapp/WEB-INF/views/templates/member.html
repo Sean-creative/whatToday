@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/member.css">
+    <title>회원가입</title>
+</head>
+<body>
+    <form>
+        <div id="member">
+            <div id="memberform">
+                <img src="img/logo.png" alt="">
+                <!-- <h2>오늘뭐하지 회원가입을 환영합니다!</h2> -->
+
+                <div>
+                    <label for="id">아이디(이메일)</label><br>
+                    <input type="text" placeholder="이메일(아이디)를 입력해주세요.">
+                    <button>중복확인</button>
+                </div>
+
+                <div>
+                    <label for="password">비밀번호</label><br>
+                    <input type="text" placeholder="비밀번호(영문,숫자,특수문자 8-16자)">
+                </div>
+
+                <div>
+                    <label for="password">비밀번호 재입력</label><br>
+                    <input type="text" placeholder="비밀번호 재입력">
+                </div>
+
+                <div>
+                    <label for="name">이름</label><br>
+                    <input type="text" placeholder="이름 입력">
+                </div>
+
+                <div>
+                    <label for="phone">휴대폰 번호</label><br>
+                    <input type="text" placeholder="휴대폰 전호('-'없이 입력)">
+                </div>
+
+                <div>
+                    <label for ="date">생년월일 </label><br> 
+                    <input type="date">
+                </div>
+
+                <div class="gender">
+                    <label for ="genter" >성별 </label>
+                    <input type="radio"> 
+                    <label for="male" class="especi">남자</label> 
+                    <input type="radio"> 
+                    <label for="female" class="especi">여자</label>
+                </div>
+
+                <p>* 관심정보<br>
+                <span>관심정보는 선택사항이며, 선택하지 않아도 회원가입이 가능합니다.</span>
+                </p>
+
+                
+                <div>
+                    <label for="interest">관심지역1</label><br>
+                    <select>
+                        <option>시/도선택</option>
+                        <option>서울특별시</option>
+                        <option>경기도</option>
+                    </select>
+                    <select>
+                        <option>구/군선택</option>
+                        <option>종로구</option>
+                        <option>서대문구</option>
+                        <option>성북구</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="interest">관심지역2</label><br>
+                    <select>
+                        <option>시/도선택</option>
+                        <option>서울특별시</option>
+                        <option>경기도</option>
+                    </select>
+                    <select>
+                        <option>구/군선택</option>
+                        <option>종로구</option>
+                        <option>서대문구</option>
+                        <option>성북구</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="category">카테고리/분야1</label><br>
+                    <select class="cate">
+                        <option>관심분야선택</option>
+                        <option>아웃도어/여행</option>
+                        <option>축구</option>
+                        <option>농구</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="category">카테고리/분야2</label><br>
+                    <select class="cate">
+                        <option>관심분야선택</option>
+                        <option>아웃도어/여행</option>
+                        <option>축구</option>
+                        <option>농구</option>
+                    </select>
+                </div>
+
+                <p>이용약관 / 개인정보 수집 및 이용 동의</p>
+                <div id="agreeform">
+                    <div>
+                        <label class="agre">이용약관 동의</label> 
+                        <input type="radio"> <label for="agree" class="especi">동의</label> 
+                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                    </div>
+
+                    <div>
+                        <label class="agre">개인정보 수집 동의</label> 
+                        <input type="radio"> <label for="agree" class="especi">동의</label> 
+                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                    </div>
+
+                    <div>
+                        <label class="agre">메일수신</label> 
+                        <input type="radio"> <label for="agree" class="especi">동의</label> 
+                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                    </div>
+                </div>
+
+                <div id="regiform">
+                    <input type="submit" class="btn" value="가입하기">
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
