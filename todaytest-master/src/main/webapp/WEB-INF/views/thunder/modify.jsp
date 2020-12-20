@@ -4,7 +4,6 @@
 
 <!-- 작성자 : 김선우 -->
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/thunder.css">
 <%@include file="../includes/header.jsp"%>
 
 <style>
@@ -218,17 +217,7 @@ ul li.tag-item {
 			</div>
 		</div>
 
-
-		<!-- 	<div>
-			<div>
-				지역 <br>
-				<select name="cbCity" id="city"></select>
-			</div>
-			<div>
-				세부지역<br>
-				<select name="cbDistrict" id="district"></select>
-			</div>
-		</div> -->
+	
 
 		<div>
 			<div>
@@ -298,6 +287,7 @@ ul li.tag-item {
 	</form>
 
 
+	<!-- 카카오 맵 -->
 	<div class="map_wrap">
 		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
@@ -314,11 +304,10 @@ ul li.tag-item {
 					</form>
 				</div>
 			</div>
-			<hr>
-			<ul id="placesList"></ul>
-			<div id="pagination"></div>
+			<hr>						
 		</div>
 	</div>
+	<!-- 카카오맵 END -->
 
 
 </section>
@@ -395,18 +384,7 @@ ul li.tag-item {
 								return word !== "";
 							});
 						}
-
-						// 서버에 넘기기
-						// 						$("#tag-form").on("submit", function(e) {
-						// 							var value = marginTag(); // return array
-						// 							$("#rdTag").val(value);
-
-						// 							if (inputCheck() == true) {
-						// 								alert('개설되었습니다.');								
-						// 							} else {
-						// 								e.preventDefault();
-						// 							}
-						// 						});
+		
 
 						// 처음 부터 #이 달려있고
 						// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.

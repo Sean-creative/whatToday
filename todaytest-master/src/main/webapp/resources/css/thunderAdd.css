@@ -1,0 +1,166 @@
+.weather {
+	display: flex;
+	color: white;
+}
+
+.weather div {
+	width: 100px;
+	text-align: center;
+}
+
+.City {
+	background-color: red;
+}
+
+.weatherContent {
+	background-color: black;
+	color: white;
+}
+
+.day {
+	font-size: 0.938rem;
+}
+
+.Icon, .Temp {
+	font-size: 1.375em;
+}
+
+.Icon {
+	margin-right: 2px;
+}
+
+/* 파일 업로드 블로그 style */
+.inputArea {
+	margin: 10px 0px;
+}
+
+select {
+	with: 100px;
+}
+
+label {
+	display: inline-block;
+	width: 70px;
+	padding: 5px;
+}
+
+label[for='gdsDes'] {
+	display: block;
+}
+
+input {
+	width: 150px;
+}
+
+textarea#gdsDes {
+	width: 400px;
+	height: 180px;
+}
+
+.select_img img {
+	margin: 20px 0px;
+}
+
+/* 해시태그 구현 */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul {
+	padding: 16px 0;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+.del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+
+
+/* 사용자 입력칸 */
+input {
+	
+	padding: 3px 0px;
+}
+
+.inputArea {
+	float: left; 
+	margin-right: 50px
+}
+
+input[required] {
+	border: 1px solid #ff9f40; 
+}
+
+input[type="datetime-local"] {
+	width: 200px;
+}
+
+input[type="file"] {
+	width: 200px;
+}
+
+img {
+	margin: 0px;
+}
+
+
+/* 카카오맵 */
+#keyword {
+	border: 1px solid #ff9f40; 
+	padding: 3px 0px;
+}
+
+
+#map {
+	width: 100%; 
+	height: 100%; 
+	position: relative;
+	overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,361 @@
+
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo');
+
+
+*{
+	margin:0;
+	padding:0;	
+}
+
+li{list-style:none;}  
+a{text-decoration:none;}  
+
+
+
+
+/* 날씨 */
+/* .weather {
+	display: flex;
+	color: white;
+}
+
+.weather div {
+	width: 100px;
+	text-align: center;
+}
+
+.City {
+	background-color: red;
+}
+
+.weatherContent {
+	background-color: black;
+	color: white;
+}
+
+.day {
+	font-size: 0.938rem;
+}
+
+.Icon, .Temp {
+	font-size: 1.375em;
+}
+
+.Icon {
+	margin-right: 2px;
+} */
+
+
+/* 넘어가는거 관련된  */
+.pagination {
+	width:1200px;
+	margin:0 auto;
+	text-align:center;
+}
+
+.pagination>li {
+	display: inline
+	
+}
+
+.pagination>li>a, .pagination>li>span {
+	/* position: relative;
+	float: left;
+	padding: 6px 12px;
+	margin-left: -1px;
+	line-height: 1.42857143;
+	color: #337ab7;
+	text-decoration: none;
+	background-color: #fff;
+	border: 1px solid #ddd */
+	border: none;
+	outline: none;
+	padding: 10px 16px;
+	background-color: #ddd;
+	cursor: pointer;
+	font-size: 12px;
+	border-radius: 50%;
+	margin-right:10px;
+	color:#fff;
+}
+
+
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus,
+	.pagination>li>span:hover {
+	z-index: 2;
+	background-color:  #ffaf31;
+	color: white;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
+	.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
+	{
+	z-index: 3;
+	cursor: default;
+	background-color:  #ffaf31;
+	color: white;
+	
+}
+
+
+
+/* =======================검색창 ========== */
+#search{
+	width:100%;
+	height:280px;
+	background:rgba(211,211,211,0.2);
+}
+
+#searchform{
+	width:810px;
+	padding:50px 0px;
+	margin:0 auto;
+}
+
+#selectThing{
+	display: flex;
+	justify-content: center;
+	margin-bottom:50px;
+}
+
+#selectThing{
+	margin-bottom:0px;
+}
+#selectThing>div{
+	margin-right:50px;
+}
+
+#selectThing>div:nth-child(2){
+	margin-right:0px;
+}
+
+label{
+	font-size:20px;
+	margin-right:5px;
+	margin-top:5px;
+}
+
+#selectThing>div select{
+	border:none;
+	background:transparent;
+	border-bottom:1px solid #000;
+	width:300px;
+}
+
+option{
+	color:#999;
+}
+
+#nav{
+	width:800px;
+	display:flex;
+	justify-content:flex-start;
+}
+
+#nav>select {
+	border:none;
+	background:transparent;
+	border-bottom:1px solid #000;
+	width:150px;
+}
+
+input[type=text]{
+	border:none;
+	background:transparent;
+	border-bottom:1px solid #000;
+	width:300px;
+	height:30px;
+	background: url("/ProjectHobby/src/main/webapp/WEB-INF/views/templates/img/search.png")no-repeat 95%;
+	background-size:7%;
+}
+
+::placeholder{
+	padding:10px;
+}
+
+
+button{
+	/* width:30px;
+	height:30px; */
+	border:none;
+
+}
+
+/* =====================날씨====================== */
+
+.header_in3{
+	width:800px;
+	height:160px;
+	margin:0 auto;
+	background:rgba(255, 179, 49, 0.3);
+	border-radius:15px;
+	padding:25px 0;
+	margin-top:50px;
+}
+.header_weekday{
+	display: flex;
+	justify-content: row;
+}
+
+.header_in3 .header_weekday li{
+	/* float:left; */
+	text-align: center;
+	
+	/* 밑에거 넣으면 맨 마지막거만 무너짐 */
+	/* width:200px; */
+	border-right:1px solid #ffaf31;
+	box-sizing: border-box;
+    /* transform: scale(1.0);
+	transition:all 2s; */
+}
+
+/* .header_in3 .header_weekday .active{
+	transform: scale(1.3);
+	transition:all 2s;
+}
+ */
+.header_weekday li:last-child{border:none;}
+
+.header_weekday h4{
+	font-size:18px;
+	padding-top:5px;
+	letter-spacing: 5px;
+	color:#999;
+}
+
+.header_weekday img{
+	padding:25px 0;
+	width : 60px;
+	height : 60px;
+}
+
+.header_weekday p{
+	font-size:18px;
+	/* padding-bottom:15px; */
+	color:#666;
+}
+
+
+
+
+/* ==========검색분류=========== */
+
+#sort
+{
+	width:1200px;
+	display:flex;
+	justify-content: flex-start;
+	margin:0 auto 30px;
+	border-bottom:1px solid #eee;
+	padding-bottom:10px;
+}
+#sort ul{
+	margin-top:50px;
+}
+
+#sort ul li{
+	display: inline
+}
+
+.order_button {	
+	border-right:1px solid #ddd;
+	padding: 0 20px;
+}
+
+.order_button a {
+	color:#000;
+}
+.order_button:first-child{	
+	padding-left:0px;
+}
+
+.order_button:last-child{
+	border:none;
+}
+
+#sort>ul>.active>a, #sort>ul>.active>a:focus, #sort>ul>.active>a:hover,
+	#sort>ul>.active>span, #sort>ul>.active>span:focus, #sort>ul>.active>span:hover {
+	color:#ffaf31;
+	cursor: default;
+	}
+	
+
+
+
+
+/* ==========검색결과=========== */
+#searchresult{
+	width:1200px;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content: flex-start;
+	margin:0 auto;
+}
+
+#searchresult div{
+	/* flex-basis: 270px; */
+	width:270px;
+	height:370px;
+	margin-right:40px;
+
+}
+#searchresult div:nth-child(4n){
+	margin-right:0px;
+}
+
+#searchresult div img{
+	width:270px;
+	height:200px;
+	border-radius: 15px;
+}
+
+.location{
+	width:270px;
+	height:16px;
+	font-weight:bold;
+	color:#2f3030;
+}
+
+.nombre{
+	width:270px;
+	height:40px;
+	margin-top:4px;
+	font-size:14px;
+	color:#2f3030
+}
+
+
+.limitmem{
+	width:270px;
+	height:16px;
+	font-size:14px;
+	padding-top:4px;
+	color:#666;
+
+}
+
+/* #myDIV{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;
+}
+.btn {
+	border: none;
+	outline: none;
+	padding: 10px 16px;
+	background-color: #ddd;
+	cursor: pointer;
+	font-size: 12px;
+	border-radius: 50%;
+	margin-right:10px;
+	color:#fff;
+  }
+
+  .active, .btn:hover {
+	background-color:  #ffaf31;
+	color: white;
+  } */
+

@@ -332,14 +332,11 @@ public class ThunderController {
 			return "redirect:/thunder/gps" + cri.getListLink();			
 		}
 		
-//		cri.setOrderBy("cbnum desc");
-//		cri.setOrderBy("cbView desc");
-//		cri.setOrderBy("cbappperiod desc");
-//		cri.setOrderBy("distance");
+
 
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.
 		model.addAttribute("list", service.getListWithPaging(cri));
-//		log.info("list(GET) : " + service.getListWithPaging(cri));
+		log.info("list(GET) : " + service.getListWithPaging(cri));
 
 		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri);
