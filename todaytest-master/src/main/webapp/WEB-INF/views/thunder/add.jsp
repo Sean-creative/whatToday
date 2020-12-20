@@ -31,6 +31,8 @@
 				<img class="thumbImg" src="/resources/img/logo.png" /> <br>
 				<input type="file" id="gdsImg" name="file"  />
 			</div>
+
+
 		</div>
 
 
