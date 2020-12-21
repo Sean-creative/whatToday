@@ -334,9 +334,11 @@ public class ThunderController {
 		
 
 
-		// cri에 들어있는 조건 대로, club 정보를 가져온다.
-		model.addAttribute("list", service.getListWithPaging(cri));
-		log.info("list(GET) : " + service.getListWithPaging(cri));
+		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
+		List<ThunderVO> thunderList = service.getListWithPaging(cri);
+		model.addAttribute("list", thunderList);
+		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
+		log.info("list(GET) - firstOne : " + thunderList.get(0));
 
 		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri);
@@ -351,10 +353,9 @@ public class ThunderController {
 	
 	
 	@GetMapping("/gps")
+	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감
 	public void gps(Criteria cri, Model model) {		
-		log.info("gps(GET) - cri : " + cri);
-		
-		model.addAttribute("cri", cri);
-		
+		log.info("gps(GET) - cri : " + cri);		
+		model.addAttribute("cri", cri);		
 	}
 }

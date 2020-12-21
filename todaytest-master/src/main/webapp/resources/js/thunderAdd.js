@@ -43,6 +43,11 @@ $(function() {
 				}
 			});
 
+	
+	
+	
+	
+	
 	/* 해시태그 관련 */
 	var tag = {};
 	var counter = 0;
@@ -63,6 +68,7 @@ $(function() {
 	}
 
 	// 서버에 넘기기
+	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
 	$("#tag-form").on("submit", function(e) {
 		var value = marginTag(); // return array
 		$("#rdTag").val(value);
@@ -164,74 +170,87 @@ $(function() {
 		maxHash--;
 	});
 
-	/* 날씨 관련 */
+	/* 날씨관련 */
 	let city = 'Seoul';
 	// var apiURI =
 	// "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
 	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
-	$.ajax({
-		url : apiURI,
-		dataType : "json",
-		type : "GET",
-		async : "false",
-		success : function(resp) {
-			console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-			$('.City').append(resp.timezone.split('/')[1]);
+	$
+			.ajax({
+				url : apiURI,
+				dataType : "json",
+				type : "GET",
+				async : "false",
+				success : function(resp) {
+					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+					// $('.City').append(resp.timezone.split('/')[1]);
 
-			for ( let idx in resp.daily) {
-				let tmp = '<div class="weatherContent">';
-				let days = new Date();
-				days.setTime(resp.daily[idx].dt * 1000);
-				const today = moment(days);
-				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
+					for ( let idx in resp.daily) {
+						let tmp = '<li>';
+						let days = new Date();
+						days.setTime(resp.daily[idx].dt * 1000);
+						const today = moment(days);
 
-				tmp += '<div class="Temp">'
-						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
-						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
+						tmp += '<h4>' + today.format('ddd') + '</h4>';
 
-				 if(resp.daily[idx].weather[0].icon=='01d' || resp.daily[idx].weather[0].icon=='01n'){
-	                   imgURL = '/resources/img/animation-ready/clear-day.svg';
-	                 }
-	                 //맑고 구름
-	                 if(resp.daily[idx].weather[0].icon=='02d' || resp.daily[idx].weather[0].icon=='02n'){
-	                   imgURL = '/resources/img/animation-ready/partly-cloudy-day.svg';
-	                 }
-	                 //구름
-	                 if(resp.daily[idx].weather[0].icon=='03d' || resp.daily[idx].weather[0].icon=='03n'){
-	                   imgURL = '/resources/img/animation-ready/cloudy.svg';
-	                 }
-	                 //먹구름
-	                 if(resp.daily[idx].weather[0].icon=='04d' || resp.daily[idx].weather[0].icon=='04n'){
-	                   imgURL = '/resources/img/animation-ready/cloudy.svg';
-	                 }
-	                 //소나기
-	                 if(resp.daily[idx].weather[0].icon=='09d' || resp.daily[idx].weather[0].icon=='09d'){
-	                   imgURL = '/resources/img/animation-ready/rain.svg';
-	                 }
-	                 //비
-	                 if(resp.daily[idx].weather[0].icon=='10d' || resp.daily[idx].weather[0].icon=='10n'){
-	                   imgURL = '/resources/img/animation-ready/rain.svg';
-	                 }
-	                 //번개
-	                 if(resp.daily[idx].weather[0].icon=='11d' || resp.daily[idx].weather[0].icon=='11n'){
-	                   imgURL = '/resources/img/animation-ready/thunderstorms.svg';
-	                 }
-	                 //눈
-	                 if(resp.daily[idx].weather[0].icon=='13d' || resp.daily[idx].weather[0].icon=='13n'){
-	                   imgURL = '/resources/img/animation-ready/snow.svg';
-	                 }
-	                 //안개
-	                 if(resp.daily[idx].weather[0].icon=='50d' || resp.daily[idx].weather[0].icon=='50n'){
-	                   imgURL = '/resources/img/animation-ready/mist.svg';
-	                 }
-				tmp += '<div class="Icon">' + "<img src=" + imgURL + ">"
-						+ '<div>';
-				tmp += "</div>"
+						if (resp.daily[idx].weather[0].icon == '01d'
+								|| resp.daily[idx].weather[0].icon == '01n') {
+							imgURL = '/resources/img/animation-ready/clear-day.svg';
+						}
+						// 맑고 구름
+						if (resp.daily[idx].weather[0].icon == '02d'
+								|| resp.daily[idx].weather[0].icon == '02n') {
+							imgURL = '/resources/img/animation-ready/partly-cloudy-day.svg';
+						}
+						// 구름
+						if (resp.daily[idx].weather[0].icon == '03d'
+								|| resp.daily[idx].weather[0].icon == '03n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 먹구름
+						if (resp.daily[idx].weather[0].icon == '04d'
+								|| resp.daily[idx].weather[0].icon == '04n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 소나기
+						if (resp.daily[idx].weather[0].icon == '09d'
+								|| resp.daily[idx].weather[0].icon == '09d') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 비
+						if (resp.daily[idx].weather[0].icon == '10d'
+								|| resp.daily[idx].weather[0].icon == '10n') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 번개
+						if (resp.daily[idx].weather[0].icon == '11d'
+								|| resp.daily[idx].weather[0].icon == '11n') {
+							imgURL = '/resources/img/animation-ready/thunderstorms.svg';
+						}
+						// 눈
+						if (resp.daily[idx].weather[0].icon == '13d'
+								|| resp.daily[idx].weather[0].icon == '13n') {
+							imgURL = '/resources/img/animation-ready/snow.svg';
+						}
+						// 안개
+						if (resp.daily[idx].weather[0].icon == '50d'
+								|| resp.daily[idx].weather[0].icon == '50n') {
+							imgURL = '/resources/img/animation-ready/mist.svg';
+						}
 
-				$('.weather').append(tmp);
-			}
-		}
-	})
+						tmp += "<img src=" + imgURL + ">";
+
+						tmp += '<p">' + Math.floor(resp.daily[idx].temp.min)
+								+ '&ordm/'
+								+ Math.floor(resp.daily[idx].temp.max)
+								+ '&ordm</p>';
+
+						tmp += "</li>"
+
+						$('.header_weekday').append(tmp);
+					}
+				}
+			})
 
 }); // end load
 

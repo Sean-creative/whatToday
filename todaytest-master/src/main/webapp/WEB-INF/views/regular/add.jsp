@@ -81,6 +81,10 @@ ul li.tag-item {
 	width: 200px;
 	height: auto;
 }
+
+
+
+
 </style>
 
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
@@ -117,8 +121,19 @@ ul li.tag-item {
 	<br>
 	<input type="hidden" name="cbMakeDate">
 	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag">해시태그</label>
-	<input type="text" id="hash" name="cbHashtag" value="#">
+	<label for="cbHashtag"> </label>
+	<div>
+				해시태그<br>
+				<input type="hidden" value="" name="cbHashtag" id="rdTag" />
+
+
+				<div>
+					<input type="text" id="tag" size="7" value="#" />
+				</div>
+				<ul id="tag-list"></ul>
+			</div>
+	
+	
 	<br> <label for="cbIntro">한줄소개</label>
 	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요">
 	<br> <label for="cbDetailContent">모임 상세내용(필수)</label><br>
@@ -196,6 +211,10 @@ ul li.tag-item {
          alert("30자 이내로 상세내용을 입력해주세요.");
          return false;
       }
+      
+      /* 해시태그 관련 */
+      var value = marginTag(); // return array
+		$("#rdTag").val(value);
      
       
    // 50명이상일경우 포인트 결제 창으로 이동 (지영)
@@ -222,7 +241,8 @@ ul li.tag-item {
     				// 모달로 바꾸기
 					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
     				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
-    				document.getElementById('register').submit();
+    				
+    				document.getElementById('register').submit();     						
     			}
     	    },
     	    error: function (){        
@@ -233,7 +253,11 @@ ul li.tag-item {
            });
 		return false;
 	  }
-   }
+      
+   } 
+   /* END inputCheckclub */
+   
+   
 
    //카테고리/분야 선택, 지역 선택 
    $(function() {
@@ -296,6 +320,131 @@ ul li.tag-item {
          }
       })
    }
+   
+   
+   
+   
+   /* 해시태그 관련 */
+	var tag = {};
+	var counter = 0;
+	var maxHash = 0;
+
+	// 태그를 추가한다.
+	function addTag(value) {
+		tag[counter] = value; // 태그를 Object 안에 추가
+		counter++; // counter 증가 삭제를 위한 del-btn 의 고유 id 가 된다.
+		maxHash++;
+	}
+
+	// 최종적으로 서버에 넘길때 tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+	function marginTag() {
+		return Object.values(tag).filter(function(word) {
+			return word !== "";
+		});
+	}
+
+	// 서버에 넘기기
+	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
+/* 	$("#tag-form").on("submit", function(e) {
+		var value = marginTag(); // return array
+		$("#rdTag").val(value);
+
+		if (inputCheckclub() == true) {
+			alert('개설되었습니다.');
+		} else {
+			e.preventDefault();
+		}
+	});  */
+
+	// 처음 부터 #이 달려있고
+	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
+	// 5개까지 밖에 입력하지 못한다.
+	$("#tag").keyup(function(e) {
+		let text = $(this).val();
+
+		if (text.length == 0) {
+			$(this).val("#");
+		}
+
+		// #은 제외
+		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+		// test() ㅡ 찾는 문자열이 들어있는지 확인
+		if (regExp.test(text)) {
+			text = text.replace(regExp, ""); // 찾은 특수 문자를 제거
+		}
+		$(this).val(text);
+	});
+
+	$("#tag")
+			.on(
+					"keypress",
+					function(e) {
+
+						var self = $(this);
+
+						// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+						if (e.key === "Enter" || e.keyCode == 32
+								|| e.keyCode == 35) {
+
+							if (maxHash >= 5) {
+								alert("5개가 최대입니다.");
+								self.val("#");
+							} else {
+								var tagValue = self.val(); // 값 가져오기
+								console.log(tagValue);
+
+								// 사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌,
+								// #은 제외
+								var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+								// test() ㅡ 찾는 문자열이 들어있는지 확인
+								if (regExp.test(tagValue)) {
+									tagValue = tagValue.replace(regExp, ""); // 찾은
+									// 특수
+									// 문자를
+									// 제거
+								}
+
+								// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
+								if (tagValue !== "" && tagValue !== "#") {
+
+									// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return
+									// 된다.
+									var result = Object.values(tag).filter(
+											function(word) {
+												return word === tagValue;
+											})
+
+									// 태그 중복 검사
+									if (result.length == 0) {
+										$("#tag-list")
+												.append(
+														"<li class='tag-item'>"
+																+ tagValue
+																+ "<span class='del-btn' idx='"
+																+ counter
+																+ "'>x</span></li>");
+										addTag(tagValue);
+										self.val("#");
+									} else {
+										alert("태그값이 중복됩니다.");
+									}
+								}
+							}
+							e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
+
+						}
+					});
+
+	// 삭제 버튼
+	// 삭제 버튼은 비동기적 생성이므로 document 최초 생성시가 아닌 검색을 통해 이벤트를 구현시킨다.
+	$(document).on("click", ".del-btn", function(e) {
+		var index = $(this).attr("idx");
+		tag[index] = "";
+		$(this).parent().remove();
+		maxHash--;
+	});
 </script>
 
 <%@include file="../includes/footer.jsp"%>

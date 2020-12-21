@@ -15,39 +15,6 @@ a{text-decoration:none;}
 
 
 
-/* 날씨 */
-/* .weather {
-	display: flex;
-	color: white;
-}
-
-.weather div {
-	width: 100px;
-	text-align: center;
-}
-
-.City {
-	background-color: red;
-}
-
-.weatherContent {
-	background-color: black;
-	color: white;
-}
-
-.day {
-	font-size: 0.938rem;
-}
-
-.Icon, .Temp {
-	font-size: 1.375em;
-}
-
-.Icon {
-	margin-right: 2px;
-} */
-
-
 /* 넘어가는거 관련된  */
 .pagination {
 	width:1200px;
@@ -184,7 +151,7 @@ button{
 
 }
 
-/* =====================날씨====================== */
+/* =============날씨=============== */
 
 .header_in3{
 	width:800px;

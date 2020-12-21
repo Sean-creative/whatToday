@@ -1,39 +1,63 @@
-.weather {
+/* =============날씨=============== */
+.header_in3 {
+	width: 800px;
+	height: 160px;
+	margin: 0 auto;
+	background: rgba(255, 179, 49, 0.3);
+	border-radius: 15px;
+	padding: 25px 0;
+	margin-top: 50px;
+}
+
+.header_weekday {
 	display: flex;
-	color: white;
+	justify-content: row;
 }
 
-.weather div {
-	width: 100px;
+.header_in3 .header_weekday li {
+	/* float:left; */
 	text-align: center;
+	/* 밑에거 넣으면 맨 마지막거만 무너짐 */
+	/* width:200px; */
+	border-right: 1px solid #ffaf31;
+	box-sizing: border-box;
+	/* transform: scale(1.0);
+	transition:all 2s; */
 }
 
-.City {
-	background-color: red;
+/* .header_in3 .header_weekday .active{
+	transform: scale(1.3);
+	transition:all 2s;
+}
+ */
+.header_weekday li:last-child {
+	border: none;
 }
 
-.weatherContent {
-	background-color: black;
-	color: white;
+.header_weekday h4 {
+	font-size: 18px;
+	padding-top: 5px;
+	letter-spacing: 5px;
+	color: #999;
 }
 
-.day {
-	font-size: 0.938rem;
+.header_weekday img {
+	padding: 25px 0;
+	width: 60px;
+	height: 60px;
 }
 
-.Icon, .Temp {
-	font-size: 1.375em;
-}
-
-.Icon {
-	margin-right: 2px;
+.header_weekday p {
+	font-size: 18px;
+	/* padding-bottom:15px; */
+	color: #666;
 }
 
 /* 파일 업로드 블로그 style */
-.inputArea {
+/* .inputArea {
 	margin: 10px 0px;
 }
-
+ */
 select {
 	with: 100px;
 }
@@ -62,12 +86,6 @@ textarea#gdsDes {
 }
 
 /* 해시태그 구현 */
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
 ul {
 	padding: 16px 0;
 }
@@ -106,20 +124,252 @@ ul li.tag-item {
 	height: auto;
 }
 
-
-/* 사용자 입력칸 */
-input {
-	
+/* 카카오맵 */
+#keyword {
+	border: 1px solid #ff9f40;
 	padding: 3px 0px;
 }
 
-.inputArea {
-	float: left; 
-	margin-right: 50px
+#map {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+/* 새로운 CSS */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+body {
+	background: #fff;
+}
+
+#wrap {
+	width: 100%;
+}
+
+header, section, footer {
+	width: inherit;
+}
+
+/*_____________________________section________________________________*/
+section {
+	width: 100%;
+	margin-top : 120px;
+}
+
+.section_in {
+	width: 1200px;
+	margin: 0 auto;
+	/*background:#333;*/
+}
+
+.section_in>h2 {
+	font-size: 30px;
+	text-align: center;
+	margin-top: 30px;
+	color: #333;
+	letter-spacing: 5px;
+	font-weight: 900;
+}
+
+.section_in>p {
+	color: #666;
+	font-size: 20px;
+	text-align: center;
+	margin-top: 10px;
+	font-weight: 100;
+}
+
+.section_in .tab {
+	width: 140px;
+	/*background:green;*/
+	margin: 0 auto;
+}
+
+.section_in .tab li {
+	float: left;
+	width: 120px;
+	height: 51px;
+	margin: 50px 10px 0px;
+	position: relative;
+}
+
+.section_in .tab li span {
+	display: block;
+	width: 120px;
+	height: 0px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #cb1517;
+	transition: all 0.6s;
+}
+
+.section_in .tab li a {
+	display: block;
+	color: #fff;
+	border: 1px solid #cb1517;
+	font-size: 14px;
+	text-align: center;
+	line-height: 50px;
+	position: relative;
+	z-index: 100;
+}
+
+.section_in .tab li:hover span {
+	height: 100%;
+}
+
+.section_in .tab li a:hover {
+	color: #fff;
+}
+
+.tab li a.selected { /*�꾩옱 �좏깮�� ��찓��*/
+	background: #cb1517;
+	color: #fff;
+	font-weight: bold;
+}
+/*____________________________________________________________________��븘�섎궡��*/
+form {
+	width: 800px;
+	/*height:1000px;*/
+	margin: 30px auto;
+	/*background:#333;*/
+}
+
+.form-stxt {
+	text-align: right;
+	color: #666;
+	font-size: 12px;
+	font-weight: 100;
+}
+
+form hr {
+	width: 800px;
+	height: 2px;
+	margin: 15px 0;
+	background: #ffaf31;
+	/*border-bottom:none;
+	border-left:none;
+	border-right:none;*/
+	border: none;
+}
+
+fieldset {
+	width: 800px;
+	padding: 20px;
+	border: none;
+}
+
+.formContent div {
+	color: #333;
+	width: 760px;
+	border-bottom: 1px dotted #9b9b9b;
+	padding: 20px 0;
+}
+
+.formContent div:first-child {
+	padding-top: 5px;
+}
+
+.formContent div:last-child {
+	border-bottom: none;
+}
+
+.formContent label {
+	display: inline-block;
+	width: 230px;
+	color: #666;
+	/*background:#666;*/
+}
+
+.formContent span {
+	display: inline-block;
+	width: 230px;
+	/*background:#666;*/
+}
+
+input[type=text] {
+	width: 100px;
+	border: 1px solid #ccc;
+	text-indent: 5px;
+}
+
+.required {
+	font-size: 12px;
+	color: #ffaf31;
+}
+
+#model {
+	width: 180px;
+	border: 1px solid #ccc;
+}
+
+#hp, #email {
+	border: 1px solid #ccc;
+}
+
+.formContent .hp1 {
+	width: 150px;
+}
+
+input[type=radio] {
+	margin-right: 3px;
+}
+
+.agreebox {
+	color: #333;
+}
+
+.agreebox>p {
+	text-align: center;
+}
+
+input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+	margin-right: 3px;
+}
+
+.btn_faq {
+	text-align: center;
+}
+
+.btn_faq2 {
+	margin-top: 30px;
+	background: #ffaf31;
+	color: #fff;
+	padding: 10px 30px;
+	border: none;
+	font-size: 15px;
+	letter-spacing: 2px;
+	cursor: pointer;
+}
+
+.class {
+	float: left;
+}
+
+textarea {
+	width: 420px;
+	height: 100px;
+	margin-bottom: 10px;
+	float: left;
+	border: 1px solid #ccc;
+}
+
+/* 사용자 입력칸 */
+input {
+	padding: 3px 0px;
 }
 
 input[required] {
-	border: 1px solid #ff9f40; 
+	border: 1px solid #ff9f40;
 }
 
 input[type="datetime-local"] {
@@ -133,34 +383,5 @@ input[type="file"] {
 img {
 	margin: 0px;
 }
-
-
-/* 카카오맵 */
-#keyword {
-	border: 1px solid #ff9f40; 
-	padding: 3px 0px;
-}
-
-
-#map {
-	width: 100%; 
-	height: 100%; 
-	position: relative;
-	overflow: hidden;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*
+/
