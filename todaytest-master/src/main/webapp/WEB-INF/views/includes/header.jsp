@@ -36,7 +36,7 @@
 					<div class="tooltip">
 					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
 					<div class="tooltiptext">
-					<div id="socketAlert" class="alert alert-success" role="alert"></div>
+					<div class="socketAlert"></div>
 						</div>
 						</div>
 						</li>
@@ -85,7 +85,6 @@
 <script type="text/javascript">
 var socket = null;  //전역 변수로 선언
 $(document).ready(function() {
-	let msgId;
 	let loginCheck = null;
 	<sec:authorize access="isAuthenticated()">
 	loginCheck = true;
@@ -148,15 +147,15 @@ function connectWS(msgNum){
 var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
 
 socket = ws;
-let Num = msgNum;
+
 ws.onopen = function(message){
-  
-  ws.send(Num);
+	ws.send(msgNum+","+"접속");
 };
 
 ws.onmessage = function(event){
+	
 console.log(event.data);
-$("#socketAlert").prepend(event.data);
+$(".socketAlert").prepend("<p>"+event.data+"</p>");
 
 };
 

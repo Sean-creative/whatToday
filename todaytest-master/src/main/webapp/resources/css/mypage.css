@@ -1,292 +1,128 @@
+
+
 *{
     margin:0;
     padding:0;
 }
-#wrap{
-    width:1020px;
-    margin:0 auto;
-}
-#header{
-   width:1020px;
-    height:100px;
-    margin:0 auto;
-}
-#header img{
-    width:80px;
-    float:left;
-}
-#header>input{
-    border:1px solid #000;
-    width:20%;
-    height:30px;
-    margin-left:10px;
-    margin-top:10px;
-}
 
-#header>ul{
-    float:right;
-}
-
-#header>ul>a{
-    margin-right:10px;
-    text-decoration: none;
-    color:#000;
-    font-size:12px;
-}
-#header ul a:last-child{
-    margin-right:10px;
-}
-
-#nav{
-    clear:both;
-    padding-top:10px;
-}
-#nav>ul>a{
-    margin-right:10px;
-    padding-top:20px;
-    text-decoration: none;
-    color:#000;
-    font-size:14px;
-}
-#nav>ul>a:first-child{
-    font-weight:bold;
-}
-
-#footer{
-    width:100%;
-    height:60px;
-    background:#999;
-    text-align: center;
-    line-height:60px;
-    clear:both;
-    margin-top:20px;
-}
-
-a:link { color: black; text-decoration: none;}
-a:visited { color: black; text-decoration: none;}
-a:hover { color: orange; text-decoration: none;}
-
-.menu{
-    background-color: orange;
-    height:40px;
-    margin: 0 auto;
-
-}
-.menu>ul{
+#totalMenu{
+    width: 1200px;
+    height: 1000px;
+    margin: 50px auto;
     display: flex;
-    align-items: center; 
-    justify-content: space-evenly;
-    height: 100%;
+    justify-content: flex-start;
+	
 }
-.menu>ul li{
-    list-style: none;
+#navMenu{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+#wrapInfo{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+.mypageMenu{
+    height: 50%;
+    position: sticky;
+    top: 0;
+}
+.mypageMenu h5{
+    text-align: center;
 }
 
-.menu button{
-    border: 0;
+
+.uInfo{
+    margin-top: 3% auto auto 3%;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    border:1px solid #ffaf31;;
+	border-radius: .25em; 
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.uInfo img{
+    margin: 0 auto;
+    width: 20%;
+    height: 20%;
+}
+.info{
+    margin-top: 10%;
+    border-color:transparent;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+}
+.info button{
+	border: 0;
     outline: 0;
     color: white;
     font-size: 18px;
-    background-color: orange;
-    min-width: 150px;
-}
-.menu button:hover{
-    color: yellow;
-}
-
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  
-  
-  .dropdown-content {
-    border: 2px dotted black;
-    display: none;
-    position: absolute;
-    transform: translateX(-40%);
-    background-color: white;
-    height: 100%;
-    width: 750px;
-    z-index: 1;
-    
-  }
-  .dropdown-content>ul{
-    display: flex;
-    align-items: center; 
-    justify-content: space-evenly;
-  }
-  .dropdown-content>ul>li{
-      width: 20%;
-  }
-  .dropdown-content button{
-    background-color: white;
-    clear: both;
-    color: black;
-    height:100%px; 
-    width:100%;
-    font-size: 15px;
-  }
-  .dropdown-content button:hover{
-      color: orange;
-  }
-  
-  .dropdown:hover .dropdown-content {
-      display: block;
-      
-    }
-  
-
-.info{
-    background-color: pink;
-	border: black 1px solid;
-    height:200px;
-    margin:0 auto;
-    margin-top: 40px;
-    display: flex;
-    align-items: center; 
-    justify-content: space-evenly;
-}
-
-.pic{
-    background-color: palevioletred;
-	border: black 1px solid;
-    height:100%;
-    width: 20%;
-    margin-right: 2%;
-}
-
-
-.pic>img{
-	height:80%
-}
-.userInfo{
-    background-color: red;
-	border: red 1px solid;
-    text-align:left;
-    line-height: 50px;
-    height: 100%;
+    background-color: #ffaf31;
     width: 100%;
-    
 }
-.userInfo>span{
-    display: inline-block;
-    background-color: green;
-    width: 100px;
+.info button:hover{
+	color: yellow;
+	transition: 1s;
 }
-
-.clubInfoSmall{
-    background-color: rgb(71, 206, 111);
-	border: red 1px solid;
-	height: 100%;
-    width: 30%;
-    
+.accordionBtn {
+	border: 0;
+    outline: 0;
+    color: white;
+ 	outline: none;
+  	font-size: 15px;
+  	transition: 1s;
 }
 
-.pwdInput{ 
-    background-color: pink;
-    border: black 1px solid;
-    height:300px;
-    margin:0 auto;
-    margin-top: 40px;
-    display: flex;
-
-}
-.pwdInput>div{
-    background-color: aqua;
-    margin: 0 auto;
-    width: 50%;
-
-    
-}
-.pwWord{
-    display: inline-block;
-    background-color: blue;
-    width: 200px;
-    margin-top: 2%;
-    margin-left: 20%;
-}
-.inputPwd{
-    height: 30px;
-    width: 50%;
-    margin-left: 25%;
-}
-.pwdInput button{
-    margin-top: 20px;
-    height: 40px;
-    width: 50%;
-    margin-left: 25%;
-    background-color: orange;
-}
-.word{
-    color: skyblue;
-
-}
-.modifyBtn{
-	margin-top: 20px;
-    height: 40px;
-    width: 25%;
-    margin-left: 37.5%;
-   
-    background-color: orange;
-    
-}
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.activeAcco, .accordionBtn:hover {
+	background-color: pink; 
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  text-align: center;
-}
-.modal-content button{
-	width: 20%;
-	height: 40px;
-	background-color: orange;
-	margin: 0 auto;
-}
 
-/* The Close Button */
-
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-.imgSelect {
-	cursor: pointer;
-}
-
-.popupLayer {
-	position: absolute;
+.accordian {
 	display: none;
-	background-color: #ffffff;
-	border: solid 2px #d0d0d0;
-	width: 200px;
-	height: 50px;
-	padding: 10px;
+	background-color: pink;
+	overflow: hidden;
 }
-.popupLayer div {
-	position: absolute;
-	top: 5px;
-	right: 5px
+.accordian button{
+	background-color: pink;
+}
+
+.list{
+    margin: 0 0 0 10%;
+    max-width: 80%;
+    height: 20%; 
+    overflow:visible;
+    display: flex;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    box-sizing:border-box;
+}
+  .list::-webkit-scrollbar {
+    width: 10px;
+  }
+  .list::-webkit-scrollbar-thumb {
+    background-color: #ffaf31;
+    border-radius: 10px;
+  }
+  .list::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+.smallList{
+    flex: 0 0 auto;
+    height: 100%;
+    width: 192px;
+    border:1px solid #ffaf31;;
+    border-radius: .25em;  
+    border: solid;
+    border-color: black;
+    box-sizing:border-box;
 }

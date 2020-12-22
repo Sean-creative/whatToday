@@ -2,22 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
-
-
-
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
-<nav id="nav">
-<div class ="menu">
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<nav id="navMenu">
+<div class ="mypageMenu">
     <ul>
         <li>
             <form action="/mypage/main" method="get">
-                <button class="btn1" type="submit"  >마이페이지</button>
+                <button class="btn1" type="submit"  style="color: yellow;">마이페이지</button>
             </form>
         </li>
             <li>
-        <div class="dropdown">
+        <div class="dropdown2">
             <button type="button" class="dropbtn">모임관리</button>
-            <div class="dropdown-content">
+            <div class="dropdown-content2">
             <ul>
                 <li>
                 <form action="/mypage/myclub/main" method="get">
@@ -30,8 +27,6 @@
                 <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
-                
-                
             </ul>
             </div>
         </div>
@@ -47,24 +42,22 @@
         </form>
     </li>
     <li>
-        <form action="/mypage/auth_leave" method="get">
-            <button type="submit" style="color: yellow">회원탈퇴하기</button>
+        <form action="/mypage/auth_leave" method="get" >
+            <button type="submit" style="color: yellow;">회원탈퇴하기</button>
         </form>
-        
         </li>
     </ul>
-
 </div>
 </nav>
-<section id="wrap">
+<section id="wrapInfo">
 <div class = "pwdInput">
-    <div>
+    <div style="width: 430px;">
         <h1 style="text-align: center;">비밀번호재입력</h1><br>
-        <p style="text-align: center;">본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</p>
+        <p>본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</p>
         <br><br>
         <form action="/mypage/leaveAction"  method="get">
         <input type="password" class="inputPwd" name="password"><br>
-        <button type="button" id="myBtn">확인</button><!-- 클릭시 blank 체크한다 -->
+        <button type="button" id="myBtn" class ="modifyBtn2">확인</button><!-- 클릭시 blank 체크한다 -->
 		<div id="myModal" class="modal">
 		  <div class="modal-content">
 		    <h1>탈퇴하시겠습니까?</h1>

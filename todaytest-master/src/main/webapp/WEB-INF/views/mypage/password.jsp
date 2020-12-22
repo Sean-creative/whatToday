@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
-
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
-<nav id="nav">
-<div class ="menu">
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<nav id="navMenu">
+<div class ="mypageMenu">
     <ul>
         <li>
             <form action="/mypage/main" method="get">
@@ -13,9 +12,9 @@
             </form>
         </li>
             <li>
-        <div class="dropdown">
+        <div class="dropdown2">
             <button type="button" class="dropbtn">모임관리</button>
-            <div class="dropdown-content">
+            <div class="dropdown-content2">
             <ul>
                 <li>
                 <form action="/mypage/myclub/main" method="get">
@@ -28,7 +27,6 @@
                 <li>                <form action="/mypage/myclub/userManage" method="get">
             	<button type="submit">회원관리</button>
         		</form></li>
-                               
             </ul>
             </div>
         </div>
@@ -40,42 +38,38 @@
     </li>
     <li>
         <form action="/mypage/password" method="get">
-            <button type="submit" style="color: yellow">비밀번호수정</button>
+            <button type="submit" style="color: yellow;">비밀번호수정</button>
         </form>
     </li>
     <li>
         <form action="/mypage/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
-        
         </li>
     </ul>
-
 </div>
 </nav>
-<section id="wrap">
-<div class="info">
-
-    <div>
+<section id="wrapInfo">
+<div style="margin: 0 auto;">
     <h1 style="text-align: center;">비밀번호 변경</h1><br>
-    <p>개인정보보호를 위해 최소 3개월 이내에는 정기적으로 비밀번호를 변경해주시는 게 좋습니다.</p><br>
-    <p>비밀번호는 쉬운번호나 타 사이트와 같은 경우 도용되기 쉽습니다.</p><br>
-    <p>주민번호, 전화번호, 생일 등 개인정보와 연관된 문자나 숫자는 보안상 위험이 높으므로 사용을 자제해 주세요.</p><br>
+    <h5 style="text-align: left;">개인정보보호를 위해 최소 3개월 이내에는 정기적으로 비밀번호를 변경해주시는 게 좋습니다.</h5><br>
+    <h5 style="text-align: left;">비밀번호는 쉬운번호나 타 사이트와 같은 경우 도용되기 쉽습니다.</h5><br>
+    <h5 style="text-align: left;">주민번호, 전화번호, 생일 등 개인정보와 연관된 문자나 숫자는 보안상 위험이 높으므로 사용을 자제해 주세요.</h5><br>
     <br>
-    </div>
-
 </div>
 <div class="pwdInput">
-<div>
-<span class="pwWord">현재 비밀번호 입력</span><input type="password" class="inputPwd" name="currentPassword"><br>
-<span class="pwWord">새로운 비밀번호 입력</span><input type="password" class="inputPwd" name="newPassword"><br>
-<span class="pwWord">새로운 비밀번호 확인</span><input type="password" class="inputPwd" name="newPassword"><br>
+<div style="width: 430px;">
+<span class="pwWord">현재 비밀번호 입력</span>
+<input type="password" class="inputPwd" name="currentPassword">
+<span class="pwWord">새로운 비밀번호 입력</span><input type="password" class="inputPwd" name="newPassword">
+<span class="pwWord">새로운 비밀번호 확인</span><input type="password" class="inputPwd" name="newPassword">
 <form name="register" action="/mypage/passwordAction" onsubmit="return check();" method="post">
 <input type="hidden" name="currentPassword" value="">
 <input type="hidden" name="newPassword" value="">
-<button>변경완료</button>
+<button class="modifyBtn2">변경완료</button>
 </form>
 </div>
+
 </div>
 
 </section>

@@ -2,11 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../../includes/header.jsp" %>
-
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
-
-<nav id="nav">
-<div class ="menu">
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<nav id="navMenu">
+<div class ="mypageMenu">
     <ul>
         <li>
             <form action="/mypage/main" method="get">
@@ -14,9 +12,9 @@
             </form>
         </li>
             <li>
-        <div class="dropdown">
-            <button type="button" class="dropbtn" style="color: yellow;">모임관리</button>
-            <div class="dropdown-content">
+        <div class="dropdown2">
+            <button type="button" class="dropbtn"  style="color: yellow;">모임관리</button>
+            <div class="dropdown-content2">
             <ul>
                 <li>
                 <form action="/mypage/myclub/main" method="get">
@@ -27,10 +25,8 @@
             	<button type="submit">만남개설</button>
         		</form></li>
                 <li>                <form action="/mypage/myclub/userManage" method="get">
-            	<button type="submit">회원관리</button>
+            	<button type="submit"  style="color: orange;">회원관리</button>
         		</form></li>
-
-                
             </ul>
             </div>
         </div>
@@ -41,7 +37,7 @@
         </form>
     </li>
     <li>
-        <form action="/mypage/password" method="get" >
+        <form action="/mypage/password" method="get">
             <button type="submit">비밀번호수정</button>
         </form>
     </li>
@@ -49,13 +45,11 @@
         <form action="/mypage/auth_leave" method="get">
             <button type="submit">회원탈퇴하기</button>
         </form>
-        
         </li>
     </ul>
-
 </div>
 </nav>
-<section id="wrap">
+<section id="wrapInfo">
 	<select name="clubList" id="clubList">
 	</select>
 	<div id="memberList">

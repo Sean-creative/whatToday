@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUBJOINHISTORY 
+		select DISTINCT usrNum,cbNum,cbName,cbType from CLUBJOINHISTORY 
 		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴'
 	</select>
 	
@@ -164,6 +164,10 @@
 	
 	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">
 		select * from clubmember where usrNum = #{usrNum} and cbNum = #{cbNum}
+	</select>
+	
+	<select id="getUserN" resultType="com.hobby.domain.UserVO">
+		select * from tbluser where usrNum = #{usrNum}
 	</select>
 	
 

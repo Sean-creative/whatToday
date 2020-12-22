@@ -2,85 +2,75 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../includes/header.jsp"%>
-
-
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/mypage.css' />?after">
-<nav id="nav">
-	<div class="menu">
-		<ul>
-			<li>
-				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit">마이페이지</button>
-				</form>
-			</li>
-			<li>
-				<div class="dropdown">
-					<button type="button" class="dropbtn">모임관리</button>
-					<div class="dropdown-content">
-						<ul>
-							<li>
-								<form action="/mypage/myclub/main" method="get">
-									<button type="submit">모임관리홈</button>
-								</form>
-							</li>
-							<li>
-								<form action="/mypage/myclub/main" method="post">
-									<button type="submit">만남개설</button>
-								</form>
-							</li>
-							<li>
-								<form action="/mypage/myclub/userManage" method="get">
-									<button type="submit">회원관리</button>
-								</form>
-							</li>
-
-
-						</ul>
-					</div>
-				</div>
-			</li>
-			<li>
-				<form action="/mypage/auth_edit" method="get">
-					<button type="submit" style="color: yellow">회원정보수정</button>
-				</form>
-			</li>
-			<li>
-				<form action="/mypage/password" method="get">
-					<button type="submit">비밀번호수정</button>
-				</form>
-			</li>
-			<li>
-				<form action="/mypage/auth_leave" method="get">
-					<button type="submit">회원탈퇴하기</button>
-				</form>
-
-			</li>
-		</ul>
-
-	</div>
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<nav id="navMenu">
+<div class ="mypageMenu">
+    <ul>
+        <li>
+            <form action="/mypage/main" method="get">
+                <button class="btn1" type="submit">마이페이지</button>
+            </form>
+        </li>
+            <li>
+        <div class="dropdown2">
+            <button type="button" class="dropbtn">모임관리</button>
+            <div class="dropdown-content2">
+            <ul>
+                <li>
+                <form action="/mypage/myclub/main" method="get">
+            	<button type="submit">모임관리홈</button>
+        		</form>
+                </li>
+                <li>                <form action="/mypage/myclub/main" method="post">
+            	<button type="submit">만남개설</button>
+        		</form></li>
+                <li>                <form action="/mypage/myclub/userManage" method="get">
+            	<button type="submit">회원관리</button>
+        		</form></li>
+            </ul>
+            </div>
+        </div>
+        </li>
+    <li>
+        <form action="/mypage/auth_edit" method="get">
+            <button type="submit" style="color: yellow;">회원정보수정</button>
+        </form>
+    </li>
+    <li>
+        <form action="/mypage/password" method="get">
+            <button type="submit">비밀번호수정</button>
+        </form>
+    </li>
+    <li>
+        <form action="/mypage/auth_leave" method="get">
+            <button type="submit">회원탈퇴하기</button>
+        </form>
+        </li>
+    </ul>
+</div>
 </nav>
-<section id="wrap">
+<section id="wrapInfo">
 	<form name="register" action="/mypage/editAction" method="post"
 		onsubmit="return inputCheck();">
-		<div class="info">
-			<div class='uploadDiv'>
-				<input type='file' id="uploadBtn" name='uploadFile'
-					accept="image/jpeg, image/jpg, image/png">
-			</div>
-
+		
+		<div class="modifyInfo">
+		<div id="prevWrap">
 			<!-- 해당 위치 안에 이미지가 쌓이게 된다. -->
 			<div id="preview">
-			<img style='width:100px; height:100px;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
-			alt="<c:out value="${userVO.usrImg }"/>"/>
+			<img src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>" alt="로딩중"/>
+			</div>
+			<div class='uploadDiv'>
+				<label for="uploadBtn">프로필 변경</label><input type='file' id="uploadBtn" name='uploadFile'
+					accept="image/jpeg, image/jpg, image/png">
+			</div>
 			</div>
 			<div class="userInfo">
-				<span>ID </span><input type="text" name="usrId" readonly="readonly"
-					value="<c:out value="${userVO.usrId }"/>"><br> <span>NAME
-				</span><input type="text" name="usrName" readonly="readonly"
-					value="<c:out value="${userVO.usrName }"/>"><br> <span>PHONE
-				</span><input type="text" name="usrPhone"
-					value="<c:out value="${userVO.usrPhone }"/>"><br> <input
+				<span class="label2">이름</span><input type="text" name="usrName" readonly="readonly" value="<c:out value="${userVO.usrName }"/>"><br>
+				<span class="label2">아이디</span><input type="text" name="usrId" readonly="readonly" value="<c:out value="${userVO.usrId }"/>"><br>
+				<span class="label2">성별</span><input type="text" name="usrGender" readonly="readonly" value="<c:out value="${userVO.usrGender }"/>"><br>
+				<span class="label2">생일</span><input type="text" name="usrBirth" readonly="readonly" value="<c:out value="${userVO.usrBirth	 }"/>"><br>
+				<span class="label2">휴대전화</span><input type="text" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>"><br>
+					<input
 					type="hidden" name="usrNum"
 					value="<c:out value="${userVO.usrNum }"/>"><input
 					type="hidden" name="usrState"
@@ -95,47 +85,47 @@
 
 		</div>
 
-		<div class="info">
-			<div class="userInfo" style="margin-left: 18.5%;">
-				<h1>
-					관심정보<span style="font-size: 15px; margin-left: 20px">개인별
-						맞춤정보 제공 - 수정은 폰번, 지역, 관심카테고리</span>
+		<div class="addInfo">
+			<div class="addInfo2">
+				<h1 style="text-align: center">관심정보<span style="font-size: 15px; margin-left: 20px">개인별
+						맞춤정보 제공</span>
 				</h1>
 
-				<ul style="list-style: none;">
-					<li>
-						<div class="input-container">
-							<label>지역1 </label> <select name="usrCity1" id="city1">
-
-							</select> <select name="usrDistrict1" id="district1">
-
-							</select>
-						</div>
-
-						<div class="input-container">
 
 
-							<label>지역2 </label> <select name="usrCity2" id="city2">
+				<div>
+					<span style="width: 300px; display:inline-block;"><label style="width: 90px; display:inline-block;">지역1</label><select
+						name="usrCity1" id="city1">
 
-							</select> <select name="usrDistrict2" id="district2">
+					</select> <select name="usrDistrict1" id="district1">
+
+					</select></span> <span style="width: 300px; display:inline-block;"><label style="width: 90px; display:inline-block;">지역2</label><select
+						name="usrCity2" id="city2">
+
+					</select> <select name="usrDistrict2" id="district2">
 
 
-							</select>
-						</div>
-					</li>
-					<li><label>관심분야 1 </label><select name="usrCategory1">
-					</select> <label>관심분야 2 </label><select name="usrCategory2">
-					</select></li>
+					</select></span>
+				</div>
 
-				</ul>
+
+				<div>
+					<span style="width: 300px; display:inline-block;"><label style="width: 90px; display:inline-block;">관심분야 1</label><select
+						name="usrCategory1">
+					</select> </span>
+					<span style="width: 300px; display:inline-block;"><label style="width: 90px; display:inline-block;">관심분야 2</label><select
+						name="usrCategory2">
+					</select></span>
+				</div>
+
 
 
 			</div>
+			<button type="submit" class="modifyBtn">수정</button>
 
 		</div>
-		<div>
-			<button type="submit" class="modifyBtn">수정</button>
-		</div>
+
+
 	</form>
 </section>
 
@@ -386,7 +376,7 @@
 									//div id="preview" 내에 동적코드추가.
 									//이 부분을 수정해서 이미지 링크 외 파일명, 사이즈 등의 부가설명을 할 수 있을 것이다.
 									$("#preview").empty();
-									$("#preview").append("<img style='width:130px; height:200px;'src=\"" + img.target.result + "\"\/>");
+									$("#preview").append("<img style='width:100%; height:100%;'src=\"" + img.target.result + "\"\/>");
 									
 									console.log(img.target.result);
 								};
