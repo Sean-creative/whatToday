@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -82,56 +83,57 @@ ul li.tag-item {
 	height: auto;
 }
 </style>
-
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
-
+<h1 style="text-align: center">정기모임 수정</h1>
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
+<form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
-	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
-	<input type="hidden" id="cbType" name="cbType" value="정기모임" />
-	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
-	<label for="cbCategory">카테고리/분야</label>
+	<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
+	
+ 	<label for="cbCategory">카테고리/분야</label>
 	<select id="cbCategory" name="cbCategory">
-		<option value="아웃도어/여행">아웃도어/여행</option>
-		<option value="문화/공연/축제">문화/공연/축제</option>
-		<option value="운동/스포츠">운동/스포츠</option>
-		<option value="음악/악기">음악/악기</option>
-		<option value="외국/언어">외국/언어</option>
-		<option value="게임/오락">게임/오락</option>
-		<option value="기타">기타</option>
-	</select>
-	<label for="cbSubcat">모임</label>
-	<select id="cbSubcat" name="cbSubcat"></select>
-	<br> <label for="cbName">모임명</label>
-	<input type="text" id="club" name="cbName">
-	<br> <label for="cbCity">지역 </label>
+		<option value="아웃도어/여행" <c:if test="${club.cbCategory eq '아웃도어/여행'}">selected</c:if>>아웃도어/여행</option>
+		<option value="문화/공연/축제" <c:if test="${club.cbCategory eq '문화/공연/축제'}">selected</c:if>>문화/공연/축제</option>
+		<option value="운동/스포츠" <c:if test="${club.cbCategory eq '운동/스포츠'}">selected</c:if>>운동/스포츠</option>
+		<option value="음악/악기" <c:if test="${club.cbCategory eq '음악/악기'}">selected</c:if>>음악/악기</option>
+		<option value="외국/언어" <c:if test="${club.cbCategory eq '외국/언어'}">selected</c:if>>외국/언어</option>
+		<option value="게임/오락" <c:if test="${club.cbCategory eq '게임/오락'}">selected</c:if>>게임/오락</option>
+		<option value="기타" <c:if test="${club.cbCategory eq '기타'}">selected</c:if>>기타</option>
+	</select> 
+	<label for="cbSubcat">모임</label> 
+	<select id="cbSubcat" name="cbSubcat"></select><br> 
+	<label for="cbName">모임명</label> 
+	<input type="text" id="club" name="cbName" value='<c:out value="${club.cbName}"/>'><br> 
+	<label for="cbCity">지역 </label> 
 	<select name="cbCity" id="cbCity">
-		<option value="서울특별시">서울특별시</option>
-		<option value="경기도">경기도</option>
-	</select>
-	<select name="cbDistrict" id="cbDistrict"></select>
-	<label for="cbMbNum">정원</label>
-	<input type="number" id="num" name="cbMbNum" min="1" max="200">
-	<br>
+		<option value="서울특별시" <c:if test="${club.cbCity eq '서울특별시'}">selected</c:if>>서울특별시</option>
+		<option value="경기도" <c:if test="${club.cbCity eq '경기도'}">selected</c:if>>경기도</option>
+	</select> 
+	<select name="cbDistrict" id="cbDistrict"></select> 
+	<label for="cbMbNum">정원</label> 
+	<input type="number" id="num" name="cbMbNum" min="1" max="200" value='<c:out value="${club.cbMbNum}"/>'><br> 
 	<input type="hidden" name="cbMakeDate">
 	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag">해시태그</label>
-	<input type="text" id="hash" name="cbHashtag" value="#">
-	<br> <label for="cbIntro">한줄소개</label>
-	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요">
-	<br> <label for="cbDetailContent">모임 상세내용(필수)</label><br>
-	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
-	<br>
+	<label for="cbHashtag">해시태그</label> 
+	<input type="text" id="hash" name="cbHashtag" value='<c:out value="${club.cbHashtag}"/>'><br> 
+	<label for="cbIntro">한줄소개</label>
+	<input type="text" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'><br>
+	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
+	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}"/></textarea><br> 
+	
 	
 	<div class="inputArea" style="float: left; margin-right: 50px">
 
 			<div class="select_img" style="margin: 2px 0px">
-				<img class="thumbImg" src="/resources/img/logo.png" style="margin: 0px;" /> <br>
+				<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
 				<!-- <label for="gdsImg" >이미지 선택</label> -->
 				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 			</div>
+<!-- 사진 첨부 안했을 시 사용해야함 -->
+		<input type='hidden' name='cbFile' value='<c:out value="${club.cbFile}"/>'>
+		<input type='hidden' name='cbThumbImg' value='<c:out value="${club.cbThumbImg}"/>'>
+
 
 			<script>
 				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
@@ -147,99 +149,26 @@ ul li.tag-item {
 								reader.readAsDataURL(this.files[0]);
 							}
 						});
-			</script>			
+			</script>
+			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
+			<%-- <%=request.getRealPath("/")%> --%>
 		</div>
 	
 	
 	
-	<button type="submit">개설하기</button>
+	<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
+	<button type="submit" data-oper='remove' class="btn btn-danger">모임 폐쇄하기</button>
+	<button type="submit" data-oper='list' class="btn btn-info">List</button>
+	
 </form>
 
 <script type="text/javascript">
 
-   //유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
-   function inputCheckclub(){
-      
-      let club = document.register.cbName;
-      let number = document.register.cbMbNum;
-      let date = document.register.cbMakeDate;
-      let info = document.register.cbIntro;
-      let infodetail = document.register.cbDetailContent;
-      let cbMbNum = document.register.cbMbNum;
-      
-      //모임명의 앞뒤 공백 체크 
-      let inputValue = club.value.replace(/^(\s|\.)*|(\s|\.)*$/g, ""); //replace:공백,.을 ""(제거)해준다.
-      
-      //모임명 빈문자열 체크 
-      if(inputValue.length <= 0) {      
-         alert("모임명을 입력해주세요.");
-         return false;
-      }
-      //모임명 글자수 제한  
-      if(inputValue.length > 30) {      
-         alert("30자 이내로 모임명을 입력해주세요.");
-         return false;
-      }
-      //모임정원 빈문자열체크,정원 제한(1~200명)
-      if(!number.value || (number.value <= 0) || (number.value > 200)) {
-         alert("모임정원을 입력해주세요.(최대정원:200명)");
-         return false;
-      }
-      
-      //한줄소개 빈문자열 체크, 글자수 제한 
-      if(!info.value || info.value.length > 30) {
-         alert("한줄소개를 입력해주세요.");
-         return false;
-      }
-      //상세내용 빈문자열 체크, 글자수 제한 
-      if(!infodetail.value || infodetail.value.length > 30) {
-         alert("30자 이내로 상세내용을 입력해주세요.");
-         return false;
-      }
-     
-      
-   // 50명이상일경우 포인트 결제 창으로 이동 (지영)
-      if(!number.value || (number.value <= 0) || (number.value > 50)){
-    	  console.log("모임 정원: " + number.value);
-		  // 현재 개설자가 포인트가 있는 지 확인한다.
-		  let usrNum = document.register.cbLeaderNum.value;
-    	  $.ajax({
-    		url: "/pay/check/userpoint", 
-           	type: 'POST',  
-       	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
-       	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
-            data: usrNum,
-            success: function(userPoint){
-    	    	console.log("userPoint: " + userPoint);
-    	    	// 모임 개설 = 만원
-    			// 포인트가 만원이하 있을 경우
-    			// 카카오 페이 포인트 결제 창으로 
-    			if(userPoint<'10000'){
-    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=#, height=#');
-    				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
-    			}else{
-    				// 포인트 결제 창으로 
-    				// 모달로 바꾸기
-					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
-    				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
-    				document.getElementById('register').submit();
-    			}
-    	    },
-    	    error: function (){        
-    	                      
-    	    }
-		
-       	    
-           });
-		return false;
-	  }
-   }
-
    //카테고리/분야 선택, 지역 선택 
    $(function() {
       //초기 세팅값
-      selectHobby("아웃도어/여행");
-      selectCity("서울특별시");
+      selectHobby('${club.cbCategory}');
+      selectCity('${club.cbCity}');
       
       $('#cbCity').change(function(e) { //cbCity변경 시, e(event)발생 
          selectCity(e.target.value); //e.target.value=경기도 / 이벤트의 값으로 selectCity를 호출한다.
@@ -266,7 +195,7 @@ ul li.tag-item {
             $("#cbSubcat").empty(); //기존모임 목록 초기화 
             //console.log(item1, hobbyCategory[item1]); //리스트명[key] = value 
             hobbyCategory[item1].forEach(item2 => { //item2(value)에 있는 option을 보여준다.(처음부터 끝까지)
-               let option = $("<option value=" + item2 + ">" + item2 + "</option>"); 
+               let option = $("<option value=" + item2 + " "+ ('${club.cbSubcat}' === item2 ? 'selected' : '') +">" + item2 + "</option>"); 
                $("#cbSubcat").append(option); //아래로 붙여준다. 
                //안녕//
             })
@@ -290,7 +219,7 @@ ul li.tag-item {
          if (targetValCity === item1) { //선택한 값과 city에 있는 값이 일치하면, 
             $("#cbDistrict").empty(); //세부지역 목록 초기화
             city[item1].forEach(item2 => { //item2(value)에 있는 option을 보여준다.(처음부터 끝까지)
-               let option = $("<option value=" + item2 + ">" + item2 + "</option>");
+               let option = $("<option value=" + item2 + " "+ ('${club.cbDistrict}' === item2 ? 'selected' : '') +">" + item2 + "</option>");
                $("#cbDistrict").append(option); //아래로 붙여준다.
             })
          }
@@ -298,4 +227,27 @@ ul li.tag-item {
    }
 </script>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		var formObj = $("#formclubUpdate");
+		$('button').on("click", function(e) {
+			e.preventDefault();
+			var operation = $(this).data("oper");
+			
+			console.log(operation);
+			
+			if (operation === 'remove') {
+				
+				formObj.attr("action", "/regular/delete");
+				
+			} else if (operation === 'list') {
+				
+				formObj.attr("action", "/regular/list").attr("method", "get");
+				formObj.empty();
+			}
+			formObj.submit();
+		});
+	});
+</script>
 <%@include file="../includes/footer.jsp"%>

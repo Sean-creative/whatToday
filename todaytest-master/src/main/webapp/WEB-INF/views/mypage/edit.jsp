@@ -145,6 +145,10 @@
 
 		let name = document.register.usrName;
 		let phone = document.register.usrPhone;
+		let usrDistrict1 = document.register.usrDistrict1;
+		let usrDistrict2 = document.register.usrDistrict2;
+		let usrCategory1 = document.register.usrCategory1;
+		let usrCategory2 = document.register.usrCategory2;
 
 		// 이름 : 한글만 2~4글자
 		const namePattern = /^[가-힣]{2,4}$/;
@@ -170,8 +174,17 @@
 			return false;
 
 		}
+		if ((usrDistrict1.value != '군/구 선택' && usrDistrict2.value != '군/구 선택') && usrDistrict1.value == usrDistrict2.value){
+			alert("서로 다른 지역을 선택해주세요.")
+			return false;
+		}
 
-	}//
+		if ((usrCategory1.value != '관심분야선택' && usrCategory2.value != '관심분야선택') && usrCategory1.value == usrCategory2.value){
+			alert("서로 다른 카테고리를 선택해주세요.")
+			return false;
+		}
+		
+	}
 
 	$(document)
 			.ready(
@@ -191,7 +204,7 @@
 								"파주시", "평택시", "포천시", "하남시", "화성시", "가평군",
 								"양평군", "연천군" ];
 
-						let category = [ "아웃도어/여행", "문화/공연/축제", "운동/스포츠",
+						let category = ["관심분야선택", "아웃도어/여행", "문화/공연/축제", "운동/스포츠",
 								"음악/악기", "외국/언어", "게임/오락", "기타" ];
 
 						let usrCat1 = $("select[name=usrCategory1]");
@@ -242,7 +255,7 @@
 									"select option[value='<c:out value="${userVO.usrDistrict1 }"/>']:first")
 									.attr("selected", true);
 
-						});//
+						});
 						$(function() {
 							let str = "";
 
@@ -424,9 +437,7 @@
 										
 										$("input[name=usrImg]").attr("value",result.uuid+'_'+result.fileName)
 										$("input[name=usrImgPath]").attr("value",result.uploadPath);
-										
-								
-										
+
 									}
 								});
 							}
