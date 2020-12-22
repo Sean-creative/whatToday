@@ -4,6 +4,7 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
+<link rel="stylesheet" href="/resources/css/paymentModal.css">
 
 <div class="regubg"></div>    
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
@@ -144,7 +145,7 @@
       }
      
       
-   // 50명이상일경우 포인트 결제 창으로 이동 (지영)
+   	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
       if(!number.value || (number.value <= 0) || (number.value > 50)){
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
@@ -161,14 +162,37 @@
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=#, height=#');
+    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=700px, height=600px');
     				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
     			}else{
+    				
+					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			
+    				// window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
+    				// document.getElementById('register').submit();
+    				
     				// 포인트 결제 창으로 
-    				// 모달로 바꾸기
-					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
-    				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
-    				document.getElementById('register').submit();
+    				// 모달로 바꾸기 - ok!!
+    				var modal = document.getElementById("myModal");
+    				modal.style.display = "block";
+    				var span = document.getElementsByClassName("close")[0];
+    				span.onclick = function() {
+    					modal.style.display = "none";
+    				}
+    				$('#chargePoint').click(function () {
+    					let money = $('input[name="cp_item"]:checked').val();
+    			    		 $.ajax({
+    			                url: "/pay/point", 
+    			             	type: 'POST',  
+    			         	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
+    			         	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+    			                data: money,
+    			                success: function(){ 
+    			                	// 포인트 db로 보내고 성공하면 개설
+    			                	document.getElementById('register').submit();
+    			                },
+    			    		 	error: function (){ }
+    			             });
+    			   });// end click 
     			}
     	    },
     	    error: function (){        
@@ -179,7 +203,7 @@
            });
 		return false;
 	  }
-   }
+   }// END ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
 
    //카테고리/분야 선택, 지역 선택 
    $(function() {

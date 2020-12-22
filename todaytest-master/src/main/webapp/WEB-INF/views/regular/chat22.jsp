@@ -1,4 +1,4 @@
-c<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -248,9 +248,8 @@ $(document).ready(function(){
         let data = e.data;
         let arr = data.split(":");
         let sender = arr[0];
-        let msg = arr[1];
         console.log("sender:  " + sender);
-        $('#chat').append('<div class="msg left-msg"><div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"></div><div class="msg-bubble"><div class="msg-info"><div class="msg-info-name">'+sender+'</div></div><div class="msg-text">'+msg+'</div></div></div>');
+        $('#chat').append('<div class="msg left-msg"><div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"></div><div class="msg-bubble"><div class="msg-info"><div class="msg-info-name">'+sender+'</div></div><div class="msg-text">'+data+'</div></div></div>');
     }
     function onClose(){
 
