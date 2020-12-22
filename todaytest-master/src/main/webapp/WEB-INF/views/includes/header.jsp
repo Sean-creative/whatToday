@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,10 +12,10 @@
 	<div id="header">
 		<div id="head">
 			<div class="menu1">
-				<a href="/index/main"> <img src="/resources/img/logo.png"
-					alt="logo"></a>
-				<form action="/index/searchlist" method="get"
-					onsubmit="return inputCheckMain()">
+				<a href="/index/main">
+					<img src="/resources/img/logo.png" alt="logo">
+				</a>
+				<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
 					<input type="text" name="search" placeholder="관심분야를 입력해주세요:)">
 				</form>
 			</div>
@@ -32,18 +29,21 @@
 			<!-- 로그인되면 보여지는 메뉴 -->
 			<sec:authorize access="isAuthenticated()">
 				<div class="menu2">
-					<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li> 	
+					<li><a href="/mypage/main" id="user">
+							<sec:authentication property="principal.user.usrName" />
+							님
+						</a></li>
 					<li>
-					<div class="tooltip">
-					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
-					<div class="tooltiptext">
-					<div id="socketAlert" class="alert alert-success" role="alert"></div>
+						<div class="tooltip">
+							<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
+							<div class="tooltiptext">
+								<div id="socketAlert" class="alert alert-success" role="alert"></div>
+							</div>
 						</div>
-						</div>
-						</li>
+					</li>
 					<li><a href="/login/logout">로그아웃</a></li>
 					<li><a href="/cs/faq">고객센터</a></li>
-					
+
 				</div>
 			</sec:authorize>
 		</div>
@@ -52,29 +52,33 @@
 				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 				<div class="overlay-content">
 					<div class="tab">
-						<button class="tablinks" onclick="openMix(event, 'Regular')"
-							id="defaultOpen">정기모임</button>
+						<button class="tablinks" onclick="openMix(event, 'Regular')" id="defaultOpen">정기모임</button>
 						<button class="tablinks" onclick="openMix(event, 'Thunder')">번개모임</button>
 					</div>
 					<div id="Regular" class="tabcontent">
-						<a href="#hello">정기모임1</a> <a href="">정기모임2</a> <a href="">정기모임3</a>
+						<a href="#hello">정기모임1</a>
+						<a href="">정기모임2</a>
+						<a href="">정기모임3</a>
 					</div>
 
 					<div id="Thunder" class="tabcontent">
-						<a href="">번개모임1</a> <a href="">번개모임2</a> <a href="">번개모임3</a>
-	
+						<a href="">번개모임1</a>
+						<a href="">번개모임2</a>
+						<a href="">번개모임3</a>
+
 					</div>
 				</div>
 			</div>
-			<span class="menubtn" style="font-size: 30px; cursor: pointer"
-				onclick="openNav()">&#9776;</span> <a class="submenu"
-				href="/regular/list">정기모임</a> <a class="submenu"
-				href="/thunder/list">번개모임</a> <a class="submenu" href="#">베스트</a> <a
-				class="submenu" href="/hobbyTest/test">취미Test</a>
+			<span class="menubtn" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+			<a class="submenu" href="/regular/list">정기모임</a>
+			<a class="submenu" href="/thunder/list">번개모임</a>
+			<a class="submenu" href="#">베스트</a>
+			<a class="submenu" href="#">취미Test</a>
 			<div class="dropdown">
 				<a class="submenu" href="#">모임개설</a>
 				<div class="dropdown-content ">
-					<a href="/regular/add">정기모임</a> <a href="/thunder/add">번개모임</a>
+					<a href="/regular/add">정기모임</a>
+					<a href="/thunder/add">번개모임</a>
 				</div>
 			</div>
 		</div>
@@ -82,8 +86,8 @@
 
 
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
 var socket = null;  //전역 변수로 선언
 $(document).ready(function() {
 	let msgId;
@@ -95,20 +99,24 @@ $(document).ready(function() {
 	if(loginCheck == true){
 		connectWS(msgNum);
 		}
+	
 	$("#alram").on("click",function(){
-		$(".tooltiptext").toggle();
-		
+		$(".tooltiptext").toggle();	
 	})
-	});
+});
 	
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
   //   document.getElementById("myDropdown").classList.toggle("hide");
   }
+  
+  
   function closeNav() {
   document.getElementById("myDropdown").classList.toggle("hide");
   }
-  window.onclick = function(event) {
+  
+  
+  window.onclick = function(event) {   
     if (!event.target.matches('.dropbtn')) {
       var dropdowns = document.getElementsByClassName("dropdown-content");
       var i;
@@ -119,15 +127,19 @@ function myFunction() {
         }
       }
     }
-  }
+  }  
+  
+
 //ver2
 function openNav() {
 document.getElementById("myNav").style.height = "100%";
 }
 
+
 function closeNav() {
 document.getElementById("myNav").style.height = "0%";
 }
+
 
 function openMix(evt, cityName) {
 var i, tabcontent, tablinks;
@@ -142,17 +154,16 @@ tablinks[i].className = tablinks[i].className.replace(" active", "");
 document.getElementById(cityName).style.display = "block";
 evt.currentTarget.className += " active";
 }
+
+
 document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
-
 var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
-
 socket = ws;
 let Num = msgNum;
-ws.onopen = function(message){
-  
-  ws.send(Num);
+ws.onopen = function(message){  
+ws.send(Num);
 };
 
 ws.onmessage = function(event){
@@ -173,6 +184,8 @@ console.log("Server Error");
 
 };
 }
+		
+		
 		var id = document.getElementById("user");
 		console.log("userId: " +id);
 		
@@ -192,7 +205,7 @@ console.log("Server Error");
 				alert("키워드가 너무 깁니다 (30자 이하)");
 				return false;
 			}
-
-
-		};
+		}
+	
+		
 </script>

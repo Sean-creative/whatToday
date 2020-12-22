@@ -48,7 +48,12 @@
 		</div>
 
 		<div style="padding: 20px;">
-			<div style="font-size: 20px; margin: 0px;">최신순 인기순 마감임박순</div>
+			<div style="font-size: 20px; margin: 0px;">
+				<select class="pagination">
+					<option value="CBNUM" <c:if test="${pageMaker.cri.orderBy eq 'CBNUM'}">selected</c:if>>최신순</option> <!-- DB 필드명을 넣어야함, java vo는 DB가 인식을 못하지 (cbNum : X) -->
+					<option value="CBVIEW" <c:if test="${pageMaker.cri.orderBy eq 'CBVIEW'}">selected</c:if>>인기순</option>
+				</select> 
+			</div>
 			<div style="margin-top: 20px; display: flex; justify-content: space-between;">
 
 				<c:forEach items="${clublist}" var="club"> 
@@ -92,6 +97,7 @@
 		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'/>
 		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'/>
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'/>
 	</form>
 
 </section>

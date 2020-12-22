@@ -14,9 +14,10 @@
 
 		insert into club
 		(cbLeaderNum,cbType,cbLeaderName,cbNum,cbCategory,cbSubcat,cbName,cbCity,cbDistrict,cbMbNum,cbMakeDate,cbHashtag,cbIntro,cbDetailContent,cbFile,cbShutDate,cbFinalState,
-		cbCurMbNum)
+		cbCurMbNum , cbThumbImg)
 		values
-		(#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile},'99/12/31','진행중',1)
+		(#{cbLeaderNum},#{cbType},#{cbLeaderName},#{cbNum},#{cbCategory},#{cbSubcat},#{cbName},#{cbCity},#{cbDistrict},#{cbMbNum},sysdate,#{cbHashtag},#{cbIntro},#{cbDetailContent},#{cbFile},'99/12/31','진행중',1,
+		#{cbThumbImg})
 	</insert>
 
 	<insert id="clubinsertJoin"> <!-- 모임을 개설한 사람만을 위한 SQL -->
@@ -70,19 +71,24 @@
 	</sql>
 	
 	<!--정기모임 목록 상세검색 (페이징)-->
-	<select id="getListWithPaging"
-		resultType="com.hobby.domain.ClubVO">
+	<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
 		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
-		(select /*+INDEX_DESC(club club_pk) */ rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum
+		(select /*+INDEX_DESC(club club_pk) */ 
+			rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbView, CBFINALSTATE
 		from club where ]]>
 
 		<include refid="criteria"></include>
 							
 	<![CDATA[  		     
-	cbType='정기모임' and rownum<= #{pageNum} * #{amount})				
-	where rn > (#{pageNum}-1) * #{amount} ]]>
+		cbType='정기모임'
+		and (CBFINALSTATE = '진행중' or CBFINALSTATE is null))
+	where 
+	rn BETWEEN (((#{pageNum} - 1) * #{amount}) + 1) AND #{pageNum} * #{amount}
+	
+	]]>
+	order by ${orderBy}
 	</select>
 
 	<!-- 정기모임 목록 :모임 총 갯수 -->
@@ -95,11 +101,7 @@
 	<!-- 정기모임 상세정보 -->
 	<!-- 모임의 정보를 가져올 때는 가져올 수있는걸 다 가져오는걸로!! -Sean -->
 	<select id="readclub" resultType="com.hobby.domain.ClubVO">
-		select
-		cbNum, cbName, cbType, cbLeaderNum, cbCategory, cbSubcat, cbCity,
-		cbDistrict, cbMbNum, cbLeaderName,
-		cbCurMbNum, cbHashtag, cbIntro, cbMakeDate, cbShutDate, cbFinalState,
-		cbDetailContent, cbFile
+		select *	
 		from club
 		where cbNum = #{cbNum}
 	</select>
@@ -148,7 +150,7 @@
 	    cb.cbbdwriter,
 	    cb.cbbdtitle,
 	    cb.cbbddate,
-	    NVL(cb.cbbdview, 0) cbbdview,
+	    NVL(cb.cbBdView, 0) cbBdView,
 	    NVL(cbr.reply_count, 0) replyCount
 	from 
 		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, 
@@ -283,5 +285,24 @@ select usrnum
 from CLUBMEMBER
 where cbNum = #{cbNum} and usrNum = #{usrNum} and cbmbstresult ='가입승인'
 </select>
+
+
+
+<!-- 정기모임 수정  -->
+<update id="updateClub">
+	update CLUB 
+	set cbCategory = #{cbCategory}, cbSubcat=#{cbSubcat}, cbName=#{cbName}, cbCity=#{cbCity}, 
+	cbDistrict=#{cbDistrict}, cbMbNum=#{cbMbNum}, cbMakeDate=sysdate, cbHashtag=#{cbHashtag}, 
+	cbIntro=#{cbIntro}, cbDetailContent=#{cbDetailContent}, cbFile=#{cbFile}, cbThumbImg=#{cbThumbImg}
+	where CBNUM = #{cbNum} 		
+</update>
+<!-- 정기모임 삭제(폐쇄)  -->
+<update id="deleteClub">
+	update CLUB
+	set CBFINALSTATE = '폐쇄',
+	CBSHUTDATE = sysdate
+	where CBNUM = #{cbNum} 
+</update>
+
 
 </mapper>

@@ -46,12 +46,12 @@
 		<div class='City'></div>
 	</div>
 
-	<form action="/meeting/add" method="post" onsubmit="return inputCheck()">
+	<form action="/meeting/modify" id="modifyForm" method="post">
 		<div>
 			<div>
 				만남명<br>
 				<!-- 30자 제한 -->
-				<input type="text" required="required" name='mtName' size="50" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="text" required="required" name='mtName' size="50" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtName}" />'>
 			</div>
 
 		</div>
@@ -62,7 +62,7 @@
 				<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
 					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
 				<!-- JS로 MIN과 MAX를 찍어주자 -->
-				<input type="datetime-local" required="required" name='mtStartDate' id='mtStartDate' style="width: 200px; border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="datetime-local" required="required" name='mtStartDate' id='mtStartDate' style="width: 200px; border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtStartDate}" />'>
 			</div>
 		</div>
 
@@ -70,7 +70,7 @@
 		<div>
 			<div>
 				만남 인원<br>
-				<input type="number" required="required" name='mtMbNum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="number" required="required" name='mtMbNum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtMbNum}" />'>
 			</div>
 		</div>
 
@@ -80,38 +80,40 @@
 				만남 지역 <br>
 				<!-- 값이 '서울 종로구' 이런식으로 들어오는데,
                   1. js단에서  ','를 기준으로 값을 분리해주면 되겠다. -->
-				<input type="text" required="required" readonly="readonly" name='mtAddress' id='cbAddress' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="text" required="required" readonly="readonly" name='mtAddress' id='cbAddress' readonly="readonly" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtAddress}" />'>
 			</div>
 		</div>
 
 		<div>
 			<div>
 				만남 장소 <br>
-				<input type="text" required="required" readonly="readonly" name='mtPlace' id='cbPlace' style="border: 1px solid #ff9f40; padding: 3px 0px;">
+				<input type="text" required="required" readonly="readonly" name='mtPlace' id='cbPlace' readonly="readonly" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtPlace}" />'>
 			</div>
 
 			<div>
 				만남 준비물<br>
-				<input type="text" name='mtSupplies' id='mtSupplies' size="50">
+				<input type="text" name='mtSupplies' id='mtSupplies' size="50" value='<c:out value="${meeting.mtSupplies}" />'>
 			</div>
 		</div>
 
 		<div>
 			만남소개<br>
 			<!-- 300자 제한 -->
-			<textarea name='mtIntro' cols="100" rows="7" maxlength="300"></textarea>
+			<textarea name='mtIntro' cols="100" rows="7" maxlength="300" value='<c:out value="${meeting.mtIntro}" />'></textarea>
 		</div>
 
 		<div style="margin-left: 470px">
-			<button type="submit">만남만들기</button>
-			<button type="reset" onclick="alert('리셋되었습니다.')">리셋 하기</button>
+			<button type="submit" data-oper='modify' class="btn-default">Modify</button>
+
+			<button type="submit" data-oper='remove' class="btn-default">Remove</button>
+
+			<button type="submit" data-oper='list' class="btn-default">List</button>
 		</div>
 
 
-		<!-- 모임 번호정도만 컨트롤러에 보낸다. -->
-		<input type="hidden" name="cbNum" value="<c:out value="${cbNum}" />" />
-		<input type="hidden" name="cbName" value="${cbName}" />
-
+		<input type="hidden" name="mtCurMbNum" value="${meeting.mtCurMbNum}" />
+		<input type="hidden" name="mtFinalState" value="${meeting.mtFinalState}" />
+		<input type="hidden" name="mtNum" value="${meeting.mtNum}" />
 	</form>
 
 
@@ -217,7 +219,7 @@
 			return false;
 		}
 
-		if (!mbnum || mbnum < 1) {
+		if (!mbNum || mbNum < 1) {
 			alert("만남인원을 다시 입력해주세요.");
 			return false;
 		}
@@ -245,13 +247,40 @@
 	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함		
 	let nowDate = today.toISOString().slice(0, 16);
 
-	$('#mtStartDate').val(nowDate);	
+	$('#mtStartDate').val(nowDate);
 
 	//현재시간으로 부터 일주일 더해준 것이 maxDay
 	today.setDate(today.getDate() + 28);
 	let maxDay = today.toISOString().slice(0, 16);
 	$("#mtStartDate").attr('min', nowDate);
 	$("#mtStartDate").attr('max', maxDay);
+
+	// Modify, Remove, List 중 버튼을 누른다면,
+	let formObj = $("#modifyForm");
+
+	$('.btn-default').on("click", function(e) {
+		e.preventDefault();
+
+		let operation = $(this).data("oper");
+
+		console.log(operation);
+
+		if (operation === 'remove') {
+			alert('삭제되었습니다');
+			formObj.attr("action", "/meeting/remove");
+
+		} else if (operation === 'list') {
+			// move to list
+			formObj.attr("action", "/regular/list").attr("method", "get");
+		}
+		// Modify 라고 한다면
+		else {
+			if (inputCheck() == false) {
+				return;
+			}
+		}
+		formObj.submit();
+	});
 </script>
 
 

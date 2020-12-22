@@ -298,7 +298,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<!-- <select id="getTotalCount" resultType="int"> select count(*) from club where <include refid="criteria"></include> cbType='번개모임' </select> -->
-
 </mapper>
 

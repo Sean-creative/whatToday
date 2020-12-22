@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -7,87 +6,102 @@
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 <link rel="stylesheet" href="/resources/css/paymentModal.css">
 
+<div class="regubg"></div>    
+<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
 
-<h3 style="text-align: center">기본정보(필수)</h3>
-
-<form id="register" name="register" action="/regular/add" method="post"
-	onsubmit="return inputCheckclub();">
-
-	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum"
-		value="${usrNum}" /> <input type="hidden" id="cbType" name="cbType"
-		value="정기모임" /> <input type="hidden" id="cbLeaderName"
-		name="cbLeaderName" value="${usrName}" /> <label for="cbCategory">카테고리/분야</label>
-	<select id="cbCategory" name="cbCategory">
-		<option value="아웃도어/여행">아웃도어/여행</option>
-		<option value="문화/공연/축제">문화/공연/축제</option>
-		<option value="운동/스포츠">운동/스포츠</option>
-		<option value="음악/악기">음악/악기</option>
-		<option value="외국/언어">외국/언어</option>
-		<option value="게임/오락">게임/오락</option>
-		<option value="기타">기타</option>
-	</select> <label for="cbSubcat">모임</label> <select id="cbSubcat" name="cbSubcat"></select><br>
-	<label for="cbName">모임명</label> <input type="text" id="club"
-		name="cbName"><br> <label for="cbCity">지역 </label> <select
-		name="cbCity" id="cbCity">
-		<option value="서울특별시">서울특별시</option>
-		<option value="경기도">경기도</option>
-	</select> <select name="cbDistrict" id="cbDistrict"></select> <label
-		for="cbMbNum">정원</label> <input type="number" id="num" name="cbMbNum"
-		min="1" max="200"><br> <input type="hidden"
-		name="cbMakeDate">
-	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag">해시태그</label> <input type="text" id="hash"
-		name="cbHashtag" value="#"><br> <label for="cbIntro">한줄소개</label>
-	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요"><br>
-	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
-	<textarea name="cbDetailContent" rows="10" cols="100"
-		style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
-	<br> <input type="file" name="cbFile">
-	<button type="submit">개설하기</button>
+	<div id="reguform">
 	
-	<!--###포인트 결제 모달(지영)###-->
-	    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div id="pointBanner">
-                <a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"width="80px"></a>
-                <span class="close">&times;</span>
-            </div>
-            <main>
-                <p id="myPointHist">내 포인트 내역 > </p>
-                <div id="myPoint"> 0 Point </div>
-                <div class="bar"></div><br>
-                <p id="pointPayment">포인트 결제</p>
-                <div id="pointbx">
-                    <div>
-                        <img src="/resources/img/coupon.png" alt="coupon" id="couponImg">
-                        <div class="pointChargeBox">
-                        <span id="product">모임 정원 범위 확대 (50이상 200명이하) </span>   
-                        <input type="hidden" name="cp_item" value="10000">   
-                        <span id="pointAmount">10,000p</span> 
-                    </div>
-                </div>     
-                <div id="chargebtn">
-                    <button type="button" id="chargePoint">결제하기</button>
-                </div>   
-                </div>
-
-                <div id = warnTitle>
-                    <p id="warnLetter">유의사항</p>
-                    <ul>
-                        <li>포인트 적립 및 사용처의 변경은 사전 고지 없이 내부 사정에 따라 변경될 수 있습니다.</li>
-                        <li>포인트의 유효기간은 포인트 지급 경로에 따라 다를 수 있습니다.</li>
-                        <li>한번 사용하신 포인트에 대해서는 철회가 불가능합니다.</li>
-                        <li>계정 정보 이전 시에 포인트 이전은 불가능합니다.</li>
-                    </ul>
-                </div>
-            </main>
+		<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
+		<input type="hidden" id="cbType" name="cbType" value="정기모임" />
+		<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
+		
+      	<span class="half">정기모임개설</span>
+      	
+      	<p class="cate">모임명</p>
+      	<div class="caja1">
+        	<div class="lef1">
+            	<div class="select_img">
+            		<img class="thumbImg" src="/resources/img/logo.png"/> <br>
+					<!-- <label for="gdsImg" >이미지 선택</label> -->
+					<input type="file" id="gdsImg" name="file" style="width: 200px;" />
+          		</div>
+          	</div>
+          	<div class="rig1">
+				<input type="text" id="club" name="cbName" placeholder="모임명을 입력하세요."> <br>
+				<input type="text" style="width:350px" id="info" name="cbIntro" placeholder="한줄소개를 30자이내로 작성하세요.">
+			</div>
+      	</div>
+	
+		<p class="cate">카테고리</p>
+      	<div class="caja2">
+        	<div class="lef1">
+				<label for="cbCategory">카테고리/분야</label>
+				<select id="cbCategory" name="cbCategory">
+					<option value="아웃도어/여행">아웃도어/여행</option>
+					<option value="문화/공연/축제">문화/공연/축제</option>
+					<option value="운동/스포츠">운동/스포츠</option>
+					<option value="음악/악기">음악/악기</option>
+					<option value="외국/언어">외국/언어</option>
+					<option value="게임/오락">게임/오락</option>
+					<option value="기타">기타</option>
+				</select>
+			</div>
+            <div class="rig1">	
+				<label for="cbSubcat">모임</label>
+				<select id="cbSubcat" name="cbSubcat"></select>
+			</div>
         </div>
-    </div><!--END myModal-->
-	<!--###포인트 결제 모달(지영)###-->
-	
+        
+         <p class="cate">지역</p>
+      	 <div class="caja2">
+         	<div class="lef1">
+				<label for="cbCity">지역 </label>
+				<select name="cbCity" id="cbCity">
+					<option value="서울특별시">서울특별시</option>
+					<option value="경기도">경기도</option>
+				</select>
+			</div>
+            <div class="rig1">
+            <label for="cbDistrict">세부지역 </label>
+			<select name="cbDistrict" id="cbDistrict"></select>
+			</div>
+         </div>
+         
+         <p class="cate">정원</p>
+      	 <div class="caja2">
+          	<div class="lef1">
+				<label for="cbMbNum">정원</label>
+				<input type="number" id="num" name="cbMbNum" min="1" max="200">
+			</div>
+            <div class="rig1">
+            	<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
+          	</div>
+         </div>
+         
+         <p class="cate">해쉬태그</p>
+      	 <div class="caja2">
+         	<div class="lef1">
+	        	<input type="hidden" name="cbMakeDate"> <!--개설일자는 sysdate로 설정 -->
+				<label for="cbHashtag">해시태그</label>
+				<input type="text" id="hash" name="cbHashtag" value="#">
+			</div>
+      	 </div>
+      	 
+      	 <p class="cate">모임상세내용</p>
+      	 <div class="caja2">
+         	<div class="lef1 detailinfo">
+				<label for="cbDetailContent">상세내용</label>
+				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+			</div>
+      	 </div>
+      	 
+      	 <div id="regiform">
+      	 	<input type="submit" class="btn" value="개설하기">
+   	 	 </div>
+   	 	 
+	</div>		
 </form>
-
+	
 <script type="text/javascript">
 
    //유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
@@ -125,8 +139,8 @@
          return false;
       }
       //상세내용 빈문자열 체크, 글자수 제한 
-      if(!infodetail.value || infodetail.value.length > 30) {
-         alert("30자 이내로 상세내용을 입력해주세요.");
+      if(!infodetail.value) {
+         alert("상세내용을 입력해주세요.");
          return false;
       }
      
@@ -252,6 +266,22 @@
          }
       })
    }
+   
+   /* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+	$("#gdsImg").change(
+			function() {
+			console.log(this.files);
+				if (this.files && this.files[0]) {
+					var reader = new FileReader;
+					reader.onload = function(data) { console.log(data.target.result);
+						$(".select_img img").attr("src",
+								data.target.result).width(200)
+								.height(144);
+					}
+					reader.readAsDataURL(this.files[0]);
+				}
+	});
+   
 </script>
 
-<%@include file="../includes/footer.jsp"%>
+<%-- <%@include file="../includes/footer.jsp"%> --%>
