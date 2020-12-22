@@ -56,9 +56,9 @@
         <span id ="phoneResult" class="hide"></span>
 
 		<div class="input-container">
-			<label>성별 </label> <input type="radio" name="usrGender" value ="m"> 
+			<label>성별 </label> <input type="radio" name="usrGender" value ="남"> 
 			<label for="male">남자</label> 
-			<input type="radio" id="female" name="usrGender" value ="f"> 
+			<input type="radio" id="female" name="usrGender" value ="여"> 
 			<label for="female">여자</label><br>
 		</div>
 		

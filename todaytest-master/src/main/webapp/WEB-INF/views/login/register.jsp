@@ -6,35 +6,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/resources/css/member.css">
+    <link rel="stylesheet" href="/resources/css/register.css">
     <title>회원가입</title>
 </head>
 <body>
-    <form>
+    <form name ="register" method="post" action="/login/registerAction" onsubmit="return inputCheck()">
         <div id="member">
             <div id="memberform">
             	<a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"></a>
                 <!--<img src="/resources/css/img/logo.png" alt="">-->
                 <!-- <h2>오늘뭐하지 회원가입을 환영합니다!</h2> -->
 	
+				<p>회원가입</p>
+				<input type="hidden" name="usrType" value="일반회원가입" >
+				
                 <div>
                     <label for="id">아이디(이메일)</label><br>
                     <input type="text" placeholder="이메일(아이디)를 입력해주세요." id="email" name="usrId">
-                    <button>중복확인</button>
+                    <button id="idDuplicateCheck" type="button" onclick="idDuplicate();">중복확인</button>
                 </div>
 				<span id ="emailResult" class="hide"></span>
 				
                 <div>
                     <label for="password">비밀번호</label><br>
-                    <input type="text" placeholder="비밀번호(영문,숫자,특수문자 8-16자)" id="pwd" name="usrPwd">
+                    <input type="password" placeholder="비밀번호(영문,숫자,특수문자 8-16자)" id="pwd" name="usrPwd">
                 </div>
                 <span id="pwdResult" class="hide"></span>
 
                 <div>
                     <label for="password">비밀번호 재입력</label><br>
-                    <input type="text" placeholder="비밀번호 재입력" id="pwdRe" name="usrPwdRe">
+                    <input type="password" placeholder="비밀번호 재입력" id="pwdRe" name="usrPwdRe">
                 </div>
                 <span id="pwdReResult" class="hide"></span>	
 
@@ -42,23 +43,26 @@
                     <label for="name">이름</label><br>
                     <input type="text" placeholder="이름 입력" id="name" name="usrName">
                 </div>
-
+				<span id="nameResult" class="hide"></span>
+				
                 <div>
                     <label for="phone">휴대폰 번호</label><br>
-                    <input type="text" placeholder="휴대폰 전호('-'없이 입력)">
-                    <button>중복 확인</button>
+                    <input type="text" placeholder="휴대폰 전호('-'없이 입력)" id="phone" name="usrPhone">
+                    <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복 확인</button>
                 </div>
+				<span id ="phoneResult" class="hide"></span>
 	
                 <div>
-                    <label for ="date">생년월일 </label><br> 
-                    <input type="date">
+                    <label for ="date" >생년월일 </label><br> 
+                    <input type="date" class="input-field" id ="datefield" min="1900-01-01" max="2020-01-01"
+					name="usrBirth" value='<fmt:formatDate pattern = "yyyy/MM/dd" value="${usrBirth}"/>'>
                 </div>
 
                 <div class="gender">
                     <label for ="genter" >성별 </label>
-                    <input type="radio"> 
+                    <input type="radio" name="usrGender" value ="남"> 
                     <label for="male" class="especi">남자</label> 
-                    <input type="radio"> 
+                    <input type="radio" name="usrGender" value ="여">  
                     <label for="female" class="especi">여자</label>
                 </div>
 
@@ -69,51 +73,39 @@
                 
                 <div>
                     <label for="interest">관심지역1</label><br>
-                    <select>
-                        <option>시/도선택</option>
-                        <option>서울특별시</option>
-                        <option>경기도</option>
+                    <select name="usrCity1" id="city1">
+                        <option value="시/도 선택">시/도 선택</option>
+						<option value="서울특별시">서울특별시</option>
+						<option value="경기도">경기도</option>
                     </select>
-                    <select>
-                        <option>구/군선택</option>
-                        <option>종로구</option>
-                        <option>서대문구</option>
-                        <option>성북구</option>
+                    <select name="usrDistrict1" id="district1">
+                      <option value="군/구 선택">군/구 선택</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="interest">관심지역2</label><br>
-                    <select>
-                        <option>시/도선택</option>
-                        <option>서울특별시</option>
-                        <option>경기도</option>
+                    <select name="usrCity2" id="city2">
+                        <option value="시/도 선택">시/도 선택</option>
+						<option value="서울특별시">서울특별시</option>
+						<option value="경기도">경기도</option>
                     </select>
-                    <select>
-                        <option>구/군선택</option>
-                        <option>종로구</option>
-                        <option>서대문구</option>
-                        <option>성북구</option>
+                    <select name="usrDistrict2" id="district2">
+                      <option value="군/구 선택">군/구 선택</option>
                     </select>
                 </div>
                 
                 <div>
                     <label for="category">카테고리/분야1</label><br>
-                    <select class="cate">
-                        <option>관심분야선택</option>
-                        <option>아웃도어/여행</option>
-                        <option>축구</option>
-                        <option>농구</option>
+                    <select class="cate" name="usrCategory1" id="category1">
+                        <option value="관심분야">관심분야 선택1</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="category">카테고리/분야2</label><br>
-                    <select class="cate">
-                        <option>관심분야선택</option>
-                        <option>아웃도어/여행</option>
-                        <option>축구</option>
-                        <option>농구</option>
+                    <select class="cate" name="usrCategory2" id="category2">
+                        <option value="관심분야">관심분야 선택2</option>
                     </select>
                 </div>
 
@@ -121,20 +113,20 @@
                 <div id="agreeform">
                     <div>
                         <label class="agre">이용약관 동의</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                        <input type="radio" name="usrTerm" value="Y"><label for="agree" class="especi">동의</label> 
+                        <input type="radio" name="usrTerm" value="N"><label for="disagree" class="especi">비동의</label>
                     </div>
 
                     <div>
                         <label class="agre">개인정보 수집 동의</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                        <input type="radio" name="usrPersonalTerm" value="Y"><label for="agree" class="especi">동의</label> 
+                        <input type="radio" name="usrPersonalTerm" value="N"><label for="disagree" class="especi">비동의</label>
                     </div>
 
                     <div>
                         <label class="agre">메일수신</label> 
-                        <input type="radio"> <label for="agree" class="especi">동의</label> 
-                        <input type="radio"> <label for="disagree" class="especi">비동의</label>
+                        <input type="radio" name="usrEmailTerm" value="Y"><label for="agree" class="especi" >동의</label> 
+                        <input type="radio" name="usrEmailTerm" value="N"><label for="disagree" class="especi" >비동의</label>
                     </div>
                 </div>
 
@@ -156,6 +148,7 @@
 		let emailResult = document.getElementById("emailResult")
 		const emailPattern = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 	
+		emailCheckResult = false;
 		function emailCheck() {
 			if (emailInput.value.length === 0) {
 				emailResult.innerHTML = "이메일을 입력하세요.";
@@ -164,6 +157,7 @@
 			} else {
 				// 이메일 입력이 형식에 맞을 경우
 				emailResult.innerHTML = "사용할 수 있는 이메일 입니다.";
+				emailCheckResult = true;
 			}
 		}
 		// 포커스를 잃었을 때 함수 실행됨.
@@ -174,6 +168,7 @@
 		let pwdResult = document.getElementById("pwdResult");
 		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
 
+		pwdCheckResult = false;
 		function pwdCheck() {
 			if (pwdInput.value.length === 0) {
 				pwdResult.innerHTML = "비밀번호를 입력하세요.";
@@ -184,6 +179,7 @@
 				//pw.value.replace(/\s/, "");
 			}else {
 				pwdResult.innerHTML = "사용할 수 있는 비밀번호 입니다.";
+				pwdCheckResult = true;
 			}
 
 
@@ -194,6 +190,7 @@
 		let pwdReInput = document.getElementById("pwdRe");
 		let pwdReResult = document.getElementById("pwdReResult");
 
+		pwdReCheckResult = false;
 		function pwdReCheck() {
 			if (pwdReInput.value.length === 0) {
 				pwdReResult.innerHTML = "비밀번호를 입력하세요.";
@@ -201,6 +198,7 @@
 				pwdReResult.innerHTML = "입력한 비밀번호와 일치하지 않습니다. 다시 입력해주세요";
 			} else {
 				pwdReResult.innerHTML = "사용할 수 있는 비밀번호 입니다.";
+				pwdReCheckResult = true;
 			}
 		}
 		pwdReInput.addEventListener("blur", pwdReCheck);
@@ -210,14 +208,16 @@
 		let nameResult = document.getElementById("nameResult")
 		const namePattern = /^[가-힣]{2,4}$/;
 
+		nameCheckResult = false;
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
 				nameResult.innerHTML = "이름을 입력하세요.";
-			} else if (namePattern.test(nameInput.value) == false) {ll
+			} else if (namePattern.test(nameInput.value) == false) {
 				nameResult.innerHTML = "한글 2~4글자인 이름을 입력해주세요";
 			} else {
 				// 이름 형식이 맞을 경우
 				nameResult.innerHTML = "사용할 수 있는 이름 입니다.";
+				nameCheckResult = true;
 			}
 		}
 		// 포커스를 잃었을 때 함수 실행됨.
@@ -229,6 +229,7 @@
 		//01012341234
 		const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
+		phoneCheckResult = false;
 		function phoneCheck() {
 			if (phoneInput.value.length === 0) {
 				phoneResult.innerHTML = "핸드폰 번호를 입력하세요.";
@@ -237,38 +238,37 @@
 			} else {
 				// 핸드폰 번호 형식이 맞을 경우
 				phoneResult.innerHTML = "사용할 수 있는 핸드폰 번호 입니다.";
+				phoneCheckResult = true;
 			}
 		}
 
 		phoneInput.addEventListener("blur", phoneCheck);
 	
 		function inputCheck(){
-			if(emailInput.value == ""){
+			if(emailInput.value == "" || !emailCheckResult){
 				return false;
 			}
 			if(document.getElementById('idDuplicateCheck').value == ""){
 				alert("아이디 중복체크를 확인하세요");
 				return false;
 			}
-			if(pwdInput.value == ""){
+			if(pwdInput.value == "" || !pwdCheckResult){
 				return false;
 			}
-			if(pwdReInput.value == ""){
+			if(pwdReInput.value == "" || !pwdReCheckResult){
 				return false;
 			}
-			if(nameInput.value == ""){
+			if(nameInput.value == "" || !nameCheckResult){
 				return false;
 			}
-			if(phoneInput.value == ""){
+			if(phoneInput.value == "" || !phoneCheckResult){
 				return false;
 			}
 			if(document.getElementById('phoneDuplicateCheck').value == ""){
 				alert("핸드폰 번호 체크를 확인하세요");
 				return false;
 			}
-			if(pwdInput.value == ""){
-				return false;
-			}
+	
 			
 			let usrGender = document.getElementsByName('usrGender');
 			let gender = null;
@@ -285,7 +285,6 @@
 			
 			if(document.getElementById('datefield').value == ""){
 				alert("생년월일을 선택하세요");
-				console.log("dd");
 				return false;
 			}
 			
@@ -320,7 +319,7 @@
 			let usrEmailTerm = document.getElementsByName('usrEmailTerm');
 			let emailTerm = null;
 			if(usrEmailTerm[0].checked == true){
-				emailTerm = usrEmailTerm[0].value;
+				emailTerm = usrEmailTerm[0].value;kplhnn
 			}
 			if(usrEmailTerm[1].checked == true){
 				emailTerm = usrEmailTerm[1].value;
