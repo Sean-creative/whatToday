@@ -192,8 +192,8 @@ ul li.tag-item {
          return false;
       }
       //상세내용 빈문자열 체크, 글자수 제한 
-      if(!infodetail.value || infodetail.value.length > 30) {
-         alert("30자 이내로 상세내용을 입력해주세요.");
+      if(!infodetail.value) {
+         alert("상세내용을 입력해주세요.");
          return false;
       }
      

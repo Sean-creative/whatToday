@@ -88,7 +88,7 @@
 	rn BETWEEN (((#{pageNum} - 1) * #{amount}) + 1) AND #{pageNum} * #{amount}
 	
 	]]>
-	order by ${orderBy} DESC
+	order by ${orderBy}
 	</select>
 
 	<!-- 정기모임 목록 :모임 총 갯수 -->

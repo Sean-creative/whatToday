@@ -5,103 +5,37 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
-<style>
-section a:link {
-	color: white;
-	text-decoration: none;
-}
 
-section a:visited {
-	color: white;
-	text-decoration: none;
-}
-
-section a:hover {
-	color: red;
-	text-decoration: none;
-}
-
-
-
-.thumbImg {
-	width: 200px;
-	height: auto;
-}
-
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-ul li {
-	display: inline-block;
-	margin: 0 5px;
-	font-size: 14px;
-	letter-spacing: -.5px;
-}
-
-form {
-	padding-top: 16px;
-}
-
-ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-.tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-</style>
-
-
-<div id="banner">
-	<ul>
-		<li><a href="javascript:void(0);">정보</a></li>
-		<!--a태그의 페이지이동 기능 무효화 -->
-		<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li>
-		<!--cbNum(모임번호)을 가지고 게시판페이지이동-->
-		<li><a href="/regular/chat?cbNum=<c:out value="${club.cbNum}" />">채팅</a></li>
-		<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
-	</ul>
-</div>
-
-<div id="body">
-	<div id=up>
-		해시태그 -
-		<c:out value="${club.cbHashtag}" />
-	</div>
-	<div id=mid>
-		[모임명]
-		<c:out value="${club.cbName}" />
-	</div>
-	<div id=dow>
-	
-		<!-- 썸네일! -->
-		<div class="inputArea">
-				<label for="gdsImg">썸네일</label> <img src="${club.cbThumbImg}" class="thumbImg" />
+<div id="bgpic">
+	<div id="detail">
+         <div id="leftinfo">
+         	<img src="../resources/img/mount.jpg" alt="">
+			<div id=banner>
+				<ul>
+					<li><a href="javascript:void(0);">정보</a></li><!--a태그의 페이지이동 기능 무효화 -->
+					<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li><!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+					<li><a href="/regular/chat?cbNum=<c:out value="${club.cbNum}" />">채팅</a></li><!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
+				</ul>
 			</div>
-		 
-		한줄소개 -
-		<c:out value="${club.cbIntro}" /><br> 
+
+			<div id=bodymain>
+				해시태그 - <c:out value="${club.cbHashtag}" /><br> 
 		
-		상세내용 -
-		<c:out value="${club.cbDetailContent}" /><br> 
+				[모임명] <c:out value="${club.cbName}" /><br> 
 		
-		가입한 회원  
-		<div style="border: 1px solid black; width: 170px; height: 140px; display: flex;">
-			<c:forEach items="${joinList}" var="joinList"> 
-				<li><c:out value="${joinList.usrName}" /></li>
-			</c:forEach>
-		</div>
-	</div>
-	<div>
-		개설자 - 
-		<c:out value="${club.cbLeaderName }" /><br>
-	</div>
+				한줄소개 - <c:out value="${club.cbIntro}" /><br> 
+				
+				상세내용 - <pre style="font-size: 15px;"><c:out value="${club.cbDetailContent}" /></pre><br> 
+				
+				가입한 회원  
+				<div style="border: 1px solid black; width: 170px; height: 140px; display: flex;">
+					<c:forEach items="${joinList}" var="joinList"> 
+						<li><c:out value="${joinList.usrName}" /></li>
+					</c:forEach>
+				</div>
+				개설자 - 
+				<c:out value="${club.cbLeaderName }" /><br>
+			</div>
 
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
@@ -180,7 +114,13 @@ ul li.tag-item {
 
 </div>
 <!-- body end -->
-
+		<div id="rightinfo" class="rightinfo">
+                <div class="content">
+					<c:out value="${club.cbName}" />
+                </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -330,4 +270,19 @@ ul li.tag-item {
 		});
 	});
 </script>
-<%@include file="../includes/footer.jsp"%>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var right = document.getElementById("rightinfo");
+var sticky = rightinfo.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    rightinfo.classList.add("sticky");
+  } else {
+    rightinfo.classList.remove("sticky");
+  }
+}
+</script>
+<%-- <%@include file="../includes/footer.jsp" %> --%>

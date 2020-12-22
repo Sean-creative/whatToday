@@ -218,8 +218,10 @@ public class ClubController {
 
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("list", service.boardgetList(cri, cbNum));
+		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		// model.addAttribute("pageMaker", new NoticeDTO(cri, 123));
-
+		log.info("#board:" + service.boardgetList(cri, cbNum));
+		
 		int total = service.boardgetTotal(cri, cbNum);
 		log.info("#board total:" + total);
 		model.addAttribute("pageMaker", new NoticeDTO(cri, total));
@@ -232,6 +234,7 @@ public class ClubController {
 		log.info("/get or boardupdate");
 		// 화면쪽으로 해당 게시물번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
+		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		model.addAttribute("club", service.get(cbBno));
 		model.addAttribute("replyVO", new ReplyVO());
 	}
@@ -256,6 +259,7 @@ public class ClubController {
 		log.info("#boardRegister");
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
+		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		// model.addAttribute("boardRegister", service.getList(cbNum));
 		model.addAttribute("boardRegister", service.boardgetList(cri, cbNum));
 	}
