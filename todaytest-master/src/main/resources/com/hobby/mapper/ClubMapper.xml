@@ -150,7 +150,7 @@
 	    cb.cbbdwriter,
 	    cb.cbbdtitle,
 	    cb.cbbddate,
-	    NVL(cb.cbbdview, 0) cbbdview,
+	    NVL(cb.cbBdView, 0) cbBdView,
 	    NVL(cbr.reply_count, 0) replyCount
 	from 
 		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, 

@@ -32,6 +32,7 @@ import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
 import com.hobby.service.MeetingService;
+import com.hobby.service.UserService;
 import com.hobby.utils.UploadFileUtils;
 
 import lombok.AllArgsConstructor;
@@ -45,6 +46,7 @@ public class ClubController {
 
 	private ClubService service;
 	private MeetingService meetingservice;
+	private UserService userService;
 	
 //	servlet-context.xml에서 설정했던 uploadPath를 추가
 	@Resource(name = "uploadPath")
@@ -142,47 +144,49 @@ public class ClubController {
 
 	// 정기모임 상세정보
 	@GetMapping("/info")
+	@PreAuthorize("isAuthenticated()")
 	public void getClub(Authentication auth, @RequestParam("cbNum") Long cbNum, Model model) {
 
-		UserVO userVO = null;
+		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		LocalDate onlyDate = LocalDate.now();
+		
+		// 파라미터 model을 통해 회원번호,회원이름,현재날짜를 결과에 담아 전달 한다.
+		model.addAttribute("usrNum", userVO.getUsrNum());
+		model.addAttribute("usrName", userVO.getUsrName());
+		model.addAttribute("toDate", onlyDate);
 
-		if (auth != null) {
-			CustomUser customUser = (CustomUser) auth.getPrincipal();
-			userVO = customUser.getUser();
-			LocalDate onlyDate = LocalDate.now();
-			// 파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
-			model.addAttribute("usrName", userVO.getUsrName());
-			model.addAttribute("toDate", onlyDate);
+		log.info("###usrnum:" + userVO);
+		
+		//개설자 정보 가져오기 
+		ClubVO club = service.getClub(cbNum);
+		UserVO userVO1 = userService.get((long) club.getCbLeaderNum());
+		model.addAttribute("userVO", userVO1);
+		
+		String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
+		log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
+		model.addAttribute("joinState", joinState);
+		
+		// 해당 모임에 대한 만남리스트를 가져온다.
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		for (MeetingVO meeting : meetingList) {
 
-			log.info("###usrnum:" + userVO);
+			meetingservice.updateMtCurMbNum(meeting);
 
-			String joinState = service.getCbMemByUsrNum(userVO.getUsrNum(), cbNum);
-			log.info("/info(GET) - joinState : " + joinState); // ** - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-			model.addAttribute("joinState", joinState);
+			// 모임리스트의 각각의 모임에다가, 로그인한 유저를 기준으로 각각의 만남에 대한 상태를 넣어준다.
+			String mtAttendState = meetingservice.getMtStateByUsrNum(userVO.getUsrNum(), cbNum, meeting.getMtNum());
+			log.info("/info(GET) - mtAttendState : " + mtAttendState);
 
-			model.addAttribute("usrNum", userVO.getUsrNum());
-
-			
-			// 해당 모임에 대한 만남리스트를 가져온다.
-			List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
-			for (MeetingVO meeting : meetingList) {
-
-				meetingservice.updateMtCurMbNum(meeting);
-
-				// 모임리스트의 각각의 모임에다가, 로그인한 유저를 기준으로 각각의 만남에 대한 상태를 넣어준다.
-				String mtAttendState = meetingservice.getMtStateByUsrNum(userVO.getUsrNum(), cbNum, meeting.getMtNum());
-				log.info("/info(GET) - mtAttendState : " + mtAttendState);
-
-				meeting.setUsrMtState(mtAttendState);
-				log.info("/info(GET) - meetingList : " + meeting);
-			}
-
-			model.addAttribute("meetingList", meetingList);
+			meeting.setUsrMtState(mtAttendState);
+			log.info("/info(GET) - meetingList : " + meeting);
 		}
+
+		model.addAttribute("meetingList", meetingList);
 
 		// 해당 클럽에서 가입승인 사람의 리스트를 가져온다. -> 뷰단에서 가입중인 모임원을 보여줄 수 있다.
 		List<ClubMemberVO> joinList = service.getJoinList(cbNum, "가입승인");
-		for (ClubMemberVO club : joinList) {
+		for (ClubMemberVO clubmember : joinList) {
 			log.info("/info(GET) - joinList : " + club);
 		}
 		model.addAttribute("joinList", joinList);
@@ -191,7 +195,6 @@ public class ClubController {
 		// 화면쪽으로 해당 모임번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("club", service.getClub(cbNum));
-		
 		
 		log.info(service.getClub(cbNum));
 
@@ -219,7 +222,7 @@ public class ClubController {
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("list", service.boardgetList(cri, cbNum));
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
-		// model.addAttribute("pageMaker", new NoticeDTO(cri, 123));
+		
 		log.info("#board:" + service.boardgetList(cri, cbNum));
 		
 		int total = service.boardgetTotal(cri, cbNum);

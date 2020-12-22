@@ -79,6 +79,7 @@
 }
 #bodymain {
     width:100%;
+    height:auto;
     background:pink;
 }
 .content {
@@ -146,3 +147,8 @@ form {
 	opacity: 0.9;
 	margin:0 auto;
 }
+/* #orange{
+    width:100%;
+    height:100px;
+    background:#ffaf31;
+} */

@@ -34,8 +34,8 @@
 					</c:forEach>
 				</div>
 				개설자 - 
-				<c:out value="${club.cbLeaderName }" /><br>
-			</div>
+				<c:out value="${userVO.usrName}" />(<c:out value="${userVO.usrId}" />)<br>
+				
 
 	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
 	<!-- <button onclick="javascript:join();">가입하기</button> -->
@@ -110,13 +110,26 @@
 		<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
 		<input type="hidden" name="cbName" value="${club.cbName }" />
 	</form>
+	
+	</div>
 
-
+	<div id="orange">
+                    게시판
+    </div>
 </div>
 <!-- body end -->
 		<div id="rightinfo" class="rightinfo">
                 <div class="content">
-					<c:out value="${club.cbName}" />
+					모임명: <c:out value="${club.cbName}" /><br>
+					개설자명: <c:out value="${userVO.usrName}" /><br>
+					개설자아이디: <c:out value="${userVO.usrId}" />
+					<c:if test="${usrNum != club.cbLeaderNum}">
+						<c:choose>
+							<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }"><button class="btn btn-info" data-oper='join' id="join">모임 가입불가</button></c:when>
+							<c:when test="${club.cbMbNum == club.cbCurMbNum}"><button class="btn btn-info" data-oper='join' id="join">모임 정원 초과</button></c:when>
+							<c:when test="${joinState eq '모임탈퇴' || joinState == null}"><button class="btn btn-info" data-oper='join' id="join">모임 가입하기</button></c:when>
+						</c:choose>
+					</c:if>
                 </div>
         </div>
     </div>
