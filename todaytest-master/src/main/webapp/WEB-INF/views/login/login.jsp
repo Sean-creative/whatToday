@@ -20,7 +20,7 @@
                     <input type="text" name="username" value="${username }" placeholder="아이디 입력">
                 </div>
                 <div>
-                    <input type="text" name="password" value="${password }" placeholder="비밀번호 입력(영문,숫자,특수문자조합)">
+                    <input type="password" name="password" value="${password }" placeholder="비밀번호 입력(영문,숫자,특수문자조합)">
                 </div>
                 <div>
                 	<button type="submit">로그인</button>
