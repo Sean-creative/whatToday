@@ -35,7 +35,7 @@ public class Criteria {
 	
 	public Criteria() {
 		//한번에 5개 정도만 보여준다.
-		this(1,24, "cbNum");		
+		this(1,24, "cbNum desc");		
 	}
 	
 	public Criteria(int pageNum, int amount, String orderBy) {

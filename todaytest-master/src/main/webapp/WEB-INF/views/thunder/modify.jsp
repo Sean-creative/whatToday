@@ -299,9 +299,8 @@ ul li.tag-item {
 						모임 장소 :
 						<input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 						<button type="submit">검색하기</button>
-
-
 					</form>
+					
 				</div>
 			</div>
 			<hr>						

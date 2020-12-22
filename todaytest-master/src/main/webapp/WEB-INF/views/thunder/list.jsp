@@ -92,9 +92,9 @@
 
 	<div id="sort">
 		<ul>
-			<li class="order_button ${pageMaker.cri.orderBy eq 'cbnum desc'? "active":""}" ><a href="cbnum desc">최신순</a></li>
+			<li class="order_button ${pageMaker.cri.orderBy eq 'cbNum desc'? "active":""}" ><a href="cbNum desc">최신순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbView desc'? "active":""}" ><a href="cbView desc">인기순</a></li>
-			<li class="order_button ${pageMaker.cri.orderBy eq 'cbappperiod desc'? "active":""}" ><a href="cbappperiod desc">마감임박순</a></li>
+			<li class="order_button ${pageMaker.cri.orderBy eq 'cbAppperiod desc'? "active":""}" ><a href="cbAppperiod desc">마감임박순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'distance'? "active":""}"><a href="distance">거리순</a></li>						
 		</ul>
 	</div>

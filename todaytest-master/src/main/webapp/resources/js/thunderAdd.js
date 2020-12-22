@@ -43,11 +43,11 @@ $(function() {
 				}
 			});
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/* 해시태그 관련 */
 	var tag = {};
 	var counter = 0;
