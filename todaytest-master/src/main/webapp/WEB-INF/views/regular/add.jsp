@@ -5,6 +5,8 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
+<link rel="stylesheet" href="/resources/css/paymentModal.css">
+
 
 <h3 style="text-align: center">기본정보(필수)</h3>
 
@@ -42,6 +44,48 @@
 		style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
 	<br> <input type="file" name="cbFile">
 	<button type="submit">개설하기</button>
+	
+	<!--###포인트 결제 모달(지영)###-->
+	    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div id="pointBanner">
+                <a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"width="80px"></a>
+                <span class="close">&times;</span>
+            </div>
+            <main>
+                <p id="myPointHist">내 포인트 내역 > </p>
+                <div id="myPoint"> 0 Point </div>
+                <div class="bar"></div><br>
+                <p id="pointPayment">포인트 결제</p>
+                <div id="pointbx">
+                    <div>
+                        <img src="/resources/img/coupon.png" alt="coupon" id="couponImg">
+                        <div class="pointChargeBox">
+                        <span id="product">모임 정원 범위 확대 (50이상 200명이하) </span>   
+                        <input type="hidden" name="cp_item" value="10000">   
+                        <span id="pointAmount">10,000p</span> 
+                    </div>
+                </div>     
+                <div id="chargebtn">
+                    <button type="button" id="chargePoint">결제하기</button>
+                </div>   
+                </div>
+
+                <div id = warnTitle>
+                    <p id="warnLetter">유의사항</p>
+                    <ul>
+                        <li>포인트 적립 및 사용처의 변경은 사전 고지 없이 내부 사정에 따라 변경될 수 있습니다.</li>
+                        <li>포인트의 유효기간은 포인트 지급 경로에 따라 다를 수 있습니다.</li>
+                        <li>한번 사용하신 포인트에 대해서는 철회가 불가능합니다.</li>
+                        <li>계정 정보 이전 시에 포인트 이전은 불가능합니다.</li>
+                    </ul>
+                </div>
+            </main>
+        </div>
+    </div><!--END myModal-->
+	<!--###포인트 결제 모달(지영)###-->
+	
 </form>
 
 <script type="text/javascript">
@@ -87,7 +131,7 @@
       }
      
       
-   // 50명이상일경우 포인트 결제 창으로 이동 (지영)
+   	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
       if(!number.value || (number.value <= 0) || (number.value > 50)){
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
@@ -104,14 +148,37 @@
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=#, height=#');
+    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=700px, height=600px');
     				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
     			}else{
+    				
+					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			
+    				// window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
+    				// document.getElementById('register').submit();
+    				
     				// 포인트 결제 창으로 
-    				// 모달로 바꾸기
-					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
-    				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
-    				document.getElementById('register').submit();
+    				// 모달로 바꾸기 - ok!!
+    				var modal = document.getElementById("myModal");
+    				modal.style.display = "block";
+    				var span = document.getElementsByClassName("close")[0];
+    				span.onclick = function() {
+    					modal.style.display = "none";
+    				}
+    				$('#chargePoint').click(function () {
+    					let money = $('input[name="cp_item"]:checked').val();
+    			    		 $.ajax({
+    			                url: "/pay/point", 
+    			             	type: 'POST',  
+    			         	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
+    			         	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+    			                data: money,
+    			                success: function(){ 
+    			                	// 포인트 db로 보내고 성공하면 개설
+    			                	document.getElementById('register').submit();
+    			                },
+    			    		 	error: function (){ }
+    			             });
+    			   });// end click 
     			}
     	    },
     	    error: function (){        
@@ -122,7 +189,7 @@
            });
 		return false;
 	  }
-   }
+   }// END ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
 
    //카테고리/분야 선택, 지역 선택 
    $(function() {
