@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,7 +29,7 @@
 				</div>
 			</sec:authorize>
 
-			<!-- 로그인되면 보여지는 페이지 -->
+			<!-- 로그인되면 보여지는 메뉴 -->
 			<sec:authorize access="isAuthenticated()">
 				<div class="menu2">
 					<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li> 	
@@ -69,7 +70,7 @@
 				onclick="openNav()">&#9776;</span> <a class="submenu"
 				href="/regular/list">정기모임</a> <a class="submenu"
 				href="/thunder/list">번개모임</a> <a class="submenu" href="#">베스트</a> <a
-				class="submenu" href="#">취미Test</a>
+				class="submenu" href="/hobbyTest/test">취미Test</a>
 			<div class="dropdown">
 				<a class="submenu" href="#">모임개설</a>
 				<div class="dropdown-content ">
