@@ -2,186 +2,197 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../includes/header.jsp"%>
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<div id="totalMenu">
+	<nav id="navMenu">
+		<div class="mypageMenu">
+			<div class="uInfo">
+				<img
+					src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"><br>
+				<h5>${userVO.usrName }</h5>
+				<br>
+				<h5>${userVO.usrId }</h5>
+				<br>
+				<h5>포인트 ${userVO.usrPoint }점</h5>
+			</div>
 
 
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/mypage.css' />?after">
-<nav id="nav">
-	<div class="menu">
-		<ul>
-			<li>
+			<div class="info">
+				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
 					<button class="btn1" type="submit">마이페이지</button>
 				</form>
-			</li>
-			<li>
-				<div class="dropdown">
-					<button type="button" class="dropbtn">모임관리</button>
-					<div class="dropdown-content">
-						<ul>
-							<li>
-								<form action="/mypage/myclub/main" method="get">
-									<button type="submit">모임관리홈</button>
-								</form>
-							</li>
-							<li>
-								<form action="/mypage/myclub/main" method="post">
-									<button type="submit">만남개설</button>
-								</form>
-							</li>
-							<li>
-								<form action="/mypage/myclub/userManage" method="get">
-									<button type="submit">회원관리</button>
-								</form>
-							</li>
+				<button type="button" class="accordionBtn">모임관리</button>
+				<div class="accordion">
+					<form action="/mypage/myclub/main" method="get">
+						<button type="submit">모임관리홈</button>
+					</form>
 
+					<form action="/mypage/myclub/main" method="post">
+						<button type="submit">만남개설</button>
+					</form>
 
-						</ul>
-					</div>
+					<form action="/mypage/myclub/userManage" method="get">
+						<button type="submit">회원관리</button>
+					</form>
 				</div>
-			</li>
-			<li>
 				<form action="/mypage/auth_edit" method="get">
-					<button type="submit" style="color: yellow">회원정보수정</button>
+					<button type="submit" style="color: yellow;">회원정보수정</button>
 				</form>
-			</li>
-			<li>
 				<form action="/mypage/password" method="get">
 					<button type="submit">비밀번호수정</button>
 				</form>
-			</li>
-			<li>
 				<form action="/mypage/auth_leave" method="get">
 					<button type="submit">회원탈퇴하기</button>
 				</form>
-
-			</li>
-		</ul>
-
-	</div>
-</nav>
-<section id="wrap">
-	<form name="register" action="/mypage/editAction" method="post"
-		onsubmit="return inputCheck();">
-		<div class="info">
-			<div class='uploadDiv'>
-				<input type='file' id="uploadBtn" name='uploadFile'
-					accept="image/jpeg, image/jpg, image/png">
 			</div>
-
-			<!-- 해당 위치 안에 이미지가 쌓이게 된다. -->
+		</div>
+	</nav>
+	
+<section id="wrapInfo2">
+	<form name="register" action="/mypage/editAction" method="post"	onsubmit="return inputCheck();">
+		
+		<div class="modifyInfo">
+			<div id="prevWrap">
 			<div id="preview">
-			<img style='width:100px; height:100px;' src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"
-			alt="<c:out value="${userVO.usrImg }"/>"/>
+			<img src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>" alt="로딩중"/>
+			</div>
+			<div class='uploadDiv'>
+				<label for="uploadBtn">프로필 변경</label><input type='file' id="uploadBtn" name='uploadFile' accept="image/jpeg, image/jpg, image/png">
+			</div>
 			</div>
 			<div class="userInfo">
-				<span>ID </span><input type="text" name="usrId" readonly="readonly"
-					value="<c:out value="${userVO.usrId }"/>"><br> <span>NAME
-				</span><input type="text" name="usrName" readonly="readonly"
-					value="<c:out value="${userVO.usrName }"/>"><br> <span>PHONE
-				</span><input type="text" name="usrPhone"
-					value="<c:out value="${userVO.usrPhone }"/>"><br> <input
-					type="hidden" name="usrNum"
-					value="<c:out value="${userVO.usrNum }"/>"><input
-					type="hidden" name="usrState"
-					value="<c:out value="${userVO.usrState }"/>">
-					<input
-					type="hidden" name="usrImg"
-					value="<c:out value="${userVO.usrImg}"/>">
-					<input
-					type="hidden" name="usrImgPath"
-					value="<c:out value="${userVO.usrImgPath}"/>">
+			<span>휴대전화</span><br>
+			<div>
+			<input type="text" id="phone" name="usrPhone" value="<c:out value="${userVO.usrPhone }"/>">
+			<button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복확인</button>
 			</div>
-
-		</div>
-
-		<div class="info">
-			<div class="userInfo" style="margin-left: 18.5%;">
-				<h1>
-					관심정보<span style="font-size: 15px; margin-left: 20px">개인별
-						맞춤정보 제공 - 수정은 폰번, 지역, 관심카테고리</span>
-				</h1>
-
-				<ul style="list-style: none;">
-					<li>
-						<div class="input-container">
-							<label>지역1 </label> <select name="usrCity1" id="city1">
-
-							</select> <select name="usrDistrict1" id="district1">
-
-							</select>
-						</div>
-
-						<div class="input-container">
-
-
-							<label>지역2 </label> <select name="usrCity2" id="city2">
-
-							</select> <select name="usrDistrict2" id="district2">
-
-
-							</select>
-						</div>
-					</li>
-					<li><label>관심분야 1 </label><select name="usrCategory1">
-					</select> <label>관심분야 2 </label><select name="usrCategory2">
-					</select></li>
-
-				</ul>
-
-
+                <input type="hidden" name="usrName" readonly="readonly" value="<c:out value="${userVO.usrName }"/>">
+				<input type="hidden" name="usrId" readonly="readonly" value="<c:out value="${userVO.usrId }"/>">
+				<input type="hidden" name="usrGender" readonly="readonly" value="<c:out value="${userVO.usrGender }"/>">
+				<input type="hidden" name="usrBirth" readonly="readonly" value="<c:out value="${userVO.usrBirth	 }"/>">
+				<input type="hidden" name="usrNum" value="<c:out value="${userVO.usrNum }"/>">
+				<input type="hidden" name="usrState" value="<c:out value="${userVO.usrState }"/>">
+				<input type="hidden" name="usrImg" value="<c:out value="${userVO.usrImg}"/>">
+				<input type="hidden" name="usrImgPath" value="<c:out value="${userVO.usrImgPath}"/>">
 			</div>
+			<div class="userInfo2">
+			<div class="smallInfo">
+				<p style="font-size: 15px; font-weight: bold;">* 관심정보<br>
+                <span style="font-size: 9px;font-weight: normal;color: #999;">관심정보는 선택사항이며, 선택하지 않아도 정보수정이 가능합니다.</span>
+                </p>
+            </div>
+				<div class="smallInfo">
+					<span class="detailInfoSpan">
+					<label class="labelSt">카테고리/분야1</label><br>
+					<select	style="width:300px" name="usrCategory1">
+					</select> </span>
+					<span class="detailInfoSpan">
+					<label class="labelSt">카테고리/분야2</label><br>
+					<select	style="width:300px" name="usrCategory2">
+					</select></span>
+				</div>
 
+
+				<div class="smallInfo">
+					
+					
+					<span class="detailInfoSpan"><label class="labelSt">관심지역1</label><br>
+					<select
+						name="usrCity1" id="city1">
+
+					</select> <select name="usrDistrict1" id="district1">
+
+					</select></span> 
+					<span class="detailInfoSpan">
+					<label class="labelSt">관심지역2</label><br>
+					<select
+						name="usrCity2" id="city2"></select> <select name="usrDistrict2" id="district2">
+
+
+					</select></span>
+				</div>
 		</div>
-		<div>
 			<button type="submit" class="modifyBtn">수정</button>
-		</div>
+			</div>
+
+		
+				
+
+
 	</form>
 </section>
-
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="/resources/js/select.js"></script>
 <script type="text/javascript">
-	function inputCheck() {
 
-		let name = document.register.usrName;
-		let phone = document.register.usrPhone;
-		let usrDistrict1 = document.register.usrDistrict1;
-		let usrDistrict2 = document.register.usrDistrict2;
-		let usrCategory1 = document.register.usrCategory1;
-		let usrCategory2 = document.register.usrCategory2;
+// 핸드폰 번호 유효성 검사
+let phoneInput = document.getElementById("phone");
+let phoneResult = document.getElementById("phoneResult")
+//01012341234
+const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
-		// 이름 : 한글만 2~4글자
-		const namePattern = /^[가-힣]{2,4}$/;
-		// 핸드폰 번호 : 010-1234-1234
-		const phonePattern = /^\d{3}\d{3,4}\d{4}$/;
+function phoneCheck() {
+	if (phoneInput.value.length === 0) {
+		swal("핸드폰 번호를 입력하세요.", "", "warning");
+		return false;
+	} else if (phonePattern.test(phoneInput.value) == false) {
+		swal("핸드폰 번호를 다시 입력하세요 (01012341234)", "", "warning");
+		return false;
+	}
+		return true;
+}
+function inputCheck(){
+	let usrDistrict1 = document.register.usrDistrict1;
+	let usrDistrict2 = document.register.usrDistrict2;
+	let usrCategory1 = document.register.usrCategory1;
+	let usrCategory2 = document.register.usrCategory2;
+	
+	if ((usrDistrict1.value != '군/구 선택' && usrDistrict2.value != '군/구 선택') && usrDistrict1.value == usrDistrict2.value){
+		swal("서로 다른 지역을 선택해주세요.", "", "warning");
+		return false;
+	}
 
-		if (!name.value) {
-			alert("이름을 입력하세요.");
+	if ((usrCategory1.value != '관심분야선택' && usrCategory2.value != '관심분야선택') && usrCategory1.value == usrCategory2.value){
+		swal("서로 다른 카테고리를 선택해주세요", "", "warning");
+		return false;
+	}
+	if(document.getElementById('phoneDuplicateCheck').value == ""){
+		swal("핸드폰 번호 중복확인를 확인하세요.", "", "warning");
+		return false;
+	}
+	
+}
+	
+
+	function phoneDuplicate() {
+		let phone = $("#phone").val();
+		let curPhone = "${userVO.usrPhone }"
+		if(!phoneCheck()){
 			return false;
 		}
-		if (namePattern.test(name.value) == false) {
-			alert("한글만 2~4글자");
-			return false;
-		}
-
-		if (!phone.value) {
-			alert("핸드폰번호를 입력하세요.");
-			return false;
-		}
-
-		if (phonePattern.test(phone.value) == false) {
-			alert("핸드폰 번호 : 01012341234");
-			return false;
-
-		}
-		if ((usrDistrict1.value != '군/구 선택' && usrDistrict2.value != '군/구 선택') && usrDistrict1.value == usrDistrict2.value){
-			alert("서로 다른 지역을 선택해주세요.")
-			return false;
-		}
-
-		if ((usrCategory1.value != '관심분야선택' && usrCategory2.value != '관심분야선택') && usrCategory1.value == usrCategory2.value){
-			alert("서로 다른 카테고리를 선택해주세요.")
-			return false;
+		else if(phone != curPhone){
+		$.ajax({
+			url : '/login/phoneDuplicateCheck',
+			type : 'POST',
+			dataType : 'text', 
+			contentType : 'text/plain; charset=utf-8;',
+			data : phone,
+			success : function(data) {
+				if (data) {
+					swal("이미 사용중인 핸드폰번호 입니다.", "", "warning");
+				} else {
+					swal("사용하실 수 있는 핸드폰번호입니다.", "", "success");
+					document.getElementById('phoneDuplicateCheck').value = "phoneChecked"
+				}
+			},
+			error : function() {
+			}
+			});
+		}else{
+			swal("현재 사용하시는 핸드폰번호입니다.", "", "success");
+			document.getElementById('phoneDuplicateCheck').value = "phoneChecked"
 		}
 		
 	}
@@ -386,7 +397,7 @@
 									//div id="preview" 내에 동적코드추가.
 									//이 부분을 수정해서 이미지 링크 외 파일명, 사이즈 등의 부가설명을 할 수 있을 것이다.
 									$("#preview").empty();
-									$("#preview").append("<img style='width:130px; height:200px;'src=\"" + img.target.result + "\"\/>");
+									$("#preview").append("<img style='width:100px;height: 120px;margin-bottom:5px;'src=\"" + img.target.result + "\"\/>");
 									
 									console.log(img.target.result);
 								};
@@ -445,5 +456,20 @@
 						});
 
 					});
+					var acc = document.getElementsByClassName("accordionBtn");
+					var i;
+
+					for (i = 0; i < acc.length; i++) {
+					  acc[i].addEventListener("click", function() {
+					    this.classList.toggle("active");
+					    var panel = this.nextElementSibling;
+					    if (panel.style.display === "block") {
+					      panel.style.display = "none";
+					    } else {
+					      panel.style.display = "block";
+					    }
+					  });
+					}
+					
 </script>
 <%@include file="../includes/footer.jsp"%>

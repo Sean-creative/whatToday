@@ -44,6 +44,8 @@ public class UserVO {
     private String usrChangePwdDate;
     // 회원 권한 리스트
     private List<AuthVO> authList;
+    // 포인트
+    private int usrPoint;
     
     //userdetail 테이블
     // 관심지역1

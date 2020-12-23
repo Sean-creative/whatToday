@@ -262,6 +262,11 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.findClubMem(usrNum,cbNum);
 	}
 
+	@Override
+	public UserVO getUserN(Long usrNum) {
+		return mapper.getUserN(usrNum);
+	}
+
 
 
 
