@@ -17,18 +17,18 @@
 			<div id="leftinfo">
 				<img src="${clubVO.cbThumbImg}" class="thumbImg" />
 				<div id="error">
-					<br>정보 <br> 모임 이름 : <b><c:out value="${clubVO.cbName}" /></b> <br> 모임 소개:
-					<c:out value="${clubVO.cbIntro}" />
-					<br> 모임일정 :
-					<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-					<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" />
-					<br> 모임장소 :
-					<c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
-					<br> 모임인원 :
-					<c:out value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />
-					<br> 준비물 :
-					<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />
-
+					<p>모임 이름 : <b><c:out value="${clubVO.cbName}" /></b>
+					</p>
+					<p>모임 소개: <c:out value="${clubVO.cbIntro}" />
+					</p>
+					<p>모임일정 : <fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" /> <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" />
+					</p>
+					<p>모임장소 : <c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
+					</p>
+					<p>모임인원 : <c:out value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />
+					</p>
+					<p>준비물 : <c:out value="${clubVO.thunderDetailVO.cbSupplies}" />
+					</p>
 				</div>
 				<!-- error END -->
 
@@ -36,35 +36,6 @@
 
 
 				<div id="orange">
-
-					<!-- 카카오 맵 -->
-					<div class="map_wrap">
-						<div id="map"></div>
-
-						<div id="menu_wrap" class="bg_white">
-							<div class="option">
-								<div>
-
-									<form role="form" onsubmit="searchPlaces(); return false;">
-										모임 장소 :
-										<input type="text" value="종각역" id="keyword" size="15">
-										<button type="submit">검색하기</button>
-
-
-									</form>
-								</div>
-							</div>
-							<hr>
-						</div>
-					</div>
-					<!-- 카카오맵 END -->
-				</div>
-				<!-- orange END -->
-
-
-
-				<div id="ab1111">
-					채팅 <br>
 					<div id="plusDiv">
 						<div>
 							"
@@ -77,9 +48,9 @@
 
 
 						<div id="plus">
-							<div >
+							<div>
 								<c:forEach items="${joinList}" var="ClubMemberVO">
-									<div >
+									<div>
 										<img src="../resources/img/thunderHuman.png">
 
 										<c:choose>
@@ -95,6 +66,33 @@
 						</div>
 					</div>
 					<!-- plus END -->
+				</div>
+				<!-- orange END -->
+
+
+
+				<div id="ab1111">
+
+
+					<!-- 카카오 맵 -->
+					<div class="map_wrap">
+						<div id="map"></div>
+						<div id="menu_wrap" class="bg_white">
+							<div class="option">
+								<div>
+									<form role="form" onsubmit="searchPlaces(); return false;">
+										모임 장소 :
+										<input type="text" value="종각역" id="keyword" size="15">
+										<button type="submit">검색하기</button>
+									</form>
+								</div>
+							</div>
+							<hr>
+							<ul id="placesList"></ul>
+							<div id="pagination"></div>
+						</div>
+					</div>
+					<!-- 카카오맵 END -->
 
 
 				</div>
@@ -113,14 +111,15 @@
 					<br>
 					<c:out value="${userVO.usrId}" />
 
-					<br> <img src="../resources/img/thunderHuman.png" > <br>
+					<br> <img src="../resources/img/thunderHuman.png"> <br>
 					<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
 					<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 까지 신청" />
 
 
 					<!-- 해시태그 구현 -->
-					<br> <ul id="tag-list"></ul>
-								
+					<br>
+					<ul id="tag-list"></ul>
+
 
 					<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
 					<c:if test="${usrNum != clubVO.cbLeaderNum}">

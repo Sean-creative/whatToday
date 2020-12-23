@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 
-<!-- 해당 모임에 대한 정보를 가져올 때 사용 -->
+	<!-- 해당 모임에 대한 정보를 가져올 때 사용 -->
 	<select id="read" resultMap="ThunderVO">
 		select * from club c, thunderDetail
 		td
@@ -136,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-<!-- 로그인한 유저가 해당 모임에 대해서 어떤 상태인지 반환 ex) 가입승인, 승인대기중 -->
+	<!-- 로그인한 유저가 해당 모임에 대해서 어떤 상태인지 반환 ex) 가입승인, 승인대기중 -->
 	<select id='readCbMemByUsrNum' resultType="String">
 		select cbmbstresult
 		from clubmember where usrnum=#{usrNum}
@@ -296,6 +296,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 )                 
 				where distance <20 ]]>
 	</select>
+
+
+	<update id="updateFinalState">
+		<![CDATA[ 
+		UPDATE (select * from club c, thunderdetail t where c.cbnum = t.cbnum) 
+		SET CBFINALSTATE='폐쇄' 
+		where TO_DATE(cbdate , 'yyyy-MM-dd"T"HH24:MI') <= sysdate 
+		]]>
+	</update>
 
 
 </mapper>

@@ -52,6 +52,11 @@
     background:pink;
 }
 
+#error p {
+	font-size:35px;
+}
+
+
 #orange{
     width:100%;
     height:500px;

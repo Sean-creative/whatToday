@@ -1,48 +1,42 @@
 /* =============날씨=============== */
 .header_in3 {
-	width: 170px;
-	height: 1700px;
+	width: 70px;
+	height: 1100px;
 	margin: 0 auto;
+	margin-right: 15px;
 	background: rgba(255, 179, 49, 0.3);
 	border-radius: 15px;
-	padding: 25px 0;
-	margin-top: 50px;
-
-display : inline-block;
+	display : inline-block;
+	margin-top:75px;
 }
 
 .header_weekday {
 	display: flex;
 	align-content: flex-start;
-flex-direction: column;
-
-overflow: auto;
-
+	flex-direction: column;
+	overflow: hidden;
 }
 
 .header_in3 .header_weekday li {
-	width: 150px;
-
-	margin: 20px auto;
-
+	width: 70px;
+	margin: 0 auto;
 	text-align: center;
-
 	box-sizing: border-box;
+	padding: 10px 0;
 }
 
 .header_weekday h4 {
-	font-size: 25px;
+	font-size: 20px;
 	padding-top: 5px;
 	letter-spacing: 5px;
 	color: #999;
 }
 
 .header_weekday img {
-	width: 100px;
-	height: 100px;
+	width: 60px;
+	height: 60px;
 	display: block;
 	margin: 0 auto;
-
 }
 
 .header_weekday p {
@@ -164,10 +158,11 @@ section {
 #container {
 	width: 1400px;
 	margin: 0 auto;
+	display: flex;
 }
 
 .section_in {
-	width: 800px;
+	width: 600px;
 	/* margin: 0 auto; */
 	/*background:#333;*/
 }
@@ -196,7 +191,7 @@ section {
 
 /* =================form================= */
 #tag-form {
-	width: 800px;
+	width: 600px;
 	/*height:1000px;*/
 	margin: 30px auto;
 	/*background:#333;*/
@@ -210,7 +205,7 @@ section {
 }
 
 form hr {
-	width: 800px;
+	width: 600px;
 	height: 2px;
 	margin: 15px 0;
 	background: #ffaf31;
@@ -221,8 +216,8 @@ form hr {
 }
 
 fieldset {
-	width: 750px;
-	padding: 20px;
+	width: 600px;
+	/* padding: 20px; */
 	border: none;
 }
 
@@ -256,11 +251,20 @@ fieldset {
 	/*background:#666;*/
 }
 
+
+/* input이 어떻게 나오는지 보여주는 곳!!! */
 .class input[type=text] {
 	width: 100px;
 	border: 1px solid #ccc;
 	text-indent: 5px;
 }
+input[type=text], input[type=number]  {
+	width: 100px;
+	border: 1px solid #ccc;
+	text-indent: 5px;
+}
+/* input이 어떻게 나오는지 보여주는 곳!!! */
+
 
 .agreebox {
 	color: #333;
@@ -275,7 +279,8 @@ fieldset {
 	text-align: center;
 }
 
-.btn_faq2 {
+/* btn-default는 modify에서 사용됨 */
+.btn_faq2, .btn-default{
 	margin-top: 30px;
 	background: #ffaf31;
 	color: #fff;

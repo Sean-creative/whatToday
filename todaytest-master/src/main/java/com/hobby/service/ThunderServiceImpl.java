@@ -171,6 +171,12 @@ public class ThunderServiceImpl implements ThunderService {
 	}
 
 	
+	@Override
+	public void schedul() {
+		System.out.println("i : ");
+	}
+
+	
 
 
 
