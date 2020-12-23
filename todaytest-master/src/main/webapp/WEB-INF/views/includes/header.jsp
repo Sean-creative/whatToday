@@ -158,7 +158,7 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
-var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
+var ws = new WebSocket("ws://localhost:8088/echo2/websocket");
 socket = ws;
 
 
