@@ -59,6 +59,9 @@
 		</div>
 		<h5>가입 대기중인 정기모임</h5>
 		<div id="myWaitClubList" class="list">
+		<c:if test="${empty waitClub}">
+		가입 대기중인 정기모임이 없습니다.
+		</c:if>
 		<c:forEach var="waitClub" items="${waitClub}">
 		<div class='smallList'><img src='${waitClub.cbFile }'/><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div>
 		</c:forEach>
@@ -100,13 +103,20 @@
 													if (club[i].cbType == "정기모임"
 															&& number != club[i].cbLeaderNum) {
 														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
-														
+														cnt++;
 													}
 													if (club[i].cbType == "번개모임"
 														&& number != club[i].cbLeaderNum) {
 														str2 += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
-												
+														cnt2++;
 													}
+												}
+												
+												if(cnt == 0){
+													str = "<a href='/regular/list'>가입한 정기모임이 없습니다. 가입하러가기</a>"
+												}
+												if(cnt2 == 0){
+													str2= "<a href='/thunder/list'>가입한 번개모임이 없습니다. 가입하러가기</a>"
 												}
 												myClubReg.empty();
 												myClubReg.append(str);
@@ -157,6 +167,7 @@
 										complete : function(list) {
 											getMyClubList();
 											getPrevClubList();
+											swal("탈퇴하셨습니다.");
 										}
 									});
 						};
@@ -181,6 +192,12 @@
 														str2 += "<div class='smallList'><img src="+club[i].cbFile+"/><button class='imgBtn detailBtn2'  data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><p>"+club[i].cbName+"</p></div>";
 														cnt2++;
 													}
+												}
+												if(cnt == 0){
+													str = "이전에 가입한 정기모임이 없어요."
+												}
+												if(cnt2 == 0){
+													str2= "이전에 가입한 번개모임이 없어요."
 												}
 												
 												myPrevRegClubList.empty();
@@ -227,7 +244,21 @@
 	})
 	$(document).on('click','.dropBtn',function(){
 		let data = $(this).data();
-		changeClubMemStateMinus(data);
+    	swal({
+  		  title: "정말 탈퇴하시겠어요?",
+  		  text: "정말 정말 정말로?",
+  		  icon: "warning",
+  		  buttons: true,
+  		  dangerMode: true,
+  		})
+  		.then((willDelete) => {
+  		  if (willDelete) {
+  				changeClubMemStateMinus(data);
+  		    } else {
+  		    swal("탈퇴를 취소하셨습니다.");
+  		  }
+  		});
+		
 	})
 
 	
