@@ -26,7 +26,7 @@
 				</div>
 			</sec:authorize>
 
-			<!-- 로그인되면 보여지는 페이지 -->
+			<!-- 로그인되면 보여지는 메뉴 -->
 			<sec:authorize access="isAuthenticated()">
 				<div class="menu2">
 					<li><a href="/mypage/main" id="user">

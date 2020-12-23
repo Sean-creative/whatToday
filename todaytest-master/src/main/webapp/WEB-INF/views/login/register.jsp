@@ -49,6 +49,7 @@
                     <label for="phone">휴대폰 번호</label><br>
                     <input type="text" placeholder="휴대폰 전호('-'없이 입력)" id="phone" name="usrPhone">
                     <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복확인</button>
+
                 </div>
 				<span id ="phoneResult" class="hide"></span>
 	
@@ -166,6 +167,10 @@
 		let pwdInput = document.getElementById("pwd");
 		let pwdResult = document.getElementById("pwdResult");
 		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		pwdCheckResult = false;
 		function pwdCheck() {
 			if (pwdInput.value.length === 0) {
@@ -184,6 +189,10 @@
 		// 비밀번호 재입력 유효성 검사
 		let pwdReInput = document.getElementById("pwdRe");
 		let pwdReResult = document.getElementById("pwdReResult");
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		pwdReCheckResult = false;
 		function pwdReCheck() {
 			if (pwdReInput.value.length === 0) {
@@ -201,6 +210,10 @@
 		let nameInput = document.getElementById("name");
 		let nameResult = document.getElementById("nameResult")
 		const namePattern = /^[가-힣]{2,4}$/;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		nameCheckResult = false;
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
@@ -221,6 +234,10 @@
 		let phoneResult = document.getElementById("phoneResult")
 		//01012341234
 		const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 		phoneCheckResult = false;
 		function phoneCheck() {
 			if (phoneInput.value.length === 0) {

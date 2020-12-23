@@ -52,6 +52,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MypageController {
 
+
 	@Setter(onMethod_ = @Autowired)
 	private MypageService service;
 
@@ -494,26 +495,26 @@ public class MypageController {
 //			@PathVariable("catClassificationCode") String catClassificationCode, Principal principal) {
 //		log.info("get...........: " + catClassificationCode);
 //
-//		return new ResponseEntity<>(service.getCategoryList(catClassificationCode), HttpStatus.OK);
-//	}
+//      return new ResponseEntity<>(service.getCategoryList(catClassificationCode), HttpStatus.OK);
+//   }
 //
-//	// ajax로 citylist 가져옴
-//	@RequestMapping(value = "/citylist/", produces = { MediaType.TEXT_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<List<RegionVO>> getCitylist(Authentication auth) {
-//		log.info("get...........: ");
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-////		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-//		return new ResponseEntity<>(service.getCityList(), HttpStatus.OK);
-//	}
+//   // ajax로 citylist 가져옴
+//   @RequestMapping(value = "/citylist/", produces = { MediaType.TEXT_XML_VALUE,
+//         MediaType.APPLICATION_JSON_UTF8_VALUE })
+//   public ResponseEntity<List<RegionVO>> getCitylist(Authentication auth) {
+//      log.info("get...........: ");
+//      CustomUser customUser = (CustomUser) auth.getPrincipal();
+////      UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+//      return new ResponseEntity<>(service.getCityList(), HttpStatus.OK);
+//   }
 //
-//	// ajax로 districtlist 가져옴
-//	@RequestMapping(value = "/districtlist/{rgName}", produces = { MediaType.TEXT_XML_VALUE,
-//			MediaType.APPLICATION_JSON_UTF8_VALUE })
-//	public ResponseEntity<List<RegionVO>> getDistrictlist(@PathVariable("rgName") String rgName, Authentication auth) {
-//		log.info("get...........: " + rgName);
-//		CustomUser customUser = (CustomUser) auth.getPrincipal();
-////		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
-//		return new ResponseEntity<>(service.getDistrictList(rgName), HttpStatus.OK);
-//	}
+//   // ajax로 districtlist 가져옴
+//   @RequestMapping(value = "/districtlist/{rgName}", produces = { MediaType.TEXT_XML_VALUE,
+//         MediaType.APPLICATION_JSON_UTF8_VALUE })
+//   public ResponseEntity<List<RegionVO>> getDistrictlist(@PathVariable("rgName") String rgName, Authentication auth) {
+//      log.info("get...........: " + rgName);
+//      CustomUser customUser = (CustomUser) auth.getPrincipal();
+////      UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+//      return new ResponseEntity<>(service.getDistrictList(rgName), HttpStatus.OK);
+//   }
 }
