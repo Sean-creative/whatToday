@@ -9,7 +9,7 @@
 <div id="bgpic">
 	<div id="detail">
          <div id="leftinfo">
-         	<img src="../resources/img/mount.jpg" alt="">
+         	<img src="${club.cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
 					<li><a href="javascript:void(0);">정보</a></li><!--a태그의 페이지이동 기능 무효화 -->
