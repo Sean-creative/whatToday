@@ -14,7 +14,7 @@
 				<br>
 				<h5>${userVO.usrId }</h5>
 				<br>
-				<h5>포인트</h5>
+				<h5>포인트 ${userVO.usrPoint }점</h5>
 			</div>
 
 
@@ -24,7 +24,7 @@
 					<button class="btn1" type="submit" style="color: yellow;">마이페이지</button>
 				</form>
 				<button type="button" class="accordionBtn">모임관리</button>
-				<div class="accordian">
+				<div class="accordion">
 					<form action="/mypage/myclub/main" method="get">
 						<button type="submit">모임관리홈</button>
 					</form>
@@ -49,27 +49,32 @@
 			</div>
 		</div>
 	</nav>
+	
 	<section id="wrapInfo">
-		<h5 style="margin-left: 10%;">내가 가입한 정기모임</h5>
+		<h5>내가 가입한 정기모임</h5>
 		<div id="myRegClubList" class="list">
 		</div>
-		<h5 style="margin-left: 10%;">내가 가입한 번개모임</h5>
+		<h5>내가 가입한 번개모임</h5>
 		<div id="myThuClubList" class="list">
 		</div>
-		<h5 style="margin-left: 10%;">가입 대기중인 정기모임</h5>
+		<h5>가입 대기중인 정기모임</h5>
 		<div id="myWaitClubList" class="list">
 		<c:forEach var="waitClub" items="${waitClub}">
-  		<h5><c:out value="[${waitClub.cbType}] "/><c:out value="${waitClub.cbName}"/></h5>
+		<div class='smallList'><img src='${waitClub.cbFile }'/><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div>
 		</c:forEach>
 		</div>
-		<h5 style="margin-left: 10%;">이전에 가입한 정기모임</h5>
+		<h5>이전에 가입한 정기모임</h5>
 		<div id="myPrevRegClubList" class="list">
 		</div>
-		<h5 style="margin-left: 10%;">이전에 가입한 번개모임</h5>
+		<h5>이전에 가입한 번개모임</h5>
 		<div id="myPrevThuClubList" class="list">
 		</div>
+		<form id="detailForm" method="get">
+			<input type="hidden" name="cbNum">
+		</form>
 	</section>
 </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="/resources/js/club.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -77,7 +82,7 @@
 						let prevClubList = $("#prevClubList");
 						
 						if ("${msg}" != "") {
-							alert("${msg}");
+							swal("${msg}", "", "success");
 						}
 
 						const getMyClubList = function() {
@@ -94,20 +99,12 @@
 												for (let i = 0; i < club.length; i++) {
 													if (club[i].cbType == "정기모임"
 															&& number != club[i].cbLeaderNum) {
-														str += "<div class='smallList' data-mycb='true' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["
-																+ club[i].cbType
-																+ "]"
-																+ club[i].cbName
-																+ "</div>";
+														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
 														
 													}
 													if (club[i].cbType == "번개모임"
 														&& number != club[i].cbLeaderNum) {
-														str2 += "<div class='smallList' data-mycb='true' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["
-														+ club[i].cbType
-														+ "]"
-														+ club[i].cbName
-														+ "</div>";
+														str2 += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
 												
 													}
 												}
@@ -120,8 +117,7 @@
 						getMyClubList();
 
 						const changeClubMemStateMinus = function(e) {
-							$
-									.ajax({
+							$.ajax({
 										url : "/mypage/clubmanage/changeClubMemStateMinus",
 										type : "PUT",
 										data : JSON.stringify({
@@ -143,8 +139,7 @@
 						};
 
 						const insertClubJoinHistory = function(e) {
-							$
-									.ajax({
+							$.ajax({
 										url : "/mypage/clubmanage/insertClubJoinHistory",
 										type : "POST",
 										data : JSON.stringify({
@@ -179,19 +174,11 @@
 												for (let i = 0; i < club.length; i++) {
 
 													if ("정기모임" == club[i].cbType) {
-														str += "<div class='smallList' data-mycb='true' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["
-														+ club[i].cbType
-														+ "]"
-														+ club[i].cbName
-														+ "</div>";
+														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn2' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><p>"+club[i].cbName+"</p></div>";
 														cnt++;
 													}
 													if ("번개모임" == club[i].cbType) {
-														str2 += "<div class='smallList' data-mycb='true' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>["
-														+ club[i].cbType
-														+ "]"
-														+ club[i].cbName
-														+ "</div>";
+														str2 += "<div class='smallList'><img src="+club[i].cbFile+"/><button class='imgBtn detailBtn2'  data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><p>"+club[i].cbName+"</p></div>";
 														cnt2++;
 													}
 												}
@@ -204,99 +191,44 @@
 											});
 						};
 						getPrevClubList();
-						$(document)
-								.on(
-										"click",
-										".cb",
-										function(e) {
-											console.log(e)
-											let index = $(".cb").index(this);
-											let data = $(".cb").eq(index)
-													.data();
+	
+ 	 $(document).on('mouseenter','.smallList', function() {
+ 		 let index = $('.smallList').index(this);
+ 		 $('.smallList img').eq(index).css("opacity","0");
+ 		 $('.imgBtn').eq(index).css("opacity","1");
+ 		 $('.imgBtn').eq(index).css("z-index","2");
+ 		 $('.imgBtn2').eq(index).css("opacity","1");
+ 		 $('.imgBtn2').eq(index).css("z-index","2");
 
-											console.log(index);
-											console.log(data);
-
-											var str = "";
-											str += '<form name="joinClub" method="get">';
-											str += '<input type="hidden" name="cbNum" value="'+data.cbnum+'">';
-											str += '<button name="details" data-cbtype="'+data.cbtype+'">상세보기</button>';
-											str += '</form>';
-											if (data.mycb == true) {
-												str += '<button name="drop" type="button" data-usrnum="'+number+'" data-cbtype="'+data.cbtype+'" data-cbnum="'+data.cbnum+'" data-cbmbstresult="모임탈퇴" data-cbname="'+data.cbname+'">탈퇴하기</button>'
-											}
-											let sWidth = window.innerWidth;
-											let sHeight = window.innerHeight;
-
-											let oWidth = $('.popupLayer')
-													.width();
-											let oHeight = $('.popupLayer')
-													.height();
-
-											// 레이어가 나타날 위치를 셋팅한다.
-											let divLeft = e.clientX + 10;
-											let divTop = e.clientY + 5;
-
-											// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
-											if (divLeft + oWidth > sWidth)
-												divLeft -= oWidth;
-											if (divTop + oHeight > sHeight)
-												divTop -= oHeight;
-
-											// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치.
-											if (divLeft < 0)
-												divLeft = 0;
-											if (divTop < 0)
-												divTop = 0;
-
-											$(".popupLayer2").html(str);
-
-											$('.popupLayer').css({
-												"top" : divTop,
-												"left" : divLeft,
-												"position" : "absolute"
-											}).show();
-											$("button[name=details]")
-													.click(
-															function() {
-																let form = $("form[name=joinClub]");
-																let data = $(
-																		"button[name=details]")
-																		.data();
-																console
-																		.log(data);
-																if (data.cbtype == "번개모임") {
-																	console
-																			.log("번개요");
-																	url = "/thunder/info";
-																} else {
-																	console
-																			.log("정기요");
-																	url = "/regular/info";
-																}
-																form
-																		.attr(
-																				"action",
-																				url);
-															});
-
-											$("button[name=drop]")
-													.click(
-															function() {
-
-																let data = $(
-																		"button[name=drop]")
-																		.data();
-																console
-																		.log(data)
-																changeClubMemStateMinus(data);
-																$(".popupLayer")
-																		.hide();
-																alert("탈퇴하셨습니다.");
-															});
-
-										});
-					});
+		});  
+ 	$(document).on('mouseleave','.smallList', function() {
+		 let index = $('.smallList').index(this);
+		 $('.smallList img').eq(index).css("opacity","1");
+		 $('.imgBtn').eq(index).css("opacity","0");
+		 $('.imgBtn').eq(index).css("z-index","0");
+		 $('.imgBtn2').eq(index).css("opacity","0");
+		 $('.imgBtn2').eq(index).css("z-index","0");
+		});  
+	$(document).on('click','.detailBtn,.detailBtn2',function(){
+		let data = $(this).data();
+		let url = "";
+		let detailForm = $("#detailForm");
+		let inputNum = $("input[name=cbNum]");
+		if(data.cbtype == '정기모임'){
+			url = "/regular/info";
+		}else if(data.cbtype == '번개모임'){
+			url = "/thunder/info";
+		}
+		console.log(data.cbnum);
+		inputNum.val(data.cbnum);
+		detailForm.attr("action",url);
+		detailForm.submit();
+		
+	})
+	$(document).on('click','.dropBtn',function(){
+		let data = $(this).data();
+		changeClubMemStateMinus(data);
+	})
 
 	
 	var acc = document.getElementsByClassName("accordionBtn");
@@ -313,6 +245,7 @@
 	    }
 	  });
 	}
+	});
 </script>
 
 

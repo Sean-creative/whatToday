@@ -1,0 +1,174 @@
+*{
+    margin:0;
+    padding:0;
+    text-decoration: none;
+    list-style: none;
+}
+/* -------------------------------헤더 */
+#header{
+    width:1200px;
+    height:80px;
+    margin:0 auto;
+}
+#head{
+    width:1200px;
+    height:80px;
+    /* background:transparent; */
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.menu1{
+    display: flex;
+    justify-content: flex-start;
+}
+/* logo */
+#head img{
+    width:80px; 
+    margin-right:20px; 
+    margin-top:5px;
+}
+
+/* 검색창 */
+input[type=text] {
+    width: 190px;
+    box-sizing: border-box;
+    /* border: 1px solid #333; */
+    border-style: none none solid none;
+    border-bottom: 1px solid #666;
+    outline:none;
+
+    /* border-radius: 4px; */
+    font-size: 14px;
+    background-color: white;
+    background-image: url("../img/search.png");
+    background-position: 5px 10px; 
+    background-repeat: no-repeat;
+    padding: 8px 20px 8px 25px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-top:10px;
+  }
+  
+  input[type=text]:focus {
+    width: 110%;
+  }
+/* 로그인/고객센터 */
+.menu2{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.menu2 a{
+    color:#333;
+    margin-right:5px;
+    font-size:13px;
+    transition: 0.3s;
+}
+.menu2 a:hover{
+    font-weight: bold;
+    color:#ffaf31;
+}
+
+
+/* 햄버거 메뉴 전체  */
+#nav{
+    display:flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+/* 햄버거 메뉴  */
+
+
+/* ==================ver2 */
+.overlay {
+    width: 1200px;
+    height: 0;
+    position: fixed;
+    z-index: 1;
+    top: 115px;
+    left:165px;
+    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  
+  .overlay-content {
+    position: relative;
+    /* top: 30%; */
+    height: 100px;
+    /* text-align: center; */
+    /* margin-top: 30px; */
+  }
+  
+  .overlay a {
+    padding: 8px;
+    font-size: 36px;
+    color: #818181;
+    /* display: block; */
+    transition: 0.3s;
+  }
+  
+  .overlay a:hover{
+    color:#ffaf31;
+  }
+  
+  .overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right:20px;
+    font-size: 60px;
+    z-index: 999;
+  }
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  .menubtn{
+      margin-right:10px;
+  }
+
+  .submenu{
+      padding-right:15px;
+      color:#333;
+      font-size:17px;
+      margin-top:3px;
+      transition: 0.5s;
+  }
+  .submenu:hover{
+      color:#ffaf31;
+  }

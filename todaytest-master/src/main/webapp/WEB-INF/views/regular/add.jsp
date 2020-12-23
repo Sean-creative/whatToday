@@ -1,20 +1,98 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
+
+<style>
+/* 파일 업로드 블로그 style */
+.inputArea {
+	margin: 10px 0px;
+}
+
+select {
+	with: 100px;
+}
+
+label {
+	display: inline-block;
+	width: 70px;
+	padding: 5px;
+}
+
+label[for='gdsDes'] {
+	display: block;
+}
+
+input {
+	width: 150px;
+}
+
+textarea#gdsDes {
+	width: 400px;
+	height: 180px;
+}
+
+.select_img img {
+	margin: 20px 0px;
+}
+
+/* 해시태그 구현 */
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul {
+	padding: 16px 0;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+form {
+	padding-top: 16px;
+}
+
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+.del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+
+.thumbImg {
+	width: 200px;
+	height: auto;
+}
+</style>
+
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 
 <h3 style="text-align: center">기본정보(필수)</h3>
 
-<form id="register" name="register" action="/regular/add" method="post"
-	onsubmit="return inputCheckclub();">
+<form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
 
-	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum"
-		value="${usrNum}" /> <input type="hidden" id="cbType" name="cbType"
-		value="정기모임" /> <input type="hidden" id="cbLeaderName"
-		name="cbLeaderName" value="${usrName}" /> <label for="cbCategory">카테고리/분야</label>
+	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
+	<input type="hidden" id="cbType" name="cbType" value="정기모임" />
+	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
+	<label for="cbCategory">카테고리/분야</label>
 	<select id="cbCategory" name="cbCategory">
 		<option value="아웃도어/여행">아웃도어/여행</option>
 		<option value="문화/공연/축제">문화/공연/축제</option>
@@ -23,24 +101,57 @@
 		<option value="외국/언어">외국/언어</option>
 		<option value="게임/오락">게임/오락</option>
 		<option value="기타">기타</option>
-	</select> <label for="cbSubcat">모임</label> <select id="cbSubcat" name="cbSubcat"></select><br>
-	<label for="cbName">모임명</label> <input type="text" id="club"
-		name="cbName"><br> <label for="cbCity">지역 </label> <select
-		name="cbCity" id="cbCity">
+	</select>
+	<label for="cbSubcat">모임</label>
+	<select id="cbSubcat" name="cbSubcat"></select>
+	<br> <label for="cbName">모임명</label>
+	<input type="text" id="club" name="cbName">
+	<br> <label for="cbCity">지역 </label>
+	<select name="cbCity" id="cbCity">
 		<option value="서울특별시">서울특별시</option>
 		<option value="경기도">경기도</option>
-	</select> <select name="cbDistrict" id="cbDistrict"></select> <label
-		for="cbMbNum">정원</label> <input type="number" id="num" name="cbMbNum"
-		min="1" max="200"><br> <input type="hidden"
-		name="cbMakeDate">
+	</select>
+	<select name="cbDistrict" id="cbDistrict"></select>
+	<label for="cbMbNum">정원</label>
+	<input type="number" id="num" name="cbMbNum" min="1" max="200">
+	<br>
+	<input type="hidden" name="cbMakeDate">
 	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag">해시태그</label> <input type="text" id="hash"
-		name="cbHashtag" value="#"><br> <label for="cbIntro">한줄소개</label>
-	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요"><br>
-	<label for="cbDetailContent">모임 상세내용(필수)</label><br>
-	<textarea name="cbDetailContent" rows="10" cols="100"
-		style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
-	<br> <input type="file" name="cbFile">
+	<label for="cbHashtag">해시태그</label>
+	<input type="text" id="hash" name="cbHashtag" value="#">
+	<br> <label for="cbIntro">한줄소개</label>
+	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요">
+	<br> <label for="cbDetailContent">모임 상세내용(필수)</label><br>
+	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+	<br>
+	
+	<div class="inputArea" style="float: left; margin-right: 50px">
+
+			<div class="select_img" style="margin: 2px 0px">
+				<img class="thumbImg" src="/resources/img/logo.png" style="margin: 0px;" /> <br>
+				<!-- <label for="gdsImg" >이미지 선택</label> -->
+				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
+			</div>
+
+			<script>
+				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+				$("#gdsImg").change(
+						function() {
+							if (this.files && this.files[0]) {
+								var reader = new FileReader;
+								reader.onload = function(data) {
+									$(".select_img img").attr("src",
+											data.target.result).width(200)
+											.height(144);
+								}
+								reader.readAsDataURL(this.files[0]);
+							}
+						});
+			</script>			
+		</div>
+	
+	
+	
 	<button type="submit">개설하기</button>
 </form>
 

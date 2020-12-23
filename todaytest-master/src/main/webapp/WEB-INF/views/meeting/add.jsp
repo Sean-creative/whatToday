@@ -45,7 +45,7 @@
 	<div class='weather'>
 		<div class='City'></div>
 	</div>
-	
+
 	<form action="/meeting/add" method="post" onsubmit="return inputCheck()">
 		<div>
 			<div>
@@ -108,10 +108,10 @@
 		</div>
 
 
-		<!-- 모임 번호정도만 컨트롤러에 보낸다. -->		
+		<!-- 모임 번호정도만 컨트롤러에 보낸다. -->
 		<input type="hidden" name="cbNum" value="<c:out value="${cbNum}" />" />
 		<input type="hidden" name="cbName" value="${cbName}" />
-				
+
 	</form>
 
 
@@ -194,20 +194,18 @@
 	})
 
 	const inputCheck = function() {
-		
-		let date = $('#mtStartDate').val();		
-		let mbNum = $("[name=mtMbNum]").val();				
-		
+
+		let date = $('#mtStartDate').val();
+		let mbNum = $("[name=mtMbNum]").val();
+
 		//공백을 제거해한 뒤에 개수를 세던지 한다.	
-		let name = $.trim($("[name=mtName]").val());		
-		let intro = $.trim($("[name=mtIntro]").val());	
+		let name = $.trim($("[name=mtName]").val());
+		let intro = $.trim($("[name=mtIntro]").val());
 		let supplies = $.trim($('#mtSupplies').val());
 
-		$('[name=mtName]').val(name);		
-		$('[name=mtIntro]').val(intro);	
+		$('[name=mtName]').val(name);
+		$('[name=mtIntro]').val(intro);
 		$('#mtSupplies').val(supplies);
-		
-		
 
 		if (!name || name.length > 30) {
 			alert("만남명을 다시 입력해주세요.");
@@ -218,7 +216,7 @@
 			alert("만남날짜를 입력해주세요.");
 			return false;
 		}
-	
+
 		if (!mbnum || mbnum < 1) {
 			alert("만남인원을 다시 입력해주세요.");
 			return false;
@@ -238,6 +236,22 @@
 
 		return true;
 	}
+
+	// toSOSString()을 이용하기 위해서 사용
+	// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환한다.
+	const offset = new Date().getTimezoneOffset() * 60000;
+	const today = new Date(Date.now() - offset);
+
+	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함		
+	let nowDate = today.toISOString().slice(0, 16);
+
+	$('#mtStartDate').val(nowDate);	
+
+	//현재시간으로 부터 일주일 더해준 것이 maxDay
+	today.setDate(today.getDate() + 28);
+	let maxDay = today.toISOString().slice(0, 16);
+	$("#mtStartDate").attr('min', nowDate);
+	$("#mtStartDate").attr('max', maxDay);
 </script>
 
 

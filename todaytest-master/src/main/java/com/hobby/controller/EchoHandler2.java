@@ -70,6 +70,9 @@ public class EchoHandler2 extends TextWebSocketHandler {
 				}else {
 					list = messageMap.get(target);
 					System.out.println("list : " + list);
+					if(list.size()==6) {
+						list.remove(0);
+					}
 					list.add(content);
 					messageMap.put(target, list);
 				}

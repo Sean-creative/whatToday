@@ -30,7 +30,7 @@
 }
 
 /* 검색창 */
-input[type=text] {
+#serchHeader {
     width: 190px;
     box-sizing: border-box;
     /* border: 1px solid #333; */
@@ -50,7 +50,7 @@ input[type=text] {
     margin-top:10px;
   }
   
-  input[type=text]:focus {
+#serchHeader:focus {
     width: 110%;
   }
 /* 로그인/고객센터 */
@@ -210,6 +210,7 @@ input[type=text] {
 .tooltip {
   position: relative;
   display: inline-block;
+  
 }
 
 .tooltip .tooltiptext {
@@ -218,14 +219,14 @@ input[type=text] {
   height: 150px;
   background-color: black;
   color: #fff;
-  text-align: center;
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 150%;
   left: 50%;
   margin-left: -152.5px;
+  
 }
 
 

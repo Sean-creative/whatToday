@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 /**
  * 작성자 : 국민성
  */
@@ -53,6 +55,9 @@ public class MypageController {
 	@Setter(onMethod_ = @Autowired)
 	private MypageService service;
 
+	@Resource(name = "uploadFolder")
+	private String uploadFolder;
+
 	// 메인페이지
 	@GetMapping("/main")
 	public String main(Model model, Authentication auth) {
@@ -87,10 +92,11 @@ public class MypageController {
 		if (auth == null) {
 			url = "redirect:/login/login";
 		}
-		
+		else {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		model.addAttribute("usrNum",customUser.getUser().getUsrNum());
-		
+		}
 		return url;
 
 	}
@@ -101,24 +107,27 @@ public class MypageController {
 		log.info("/myclub/userManage");
 		if (auth == null) {
 			url = "redirect:/login/login";
-		}
+		}else {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		model.addAttribute("usrNum",customUser.getUser().getUsrNum());
+		}
 		return url;
 	}
 	// 회원정보수정하게되면 비밀번호를 재입력받는 페이지
 	// auth_leave 페이지랑 통합하는 방법을 생각해볼것
 	@GetMapping("/auth_edit")
-	public String auth_edit(Authentication auth) {
+	public String auth_edit(Authentication auth,Model model) {
 
 		String url = "/mypage/auth_edit";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/auth_edit");
 		if (auth == null) {
 			url = "redirect:/login/login";
+		}else {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		}
-
 		return url;
 	}
 
@@ -165,6 +174,9 @@ public class MypageController {
 		log.info("##/edit");
 		if (auth == null) {
 			url = "redirect:/login/login";
+		}else {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		}
 		return url;
 	}
@@ -199,13 +211,16 @@ public class MypageController {
 
 	// 비밀번호 변경 페이지
 	@GetMapping("/password")
-	public String password(Authentication auth) {
+	public String password(Authentication auth, Model model) {
 		String url = "/mypage/password";
 
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/password");
 		if (auth == null) {
 			url = "redirect:/login/login";
+		}else {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		}
 		return url;
 	}
@@ -256,13 +271,16 @@ public class MypageController {
 
 	// 회원탈퇴 비밀번호 입력페이지
 	@GetMapping("/auth_leave")
-	public String auth_leave(Authentication auth) {
+	public String auth_leave(Authentication auth, Model model) {
 
 		String url = "/mypage/auth_leave";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/auth_leave");
 		if (auth == null) {
 			url = "redirect:/login/login";
+		}else {
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 		}
 		return url;
 	}
@@ -302,11 +320,6 @@ public class MypageController {
 
 		return url;
 	}
-	
-	@GetMapping("/uploadUserImage")
-	public void uploadUserImage() {
-		log.info("uploadUserImage");
-	}
 
 	@PostMapping(value = "/uploadFormAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
@@ -314,7 +327,6 @@ public class MypageController {
 		
 		AttachFileDTO imgFile = new AttachFileDTO();
 		//각자 컴퓨터 경로로 바꿔야할듯
-		String uploadFolder = "C:\\Users\\sudal\\Desktop\\workspace\\todaytest-master\\src\\main\\webapp\\resources\\img\\upload";
 		
 		//make folder---
 		String uploadFolderpath = service.getFolder();

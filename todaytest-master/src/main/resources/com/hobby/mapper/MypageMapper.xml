@@ -33,13 +33,12 @@
 	</select>
 	
 	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
-		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum from club,clubmember where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate
+		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum, club.cbfile from club,clubmember,tbluser where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.cbleadernum=tbluser.usrnum and tbluser.USRSTATE ='회원' and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate
 	</select>
 	
 	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
-		select cbnum,cbname,cbtype from clubjoinhistory where USRNUM = #{usrNum} and CBJOINSTATERESULT = '승인대기' and
+		select club.cbnum,club.cbname,club.cbtype,club.cbfile from clubjoinhistory,club,tbluser where clubjoinhistory.USRNUM = #{usrNum} and clubjoinhistory.CBJOINSTATERESULT = '승인대기' and tbluser.usrNum=club.cbLeadernum and tbluser.USRSTATE='회원' and clubjoinhistory.cbnum = club.cbnum and
 (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum)
-
 
 	</select>
 	
