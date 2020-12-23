@@ -4,11 +4,14 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hobby.domain.HobbyTestVO;
 import com.hobby.service.TestService;
 
 import lombok.AllArgsConstructor;
@@ -49,5 +52,24 @@ public class HobbyTestController {
 		//localhost:8080/regular/list?category=아웃도어%2F여행&subclass=캠핑%2F백패킹
 		
 		return getResult;
+	}
+	
+	@PostMapping
+	public String testResultAction(HobbyTestVO test, Model model) {
+		log.info("##/testResultAction" + test);
+		
+		String userResult = test.getUserResult1()+test.getUserResult2()+test.getUserResult3();
+		JSONArray getResult = service.getTestResult(userResult);
+		
+		//결과:[{"subclass":"산책\/트래킹","category":"아웃도어\/여행"},{"subclass":"스케이트\/인라인","category":"운동\/스포츠"},{"subclass":"공연\/연극","category":"문화\/공연\/축제"}]
+		System.out.println("re1: " + getResult.get(0));
+		System.out.println("re1: " + getResult.get(1));
+		System.out.println("re1: " + getResult.get(2));
+		
+		model.addAttribute("testReuslt1", getResult.get(0));
+		model.addAttribute("testReuslt2", getResult.get(1));
+		model.addAttribute("testReuslt3", getResult.get(2));
+		
+		return "/hobbyTest/result";
 	}
 }

@@ -2,56 +2,68 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@include file="../includes/header.jsp" %>
+<%-- <%@include file="../includes/header.jsp" %> --%>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="body">
-	<div id="banner">
-		<ul>
-			<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-			<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
-			<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li> <!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
-		</ul>
-	</div>
-	<div id="bodymain">
-				
-		<form id="formBoardUpdate" role="form" action="/regular/boardupdate" method="post">
+<div id="bgpic">
+	<div id="detail">
+         <div id="leftinfo">
+         	<img src="../resources/img/mount.jpg" alt="">
+			<div id=banner>
+				<ul>
+					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
+					<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
+				</ul>
+			</div>
+		 <div id=bodymain>
+		 <h2>수정</h2> 
+		 		
+		 <form id="formBoardUpdate" role="form" action="/regular/boardupdate" method="post">
 			
 			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
 			<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
 			<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
 			
 			<div class="form-group">
-				<label>게시판 번호</label> 
-				<input class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly"/>
+				<label>게시판 번호</label><br>
+				<input type="text" class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly"/>
 			</div>
 			
 			<div class="form-group">
-				<label>제목</label> 
-				<input class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>'/>
+				<label>제목</label><br> 
+				<input type="text" class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>'/>
 			</div>
 			
 			<div class="form-group">
-				<label>내용</label>
-				<textarea class="form-control" rows="5" name='cbBdContent'>
+				<label>작성자</label><br>
+				<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly"/>
+			</div>
+			
+			<div class="form-group">
+				<label>내용</label><br>
+				<textarea class="form-control" name='cbBdContent'>
 					<c:out value="${club.cbBdContent}"/>
 				</textarea>
 			</div>
 			
-			<div class="form-group">
-				<label>작성자</label>
-				<input class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly"/>
-			</div>
-			
-			<button type="submit" data-oper='update' class="btn btn-default">수정</button>
-			<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
-			<button type="submit" data-oper="list" class="btn btn-info">목록으로 이동</button>
+			<button type="submit" data-oper='update' class="btn btn">수정</button>
+			<button type="submit" data-oper='delete' class="btn btn">삭제</button>
+			<button type="submit" data-oper="list" class="btn btn">목록</button>
 			
 		</form>
 			
+		</div>
+		</div>	
+	
+		<div id="rightinfo" class="rightinfo">
+                <div class="content">
+					<c:out value="${cbName}" />
+                </div>
+        </div>
 	</div>
-</div>	
-
+ </div>
+ 
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -82,5 +94,18 @@
 		});
 	});
 </script>
+<script>
+window.onscroll = function() {myFunction()};
 
-<%@include file="../includes/footer.jsp" %>
+var right = document.getElementById("rightinfo");
+var sticky = rightinfo.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    rightinfo.classList.add("sticky");
+  } else {
+    rightinfo.classList.remove("sticky");
+  }
+}
+</script>	
+<%-- <%@include file="../includes/footer.jsp" %> --%>
