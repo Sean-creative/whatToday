@@ -77,15 +77,48 @@
   	top: 40px;
   	/* margin-left:70%; */
 }
-#bodymain {
+#body1 {
     width:100%;
-    height:auto;
+    height:500px;
     background:pink;
+}
+.cod {
+    display:flex;
+    margin-top:20px;
+    height:60px;
+    background: #ab1170;
+}
+.nam1{
+    display:flex;
+    height:150px;
+    background: #117aab;
+}
+.nam2{
+    display:flex;
+    height:120px;
+    margin-top:20px;
+    background: #94ab11;
+}
+#body2{
+    width:100%;
+    height:100px;
+    background:#35ab11;
+    display: flex;
+}
+
+#body3{
+    width:100%;
+    height:700px;
+    background:beige;
+}
+#body4{
+    width:100%;
+    height:500px;
+    background:#1199ab;
 }
 .content {
 	margin: 30px;
 }
-
 /* //////MODAL//////////////////////////////////////////////////// */
 
 /* Add padding and center-align text to the container */
@@ -142,13 +175,7 @@ form {
 	padding: 15px 20px;
 	border: none;
 	cursor: pointer;
-    width: 80px;
     border-radius: 5px;
 	opacity: 0.9;
-	margin:0 auto;
+	margin:10px auto;
 }
-/* #orange{
-    width:100%;
-    height:100px;
-    background:#ffaf31;
-} */

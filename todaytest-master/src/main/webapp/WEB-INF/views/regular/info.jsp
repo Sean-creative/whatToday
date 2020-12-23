@@ -18,106 +18,111 @@
 				</ul>
 			</div>
 
-			<div id=bodymain>
-				해시태그 - <c:out value="${club.cbHashtag}" /><br> 
-		
-				[모임명] <c:out value="${club.cbName}" /><br> 
-		
-				한줄소개 - <c:out value="${club.cbIntro}" /><br> 
-				
-				상세내용 - <pre style="font-size: 15px;"><c:out value="${club.cbDetailContent}" /></pre><br> 
-				
-				가입한 회원  
-				<div style="border: 1px solid black; width: 170px; height: 140px; display: flex;">
+			<div id=body1>
+				<div class="cod">
+					<c:out value="${club.cbHashtag}" />
+				</div>
+				<div class="nam1">
+					<c:out value="${club.cbName}" />
+				</div>
+				<div class="cod">
+					<c:out value="${club.cbIntro}" />
+				</div>
+				<div class="cod">
+					개설자 정보 : <c:out value="${userVO.usrName}" />(<c:out value="${userVO.usrId}" />)
+				</div>
+				<div class="nam2">
+					모임에 가입된 회원 정보 
+					<div style="border: 1px solid black; width: 100px; height: 100px; display: flex;">
 					<c:forEach items="${joinList}" var="joinList"> 
 						<li><c:out value="${joinList.usrName}" /></li>
 					</c:forEach>
+					</div>
 				</div>
-				개설자 - 
-				<c:out value="${userVO.usrName}" />(<c:out value="${userVO.usrId}" />)<br>
+			</div>
+			
+			<div id="body2">
+			
+				<!-- 로그인 유저가 모임장이면 모임수정하기 버튼을 보여준다. -->
+				<c:if test="${usrNum == club.cbLeaderNum}">
+					<button data-oper='modify' class="btn btn-default">모임 수정</button>
+				</c:if>
+					<button data-oper='list' class="btn btn-info">목록</button>
+
+				<form id='operForm' action="/regular/update" method="get">
+					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+				</form>
 				
-
-	<!-- <button type="submit" onclick="document.getElementById('id01').style.display='none'">가입하기</button> -->
-	<!-- <button onclick="javascript:join();">가입하기</button> -->
-	
-	<div style="display:flex; flex-direction: row; justify-content: flex-end;">
-		<!-- 로그인 유저가 모임장이면 모임수정하기 버튼을 보여준다. -->
-		<c:if test="${usrNum == club.cbLeaderNum}">
-			<button data-oper='modify' class="btn btn-default">모임 수정</button>
-		</c:if>
-			<button data-oper='list' class="btn btn-info">List</button>
-	</div>
-	<form id='operForm' action="/regular/update" method="get">
-		<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-	</form>
-	
-	<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
-	<c:if test="${usrNum != club.cbLeaderNum}">
-		<button style="margin-left: 230px; padding: 5px 80px; margin-bottom: 30px;" class="btn btn-info" data-oper='join' id="join">
-			<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-			<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
-			<c:choose>
-				<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-				<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }">모임 가입불가</c:when>
-				<c:when test="${joinState eq '승인대기'}">승인 대기 중</c:when>
-
-				<c:when test="${club.cbMbNum == club.cbCurMbNum}">모임 정원 초과</c:when>
-				<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-			</c:choose>
-		</button>
-	</c:if>
-
-
-	<form action="#" method="get" id="meeting-form">
-		<%-- <c:choose>
-						<c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
-						<c:otherwise>모임원</c:otherwise>
-					</c:choose> --%>
-		<div id="plus" style="float: right; border: 1px solid; margin: 30px auto;">
-			<c:forEach items="${meetingList}" var="MeetingVO">
-				<div style="text-align: center; border: 1px solid; margin: 0px; padding: 10px; font-size: 30px;">
-
-					<br> ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명) <br>
-					<fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-					<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " />
-
-					<br> ${MeetingVO.mtAddress} ${MeetingVO.mtPlace} <br> ${MeetingVO.mtName} <br> ${MeetingVO.mtSupplies}
-
-					<button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+				<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
+				<c:if test="${usrNum != club.cbLeaderNum}">
+					<button class="btn btn-info" data-oper='join' id="join">
+						<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+						<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
 						<c:choose>
-							<c:when test="${MeetingVO.usrMtState eq '참석중'}">만남 참석 취소</c:when>
-							<c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">만남 참석</c:when>
+							<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+							<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }">모임 가입불가</c:when>
+							<c:when test="${joinState eq '승인대기'}">승인 대기 중</c:when>
+			
+							<c:when test="${club.cbMbNum == club.cbCurMbNum}">모임 정원 초과</c:when>
+							<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
 						</c:choose>
 					</button>
-
-
-					<c:if test="${usrNum == club.cbLeaderNum}">
-						<button class="btn-meeting" data-oper='modifyMeeting' value="${MeetingVO.mtNum}">만남 수정</button>
-					</c:if>
-
+				</c:if>
+			</div>
+			
+			<div id="body3">    
+				<pre style="font-size: 15px;"><c:out value="${club.cbDetailContent}" /></pre>
+            </div>
+            
+            <div id="body4">
+	            <form action="#" method="get" id="meeting-form">
+				<%-- <c:choose>
+							<c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+							<c:otherwise>모임원</c:otherwise>
+					 </c:choose> --%>
+					 
+				<div id="plus" style="float: right; border: 1px solid; margin: 30px auto;">
+					<c:forEach items="${meetingList}" var="MeetingVO">
+						<div style="text-align: center; border: 1px solid; margin: 0px; padding: 10px; font-size: 30px;">
+		
+							<br> ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명) <br>
+							<fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+							<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " />
+		
+							<br> ${MeetingVO.mtAddress} ${MeetingVO.mtPlace} <br> ${MeetingVO.mtName} <br> ${MeetingVO.mtSupplies}
+		
+							<button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+								<c:choose>
+									<c:when test="${MeetingVO.usrMtState eq '참석중'}">만남 참석 취소</c:when>
+									<c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">만남 참석</c:when>
+								</c:choose>
+							</button>
+		
+		
+							<c:if test="${usrNum == club.cbLeaderNum}">
+								<button class="btn-meeting" data-oper='modifyMeeting' value="${MeetingVO.mtNum}">만남 수정</button>
+							</c:if>
+		
+						</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
-		</div>
-
-
-		<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;">
-			<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
-			<c:if test="${usrNum == club.cbLeaderNum}">
-				<button style="padding: 5px 80px;" class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
-			</c:if>
-		</div>
-
-		<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
-		<input type="hidden" name="cbName" value="${club.cbName }" />
-	</form>
 	
-	</div>
-
-	<div id="orange">
-                    게시판
-    </div>
-</div>
-<!-- body end -->
+	
+				<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;">
+					<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
+					<c:if test="${usrNum == club.cbLeaderNum}">
+						<button style="padding: 5px 80px;" class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+					</c:if>
+				</div>
+		
+				<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+				<input type="hidden" name="cbName" value="${club.cbName }" />
+				</form>
+            </div>
+      
+          
+    	</div>
+    	
 		<div id="rightinfo" class="rightinfo">
                 <div class="content">
 					모임명: <c:out value="${club.cbName}" /><br>
@@ -132,11 +137,11 @@
 					</c:if>
                 </div>
         </div>
-    </div>
+	</div>
 </div>
 
 
-
+<!-- 가입하기 모달창  -->
 <div id="id01" class="modal">
 	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
 
@@ -184,14 +189,11 @@
 		}
 	} */
 	
-	
 	const btnText = $("#join").text().trim();
 	console.log(btnText);
 	if (btnText=='모임 가입불가'||btnText=='승인 대기 중'||btnText=='모임 정원 초과') {
 		document.getElementById("join").disabled = 'disabled';
 	} 
-	
-	
 	
 	$("button[data-oper='join']").on(
 			"click",
@@ -207,7 +209,6 @@
 				}																															
 			});
 	
-	
 	function join() {
 		if(!replyer){
 			location.href="/regular/clubjoin?cbNum=${club.cbNum}";
@@ -217,9 +218,7 @@
 			modal.style.display = "block";
 		}
 	}
-	
-	
-	
+
 	
 	// Meeting에 관련된 것들 중에서 -> 참석하기, 개설하기, 수정하기 중 버튼을 누른다면
 	let formObj = $("#meeting-form");
@@ -261,9 +260,6 @@
 	if ('${joinState}' !== '가입승인') {
 		$("button[data-oper='joinMeeting']").attr("disabled", "disabled");
 	}
-		
-	
-	
 	
 </script>
 

@@ -8,7 +8,7 @@
 <div id="bgpic">
 	<div id="detail">
          <div id="leftinfo">
-         	<img src="../resources/img/mount.jpg" alt="">
+         	<img src="${cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
 					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
