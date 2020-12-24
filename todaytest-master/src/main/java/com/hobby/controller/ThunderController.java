@@ -5,14 +5,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,7 +39,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ThunderController {
 
-	private ThunderService service;
+	
+	private ThunderService service;	
 	private UserService userService;
 
 //	servlet-context.xml에서 설정했던 uploadPath를 추가
@@ -332,14 +337,17 @@ public class ThunderController {
 			return "redirect:/thunder/gps" + cri.getListLink();			
 		}
 		
-//		cri.setOrderBy("cbnum desc");
-//		cri.setOrderBy("cbView desc");
-//		cri.setOrderBy("cbappperiod desc");
-//		cri.setOrderBy("distance");
 
-		// cri에 들어있는 조건 대로, club 정보를 가져온다.
-		model.addAttribute("list", service.getListWithPaging(cri));
-//		log.info("list(GET) : " + service.getListWithPaging(cri));
+
+		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
+		List<ThunderVO> thunderList = service.getListWithPaging(cri);
+		model.addAttribute("list", thunderList);
+		log.info("list(GET) - thunderList : " + thunderList);
+		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
+		
+		if(thunderList.size() != 0) {
+			log.info("list(GET) - firstOne : " + thunderList.get(0));
+		}
 
 		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri);
@@ -354,10 +362,12 @@ public class ThunderController {
 	
 	
 	@GetMapping("/gps")
+	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감
 	public void gps(Criteria cri, Model model) {		
-		log.info("gps(GET) - cri : " + cri);
-		
-		model.addAttribute("cri", cri);
-		
+		log.info("gps(GET) - cri : " + cri);		
+		model.addAttribute("cri", cri);		
 	}
+	
+	
+
 }
