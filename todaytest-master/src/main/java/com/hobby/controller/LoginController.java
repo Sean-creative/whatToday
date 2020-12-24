@@ -81,53 +81,55 @@ public class LoginController {
 	}
 
 
-	//	// 3. 회원가입 처리 - 메일 본인확인 버전
-	//	@PostMapping("/registerAction")
-	//	public String registerAction(UserVO user, RedirectAttributes rtts) {
-	//		log.info("##/registerAction: " + user);
-	//		// DB에 회원정보가 정상적으로 입력되었는가
-	//		// 회원가입 정보 - 5개 테이블에 입력 됨   
-	//		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
-	//		if(service.register(user)) {
-	//			// 본인확인 메일 전송
-	//			if(service.sendRegisterMail(user.getUsrId(), user.getUsrState())){
-	//				// alert로 회원가입 성공 여부 알림
-	//				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
-	//				return "redirect:/login/login";
-	//				// 회원가입이 안되면 다시 회원가입 페이지로 이동
-	//			}
-	//			return "redirect:/login/login";
-	//		}else {
-	//			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
-	//			return "redirect:/login/register";
-	//		}
-	//	}
-
-	// 3. 회원가입 처리 - test용 - 메일 확인 없이 그냥 회원가입되도록
-	@PostMapping("/registerAction")
-	public String registerAction(UserVO user, RedirectAttributes rtts) {
-		log.info("##/registerAction: " + user);
-		// DB에 회원정보가 정상적으로 입력되었는가
-		// 회원가입 정보 - 5개 테이블에 입력 됨   
-		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
-		if(service.register(user)) {
-			return "redirect:/login/login";
-		}else {
-			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+		// 3. 회원가입 처리 - 메일 본인확인 버전
+		@PostMapping("/registerAction")
+		public String registerAction(UserVO user, RedirectAttributes rtts) {
+			log.info("##/registerAction: " + user);
+			// DB에 회원정보가 정상적으로 입력되었는가
+			// 회원가입 정보 - 5개 테이블에 입력 됨   
+			// 회원가입이 성공되면 로그인 페이지로 넘어간다.
+			if(service.register(user)) {
+				// 본인확인 메일 전송
+				if(service.sendRegisterMail(user.getUsrId(), user.getUsrState())){
+					// alert로 회원가입 성공 여부 알림
+					rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName()+"님, 메일로 본인확인하여 회원가입을 완료해주세요.");
+					
+					return "redirect:/login/login";
+					// 회원가입이 안되면 다시 회원가입 페이지로 이동
+				}
+				return "redirect:/login/login";
+			}else {
+				rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+				return "redirect:/login/register";
+			}
+		}
+		
+		@GetMapping("/register/confirm")
+		public String registerConfirm(@RequestParam("usrId") String usrId, @RequestParam("authKey") String authKey) {
+			log.info("usrId: " + usrId);
+			log.info("authKey: " + authKey );
+			if(service.registerConfirm(usrId, authKey)) {
+				return "redirect:/login/login";
+				
+			}
 			return "redirect:/login/register";
 		}
-	}
 
-	@GetMapping("/register/confirm")
-	public String registerConfirm(@RequestParam("usrId") String usrId, @RequestParam("authKey") String authKey) {
-		log.info("usrId: " + usrId);
-		log.info("authKey: " + authKey );
-		if(service.registerConfirm(usrId, authKey)) {
-			return "redirect:/login/login";
-
-		}
-		return "redirect:/login/register";
-	}
+//	// 3. 회원가입 처리 - test용 - 메일 확인 없이 그냥 회원가입되도록 / serviceImpl도 추적처기
+//	@PostMapping("/registerAction")
+//	public String registerAction(UserVO user, RedirectAttributes rtts) {
+//		log.info("##/registerAction: " + user);
+//		// DB에 회원정보가 정상적으로 입력되었는가
+//		// 회원가입 정보 - 5개 테이블에 입력 됨   
+//		// 회원가입이 성공되면 로그인 페이지로 넘어간다.
+//		if(service.register(user)) {
+//			return "redirect:/login/login";
+//		}else {
+//			rtts.addFlashAttribute("registerFailMsg", "회원정보를 다시 입력해주세요.");
+//			return "redirect:/login/register";
+//		}
+//	}
+//
 
 	//	@GetMapping("/loginSuccess")
 	//	public void loginSuccess(Authentication auth, Model model) {
@@ -230,10 +232,11 @@ public class LoginController {
 			user.setUsrGender("");
 			user.setUsrBirth("");
 			user.setUsrType("카카오 회원가입");
+			user.setUsrState("회원");
 
 			if(service.snsRegister(user)) {
 				// alert로 회원가입 성공 여부 알림
-				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName());
+				rtts.addFlashAttribute("registerSuccessMsg", user.getUsrName()+"님 반갑습니다.");
 				return "redirect:/login/login";
 				// 회원가입이 안되면 다시 회원가입 페이지로 이동
 			}else {

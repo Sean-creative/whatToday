@@ -1,47 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../includes/header.jsp"%>
-<!-- 작성자: 김지영 -->
+<%@include file="../includes/slimHeader.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
-<link rel="stylesheet" href="/resources/css/findStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/memberFind.css">
+    <title>아이디/비밀번호찾기</title>
 </head>
 <body>
+    <div id="todofind">
+        <div id="centro">
+            <div class="lef1">
+                <p class="idpwd">가입 시 입력한 정보로 아이디를 찾아보세요.</p>
+                <div>
+                    <input type="text" placeholder="이름을 입력해주세요." id="name" name="usrName">
+                </div>
+                <div>
+                    <input type="text" placeholder="휴대폰 번호 입력" id="phone" name="usrPhone">
+                </div>
+                <p id="resultId"></p>
+                <div>
+                    <button class="btn" type="button" onclick="checkId();"> 확인</button>
+                </div>
 
-<div class="leftcolumn">
-  <p>아이디 찾기</p>
-  <div class="input-container">
-  	<label> 이름 </label>
-    <input class="input-field" type="text" placeholder="이름을 입력해주세요" id="name" name="usrName">
-  </div>
+                <div id="membership">
+                    <p>아직 회원이 아니세요?</p>
+                    <p><a href="">회원가입 > </a></p>
+                </div>
+            </div>
 
-  <div class="input-container">
-    <label>휴대전화 번호  </label>
-    <input class="input-field" type="text" placeholder="01012345678"  id="phone" name="usrPhone">
-  </div>
+            <div class="rig1">
+                <p class="idpwd">가입 시 입력한 정보로 비밀번호를 찾아보세요.</p>
+                <div>
+                    <input type="email" placeholder="이메일을 입력해주세요." id="email" name="usrId">
+                </div>
+                <p id="resultPwd"></p>
+				<div>
+  					<button class="btn" type="button" onclick="checkPwd();"> 확인</button>
+                </div>
 
-  <p id="resultId"></p>
+                <div id="membership">
+                    <p>아직 회원이 아니세요?</p>
+                    <p><a href="">회원가입 > </a></p>
+                </div>
 
-  <button class="btn" type="button" onclick="checkId();"> 확인</button>
-
-  </div>
-  
-<div class="rightcolumn">
-  <p>비밀번호 찾기</p>
-  <div class="input-container">
-  	<label>이메일(아이디) </label>
-    <input class="input-field" type="email" placeholder="이메일을 입력해주세요" id="email" name="usrId">
-  </div>
-
-  <p id="resultPwd"></p>
-
-  <button class="btn" type="button" onclick="checkPwd();"> 확인</button>
-</div>
-
-
-
+            </div>
+        </div>
+    </div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 function checkId(){
 	let name = $("#name").val();
@@ -84,9 +92,9 @@ function checkId(){
 	    data: JSON.stringify(send),
 	    success: function(data){
 	         if(data){
-	        	 document.getElementById('resultId').innerHTML = "<p class='answer'>아이디는 " + data + "입니다.</p>";
+	        	 document.getElementById('resultId').innerHTML = "아이디는 <span id='answer'>" + data + "</span>입니다.";
 	         }else{
-	        	 document.getElementById('resultId').innerHTML = "<p class='answer'>아이디를 찾을 수 없습니다.</p>";
+	        	 document.getElementById('resultId').innerHTML = "<span id='answer'>아이디를 찾을 수 없습니다.</span>";
 	         }
 	    },
 	    error: function (){        
@@ -94,10 +102,7 @@ function checkId(){
 	    }
 	  });
 }
-</script>
 
-
-<script type="text/javascript">
 function checkPwd(){
 	email = $("#email").val();
 	
@@ -131,4 +136,3 @@ function checkPwd(){
 </script>
 </body>
 </html>
-<%@ include file="../includes/footer.jsp"%>
