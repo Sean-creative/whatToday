@@ -30,14 +30,16 @@
 }
 
 /* 검색창 */
+
 #serchHeader {
     width: 190px;
     box-sizing: border-box;
-    /* border: 1px solid #333; */
-    border-style: none none solid none;
-    border-bottom: 1px solid #666;
+    border: 1px solid #333;
+    /* border-style: none none solid none;
+    border-bottom: 1px solid #666; */
     outline:none;
-
+    border-radius: 20px;
+    
     /* border-radius: 4px;*/
     font-size: 14px;
     background-color: white;
@@ -50,9 +52,6 @@
     margin-top:10px;
   }
   
-#serchHeader:focus {
-    width: 110%;
-  }
 /* 로그인/고객센터 */
 .menu2{
     display: flex;

@@ -47,7 +47,7 @@
 <!-- 공지사항  내용   -->
 <select id="noticeContent" resultType="com.hobby.domain.NoticeVO">
 	<![CDATA[	 
-		 select notice.ntTitle, noticeContent.ntNum, noticeContent.ntContent
+		 select notice.ntTitle,notice.ntDate,notice.readCnt, noticeContent.ntNum, noticeContent.ntContent
 		 from notice, noticeContent
 		 where notice.ntNum = noticeContent.ntNum and notice.ntNum = #{ntNum} 
 	]]>
