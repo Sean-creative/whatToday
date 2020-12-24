@@ -45,46 +45,22 @@ public class LoginServiceImpl implements LoginService{
 		return mapper.phoneDuplicateCheck(us_phone);
 	}
 
-//	@Transactional
-//	@Override 
-//  메일 본인확인 버전
-//	public boolean register(UserVO user) {
-//		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
-//		// 테이블에 insert가 잘되면 행(1)을 반환
-//		// 5개 테이블에 잘 들어갔는 지 확인
-//		log.info("##Service : register");
-//
-//		String registerPwd = user.getUsrPwd();
-//		user.setUsrPwd(pwencoder.encode(registerPwd));
-//		
-//		// 메일로 본인 확인 인증 전 회원상태 = 난수
-//		String authKey = (int) (Math.random()*100000000)+"";
-//		user.setUsrState(authKey);
-//		System.out.println("authKey: " + authKey);
-//		
-//		int resultCount = 0;
-//
-//		resultCount += mapper.insert(user);
-//		resultCount += mapper.insertUserInfo(user);
-//		resultCount += mapper.insertUserTerms(user);
-//		resultCount += mapper.insertUserHistory(user);
-//		resultCount += mapper.insertAuth();
-//
-//		return resultCount == 5;
-//	}
-	
 	@Transactional
-	@Override
+	@Override 
+    //메일 본인확인 버전
 	public boolean register(UserVO user) {
 		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
 		// 테이블에 insert가 잘되면 행(1)을 반환
 		// 5개 테이블에 잘 들어갔는 지 확인
 		log.info("##Service : register");
-		
+
 		String registerPwd = user.getUsrPwd();
 		user.setUsrPwd(pwencoder.encode(registerPwd));
 		
-		user.setUsrState("회원");
+		// 메일로 본인 확인 인증 전 회원상태 = 난수
+		String authKey = (int) (Math.random()*100000000)+"";
+		user.setUsrState(authKey);
+		System.out.println("authKey: " + authKey);
 		
 		int resultCount = 0;
 
@@ -96,6 +72,30 @@ public class LoginServiceImpl implements LoginService{
 
 		return resultCount == 5;
 	}
+	
+//	@Transactional
+//	@Override
+//	public boolean register(UserVO user) {
+//		// 회원가입에 대한 정보 여러 테이블에 저장됨. 한번에 트랜잭션 처리
+//		// 테이블에 insert가 잘되면 행(1)을 반환
+//		// 5개 테이블에 잘 들어갔는 지 확인
+//		log.info("##Service : register");
+//		
+//		String registerPwd = user.getUsrPwd();
+//		user.setUsrPwd(pwencoder.encode(registerPwd));
+//		
+//		user.setUsrState("회원");
+//		
+//		int resultCount = 0;
+//
+//		resultCount += mapper.insert(user);
+//		resultCount += mapper.insertUserInfo(user);
+//		resultCount += mapper.insertUserTerms(user);
+//		resultCount += mapper.insertUserHistory(user);
+//		resultCount += mapper.insertAuth();
+//
+//		return resultCount == 5;
+//	}
 
 	// 본인확인 메일 전송
 	public boolean sendRegisterMail(String email, String authKey) {
@@ -106,7 +106,7 @@ public class LoginServiceImpl implements LoginService{
 				+ "<p>오늘뭐하지를 이용해 주셔서 진심으로 감사드립니다.</p>"
 				+ "<p>아래 링크를 클릭하여 회원가입을 완료해 주세요.</p>"
 				+ "<p>감사합니다.</p>"
-				+ "<a href='http://localhost:8080/login/register/confirm?usrId=" + email + "&authKey=" + authKey + "'>로그인하러가기</a>";
+				+ "<a href='http://localhost:8088/login/register/confirm?usrId=" + email + "&authKey=" + authKey + "'>로그인하러가기</a>";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
