@@ -31,8 +31,12 @@ public class PayController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/kakaoPayPayment")
-	public void pointPayment() {
+	public void pointPayment(@RequestParam("usrNum") Long usrNum, Model model) {
 		log.info("##/pointPayment");
+		
+		Long userPoint = service.getUserPoint(usrNum);
+		
+		model.addAttribute("userPoint", userPoint);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -50,11 +54,10 @@ public class PayController {
 		
 		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
-		
-		System.out.println("usrNum: " + usrNum);
-		service.pointInsert(usrNum, Long.parseLong(money));
-		System.out.println("dd");
-		
+		Long curUsrPoint = customUser.getUser().getUsrPoint();
+		Long sum = Long.parseLong(money) + curUsrPoint;
+		System.out.println("@@@@sum: " + sum);
+		service.pointInsert(usrNum, sum);
 	}
 	
 	// 포인트 결제 요청

@@ -280,13 +280,19 @@
 		where cbNum = #{cbNum}
 	</update>
 
+<!-- 정기모임에 가입한 사람 - 지영 -->
 <select id="getCbMember" resultType="long">
 select usrnum
 from CLUBMEMBER
-where cbNum = #{cbNum} and usrNum = #{usrNum} and cbmbstresult ='가입승인'
+where cbNum = #{cbNum} and usrNum = #{usrNum} and cbMbStResult = #{cbMbStResult}
 </select>
 
-
+<!-- 모임 개설자 번호 - 지영 -->
+<select id="getCbLeaderNum" resultType="long">
+select cbLeaderNum
+from CLUB
+where cbNum = #{cbNum}
+</select>
 
 <!-- 정기모임 수정  -->
 <update id="updateClub">
