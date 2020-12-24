@@ -97,7 +97,7 @@ $(document).ready(function() {
 		console.log(club)
 		if(club.length == 0){
 			alert("만든거없음 이건 나중에 바꿀거 지금 테스트용임");
-			return;
+			return; 
 		}
 		for (let i = 0; i < club.length; i++) {
 			str += "<option value='"+club[i].cbNum+"' data-cbname='"+club[i].cbName+"' data-cbtype='"+club[i].cbType+"'>"

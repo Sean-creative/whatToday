@@ -3,6 +3,24 @@
 
 <mapper namespace="com.hobby.mapper.AdminMapper">
 
+<resultMap id="cbMem" type="com.hobby.domain.ClubVO">
+ 	<result property="usrNum" column="usrNum" />
+ 
+    <result property="usrName" column="usrName" />
+    <result property="cbMemIntro" column="cbMemIntro" />
+    <result property="cbAppDate" column="cbAppDate" />  
+    <result property="cbMbStResult" column="cbMbStResult" />  
+    <result property="cbNum" column="cbNum" />  
+    <result property="cbType" column="cbType" />  
+    <result property="cbName" column="cbName" />  
+    <result property="cbJoinStateUpdateDate" column="cbJoinStateUpdateDate" />  
+    <result property="cbJoinStateResult" column="cbJoinStateResult" />  
+    <association property="userVO" javaType="com.hobby.domain.UserVO">
+    	<id column="usrId" property="usrId"/>
+		<result column="usrBirth" property="usrBirth"/>
+		<result column="usrGender" property="usrGender"/>
+    </association>
+</resultMap>
 	<select id="getUserList" resultType="com.hobby.domain.UserVO">
 		select * from TBLUSER where USRSTATE = '회원'
 	</select>
@@ -36,11 +54,11 @@
 	</select>
 	
 	<select id="getClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUB WHERE CBFINALSTATE = '진행중'
+		select * from CLUB WHERE CBFINALSTATE = '진행중' order by cbnum desc
 	</select>
 	
-	<select id="getClubMemberList" resultType="com.hobby.domain.ClubVO">
-		select * from clubmember where cbnum = #{cbNum}
+	<select id="getClubMemberList" resultMap="cbMem">
+		select tbluser.usrName,tbluser.usrNum from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult = '가입승인' and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
 	</select>
 	
 	<insert id="insertUserHistory">
@@ -121,7 +139,6 @@
 	    usrLoginDate,
 	    COUNT(*) as memberCount
 		FROM tbluser
-        where usrstate = '회원'
 		GROUP BY 
 		usrLoginDate
         having usrLoginDate =  TO_CHAR(sysdate, 'yy/mm/dd')

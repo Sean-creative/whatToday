@@ -461,6 +461,7 @@
 		
 		var table;
 		table = $('#clubTable').DataTable({
+			"order": [],
 			 "createdRow": function( row, data, dataIndex ) {
 		        	$(row).attr("data-toggle","modal");
 		        	$(row).attr("data-target","#clubInfoModal");

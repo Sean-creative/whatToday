@@ -50,9 +50,9 @@
 	</nav>
 
 	<section id="wrapInfo3">
-		<h5>내가 개설한 정기모임</h5>
+		<h5>내가 모임장인 정기모임</h5>
 		<div id="myRegClubList" class="list" style="height: 182.4px;"></div>
-		<h5>내가 개설한 번개모임</h5>
+		<h5>내가 모임장인 번개모임</h5>
 		<div id="myThuClubList" class="list" style="height: 182.4px;"></div>
 		<form name="manageClub">
 			<input type="hidden" name="cbNum">
