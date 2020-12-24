@@ -11,6 +11,7 @@ import com.hobby.domain.UserVO;
 public interface MypageService {
 
 	
+	public UserVO getUserN(Long usrNum);
 	public UserVO getUser(String id);
 	public ClubVO getClub(ClubVO clubVO);
 	public ClubVO getJoinClub(Long usrNum);

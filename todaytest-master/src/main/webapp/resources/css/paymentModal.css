@@ -1,0 +1,146 @@
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	vertical-align: middle;
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 40%;
+	vertical-align: middle;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#pointBanner{
+    padding-bottom: 25px;
+}
+
+.close{
+    float: right;
+    cursor: pointer;
+}
+
+#myPointHist{
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px 0px 20px;
+    color: rgb(133, 138, 141);
+}
+
+#myPoint{
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px 0px 5px;
+    padding-bottom: 8px;
+}
+
+.bar{
+    content: "";
+    width: 100%;
+    height: 3px;
+    background: rgb(27, 28, 29);
+}
+
+#pointPayment{
+    font-size: 18px;
+    font-weight: bold;
+    margin : 10px 0px 10px 0px;
+    
+}
+
+#pointbx{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#pointbx div{
+    display: flex;
+    justify-content: space-between;
+}
+
+#couponImg{
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.pointChargeBox{
+    height: 40px;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    padding-bottom: 30px;
+}
+
+#product{
+    font-size: 14px;
+    font-weight: normal;
+    color: rgb(27, 28, 29);
+    margin: 0px;
+    padding-top: 14px;
+}
+
+#pointAmount{
+    font-size: 8px;
+    color: #ffaf31;
+    font-weight: bold;
+    margin: 0px;
+}
+
+#chargebtn{
+	margin-top: 11px;
+}
+
+#chargePoint{
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 11px;
+    background-color: rgb(248, 248, 249);
+}
+
+#warnTitle{
+    padding: 10px 20px;
+    background-color: rgb(248, 248, 249);
+    margin-top: 20px;
+}
+
+#warnLetter{
+    font-size: 11px;
+    color: rgb(27, 28, 29);
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    font-weight: bold;
+}
+
+li{
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    color: rgb(133, 138, 141);
+    opacity: 0.8;
+}
