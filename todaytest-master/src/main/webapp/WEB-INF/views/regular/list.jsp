@@ -102,7 +102,7 @@
 <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
 <script type="text/javascript" src="/resources/js/regularList.js"></script>
 
-<%-- <%@include file="../includes/footer.jsp"%> --%>
+<%@include file="../includes/footer.jsp"%>
 
 <%-- <div id="body">
 	<c:forEach items="${clublist}" var="club" varStatus="status" begin="0" end="19"> <!--20개 목록만 보여주기-->

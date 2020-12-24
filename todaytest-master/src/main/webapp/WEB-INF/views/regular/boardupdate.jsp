@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%-- <%@include file="../includes/header.jsp" %> --%>
+<%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
 <div id="bgpic">
@@ -108,4 +108,4 @@ function myFunction() {
   }
 }
 </script>	
-<%-- <%@include file="../includes/footer.jsp" %> --%>
+<%@include file="../includes/footer.jsp" %>

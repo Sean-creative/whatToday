@@ -266,4 +266,4 @@ function myFunction() {
   }
 }
 </script>
-<%-- <%@include file="../includes/footer.jsp" %> --%>
+<%@include file="../includes/footer.jsp" %>
