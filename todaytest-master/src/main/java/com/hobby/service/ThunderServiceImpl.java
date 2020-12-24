@@ -5,6 +5,7 @@ package com.hobby.service;
  */
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -171,12 +172,15 @@ public class ThunderServiceImpl implements ThunderService {
 	}
 
 	
+	private static int i = 0;
 	@Override
+	@Scheduled(cron=" */30 * * * * *")
 	public void schedul() {
-		System.out.println("i : ");
+		System.out.println(i++ + " Test controller!!");
+		
+		mapper.updateFinalState();
 	}
 
-	
 
 
 

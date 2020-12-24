@@ -170,7 +170,7 @@
 
 
       <!-- ========오른쪽========== -->
-      <div style="display : inline-block; background-color : red; width:700px; height:1100px; margin-top:75px; margin-left:40px;">
+      <div style="display : inline-block; width:700px; height:1100px; margin-top:75px; margin-left:40px;">
 
         <!-- 카카오 맵 영역 -->
         <div class="map_wrap">

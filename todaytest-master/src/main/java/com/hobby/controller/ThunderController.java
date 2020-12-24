@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ThunderController {
 
-	private ThunderService service;
+	
+	private ThunderService service;	
 	private UserService userService;
 
 //	servlet-context.xml에서 설정했던 uploadPath를 추가
@@ -339,8 +342,12 @@ public class ThunderController {
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
 		List<ThunderVO> thunderList = service.getListWithPaging(cri);
 		model.addAttribute("list", thunderList);
+		log.info("list(GET) - thunderList : " + thunderList);
 		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
-		log.info("list(GET) - firstOne : " + thunderList.get(0));
+		
+		if(thunderList.size() != 0) {
+			log.info("list(GET) - firstOne : " + thunderList.get(0));
+		}
 
 		// cri에 들어있는 조건 대로, 가져올 수 있는 club의 개수를 체크한다.
 		int total = service.getTotal(cri);
@@ -362,23 +369,5 @@ public class ThunderController {
 	}
 	
 	
-	
-	
-	@RequestMapping("ajax")
-	public String ajax() {
-		System.out.println("ajax 실행 됩니다.");
-		return "/thunder/ajax";
-	}
-	
-	static int cnt=0;
-	@RequestMapping(value="ajax_result02", produces="application/text;charset=utf-8")
-	@ResponseBody
-	public String ajax_result() {
-		return ++cnt + "";
-	}
-	
-	
-	
-	
-	
+
 }

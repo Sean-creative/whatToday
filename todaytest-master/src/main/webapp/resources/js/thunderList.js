@@ -90,8 +90,8 @@ $(function() {
 	}
 	
 	
-	//gps 관련
-	whereami();
+//	//gps 관련
+//	whereami();
 	
 	
 	
@@ -286,11 +286,11 @@ const inputCheck = function() {
 
 
 
+/*
 
-
-/**
+*//**
  * 비동기적으로 현재 위치를 알아내어 지정된 요소에 출력한다.
- */
+ *//*
 function whereami() {
     // 이 객체를 getCurrentPosition() 메서드의 세번째 인자로 전달한다.
     var options = {
@@ -346,4 +346,4 @@ function whereami() {
             
             console.log(msg);
     }
-}
+}*/

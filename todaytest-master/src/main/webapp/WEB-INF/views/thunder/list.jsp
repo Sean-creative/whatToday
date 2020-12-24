@@ -61,18 +61,6 @@
                 </div>
 
 
-
-<%-- 				<div id="nav">
-					<select name='searchBy' id='searchBy' style="width: 150px; height: 35px; font-size: 20px;">
-						<option value='모임명'>모임명</option>
-						<option value='글작성자'>글작성자</option>
-						<option value='해시태그'>해시태그</option>
-					</select>
-
-					<input type="text" name='keyword' placeholder="관심 취미를 검색해주세요." value='<c:out value="${pageMaker.cri.keyword}"/>'>
-					<button></button>
-				</div> --%>
-
 			</div>
 		</div>
 	</form>
@@ -100,6 +88,7 @@
 	</div>
 
 
+
 	<!-- 검색결과  -->
 	<div id="searchresult">
 		<c:forEach items="${list}" var="thunderItem" varStatus="status">
@@ -119,18 +108,6 @@
 	</div>
 
 
-
-
-
-	<!-- 페이지 넘버링 -->
-	<!-- <div id="myDIV">
-        <button class="btn">1</button>
-        <button class="btn active">2</button>
-        <button class="btn">3</button>
-        <button class="btn">4</button>
-        <button class="btn">5</button>
-    </div> -->
-    
     
 	<div class='pull-right'>
 		<ul class="pagination">
@@ -165,8 +142,8 @@
 		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'>
 
 		<!-- list.jsp로 어디서 오는지를 몰라서, 리스트 올 떄마다 값을 전달하는 방식으로! -->
-		<input type="hidden" name="userLatitude">
-		<input type="hidden" name="userLongitude">
+		<input type="hidden" name="userLatitude" value='<c:out value="${pageMaker.cri.userLatitude}"/>'>
+		<input type="hidden" name="userLongitude" value='<c:out value="${pageMaker.cri.userLongitude}"/>'>
 	</form>
 
 </section>
@@ -194,6 +171,27 @@
                       this.className += " active";
                           });
                       } */
+                      
+                          
+                      //3초마다 한번씩 릴로드 되게끔!
+                      function test() {
+                  		/* $.ajax({
+                  			url : "/thunder/list",
+                  			type : "GET",
+                  			success:function(data) {
+                  				$("#result").text(data);
+                  				console.log("성공")
+                  				},
+                  			error:function() {console.log("실패")}
+                  		}) */		
+                  		
+                  		actionForm.submit();
+                  		/* location.href="/thunder/list"; */
+                  	}
+                  	
+                  	
+                  	timerId = setInterval(test, 10000);
+                  	console.log(timerId);
 				</script>
 
 <!-- jQuery -->
