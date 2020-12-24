@@ -74,15 +74,25 @@ $(document).ready(function() {
 			let str2= "";
 			let myClubReg = $("#myRegClubList");
 			let myClubThu = $("#myThuClubList");
-			console.log(club);
+			let cnt = 0;
+			let cnt2 = 0;
 
 			for(let i = 0; i < club.length; i++){
 				if('정기모임' == club[i].cbType){
 					str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>수정하기</button><button class='imgBtn2 dropBtn' data-cbnum='"+club[i].cbNum+"'>폐쇄하기</button><p>"+club[i].cbName+"</p></div>";
-					}else if('번개모임' == club[i].cbType){
+					cnt++;	
+				}else if('번개모임' == club[i].cbType){
 						str2 += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>수정하기</button><button class='imgBtn2 dropBtn' data-cbnum='"+club[i].cbNum+"'>폐쇄하기</button><p>"+club[i].cbName+"</p></div>";
-					}
+						cnt2++;
 				}
+				}
+			
+			if(cnt == 0){
+				str = "<a href='/regular/add'>개설한 정기모임이 없습니다. 개설하러가기.</a>"
+			}
+			if(cnt2 == 0){
+				str2= "<a href='thunder/add'>개설한 번개모임이 없습니다. 개설하러가기.</a>"
+			}
 			myClubReg.empty();
 			myClubReg.append(str);
 			myClubThu.empty();

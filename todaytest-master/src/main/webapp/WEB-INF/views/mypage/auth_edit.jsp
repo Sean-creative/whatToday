@@ -13,7 +13,7 @@
 				<br>
 				<h5>${userVO.usrId }</h5>
 				<br>
-				<h5>${userVO.usrPoint }</h5>
+				<h5>포인트 ${userVO.usrPoint }점</h5>
 			</div>
 
 
