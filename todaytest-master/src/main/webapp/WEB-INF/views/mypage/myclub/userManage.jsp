@@ -121,17 +121,18 @@ $(document).ready(function() {
 				{"data": "userVO.usrBirth"},
 				{"data": "cbAppDate"},
 				{"data": function (data, type, dataToSet) {
+					console.log(data);
 					let str = "";
 								if(number == data.usrNum){
 									str = "모임장"
 								}else if(data.cbJoinStateResult == '승인대기'){
 									str = "<select name='cbJoinStateResult' id='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
 									+ data.cbJoinStateResult
-									+ "</option><option value='가입승인'>가입승인</option><option value='승인거부'>승인거부</option>";
+									+ "</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"' value='가입승인'>가입승인</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"'  value='승인거부'>승인거부</option>";
 								}else if(data.cbJoinStateResult == '가입승인'){
-									str = "<select name='cbJoinStateResult' id='cbJoinStateResult'><option value='"+list[i].cbJoinStateResult+"'>"
-									+ list[i].cbJoinStateResult
-									+ "</option><option value='모임추방'>모임추방</option>"
+									str = "<select name='cbJoinStateResult' id='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
+									+ data.cbJoinStateResult
+									+ "</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"' value='모임추방'>모임추방</option>"
 								}
 								return str;
 					}	
@@ -151,7 +152,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : "/mypage/clubmanage/changeClubMemStatePlus",
 			type : "PUT",
-			data : JSON.stringify({usrNum : e.usrNum,cbNum : e.cbNum, cbName : e.cbName, cbType : e.cbType, cbMbStResult : e.cbJoinStateResult}),
+			data : JSON.stringify({usrNum : e.usrnum,cbNum : e.cbnum, cbName : e.cbname, cbType : e.cbtype, cbMbStResult : e.cbJoinStateResult}),
 			dataType : "json",
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
@@ -168,7 +169,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : "/mypage/clubmanage/changeClubMemStateMinus",
 			type : "PUT",
-			data : JSON.stringify({usrNum : e.usrNum,cbNum : e.cbNum,cbName : e.cbName,cbType : e.cbType,cbMbStResult : e.cbJoinStateResult}),
+			data : JSON.stringify({usrNum : e.usrnum,cbNum : e.cbnum,cbName : e.cbname,cbType : e.cbtype,cbMbStResult : e.cbJoinStateResult}),
 			dataType : "json",
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
@@ -190,10 +191,10 @@ $(document).ready(function() {
 										type : "POST",
 										data : JSON
 												.stringify({
-													usrNum : e.usrNum,
-													cbNum : e.cbNum,
-													cbName : e.cbName,
-													cbType : e.cbType,
+													usrNum : e.usrnum,
+													cbNum : e.cbnum,
+													cbName : e.cbname,
+													cbType : e.cbtype,
 													cbJoinStateResult : e.cbJoinStateResult
 												}),
 										dataType : "json",
@@ -202,20 +203,22 @@ $(document).ready(function() {
 
 										},
 										complete : function(list) {
-											console.log(socData.usrId);
-											console.log(socData.cbName);
+											table.ajax.reload();
+											console.log(socData.usrid);
+											console.log(socData.cbname);
 
 											if (socket.readyState != 1) {
 												return;
 											}
 
-											socket.send(socData.userVO.usrId
+											socket.send(socData.usrid
 													+ "," + "["
-													+ socData.cbType + "]"
-													+ socData.cbName
+													+ socData.cbtype + "]"
+													+ socData.cbname
 													+ "에 가입되셨습니다."); //타겟, 내용.
 
 										}
+										
 									});
 						};
 
@@ -226,11 +229,11 @@ $(document).ready(function() {
 										type : "POST",
 										data : JSON
 												.stringify({
-													usrNum : e.usrNum,
-													usrName : e.usrName,
-													cbNum : e.cbNum,
-													cbName : e.cbName,
-													cbType : e.cbType,
+													usrNum : e.usrnum,
+													usrName : e.usrname,
+													cbNum : e.cbnum,
+													cbName : e.cbname,
+													cbType : e.cbtype,
 													cbJoinStateResult : e.cbJoinStateResult
 												}),
 										dataType : "json",
@@ -239,11 +242,7 @@ $(document).ready(function() {
 
 										},
 										complete : function(list) {
-											insertClubJoinHistory(e);
-											let cbNum = $(
-													"#clubList option:selected")
-													.val();
-											
+											insertClubJoinHistory(e);									
 										}
 									});
 						};
@@ -251,21 +250,19 @@ $(document).ready(function() {
 						$(document).on("change","select[name=cbJoinStateResult]",function() {
 							let index = $("select[name=cbJoinStateResult]").index(this);
 							let status = $("select[name=cbJoinStateResult]").eq(index).val();
-							let data = $("#clubList option:selected").data();
+							let data = $("select[name=cbJoinStateResult] option:selected").data();
+							data.cbJoinStateResult = status;
 							console.log(data);
-							/* console.log(memList[index]);
-							memList[index].cbJoinStateResult = status;
-							console.log(memList[index].cbJoinStateResult);
-							if (status == '가입승인') {
-								changeClubMemStatePlus(memList[index]);
+							  if (status == '가입승인') {
+								changeClubMemStatePlus(data);
 								alert("가입승인하셨습니다.");
 								} else if (status == '승인거부') {
-									insertClubJoinHistory(memList[index]);
+									insertClubJoinHistory(data);
 									alert("승인거부하셨습니다.");
 									} else if (status == '모임추방') {
-										changeClubMemStateMinus(memList[index]);
+										changeClubMemStateMinus(data);
 										alert("모임추방하셨습니다.");
-										} */
+										}  
 							});
 						
 
