@@ -14,7 +14,7 @@
 				<br>
 				<h5>${userVO.usrId }</h5>
 				<br>
-				<h5>포인트 ${userVO.usrPoint }점l</h5>
+				<h5>포인트 ${userVO.usrPoint }점</h5>
 			</div>
 
 
@@ -95,6 +95,10 @@ $(document).ready(function() {
 	clubService.getLeaderClubList({cbLeaderNum : number},function(club) {
 		let str = "";
 		console.log(club)
+		if(club.length == 0){
+			alert("만든거없음 이건 나중에 바꿀거 지금 테스트용임");
+			return;
+		}
 		for (let i = 0; i < club.length; i++) {
 			str += "<option value='"+club[i].cbNum+"' data-cbname='"+club[i].cbName+"' data-cbtype='"+club[i].cbType+"'>"
 			+ "[" + club[i].cbType + "]" + club[i].cbName + "</option>";
