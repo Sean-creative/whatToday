@@ -88,11 +88,12 @@ ul li.tag-item {
 </style>
 
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
+<link rel="stylesheet" href="/resources/css/paymentModal.css">
 
-<h3 style="text-align: center">기본정보(필수)</h3>
-
+<div class="regubg"></div>    
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
 
+	<div id="reguform">
 	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
 	<input type="hidden" id="cbType" name="cbType" value="정기모임" />
 	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
@@ -140,36 +141,97 @@ ul li.tag-item {
 	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
 	<br>
 	
-	<div class="inputArea" style="float: left; margin-right: 50px">
-
-			<div class="select_img" style="margin: 2px 0px">
-				<img class="thumbImg" src="/resources/img/logo.png" style="margin: 0px;" /> <br>
-				<!-- <label for="gdsImg" >이미지 선택</label> -->
-				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
+		<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
+		<input type="hidden" id="cbType" name="cbType" value="정기모임" />
+		<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
+		
+      	<span class="half">정기모임개설</span>
+      	
+      	<p class="cate">모임명</p>
+      	<div class="caja1">
+        	<div class="lef1">
+            	<div class="select_img">
+            		<img class="thumbImg" src="/resources/img/logo.png"/> <br>
+					<!-- <label for="gdsImg" >이미지 선택</label> -->
+					<input type="file" id="gdsImg" name="file" style="width: 200px;" />
+          		</div>
+          	</div>
+          	<div class="rig1">
+				<input type="text" id="club" name="cbName" placeholder="모임명을 입력하세요."> <br>
+				<input type="text" style="width:350px" id="info" name="cbIntro" placeholder="한줄소개를 30자이내로 작성하세요.">
 			</div>
-
-			<script>
-				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
-				$("#gdsImg").change(
-						function() {
-							if (this.files && this.files[0]) {
-								var reader = new FileReader;
-								reader.onload = function(data) {
-									$(".select_img img").attr("src",
-											data.target.result).width(200)
-											.height(144);
-								}
-								reader.readAsDataURL(this.files[0]);
-							}
-						});
-			</script>			
-		</div>
+      	</div>
 	
-	
-	
-	<button type="submit">개설하기</button>
+		<p class="cate">카테고리</p>
+      	<div class="caja2">
+        	<div class="lef1">
+				<label for="cbCategory">카테고리/분야</label>
+				<select id="cbCategory" name="cbCategory">
+					<option value="아웃도어/여행">아웃도어/여행</option>
+					<option value="문화/공연/축제">문화/공연/축제</option>
+					<option value="운동/스포츠">운동/스포츠</option>
+					<option value="음악/악기">음악/악기</option>
+					<option value="외국/언어">외국/언어</option>
+					<option value="게임/오락">게임/오락</option>
+					<option value="기타">기타</option>
+				</select>
+			</div>
+            <div class="rig1">	
+				<label for="cbSubcat">모임</label>
+				<select id="cbSubcat" name="cbSubcat"></select>
+			</div>
+        </div>
+        
+         <p class="cate">지역</p>
+      	 <div class="caja2">
+         	<div class="lef1">
+				<label for="cbCity">지역 </label>
+				<select name="cbCity" id="cbCity">
+					<option value="서울특별시">서울특별시</option>
+					<option value="경기도">경기도</option>
+				</select>
+			</div>
+            <div class="rig1">
+            <label for="cbDistrict">세부지역 </label>
+			<select name="cbDistrict" id="cbDistrict"></select>
+			</div>
+         </div>
+         
+         <p class="cate">정원</p>
+      	 <div class="caja2">
+          	<div class="lef1">
+				<label for="cbMbNum">정원</label>
+				<input type="number" id="num" name="cbMbNum" min="1" max="200">
+			</div>
+            <div class="rig1">
+            	<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
+          	</div>
+         </div>
+         
+         <p class="cate">해쉬태그</p>
+      	 <div class="caja2">
+         	<div class="lef1">
+	        	<input type="hidden" name="cbMakeDate"> <!--개설일자는 sysdate로 설정 -->
+				<label for="cbHashtag">해시태그</label>
+				<input type="text" id="hash" name="cbHashtag" value="#">
+			</div>
+      	 </div>
+      	 
+      	 <p class="cate">모임상세내용</p>
+      	 <div class="caja2">
+         	<div class="lef1 detailinfo">
+				<label for="cbDetailContent">상세내용</label>
+				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+			</div>
+      	 </div>
+      	 
+      	 <div id="regiform">
+      	 	<input type="submit" class="btn" value="개설하기">
+   	 	 </div>
+   	 	 
+	</div>		
 </form>
-
+	
 <script type="text/javascript">
 
    //유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
@@ -207,8 +269,8 @@ ul li.tag-item {
          return false;
       }
       //상세내용 빈문자열 체크, 글자수 제한 
-      if(!infodetail.value || infodetail.value.length > 30) {
-         alert("30자 이내로 상세내용을 입력해주세요.");
+      if(!infodetail.value) {
+         alert("상세내용을 입력해주세요.");
          return false;
       }
       
@@ -217,7 +279,7 @@ ul li.tag-item {
 		$("#rdTag").val(value);
      
       
-   // 50명이상일경우 포인트 결제 창으로 이동 (지영)
+   	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
       if(!number.value || (number.value <= 0) || (number.value > 50)){
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
@@ -234,15 +296,37 @@ ul li.tag-item {
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=#, height=#');
+    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=700px, height=600px');
     				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
     			}else{
-    				// 포인트 결제 창으로 
-    				// 모달로 바꾸기
-					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    				
-    				window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
     				
-    				document.getElementById('register').submit();     						
+					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			
+    				// window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
+    				// document.getElementById('register').submit();
+    				
+    				// 포인트 결제 창으로 
+    				// 모달로 바꾸기 - ok!!
+    				var modal = document.getElementById("myModal");
+    				modal.style.display = "block";
+    				var span = document.getElementsByClassName("close")[0];
+    				span.onclick = function() {
+    					modal.style.display = "none";
+    				}
+    				$('#chargePoint').click(function () {
+    					let money = $('input[name="cp_item"]:checked').val();
+    			    		 $.ajax({
+    			                url: "/pay/point", 
+    			             	type: 'POST',  
+    			         	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
+    			         	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+    			                data: money,
+    			                success: function(){ 
+    			                	// 포인트 db로 보내고 성공하면 개설
+    			                	document.getElementById('register').submit();
+    			                },
+    			    		 	error: function (){ }
+    			             });
+    			   });// end click 
     			}
     	    },
     	    error: function (){        
@@ -253,6 +337,7 @@ ul li.tag-item {
            });
 		return false;
 	  }
+   }// END ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
       
    } 
    /* END inputCheckclub */
@@ -445,6 +530,22 @@ ul li.tag-item {
 		$(this).parent().remove();
 		maxHash--;
 	});
+   
+   /* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+	$("#gdsImg").change(
+			function() {
+			console.log(this.files);
+				if (this.files && this.files[0]) {
+					var reader = new FileReader;
+					reader.onload = function(data) { console.log(data.target.result);
+						$(".select_img img").attr("src",
+								data.target.result).width(200)
+								.height(144);
+					}
+					reader.readAsDataURL(this.files[0]);
+				}
+	});
+   
 </script>
 
-<%@include file="../includes/footer.jsp"%>
+<%-- <%@include file="../includes/footer.jsp"%> --%>

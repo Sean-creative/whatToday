@@ -16,7 +16,7 @@
 					<img src="/resources/img/logo.png" alt="logo">
 				</a>
 				<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-					<input type="text" name="search" placeholder="관심분야를 입력해주세요:)">
+					<input id="serchHeader" type="text" name="search" placeholder="관심분야를 입력해주세요:)">
 				</form>
 			</div>
 			<sec:authorize access="isAnonymous()">
@@ -26,7 +26,7 @@
 				</div>
 			</sec:authorize>
 
-			<!-- 로그인되면 보여지는 페이지 -->
+			<!-- 로그인되면 보여지는 메뉴 -->
 			<sec:authorize access="isAuthenticated()">
 				<div class="menu2">
 					<li><a href="/mypage/main" id="user">
@@ -34,11 +34,11 @@
 							님
 						</a></li>
 					<li>
-						<div class="tooltip">
-							<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
-							<div class="tooltiptext">
-								<div id="socketAlert" class="alert alert-success" role="alert"></div>
-							</div>
+					<div class="tooltip">
+					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
+					<div class="tooltiptext">
+					<div class="socketAlert"></div>
+
 						</div>
 					</li>
 					<li><a href="/login/logout">로그아웃</a></li>
@@ -90,7 +90,6 @@
 	<script type="text/javascript">
 var socket = null;  //전역 변수로 선언
 $(document).ready(function() {
-	let msgId;
 	let loginCheck = null;
 	<sec:authorize access="isAuthenticated()">
 	loginCheck = true;
@@ -159,16 +158,22 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
-var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
+var ws = new WebSocket("ws://localhost:8088/echo2/websocket");
 socket = ws;
-let Num = msgNum;
-ws.onopen = function(message){  
-ws.send(Num);
+
+
+ws.onopen = function(message){
+	ws.send(msgNum+","+"접속");
+
 };
 
 ws.onmessage = function(event){
+	
 console.log(event.data);
-$("#socketAlert").prepend(event.data);
+if($(".socketAlert p").length == 5){
+	$(".socketAlert p:last").remove();
+}
+$(".socketAlert").prepend("<p style='margin-left:8%; margin-top:2%;'>"+event.data+"</p>");
 
 };
 
@@ -184,6 +189,7 @@ console.log("Server Error");
 
 };
 }
+
 		
 		
 		var id = document.getElementById("user");

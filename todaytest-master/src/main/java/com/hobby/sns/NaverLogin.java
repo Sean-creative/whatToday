@@ -45,7 +45,8 @@ public class NaverLogin {
         setSession(session,state);        
  
         /* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
-        OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)                                                   
+        OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)
+        		.apiKey(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
                 .callback(REDIRECT_URI)
                 .state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
@@ -62,6 +63,7 @@ public class NaverLogin {
         if(StringUtils.pathEquals(sessionState, state)){
  
             OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)
+            		.apiKey(CLIENT_ID)
                     .apiSecret(CLIENT_SECRET)
                     .callback(REDIRECT_URI)
                     .state(state)

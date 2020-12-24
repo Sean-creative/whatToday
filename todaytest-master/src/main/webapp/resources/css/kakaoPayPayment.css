@@ -1,0 +1,110 @@
+#myPointHist{
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px 0px 15px;
+    color: rgb(133, 138, 141);
+}
+
+#myPoint{
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px 0px 5px;
+    padding-bottom: 8px;
+}
+
+.bar{
+    content: "";
+    width: 100%;
+    height: 3px;
+    background: rgb(27, 28, 29);
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th{
+    padding: 17px 0 17px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    line-height: 15px;
+    font-weight: 600;
+    text-align: center;
+    background: #f8f8f8;
+    font-size: 15px;
+}
+
+table td{
+    height: 40px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+    color: #6e6e6e;
+}
+
+#kakaoPaybox{
+    padding: 10px;
+}
+
+#kakaopayCharge{
+    background-color: yellow;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px; 
+}
+
+#warnTitle{
+    padding: 10px 20px;
+    background-color: rgb(248, 248, 249);
+    margin-top: 20px;
+}
+
+#warnLetter{
+    font-size: 11px;
+    color: rgb(27, 28, 29);
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    font-weight: bold;
+}
+
+li{
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    color: rgb(133, 138, 141);
+    opacity: 0.8;
+}
+
+#payBtn{
+    width: 230px;
+    height: 52px;
+    margin : 20px auto; 
+}
+
+#imgBanner{
+    padding-bottom: 25px;
+}
+
+#chargeTitle{
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px 0px 5px;
+    padding-bottom: 20px;
+}

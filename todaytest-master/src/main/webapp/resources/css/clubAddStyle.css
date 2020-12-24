@@ -1,6 +1,146 @@
 @charset "UTF-8";
 
-#register {
-		margin: 0 auto; 
-        width:1000px;
-	}
+*{
+    margin:0;
+    padding:0;
+}
+.header{
+    width:100%;
+    height: 121px;
+    background:pink;
+}
+.regubg{
+    width:1600px;
+    height:1600px;
+    background:url('../img/brown.jpg') no-repeat;
+    background-size:cover;
+    filter: grayscale(100%);
+    position: relative;
+}
+.half{
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+    background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+  }
+/* ============작성폼============ */
+#reguform{
+    width:800px;
+    height:1300px;
+    background:#fff;
+    margin: 520px auto;
+    padding:30px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.caja1{
+    display:flex;
+    margin-top:20px;
+    height:200px;
+} 
+.caja1 .lef1{
+    margin-left:30px;
+}
+
+.thumbImg {
+    width: 150px;
+    height:150px;
+    /* background:orange; */
+    border-radius: 70%;
+}
+.cate{
+    width:800px;
+    border-bottom:3px solid rgba(255,175,49,0.7);
+    padding-top:40px;
+    font-weight:bold;
+    font-size:20px;
+}
+.rig1 input[type=text]{
+    width:225px;
+    height:40px;
+    border:1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top:30px;
+    padding-left:10px;
+    color:#999;
+}
+/* ============카테고리 박스 ============== */
+.caja2{
+    display:flex;
+    margin-top:20px;
+}
+.lef1{
+    margin-right:30px;
+}
+.caja2 label{
+    margin-right:10px;
+}
+.caja2 select{
+    width:225px;
+    height:40px;
+    border:1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top:10px;
+    padding-left:10px;
+    color:#999;
+}
+.caja2 input[type=text]{
+    width:225px;
+    height:40px;
+    border:1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top:10px;
+    padding-left:10px;
+    color:#999;
+}
+.caja2 input[type=number]{
+    width:225px;
+    height:40px;
+    border:1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top:10px;
+    padding-left:10px;
+    color:#999;
+}
+.caja2 textarea{
+    width:680px;
+    height:200px;
+    border:1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top:10px;
+    padding-left:10px;
+    color:#999;
+}
+.detailinfo{
+    display:flex;
+}
+.infonam{
+    margin-top:20px;
+}
+.pil{
+    margin-top:20px;
+    color: #ab1111;
+    font-size:13px;
+}
+#regiform{
+    width:400px;
+    margin:50px auto;
+}
+.btn{
+    background-color: #ffaf31;
+	color:#fff;
+	padding: 15px 20px;
+	border: none;
+	cursor: pointer;
+    width: 80%;
+    border-radius: 5px;
+	opacity: 0.9;
+}
+
+/* 파일 업로드 style */
+.select_img img {
+	margin: 20px 0px;
+}

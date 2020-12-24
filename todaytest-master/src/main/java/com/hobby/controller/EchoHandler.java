@@ -68,8 +68,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						 System.out.println("1session: " + session.getId());
 						 System.out.println("1sess: " + sess.getId());
 						 // 나한테는 메시지 보낼 필요없음.
-						 // if(!session.getId().equals(sess.getId()))
-						 	sess.sendMessage(new TextMessage(nickname + " : " + content));
+						  if(!session.getId().equals(sess.getId())) {
+						 	sess.sendMessage(new TextMessage(nickname + ":" + content));
+					 
+						  }
 					 }
 				}
 			}
