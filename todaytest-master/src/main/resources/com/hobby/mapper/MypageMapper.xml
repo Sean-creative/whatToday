@@ -33,19 +33,18 @@
 	</select>
 	
 	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
-		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum from club,clubmember where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate
+		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum, club.cbfile from club,clubmember,tbluser where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.cbleadernum=tbluser.usrnum and tbluser.USRSTATE ='회원' and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate
 	</select>
 	
 	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
-		select cbnum,cbname,cbtype from clubjoinhistory where USRNUM = #{usrNum} and CBJOINSTATERESULT = '승인대기' and
+		select club.cbnum,club.cbname,club.cbtype,club.cbfile from clubjoinhistory,club,tbluser where clubjoinhistory.USRNUM = #{usrNum} and clubjoinhistory.CBJOINSTATERESULT = '승인대기' and tbluser.usrNum=club.cbLeadernum and tbluser.USRSTATE='회원' and clubjoinhistory.cbnum = club.cbnum and
 (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum)
-
 
 	</select>
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
-		select * from CLUBJOINHISTORY 
-		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴'
+select usrNum,cbNum,cbName,cbType,max(cbjoinnum) from CLUBJOINHISTORY 
+where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,cbNum,cbName,cbType order by max(cbjoinnum) desc
 	</select>
 	
 	<update id="updateUserAuth">
@@ -122,14 +121,13 @@
 	</select>
 	
 	<select id="getClubManageMemList" resultMap="cbMem">
-		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum)
+		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
 	
 	
 	</select>
 	
 	<insert id="insertClubJoinHistory">
-		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE)  
-		values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
+		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
 	</insert>
 	
 	<update id="updateClubManageMem">
@@ -158,12 +156,15 @@
 	</update>
 	
 	<insert id="insertClubMember">
-		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE)  
-		values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
+		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
 	</insert>
 	
 	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">
 		select * from clubmember where usrNum = #{usrNum} and cbNum = #{cbNum}
+	</select>
+	
+	<select id="getUserN" resultType="com.hobby.domain.UserVO">
+		select * from tbluser where usrNum = #{usrNum}
 	</select>
 	
 

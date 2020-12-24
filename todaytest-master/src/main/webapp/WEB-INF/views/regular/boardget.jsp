@@ -5,95 +5,87 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="body">
-	<div id=banner>
-		<ul>
-			<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-			<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
-			<li><a href="javascript:void(0);" onClick="alert('곧 오픈됩니다!'); return false;">채팅</a></li> <!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
-		</ul>
-	</div><div id=bodymain>
-				
-				<div class="row">
-				<div class="col-lg-12">
-				<div class="panel panel-default">
-				
+<div id="bgpic">
+	<div id="detail">
+         <div id="leftinfo">
+         	<img src="${cbThumbImg}" alt="">
+			<div id=banner>
+				<ul>
+					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
+					<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
+				</ul>
+			</div>
+			<div id=bodymain>
+			<h2>조회</h2>
+			 	
+			 	<div class="rowget">
 				<div class="form-group">
-					<label>게시판 번호</label> <input class="form-control" name='cbBno'
-					 value = '<c:out value="${club.cbBno}"/>' readonly="readonly">
+					<label>게시판 번호</label><br> 
+					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
-					<label>제목</label> <input class="form-control" name='cbBdTitle'
-					 value = '<c:out value="${club.cbBdTitle}"/>' readonly="readonly">
+					<label>제목</label><br> 
+					<input type="text"class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
-					<label>내용</label>
-					<textarea class="form-control" rows="5" name='cbBdContent' 
-					readonly="readonly"><c:out value="${club.cbBdContent}"/></textarea>
+					<label>작성자</label><br>
+					<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
-					<label>작성자</label>
-					<input class="form-control" name='cbBdWriter'
-					 value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly">
+					<label>내용</label><br>
+					<textarea class="form-control" name='cbBdContent' readonly="readonly">
+						<c:out value="${club.cbBdContent}"/></textarea>
 				</div>
 				
-				<button data-oper='update' class="btn btn-default">수정</button>
-				<button data-oper='list' class="btn btn-info">목록으로 이동</button>
+				<button data-oper='update' class="btn">수정</button>
+				<button data-oper='list' class="btn">목록</button>
 				
+				</div>
 				<form id='operForm' action="/regular/boardupdate" method="get">
 					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
 					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
-				</form>
+				</form>		
+				<hr>
 				
-				</div>
-				</div>
-				</div>
-		</div>
-		
-<!-- 댓글 등록  -->
-<div>
- 	<!-- <div class="my reply add"> -->
- 	<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+	<!-- 댓글 등록  -->
+ 	<div class="my-3 p-3 bg-white rounded shadow-sm">
 		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<textarea name="reply" id="reply" class="form-control" cols="100" rows="3" style="resize: none;" placeholder="댓글을 입력해주세요."></textarea>
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
 				</div>
 				<div class="col-sm-2">
 					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
-					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert" style="width: 30%; margin-top: 10px">등록</button>
+					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
 				</div>	
 			</div>
 		</form>
 	</div>  
 	
-<!-- 댓글 목록  -->	
-	<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
-				<div id="replyList"></div>
+	<!-- 댓글 목록  -->	
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<div id="replyList"></div>
 	</div>
-</div>	
-
-<!-- 댓글목록 처리 -->
-<!-- 		<div class='row'>
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<ul class="chat">
-						</ul>
-					</div>
-					<div class="panel-footer"></div>
-				</div>
-			</div>
+	
 		</div>
-</div> -->
-</div>
-<!-- <script type="text/javascript" src="/resources/js/reply.js"></script> -->
+	</div>	
+	
+		<div id="rightinfo" class="rightinfo">
+                <div class="content">
+					<c:out value="${cbName}" />
+                </div>
+        </div>
+	</div>
+ </div>
+ 
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 
 	$(document).ready(function() {
@@ -111,90 +103,6 @@
 		});
 	});
 </script>
-<script>
-	//댓글
-/* 	console.log(replyService);
-	console.log("==============");
-	console.log("JS TEST");
-	
-	var cbBnoValue = '<c:out value="${club.cbBno}"/>';
-	var cbNumValue = '<c:out value="${cbNum}"/>';
-	
-	//for replyService add test
- 	replyService.add(
-			{reply: "JS Test", replyer:"tester", cbBno:cbBnoValue, cbNum:cbNumValue},
-			function(result){
-				alert("RESULT: " + result);
-			}
-	); 
-	
-	replyService.getList({cbBno:cbBnoValue}, function(list) {
-		
-	
-		for(var i = 0, len=list.length || 0; i< len; i++) {
-			
-			console.log(list[i]);
-		}
-	});
-	
- 	replyService.remove(15, function(count) {
-		
-		console.log(count);
-		
-		if(count === "success") {
-			alert("REMOVED");
-		}
-	}, function(err) {
-		alert('ERROR...');
-	}); 
-	
-	replyService.update({
-		rno : 22,
-		cbBno : cbBnoValue,
-		reply : "Modified Reply...."
-	}, function(result) {
-		alert("수정 완료....");
-	});
-	
-	replyService.get(22, function(data) {
-		console.log(data);
-	});  */
-</script>
-
-<!-- <script>  
-	$(document).ready(function() {
-
-		var cbBnoValue = '<c:out value="${club.cbBno}"/>';
-		var cbNumValue = '<c:out value="${cbNum}"/>';
-		var replyUL = $(".chat");
-
-		showList(1);
-
-		function showList(page) {
-
-		replyService.getList({cbBno : cbBnoValue}, function(list) {
-
-			var str = "";
-			if (list == null || list.length == 0) {
-			replyUL.html("");
-			return;
-			}
-			for (var i = 0, len = list.length || 0; i < len; i++) {
-				str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-				str +="  <div><div class='header'><strong class='primary-font'>["
-					   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-				str +="    <small class='pull-right text-muted'>"
-					   +replyService.displayTime(list[i].replyDate)+"</small></div>";
-				str +="    <p>"+list[i].reply+"</p></div></li>";
-			}
-												     
-			replyUL.html(str);
-		});
-		}		
-		
-	});
-					 
-</script> -->
 
 <script>
 
@@ -219,7 +127,7 @@
                	var htmls = "";
 				if(result.length < 1){
 					console.log("result.length:"+result.length);
-					htmls += "<span>등록된 댓글이 없습니다.</span>";
+					htmls += '<span style="padding-left:25px">등록된 댓글이 없습니다.</span>';
 				} else {
 					$(result).each(function(){
 		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0;">';
@@ -286,17 +194,20 @@
 		htmls += '</span>';
 		htmls += '</span>';		
 		htmls += '</div>';		
-		htmls += '<div>';		
+		htmls += '<div>';
 		htmls += '<textarea name="editContent" id="editContent" class="form-control" cols="100" rows="3" style="resize: none;">';
 		htmls += reply;
 		htmls += '</textarea>';
+		/* htmls += '<input type="text" name="editContent" id="editContent" class="form-control">';
+		htmls += reply;
+		htmls += '</>'; */
 		htmls += '</p>';
 		htmls += '</div>';
 		htmls += '</div>';
 		$('#rno' + rno).replaceWith(htmls);
 		$('#rno' + rno + ' #editContent').focus();
 	}
-	
+
 	function fn_updateReply(rno, replyer){
 
 		var replyEditContent = $('#editContent').val();
@@ -341,5 +252,18 @@
 	}
 	
 </script>
+<script>
+window.onscroll = function() {myFunction()};
 
+var right = document.getElementById("rightinfo");
+var sticky = rightinfo.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    rightinfo.classList.add("sticky");
+  } else {
+    rightinfo.classList.remove("sticky");
+  }
+}
+</script>
 <%@include file="../includes/footer.jsp" %>

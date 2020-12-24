@@ -4,9 +4,9 @@
 
 <!-- 작성자 : 김선우 -->
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/thunder.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/thunderAdd.css">
 <%@include file="../includes/header.jsp"%>
-
+<!-- 
 <style>
 .weather {
 	display: flex;
@@ -115,210 +115,224 @@ ul li.tag-item {
 	width: 200px;
 	height: auto;
 }
-</style>
+</style> -->
 
-<!--  번개 모임 개설 -->
-<section id="wrap">
 
-	<div class='weather'>
-		<div class='City'></div>
+<!--  번개 모임 수정 -->
+
+<section>
+	<div class="section_header" style="margin: 0 auto;">
+		<h2>번개 모임 수정</h2>
+		<p>모임 정보를 수정해주세요!</p>
 	</div>
+	<div id="container">
 
 
-	<form role="form" action="/thunder/modify" id="modifyForm" method="post" enctype="multipart/form-data">
 
-		<div>
-			<div>
-				모임명<br>
-				<input type="text" required="required" name='cbName' size="50" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${clubVO.cbName}" />'>
-			</div>
-
+		<!-- ========왼쪽========== -->
+		<div class="header_in3">
+			<ul class="header_weekday">
+			</ul>
 		</div>
 
 
-		<div class="inputArea" style="float: left; margin-right: 50px">
 
-			<div class="select_img" style="margin: 2px 0px">
-				<img class="thumbImg" src="${clubVO.cbThumbImg}" style="margin: 0px;" /> <br>
-				<!-- <label for="gdsImg" >이미지 선택</label> -->
-				<input type="file" id="gdsImg" name="file" style="width: 200px;" />
-			</div>
+		<!-- ========중앙========== -->
+		<div class="section_in" style="display: inline-block; overflow: hidden">
+			<form role="form" action="/thunder/modify" id="modifyForm" method="post" enctype="multipart/form-data">
+				<h6 class="form-stxt">*필수 입력사항&nbsp;&nbsp;</h6>
+				<hr>
+				<fieldset class="formContent">
 
-			<script>
-				/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
-				$("#gdsImg").change(
-						function() {
-							if (this.files && this.files[0]) {
-								var reader = new FileReader;
-								reader.onload = function(data) {
-									$(".select_img img").attr("src",
-											data.target.result).width(200)
-											.height(144);
-								}
-								reader.readAsDataURL(this.files[0]);
-							}
-						});
-			</script>
-			<!-- 현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다. -->
-			<%-- <%=request.getRealPath("/")%> --%>
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<!-- 30자 제한 -->
+							<label for="name" style="display: block;">모임명*</label>
+							<input type="text" required="required" name='cbName' size="50" value='<c:out value="${clubVO.cbName}" />'>
+						</div>
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">모임 인원*</label>
+							<input type="number" required="required" name='cbMbnum' min="1" max="1000000" value='<c:out value="${clubVO.cbMbnum}"/>'>
+						</div>
+					</div>
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="email">카테고리/분야*</label>
+							<select name="cbCategory" required="required" id='category'></select>
+						</div>
+
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="location">모임</label>
+							<select name="cbSubcat" required="required" id="subcat">
+								<option value="모임 선택" selected>모임 선택
+							</select>
+						</div>
+					</div>
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
+  					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
+							<!-- JS로 MIN과 MAX를 찍어주자 -->
+							<label for="hp">모임 날짜*</label>
+							<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'>
+						</div>
+
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 마감기간*</label>
+							<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />'>
+						</div>
+					</div>
+
+
+
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 지역*</label>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress' value='<c:out value="${clubVO.thunderDetailVO.cbAddress}" />'>
+						</div>
+
+
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 장소 *</label>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' value='<c:out value="${clubVO.thunderDetailVO.cbPlace}" />'>
+						</div>
+					</div>
+
+
+
+					<div>
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">해시태그</label>
+							<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />' />
+							<input type="text" id="tag" size="7" value="#" />
+							<ul id="tag-list"></ul>
+						</div>
+
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">모임 준비물</label>
+							<input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50" value='<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />'>
+						</div>
+
+					</div>
+
+
+
+
+					<div class="request">
+						<label for="request" class="class" style="display: block;">모임소개</label>
+						<textarea name='cbIntro' cols="100" rows="7" maxlength="300"><c:out value="${clubVO.cbIntro}" /></textarea>
+
+					</div>
+
+
+
+
+					<div class="request">
+						<label for="request" class="class">사진 등록</label>
+						<div class="select_img">
+							<img class="thumbImg" src="${clubVO.cbThumbImg}" /> <br>
+							<input type="file" id="gdsImg" name="file" />
+						</div>
+
+
+					</div>
+
+
+
+				</fieldset>
+
+
+				<hr>
+
+				<fieldset class="agreebox">
+
+
+
+					<div class="btn_faq">
+						<button type="submit" data-oper='modify' class="btn-default">수정하기</button>
+						<button type="submit" data-oper='remove' class="btn-default">삭제하기</button>
+						<button type="submit" data-oper='list' class="btn-default">돌아가기</button>
+					</div>
+				</fieldset>
+
+
+
+
+
+				<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'>
+				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+				<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
+				<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
+				<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+				<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
+				<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
+				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+
+				<!-- 사진 첨부 안했을 시 사용해야함 -->
+				<input type='hidden' name='cbFile' value='<c:out value="${clubVO.cbFile}"/>'>
+				<input type='hidden' name='cbThumbImg' value='<c:out value="${clubVO.cbThumbImg}"/>'>
+
+				<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
+				<input type='hidden' name='cbCity' value='<c:out value="${clubVO.cbCity}"/>'>
+				<input type='hidden' name='cbDistrict' value='<c:out value="${clubVO.cbDistrict}"/>'>
+
+				<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude' value='<c:out value="${clubVO.thunderDetailVO.cbLatitude}"/>'>
+				<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude' value='<c:out value="${clubVO.thunderDetailVO.cbLongitude}"/>'>
+
+				<!-- 업데이트가 되어있어야 하기때문에, mapper.xml의 update에 있는 속성은 전달해야함-->
+				<input type='hidden' name='cbCurMbnum' value='<c:out value="${clubVO.cbCurMbnum}"/>'>
+				<%-- <input type='hidden' name='cbShutDate' value='<c:out value="${clubVO.cbShutDate}"/>'  id='cbDate'> --%>
+			</form>
+
 		</div>
+		<!-- 중앙 끝  -->
 
 
-		<div>
-			<div>
-				모임 날짜<br>
-				<%-- <input type="datetime-local" name='thunderDetailVO.cbDate' id=cbDate value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'> --%>
-				<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'>
-
-			</div>
-			<div>
-
-				카테고리/분야<br>
-				<script type="text/javascript">
-					/* 외부 JS에서 JSTL이 적용되지 않아서, 내부스크립트의 var를 써서 해결 */
-					var cg = '${clubVO.cbCategory}';
-					var sc = '${clubVO.cbSubcat}';
-					var ct = '${clubVO.cbCity}';
-					var dt = '${clubVO.cbDistrict}';
-				</script>
-				<select name="cbCategory" id=category required="required" style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
-			</div>
-
-			<div>
-				모임<br>
-				<select name="cbSubcat" id="subcat" required="required" style="border: 1px solid #ff9f40; padding: 3px 0px;"></select>
-			</div>
-		</div>
 
 
-		<div>
-			<div>
-				모임 인원<br>
-				<input type="number" name='cbMbnum' min="1" max="1000000" value='<c:out value="${clubVO.cbMbnum}"/>' required="required" style="border: 1px solid #ff9f40; padding: 3px 0px;">
 
-			</div>
+		<!-- ========오른쪽========== -->
+		<div style="display: inline-block; background-color: red; width: 700px; height: 1100px; margin-top: 75px; margin-left: 40px;">
 
-			<div>
-				모임 마감기간<br>
-				<input type="datetime-local" name='thunderDetailVO.cbAppPeriod' id=cbAppPeriod value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />' required="required" style="border: 1px solid #ff9f40; padding: 3px 0px;">
-
-			</div>
-
-			<div>
-				해시태그<br>
-				<!-- 해시태그 수정 안하면 이값 그대로 가면 됨 -->
-				<input type="hidden" name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />' />
-
-
-				<div>
-					<!-- value="#" -->
-					<input type="text" id="tag" size="7" value='#' />
+			<!-- 카카오 맵 영역 -->
+			<div class="map_wrap">
+				<div id="map"></div>
+				<div id="menu_wrap" class="bg_white">
+					<div class="option">
+						<div>
+							<form role="form" onsubmit="searchPlaces(); return false;">
+								모임 장소 :
+								<input type="text" value="종각역" id="keyword" size="15">
+								<button type="submit">검색하기</button>
+							</form>
+						</div>
+					</div>
+					<hr>
+					<ul id="placesList"></ul>
+					<div id="pagination"></div>
 				</div>
-				<ul id="tag-list"></ul>
 			</div>
+			<!-- 카카오 맵 END -->
+
+
+
+
 		</div>
 
 
-		<!-- 	<div>
-			<div>
-				지역 <br>
-				<select name="cbCity" id="city"></select>
-			</div>
-			<div>
-				세부지역<br>
-				<select name="cbDistrict" id="district"></select>
-			</div>
-		</div> -->
-
-		<div>
-			<div>
-				모임 지역 <br>
-				<!-- 값이 '서울 종로구' 이런식으로 들어오는데,
-                  1. js단에서  ','를 기준으로 값을 분리해주면 되겠다. -->
-				<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress' style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${clubVO.thunderDetailVO.cbAddress}" />'>
-			</div>
-		</div>
-
-
-		<div>
-			<div>
-				모임 장소 <br>
-				<input type="text" name='thunderDetailVO.cbPlace' id=cbPlace value='<c:out
-						value="${clubVO.thunderDetailVO.cbPlace}" />' required="required" readonly="readonly" style="border: 1px solid #ff9f40; padding: 3px 0px;">
-			</div>
-
-			<div>
-				모임 준비물<br>
-				<input type="text" name='thunderDetailVO.cbSupplies' id=cbSupplies value='<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />'>
-			</div>
-		</div>
-
-
-
-		<div>
-			모임소개<br>
-			<!-- 300자 제한 -->
-			<textarea name='cbIntro' cols="100" rows="7" maxlength="300"><c:out value="${clubVO.cbIntro}" /></textarea>
-		</div>
-
-		<div style="margin-left: 470px">
-			<button type="submit" data-oper='modify' class="btn-default">Modify</button>
-
-			<button type="submit" data-oper='remove' class="btn-default">Remove</button>
-
-			<button type="submit" data-oper='list' class="btn-default">List</button>
-		</div>
-
-		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'>
-		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-		<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
-		<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
-		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
-		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
-		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-
-		<!-- 사진 첨부 안했을 시 사용해야함 -->
-		<input type='hidden' name='cbFile' value='<c:out value="${clubVO.cbFile}"/>'>
-		<input type='hidden' name='cbThumbImg' value='<c:out value="${clubVO.cbThumbImg}"/>'>
-
-		<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
-		<input type='hidden' name='cbCity' value='<c:out value="${clubVO.cbCity}"/>'>
-		<input type='hidden' name='cbDistrict' value='<c:out value="${clubVO.cbDistrict}"/>'>
-
-		<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude' value='<c:out value="${clubVO.thunderDetailVO.cbLatitude}"/>'>
-		<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude' value='<c:out value="${clubVO.thunderDetailVO.cbLongitude}"/>'>
-
-		<!-- 업데이트가 되어있어야 하기때문에, mapper.xml의 update에 있는 속성은 전달해야함-->
-		<input type='hidden' name='cbCurMbnum' value='<c:out value="${clubVO.cbCurMbnum}"/>'>
-		<%-- <input type='hidden' name='cbShutDate' value='<c:out value="${clubVO.cbShutDate}"/>'  id='cbDate'> --%>
-
-
-	</form>
-
-
-	<div class="map_wrap">
-		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-		<div id="menu_wrap" class="bg_white">
-			<div class="option">
-				<div>
-
-					<form role="form" onsubmit="searchPlaces(); return false;">
-						모임 장소 :
-						<input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
-						<button type="submit">검색하기</button>
-
-
-					</form>
-				</div>
-			</div>
-			<hr>
-			<ul id="placesList"></ul>
-			<div id="pagination"></div>
-		</div>
 	</div>
+	<!-- 컨테이너 END -->
+
 
 
 </section>
@@ -340,39 +354,87 @@ ul li.tag-item {
 
 
 <script>
+	/* 날씨관련 */
 	let city = 'Seoul';
-	// var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
+	// var apiURI =
+	// "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
 	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
-	$.ajax({
-		url : apiURI,
-		dataType : "json",
-		type : "GET",
-		async : "false",
-		success : function(resp) {
-			console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-			$('.City').append(resp.timezone.split('/')[1]);
+	$
+			.ajax({
+				url : apiURI,
+				dataType : "json",
+				type : "GET",
+				async : "false",
+				success : function(resp) {
+					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+					// $('.City').append(resp.timezone.split('/')[1]);
 
-			for ( let idx in resp.daily) {
-				let tmp = '<div class="weatherContent">';
-				let days = new Date();
-				days.setTime(resp.daily[idx].dt * 1000);
-				const today = moment(days);
+					for ( let idx in resp.daily) {
+						let tmp = '<li>';
+						let days = new Date();
+						days.setTime(resp.daily[idx].dt * 1000);
+						const today = moment(days);
 
-				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
+						tmp += '<h4>' + today.format('ddd') + '</h4>';
 
-				tmp += '<div class="Temp">'
-						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
-						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
+						if (resp.daily[idx].weather[0].icon == '01d'
+								|| resp.daily[idx].weather[0].icon == '01n') {
+							imgURL = '/resources/img/animation-ready/clear-day.svg';
+						}
+						// 맑고 구름
+						if (resp.daily[idx].weather[0].icon == '02d'
+								|| resp.daily[idx].weather[0].icon == '02n') {
+							imgURL = '/resources/img/animation-ready/partly-cloudy-day.svg';
+						}
+						// 구름
+						if (resp.daily[idx].weather[0].icon == '03d'
+								|| resp.daily[idx].weather[0].icon == '03n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 먹구름
+						if (resp.daily[idx].weather[0].icon == '04d'
+								|| resp.daily[idx].weather[0].icon == '04n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 소나기
+						if (resp.daily[idx].weather[0].icon == '09d'
+								|| resp.daily[idx].weather[0].icon == '09d') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 비
+						if (resp.daily[idx].weather[0].icon == '10d'
+								|| resp.daily[idx].weather[0].icon == '10n') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 번개
+						if (resp.daily[idx].weather[0].icon == '11d'
+								|| resp.daily[idx].weather[0].icon == '11n') {
+							imgURL = '/resources/img/animation-ready/thunderstorms.svg';
+						}
+						// 눈
+						if (resp.daily[idx].weather[0].icon == '13d'
+								|| resp.daily[idx].weather[0].icon == '13n') {
+							imgURL = '/resources/img/animation-ready/snow.svg';
+						}
+						// 안개
+						if (resp.daily[idx].weather[0].icon == '50d'
+								|| resp.daily[idx].weather[0].icon == '50n') {
+							imgURL = '/resources/img/animation-ready/mist.svg';
+						}
 
-				imgURL = "http://openweathermap.org/img/w/"
-						+ resp.daily[idx].weather[0].icon + ".png";
-				tmp += '<div class="Icon">' + "<img src="+imgURL+">" + '<div>';
-				tmp += "</div>"
+						tmp += "<img src=" + imgURL + ">";
 
-				$('.weather').append(tmp);
-			}
-		}
-	})
+						tmp += '<p">' + Math.floor(resp.daily[idx].temp.min)
+								+ '&ordm/'
+								+ Math.floor(resp.daily[idx].temp.max)
+								+ '&ordm</p>';
+
+						tmp += "</li>"
+
+						$('.header_weekday').append(tmp);
+					}
+				}
+			})
 
 	$(document)
 			.ready(
@@ -395,18 +457,6 @@ ul li.tag-item {
 								return word !== "";
 							});
 						}
-
-						// 서버에 넘기기
-						// 						$("#tag-form").on("submit", function(e) {
-						// 							var value = marginTag(); // return array
-						// 							$("#rdTag").val(value);
-
-						// 							if (inputCheck() == true) {
-						// 								alert('개설되었습니다.');								
-						// 							} else {
-						// 								e.preventDefault();
-						// 							}
-						// 						});
 
 						// 처음 부터 #이 달려있고
 						// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
@@ -446,13 +496,16 @@ ul li.tag-item {
 													self.val("#");
 												} else {
 													var tagValue = self.val(); // 값 가져오기
-													
+
 													//사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌, #은 제외
 													var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
-													 													 
+
 													// test() ㅡ 찾는 문자열이 들어있는지 확인
-													if(regExp.test(tagValue)){													 
-													tagValue = tagValue.replace(regExp, ""); // 찾은 특수 문자를 제거													
+													if (regExp.test(tagValue)) {
+														tagValue = tagValue
+																.replace(
+																		regExp,
+																		""); // 찾은 특수 문자를 제거													
 													}
 
 													// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
@@ -501,12 +554,12 @@ ul li.tag-item {
 						let arrayHash = stringHash.split(',');
 						for ( let i in arrayHash) {
 							if (arrayHash[i] != "") {
-							$("#tag-list")
-									.append(
-											"<li class='tag-item'>"
-													+ arrayHash[i]
-													+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-							addTag(arrayHash[i]);
+								$("#tag-list")
+										.append(
+												"<li class='tag-item'>"
+														+ arrayHash[i]
+														+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+								addTag(arrayHash[i]);
 							}
 						}
 
@@ -531,29 +584,6 @@ ul li.tag-item {
 										// move to list
 										formObj.attr("action", "/thunder/list")
 												.attr("method", "get");
-
-										//								let pageNumTag = $("input[name='pageNum']").clone();
-										//								let amountTag = $("input[name = 'amount']").clone();
-										//
-										//								let categoryTag = $("input[name = 'category']").clone();
-										//								let subclassTag = $("input[name = 'subclass']").clone();
-										//								let cityTag = $("input[name = 'city']").clone();
-										//								let districtTag = $("input[name = 'district']").clone();
-										//								let searchByTag = $("input[name = 'searchBy']").clone();
-										//								let keywordTag = $("input[name = 'keyword']").clone();
-										//
-										//								formObj.empty();
-										//
-										//								formObj.append(pageNumTag);
-										//								formObj.append(amountTag);
-										//
-										//								formObj.append(categoryTag);
-										//								formObj.append(subclassTag);
-										//								formObj.append(cityTag);
-										//								formObj.append(districtTag);
-										//								formObj.append(searchByTag);
-										//								formObj.append(keywordTag);
-
 									}
 									// Modify 라고 한다면
 									else {
@@ -571,6 +601,16 @@ ul li.tag-item {
 
 					})
 </script>
+
+
+<script type="text/javascript">
+	/* 외부 JS에서 JSTL이 적용되지 않아서, 내부스크립트의 var를 써서 해결 */
+	var cg = '${clubVO.cbCategory}';
+	var sc = '${clubVO.cbSubcat}';
+	var ct = '${clubVO.cbCity}';
+	var dt = '${clubVO.cbDistrict}';
+</script>
+
 <%@include file="../includes/footer.jsp"%>
 
 

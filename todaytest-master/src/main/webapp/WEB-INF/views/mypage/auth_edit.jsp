@@ -2,91 +2,97 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../includes/header.jsp" %>
+<link id="myCss" rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
+<div id="totalMenu">
+	<nav id="navMenu">
+		<div class="mypageMenu">
+			<div class="uInfo">
+				<img
+					src="\resources\img\upload\<c:out value="${userVO.usrImgPath }"/>\<c:out value="${userVO.usrImg }"/>"><br>
+				<h5>${userVO.usrName }</h5>
+				<br>
+				<h5>${userVO.usrId }</h5>
+				<br>
+				<h5>포인트 ${userVO.usrPoint }점</h5>
+			</div>
 
 
+			<div class="info">
+				<h1>메뉴</h1>
+				<form action="/mypage/main" method="get">
+					<button class="btn1" type="submit">마이페이지</button>
+				</form>
+				<button type="button" class="accordionBtn">모임관리</button>
+				<div class="accordion">
+					<form action="/mypage/myclub/main" method="get">
+						<button type="submit">모임관리홈</button>
+					</form>
 
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
-<nav id="nav">
-<div class ="menu">
-    <ul>
-        <li>
-            <form action="/mypage/main" method="get">
-                <button class="btn1" type="submit" >마이페이지</button>
+					<form action="/mypage/myclub/main" method="post">
+						<button type="submit">만남개설</button>
+					</form>
 
-            </form>
-        </li>
-            <li>
-        <div class="dropdown">
-            <button type="button" class="dropbtn">모임관리</button>
-            <div class="dropdown-content">
-            <ul>
-                <li>
-                <form action="/mypage/myclub/main" method="get">
-            	<button type="submit">모임관리홈</button>
-        		</form>
-                </li>
-                <li>                <form action="/mypage/myclub/main" method="post">
-            	<button type="submit">만남개설</button>
-        		</form></li>
-                <li>                <form action="/mypage/myclub/userManage" method="get">
-            	<button type="submit">회원관리</button>
-        		</form></li>
-                
-                
-            </ul>
-            </div>
-        </div>
-        </li>
-    <li>
-        <form action="/mypage/auth_edit" method="get">
-            <button type="submit" style="color: yellow">회원정보수정</button>
-        </form>
-    </li>
-    <li>
-        <form action="/mypage/password" method="get" >
-            <button type="submit">비밀번호수정</button>
-        </form>
-    </li>
-    <li>
-        <form action="/mypage/auth_leave" method="get">
-            <button type="submit">회원탈퇴하기</button>
-        </form>
-        
-        </li>
-    </ul>
-
-</div>
-</nav>
-<section id="wrap">
+					<form action="/mypage/myclub/userManage" method="get">
+						<button type="submit">회원관리</button>
+					</form>
+				</div>
+				<form action="/mypage/auth_edit" method="get">
+					<button type="submit" style="color: yellow;">회원정보수정</button>
+				</form>
+				<form action="/mypage/password" method="get">
+					<button type="submit">비밀번호수정</button>
+				</form>
+				<form action="/mypage/auth_leave" method="get">
+					<button type="submit">회원탈퇴하기</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	
+<section id="wrapInfo2">
 <div class = "pwdInput">
-    <div>
+
         <h1 style="text-align: center;">비밀번호재입력</h1><br>
-        <p style="text-align: center;">본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</p>
+        <h3>본인확인을 위해 <span class="word">로그인 비밀번호</span>를 한 번 더 입력해주세요.</h3>
         <br><br>
         <form action="/mypage/authAction" onsubmit="return blankCheck();" method="post">
-        <input type="password" class="inputPwd" name="password"><br>
-        <button type="submit">확인</button>
+        <input type="password" class="inputPwd" name="password" placeholder="비밀번호"><br>
+        <button type="submit" class="modifyBtn2">확인</button>
         </form>
-    </div>
+
 </div>
 
-<input id="btnSend" value="Send" type="button"> 
-<input type="text" id="msg" value="1212테스트test" class="form-control" />
 </section>
-
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 if("${msg}" != ""){
-	alert("${msg}");
+	swal("${msg}", "", "error");
 }
 
 let blankCheck = function(){
     let password = document.getElementsByName("password");
     if(password[0].value.length == 0){
-    	alert("비밀번호를 입력해주세요.") 
+    	swal("비밀번호를 입력해주세요.", "", "warning");
         return false;
     }
     return true;
 }
+var acc = document.getElementsByClassName("accordionBtn");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
 
 </script>
 

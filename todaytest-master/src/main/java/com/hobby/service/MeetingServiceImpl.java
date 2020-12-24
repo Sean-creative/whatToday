@@ -1,8 +1,12 @@
 package com.hobby.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.MeetingVO;
+import com.hobby.domain.UserVO;
 import com.hobby.mapper.MeetingMapper;
 
 import lombok.AllArgsConstructor;
@@ -48,113 +52,115 @@ public class MeetingServiceImpl implements MeetingService {
 //
 //	
 //	@Override
-//	public List<ClubMemberVO> getJoinList(Long cbnum, String cbmbstresult) {		
-//		System.out.println("Service-getJoinHashMap......cbnum: " + cbnum);
-//		System.out.println("Service-getJoinHashMap......cbmbstresult: " + cbmbstresult);
-//		
-//		return mapper.getJoinList(cbnum, cbmbstresult);
-//	}
-//
-//	
-//	
-//	
-//	
-//
-//	@Override
-//	public boolean modify(ThunderVO club) {
-//		log.info("modify...." + club);		
-//		return mapper.update(club) == 1;
-//
-//	}
-//
-//	@Override
-//	public boolean remove(long cbNum) {
-//		log.info("remove...." + cbNum);
-//		return mapper.delete(cbNum) == 1;
-//	}
-//
-//	@Override
-//	public int getTotal(Criteria cri) {
-//		log.info("get total count");
-//		return mapper.getTotalCount(cri);
-//	}
-//
-//	@Override
-//	public boolean isLogin(Authentication auth) {
-//		log.info("is login.....");
-//		if (auth == null)
-//			return false;
-//		return true;
-//	}
-//
-//	
-//	
-//	
-//	@Override
-//	@Transactional
-//	public boolean join(ThunderVO clubVO, UserVO loginUser, String joinState) {
-//		System.out.println("Service-join......" + clubVO);
-//		System.out.println("Service-join......" + loginUser);
-//		System.out.println("Service-join......" + joinState);		
-//		
-//		//우선적으로는 Service.join 쪽 갔을때만 -> 인원수 변동시켜주자!!!
-//			    	
-//	    //신청하기or신청취소하기 버튼을 눌렀으면 여기서 케이스를 나눠서 Mapper 메소드를 실행한다.
-//	    //joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전)
-//		
-//		int result = 0;
-//		String chagneJoinState = null;
-//		
-//		if( "".equals(joinState)) {
-//	    	//null일 때 -> 가입승인 되어야 함
-//			chagneJoinState = "가입승인";
-//			clubVO.setCbCurMbnum(clubVO.getCbCurMbnum()+1);
-//			
-//			result += mapper.insertJoin(clubVO, loginUser,chagneJoinState);
-//			System.out.println("Service-join...... result : " + result);
-//			
-//			result += mapper.insertJoinHistory(clubVO, loginUser, chagneJoinState);
-//			System.out.println("Service-join...... result : " + result);
-//			
-//			
-//	    }
-//		else if(joinState.equals("모임탈퇴")) {
-//			//'모임탈퇴'일 때 -> 가입승인 되어야 함
-//			chagneJoinState = "가입승인";
-//			clubVO.setCbCurMbnum(clubVO.getCbCurMbnum()+1);
-//			
-//			result += mapper.updateJoin(clubVO, loginUser,chagneJoinState);
-//			result += mapper.insertJoinHistory(clubVO, loginUser, chagneJoinState);
-//		} 
-//		else if(joinState.equals("가입승인")) {			
-//	    	//'가입승인'일 때 -> 가입이 취소되어야함
-//			chagneJoinState = "모임탈퇴";
-//			clubVO.setCbCurMbnum(clubVO.getCbCurMbnum()-1);
-//			
-//			result += mapper.updateJoin(clubVO, loginUser,chagneJoinState);
-//			result += mapper.insertJoinHistory(clubVO, loginUser, chagneJoinState);
-//	    } 
-//	    else {
-//	    	// '모임만료'나 '모임추방'일때는  -> 가입불가 X	   
-//	    	log.info("Service-join : 아무것도 안찍힘");
-//	    }
-//	    
-//		// 멤버상태를 변경해주고 나서는, club의 현재인원을 update해준다.
-//		// 오류나서, 이거 제외하고 민성이형 주기
-//		result += mapper.update(clubVO); 	    
-//		log.info("result : " + result);
-//		System.out.println("result : " + result);
-//					
-//		// update가 call-begin-end되있어서 반환값 -1 이라 -> 2-1 =1 나옴
-//		return result == 1;
-//	}
-//
-//	@Override
-//	public String getCbMemByUsrNum(Long usrNum, Long cbNum) {
-//		log.info("getCbMemByUsrNum......" + cbNum);
-//		
-//		return mapper.readCbMemByUsrNum(usrNum, cbNum);
-//	}
+	//해당 모임에 대한 만남리스트를 가져온다.
+	public List<MeetingVO> getMeetingList(Long cbNum) {
+		System.out.println("MeetingService(getMeetingList) - cbnum: " + cbNum);		
+		
+		return mapper.getMeetingList(cbNum);
+	}
+
+
+
+
+
+	@Override
+	public MeetingVO getMeeting(Long mtNum) {
+		System.out.println("MeetingService(getMeeting) - mtNum: " + mtNum);
+		
+		return mapper.readMeeting(mtNum);
+	}
+
+	
+
+	@Override
+	public boolean modify(MeetingVO meeting) {
+		log.info("MeetingService(modify) - meeting: " + meeting);		
+		return mapper.update(meeting) == 1;
+	}
+	
+
+	@Override
+	public boolean remove(Long mtNum) {
+		log.info("remove...." + mtNum);
+		return mapper.delete(mtNum) == 1;
+	}
+
+
+
+	@Override
+	@Transactional
+	public boolean attend(MeetingVO meeting, UserVO loginUser, String mtAttendState) {
+		System.out.println("Service-join......" + meeting);
+		System.out.println("Service-join......" + loginUser);
+		System.out.println("Service-join......" + mtAttendState);		
+		
+		//우선적으로는 Service.attend 쪽 갔을때만 -> 인원수 변동시켜주자!!!
+			    	
+	    //신청하기or신청취소하기 버튼을 눌렀으면 여기서 케이스를 나눠서 Mapper 메소드를 실행한다.	
+	    //mtAttendState - 참석중, 미참석, Null("")
+		
+		int result = 0;
+		String chagneAttendState = null;
+		
+		//버튼을 눌렀을 떄 회원의 상태에 따라 달라졌을 것이다.
+		if( "".equals(mtAttendState) || mtAttendState == null) {
+	    	//null일 때 -> 참석중이 되어야 함
+			chagneAttendState = "참석중";
+			meeting.setMtCurMbNum(meeting.getMtCurMbNum()+1);
+			
+			result += mapper.insertAttend(meeting, loginUser, chagneAttendState);			
+	    }
+		else if(mtAttendState.equals("참석중")) {
+			//'참석중'일 때 -> 미참석 되어야 함
+			chagneAttendState = "미참석";
+			meeting.setMtCurMbNum(meeting.getMtCurMbNum()-1);
+			
+			result += mapper.updateAttend(meeting, loginUser, chagneAttendState);			
+		} 
+		else if(mtAttendState.equals("미참석") || mtAttendState.equals("모임탈퇴")) {			
+	    	//'미참석'일 때 -> "참석중"
+			chagneAttendState = "참석중";
+			meeting.setMtCurMbNum(meeting.getMtCurMbNum()+1);
+			
+			result += mapper.updateAttend(meeting, loginUser, chagneAttendState);			
+	    }
+	   
+	    
+		// 멤버상태를 변경해주고 나서는, meeting의 현재인원을 update해준다.		
+		result += mapper.update(meeting); 	    		
+		System.out.println("result : " + result);
+					
+		return result == 2;
+	}
+	
+	
+
+	
+	
+	
+	@Override
+	public String getMtStateByUsrNum(Long usrNum, Long cbNum, Long mtNum) {
+		System.out.println("MeetingServiceImpl - usrNUm : " + usrNum);
+		System.out.println("MeetingServiceImpl - cbNum : " + cbNum);
+		System.out.println("MeetingServiceImpl - mtNum : " + mtNum);
+		
+		
+		return mapper.readMtStateByUsrNum(usrNum, cbNum, mtNum);
+	}
+
+
+
+
+
+	@Override
+	public boolean updateMtCurMbNum(MeetingVO meeting) {
+
+		int mtCurMbNum = mapper.readMtCurMbNum(meeting.getMtNum());
+		meeting.setMtCurMbNum((long)mtCurMbNum);
+		
+		int result = mapper.update(meeting);			
+		return result == 1;
+	}
 
 	
 

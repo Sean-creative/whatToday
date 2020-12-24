@@ -31,7 +31,7 @@ public class NaverLogin {
     //state: 애플리케이션이 생성한 상태 토큰
     private final static String CLIENT_ID = "IgKeHY5UlZdSkXeSXrTX";
     private final static String CLIENT_SECRET = "1jeKIvVNQu";
-    private final static String REDIRECT_URI = "http://localhost:8080/login/naverCallback";
+    private final static String REDIRECT_URI = "http://localhost:8088/login/naverCallback";
     private final static String SESSION_STATE = "oauth_state";
     /* 프로필 조회 API URL */
     private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
@@ -45,7 +45,8 @@ public class NaverLogin {
         setSession(session,state);        
  
         /* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
-        OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)                                                   
+        OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)
+        		.apiKey(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
                 .callback(REDIRECT_URI)
                 .state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
@@ -62,6 +63,7 @@ public class NaverLogin {
         if(StringUtils.pathEquals(sessionState, state)){
  
             OAuth20Service oauthService = new ServiceBuilder(CLIENT_ID)
+            		.apiKey(CLIENT_ID)
                     .apiSecret(CLIENT_SECRET)
                     .callback(REDIRECT_URI)
                     .state(state)

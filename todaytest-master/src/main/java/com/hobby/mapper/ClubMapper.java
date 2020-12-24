@@ -75,6 +75,15 @@ public interface ClubMapper {
 	
 	
 	// 정기모임에 가입한 사람 - 지영
-	public Long getCbMember(@Param("cbNum") Long cbNum, @Param("usrNum") Long usrNum);
+	public Long getCbMember(@Param("cbNum") Long cbNum, @Param("usrNum") Long usrNum, @Param("cbMbStResult") String cbMbStResult);
 	
+	public Long getCbLeaderNum(Long cbNum);
+	
+	
+	
+	
+	// 정기모임 수정 
+	public int updateClub(ClubVO club);
+	// 정기모임 삭제(폐쇄) 
+	public int deleteClub(Long cbNum);
 }

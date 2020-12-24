@@ -5,14 +5,18 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="body">
-	<div id=banner>
-		<ul>
-			<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-			<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
-			<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
-		</ul>
-	</div><div id=bodymain>
+<div id="bgpic">
+	<div id="detail">
+         <div id="leftinfo">
+         	<img src="${cbThumbImg}" alt="">
+			<div id=banner>
+				<ul>
+					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
+					<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
+					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
+				</ul>
+			</div>
+			<div id=bodymain>
 			<table id="clubboard">
 				<tr>
 			  		<th>#번호</th>
@@ -34,10 +38,7 @@
 				</c:forEach>
 			</table>
 			
-			
-			</div> 
-		
- 		<button id="createBtn" type="button" class="btn btn-xs pull-right">글쓰기</button>
+ 		<button id="createBtn" type="button">글쓰기</button>
 		
 			<div class='pullright'>
 				<ul class="pagination">
@@ -55,8 +56,16 @@
 						</c:if>						
 					</ul>
 			</div>
-			<!--  end Pagination --> 
+			</div> 
 		</div>
+		<div id="rightinfo" class="rightinfo">
+                <div class="content">
+					<c:out value="${cbName}" />
+                </div>
+        </div>
+    </div>
+</div>
+			<!--  end Pagination --> 
 		    <form id='actionForm' action="/regular/board" method='get'>
 		    	<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
@@ -96,4 +105,18 @@
 				});
 </script>
 
+<script>
+window.onscroll = function() {myFunction()};
+
+var right = document.getElementById("rightinfo");
+var sticky = rightinfo.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    rightinfo.classList.add("sticky");
+  } else {
+    rightinfo.classList.remove("sticky");
+  }
+}
+</script>
 <%@include file="../includes/footer.jsp" %>

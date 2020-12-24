@@ -2,17 +2,18 @@ package com.hobby.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.google.common.util.concurrent.ServiceManager;
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.ClubVO;
 import com.hobby.domain.Criteria;
 import com.hobby.domain.NoticeCri;
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.ClubMapper;
+import com.hobby.mapper.MeetingMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +24,8 @@ import lombok.extern.log4j.Log4j;
 public class ClubServiceImpl implements ClubService {
 
 	private ClubMapper mapper;
+	private MeetingMapper meetingMapper;
+	
 	
 	//정기모임 개설 
 	@Override
@@ -63,7 +66,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubVO> getList(Criteria cri) {
 		
-		log.info("get List with criteria:" + cri);
+		log.info("========= get List with criteria:" + cri);
 		return mapper.getListWithPaging(cri);
 	}
 
@@ -153,8 +156,7 @@ public class ClubServiceImpl implements ClubService {
 			chagneJoinState = "승인대기";
 			System.out.println("chagneJoinState : " + chagneJoinState);
 									
-			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
-			System.out.println("Service-join...... result : " + result);						
+			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);								
 	    }		
 		else if(joinState.equals("모임탈퇴")) {
 			//'모임탈퇴'일 때 -> 승인대기 되어야 함
@@ -162,6 +164,8 @@ public class ClubServiceImpl implements ClubService {
 			System.out.println("chagneJoinState : " + chagneJoinState);			
 						
 			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
+			
+			
 		} 
 		else if(joinState.equals("가입승인")) {			
 	    	//'가입승인'일 때 -> 가입이 취소되어야함
@@ -171,6 +175,11 @@ public class ClubServiceImpl implements ClubService {
 			
 			result += mapper.updateJoin(club, loginUser,chagneJoinState);
 			result += mapper.insertJoinHistory(club, loginUser, chagneJoinState);
+			
+			//모임을 탈퇴하게 되면, 해당 사용자는 해당 모임에서 가입한 모든 만남을 탈퇴해야한다.	
+			System.out.println(club.getCbNum() + "  "+ loginUser.getUsrNum());
+			meetingMapper.updateMtOut(club.getCbNum(), loginUser.getUsrNum());
+			
 	    }
 		
 			    
@@ -201,14 +210,20 @@ public class ClubServiceImpl implements ClubService {
 	
 	
 	
-	// 정기모임에 가입한 사람 - 지영
+	// 정기모임에 가입한 사람인지 확인 - 지영
 	@Override
-	public Long getCbMember(Long cbNum, Long usrNum) {
-		Long result = mapper.getCbMember(cbNum, usrNum);
+	public Long getCbMember(Long cbNum, Long usrNum, String cbMbStResult) {
+		Long result = mapper.getCbMember(cbNum, usrNum, cbMbStResult);
 		System.out.println("result: " + result);
 		return result;
 	}
 	
+	// 모임 개설자 번호 - 지영
+	@Override
+	public Long getCbLeaderNum(Long cbNum) {
+		Long result = mapper.getCbLeaderNum(cbNum);
+		return result;
+	}
 	
 
 	//정기모임 게시판 총 갯수 
@@ -218,6 +233,24 @@ public class ClubServiceImpl implements ClubService {
 		log.info("get total board count");
 		return mapper.boardgetTotalCount(cri, cbNum);
 	}
+
+	//정기모임 수정
+	@Override
+	public boolean updateClub(ClubVO club) {
+		
+		log.info("updateclub......"+club);
+		System.out.println("updateclub......"+club);
+		return mapper.updateClub(club) == 1;
+	}
+	//정기모임 삭제(폐쇄)
+	@Override
+	public boolean deleteClub(Long cbNum) {
+		
+		log.info("deleteclub......"+ cbNum);
+		return mapper.deleteClub(cbNum) == 1;
+	}
+
+
 
 
 

@@ -5,37 +5,88 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>카카오 페이 결제</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<link rel="stylesheet" href="/resources/css/kakaoPayPayment.css">
 </head>
 <body>
- <div class="card-body bg-white mt-0 shadow">
-                <p style="font-weight: bold">카카오페이 현재 사용가능</p>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="20000"><span>20,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="25000"><span>25,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="30000"><span>30,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="35000"><span>35,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="40000"><span>40,000원</span></label>
-                <label class="box-radio-input"><input type="radio" name="cp_item" value="50000"><span>50,000원</span></label>
-                <p  style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 5,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
-                <button type="button" class="btn btn-lg btn-block  btn-custom" id="charge_kakao">충 전 하 기</button>
- </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<div id="kakaoPaybox">
+<div id="imgBanner">
+    <a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"width="80px"></a>
+</div>
+<div>
+    <p id="myPointHist">내 포인트 내역 > </p>
+    <div id="myPoint"> ${userPoint }p </div>
+    <div class="bar"></div><br>
+
+    <p id="chargeTitle">충전금액 선택</p>
+</div>
+
+<div id = "chargeBox">
+    <table>
+        <thead>
+            <tr>
+                <th>충전금액</th>
+                <th>수수료</th>
+                <th>총 결제금액</th>
+            </tr>
+        </thead>
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>6,000원</td>
+            </tr>
+
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>12,000원</td>
+            </tr>
+
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="20000"><span>20,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>24,000원</td>
+            </tr>
+
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="30000"><span>30,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>36,000원</td>
+            </tr>
+
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="40000"><span>40,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>48,000원</td>
+            </tr>
+
+            <tr>
+                <td class="point"><label class="box-radio-input"><input type="radio" name="cp_item" value="50000"><span>50,000원</span></label></td>
+                <td>부가세10% , 결제처리수수료 10%</td>
+                <td>60,000원</td>
+            </tr>
+    </table>
+    <div id="payBtn">
+        <button type="button" id="kakaopayCharge">카카오페이 결제</button>
+    </div>
+</div>
+
+
+<div id = warnTitle>
+    <p id="warnLetter">유의사항</p>
+    <ul>
+        <li>포인트 적립 및 사용처의 변경은 사전 고지 없이 내부 사정에 따라 변경될 수 있습니다.</li>
+        <li>포인트의 유효기간은 포인트 지급 경로에 따라 다를 수 있습니다.</li>
+        <li>한번 사용하신 포인트에 대해서는 철회가 불가능합니다.</li>
+        <li>계정 정보 이전 시에 포인트 이전은 불가능합니다.</li>
+    </ul>
+</div>
+</div>
 
 <script>
-    $('#charge_kakao').click(function () {
-    	$.ajax({
-            type: "GET", 
-            url: "/payments/complete", //충전 금액값을 보낼 url 설정
-            data: {
-                "paid_amount" : money
-            },
-        });
+    $('#kakaopayCharge').click(function () {
         // getter
         var IMP = window.IMP;
         IMP.init('imp27258746');
@@ -49,9 +100,9 @@
             name: '오늘 뭐하지 포인트 결제',
             amount: money,
             buyer_email: 'iamport@siot.do',
-            buyer_name: '구매자이름',
+            buyer_name: '사용자',
             buyer_tel: '010-1234-5678',
-            buyer_addr: '인천광역시 부평구',
+            buyer_addr: '서울시 종로구',
             buyer_postcode: '123-456'
         }, function (rsp) {
             console.log(rsp);

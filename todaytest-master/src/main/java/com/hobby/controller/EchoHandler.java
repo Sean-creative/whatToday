@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -68,8 +69,10 @@ public class EchoHandler extends TextWebSocketHandler {
 						 System.out.println("1session: " + session.getId());
 						 System.out.println("1sess: " + sess.getId());
 						 // 나한테는 메시지 보낼 필요없음.
-						 // if(!session.getId().equals(sess.getId()))
-						 	sess.sendMessage(new TextMessage(nickname + " : " + content));
+						  if(!session.getId().equals(sess.getId())) {
+						 	sess.sendMessage(new TextMessage(nickname + ":" + content));
+					 
+						  }
 					 }
 				}
 			}
@@ -77,15 +80,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	}
 
 	// 클라이언트와 연결을 끊었을 때 실행되는 메소드_연결 끊기는거 나중에 구현
-//	@Override
-//	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-//		String senderId = getMemberId(session);
-//
-//		if (senderId != null) { // 로그인 값이 있는 경우만
-//
-//			socketMap.remove(senderId);
-//
-//		}
-//	}
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		sessionList.remove(session);
+	}
 
 }
