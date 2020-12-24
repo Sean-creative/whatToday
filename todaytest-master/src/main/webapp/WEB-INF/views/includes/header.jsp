@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
-<title>Document</title>
+<title>오늘뭐하지?</title>
 </head>
 <body>
 	<div id="header">
@@ -18,13 +18,13 @@
 					alt="logo"></a>
 				<form action="/index/searchlist" method="get"
 					onsubmit="return inputCheckMain()">
-					<input type="text" name="search" placeholder="관심분야를 입력해주세요:)">
+					<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
 				</form>
 			</div>
 			<sec:authorize access="isAnonymous()">
 				<div class="menu2">
 					<li><a href="/login/login">로그인</a></li>
-					<li><a href="/cs/faq">고객센터</a></li>
+					<li><a href="/cs/notice">고객센터</a></li>
 				</div>
 			</sec:authorize>
 

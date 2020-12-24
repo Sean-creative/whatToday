@@ -10,9 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hobby.domain.InquireVO;
 import com.hobby.domain.NoticeCri;
 import com.hobby.domain.NoticeDTO;
 import com.hobby.domain.UserVO;
@@ -72,8 +74,11 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value="/mailRequest")
-	public String inquireRegister(HttpServletRequest request) {
-		 log.info("mailRequest####");  
+	public String inquireRegister(InquireVO inquire, HttpServletRequest request) {
+		
+		 log.info("mailRequest####"); 
+		 
+		service.register2(inquire);
 		String setfrom = request.getParameter("qsEmail");  //사용자 메일 주소         
 		String tomail  = "whattodayhobby@gmail.com";     //운영자 메일 주소 
 	    String title   = request.getParameter("qsTitle");      // 제목
@@ -118,13 +123,12 @@ public class FaqController {
 		int total = noticeService.getTotal(); 
 		log.info("list - total : " + total);
 		
-		
 		model.addAttribute("noticeList",service.noticeList(cri));
 		model.addAttribute("pageMaker", new NoticeDTO(cri,total));
 	}
 	
 	@GetMapping("/noticepage")
-	public void noticePage(@RequestParam("ntNum") Long ntNum, Model model) {
+	public void noticePage(@RequestParam("ntNum") Long ntNum,@ModelAttribute("cri") NoticeCri cri,Model model) {
 		
 		model.addAttribute("noticePage",service.noticeContent(ntNum));
 		log.info("#####noticePage");

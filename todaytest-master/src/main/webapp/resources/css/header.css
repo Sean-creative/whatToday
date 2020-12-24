@@ -30,15 +30,14 @@
 }
 
 /* 검색창 */
-input[type=text] {
-    width: 190px;
+#header input[type=text] {
+    width: 200px;
     box-sizing: border-box;
-    /* border: 1px solid #333; */
-    border-style: none none solid none;
-    border-bottom: 1px solid #666;
+    border: 1px solid #333;
+    /* border-style: none none solid none;
+    border-bottom: 1px solid #666; */
     outline:none;
-
-    /* border-radius: 4px; */
+    border-radius: 20px;
     font-size: 14px;
     background-color: white;
     background-image: url("../img/search.png");
@@ -50,9 +49,9 @@ input[type=text] {
     margin-top:10px;
   }
   
-  input[type=text]:focus {
+/*  #header input[type=text]:focus {
     width: 110%;
-  }
+  } */
 /* 로그인/고객센터 */
 .menu2{
     display: flex;

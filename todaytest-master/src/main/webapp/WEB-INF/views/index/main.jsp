@@ -16,13 +16,13 @@
            <div class="in_visual">  <!-------------------------------비주얼-->
                <div id="mainnav"> <!------------------------------------- 메뉴 -->
                     <ul>
-                        <li><a href="">정기모임</a></li>
-                        <li><a href="">번개모임</a></li>
-                        <li><a href="">베스트</a></li>
-                        <li><a href="">추천TEST</a></li>
-                        <li><a href="">정기개설</a></li>
-                        <li><a href="">번개개설</a></li>
-                        <li><a href="">고객센터</a></li>
+                        <li><a href="/regular/list">정기모임</a></li>
+                        <li><a href="/thunder/list">번개모임</a></li>
+                        <li><a href="/hobbyTest/test">추천TEST</a></li>
+                        <li><a href="/regular/add">정기개설</a></li>
+                        <li><a href="/thunder/add">번개개설</a></li>
+                        <li><a href="">포인트충전소</a></li>
+                        <li><a href="/cs/notice">고객센터</a></li>
                     </ul>
                     <div class="mainlogo"></div>
 
@@ -46,13 +46,13 @@
 					alt="logo"></a>
 				<form action="/index/searchlist" method="get"
 					onsubmit="return inputCheckMain()">
-					<input type="text" name="search" placeholder="관심분야를 입력해주세요:)">
+					<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
 				</form>
 			</div>
 			<sec:authorize access="isAnonymous()">
 				<div class="menu2">
 					<li><a href="/login/login">로그인</a></li>
-					<li><a href="/cs/faq">고객센터</a></li>
+					<li><a href="/cs/notice">고객센터</a></li>
 				</div>
 			</sec:authorize>
 

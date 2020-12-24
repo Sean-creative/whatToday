@@ -1,0 +1,116 @@
+*{
+    margin:0;
+    padding:0;
+}
+.s-visual{
+	width:100%;
+	height:400px;
+	background:url(../img/brush.jpg) no-repeat center center;
+	background-size:cover;
+	margin-top:40px;
+}
+.s-visual-in{
+	width:1100px;
+	margin:0 auto;
+	padding-top:140px;
+}
+.s-visual-in h2{
+	text-align:center;
+	font-size:70px;
+	color:#333;
+	line-height:90px;
+	letter-spacing:10px;
+	text-shadow:5px 5px 10px #666;
+}
+.s-visual-in h4{
+	text-align:center;
+	font-size:25px;
+	color:#666;
+	font-weight:100;
+	letter-spacing:10px;
+}
+
+/* =======menu  */
+.notimenu{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px dotted #333;
+    padding:15px 0;
+    margin-bottom: 60px;
+}
+.notisubmenu{
+    width:800px;
+}
+.notisubmenu a{
+    color:#333;
+    text-decoration: none;
+    margin-right: 30px;
+    font-size:15px;
+}
+.notisubmenu a:nth-child(1){
+    color: #ffaf31;
+    border-bottom:2px solid #ffaf31;
+    padding-bottom: 15px;
+}
+
+
+/* ===================table======== */
+#table{
+    width:1200px;
+    margin: 0 auto;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th{
+    text-align:center;
+    padding: 15px 12px;
+  }
+  td{
+      padding:20px;
+  }
+  tr{
+      text-align:center;
+      padding:20px;
+  }
+
+  tr:nth-child(odd){background-color: #f2f2f2}
+  tr:nth-child(1){background-color:#fff;}
+  
+  th {
+    border-top:3px solid #ffaf31;
+    border-bottom:1px solid #ffaf31;
+    color: #666;
+  } 
+
+  th:nth-child(1){width:10%;}
+  th:nth-child(3){width:15%;}
+  th:nth-child(4){width:15%;}
+
+  /* =======페이징처리 ==============*/
+  .pagination {
+    margin-top:30px;
+    width:1200px;
+    display: inline-block;
+    text-align:center;
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border-radius: 50%;
+  }
+  
+  .pagination a.active {
+    background-color:#ffaf31;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
