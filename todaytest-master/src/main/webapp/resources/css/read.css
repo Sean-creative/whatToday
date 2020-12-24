@@ -1,0 +1,70 @@
+#readbg{
+    width:1200px;
+    height:auto;
+    margin:80px auto 0;
+    border:1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.primera{
+    width:100%;
+    height:50px;
+    display:flex;
+    justify-content: flex-start;
+    border-bottom:1px solid #eee;
+    line-height:50px;
+} 
+
+
+.leff{
+    width:10%;
+    background:#ddd;
+}
+
+.primera p{
+    text-indent: 20px;
+}  
+
+
+.segundo ul{
+    display:flex;
+    margin-left:20px;
+    margin-top:20px;
+}
+
+.espec{
+    font-weight:bold;
+    font-size:14px;
+    color:#666;
+}
+
+.numero{
+    font-size:14px;
+    color:#888;
+}
+
+.segundo li{
+    list-style: none;
+    padding-right:20px;
+}
+
+.noticont p{
+    padding:20px;
+}
+
+.readpage{
+	width:1200px;
+	display:flex;
+	justify-content: flex-start;
+	margin:0 auto;
+}
+
+.readpage button{
+	padding:10px;
+	background:rgba(153,153,153,0.3);
+	outline:none;
+	border:none;
+	margin-top:20px;
+	border-radius:5px;
+	cursor:pointer;
+}

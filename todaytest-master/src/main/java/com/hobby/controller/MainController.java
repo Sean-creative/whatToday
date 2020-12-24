@@ -37,6 +37,7 @@ public class MainController {
 	//번개 검색결과 보여주기 
 	@GetMapping("/searchlist")
 	public void list( Criteria cri, Model model) {
+		cri.setAmount(12);
 		
 		//번개 
 		log.info("/list - GET");

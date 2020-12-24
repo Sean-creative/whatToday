@@ -27,7 +27,7 @@
 		<tr>
 			<td><c:out value="${notice.ntNum}" /></td>
 			<td>
-				<a href='/admin/noticepage?ntNum=<c:out value="${notice.ntNum }"/>'>
+				<a class='move' href='<c:out value="${notice.ntNum }"/>'> 
 				<c:out value="${notice.ntTitle}" />
 				</a>
 			</td>
@@ -77,10 +77,10 @@ var actionForm = $("#actionForm");
 $(".move").on("click",function(e){
 	e.preventDefault();
 	actionFrom.append("<input type='hidden' name='ntNum' value='"+$(this).attr("href")+"'>");
-	actionFrom.attr("action","/cs/notice");
+	actionFrom.attr("action","/cs/noticepage");
 	actionForm.submit();
-});	
-  });   
+	});	
+});   
 </script>
 </body>
 </html>

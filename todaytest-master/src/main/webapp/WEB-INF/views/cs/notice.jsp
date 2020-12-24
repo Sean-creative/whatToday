@@ -3,8 +3,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp"%>
 
-<link rel="stylesheet" href="<c:url value='../resources/css/boardStyle2.css?after'/>">
+<link rel="stylesheet" href="<c:url value='../resources/css/notice.css?after'/>">
 
+ <div class="s-visual">
+		<div class="s-visual-in">
+			<h2>공지사항</h2>
+			<h4>NOTICE</h4>
+		</div>
+    </div>
+    
+    <div class="notimenu">
+        <div class="notisubmenu">
+            <a href="/cs/notice">공지사항 </a>
+            <a href="/cs/faq">자주묻는질문 </a>
+            <a href="/cs/inquire">문의사항 </a>
+        </div>
+    </div>
+
+    <div id="table">
+        <table>
+            <tr>
+              <th>분류</th>
+              <th>제목</th>
+              <th>날짜</th>
+              <th>조회수</th>
+            </tr>
+
+            <c:forEach items="${noticeList}" var="notice">
+			<tr>
+				<td>공지</td>
+				<td>
+					<a href='/cs/noticepage?ntNum=<c:out value="${notice.ntNum }"/>'>
+					<c:out value="${notice.ntTitle}" />
+					</a>
+				</td>
+				<td><c:out value="${notice.ntDate}" /></td>
+				<td><c:out value="${notice.readCnt }"/></td>
+			</tr>
+	</c:forEach>
+        </table>    
+
+
+<%-- 
 <div class="ntc">
 <div class="bcoran">
 	<a href="/cs/faq">자주묻는질문 </a>
@@ -35,7 +75,9 @@
 			<td><c:out value="${notice.readCnt }"/></td>
 		</tr>
 	</c:forEach>
-</table>
+</table> --%>
+
+
 <!-- 페이지처리  -->
 <div class='pull-right'>
 	<ul class="pagination">
@@ -63,6 +105,7 @@
 	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>                 
 </form>  
 </div>
+
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 $(document).ready(function(){
