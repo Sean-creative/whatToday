@@ -54,6 +54,7 @@ public class HobbyTestController {
 		return getResult;
 	}
 	
+	// ajax가 더 빠름. 이 메소드 활용 안함.
 	@PostMapping
 	public String testResultAction(HobbyTestVO test, Model model) {
 		log.info("##/testResultAction" + test);

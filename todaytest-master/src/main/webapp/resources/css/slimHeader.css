@@ -1,0 +1,50 @@
+*{
+    margin:0;
+    padding:0;
+    text-decoration: none;
+    list-style: none;
+}
+/* -------------------------------헤더 */
+#header{
+    width:1040px;
+    height:80px;
+    margin:0 auto;
+}
+#head{
+    width:1040px;
+    height:80px;
+    /* background:transparent; */
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+.menu1{
+    display: flex;
+    justify-content: flex-start;
+}
+/* logo */
+#head img{
+    width:80px; 
+    margin-right:20px; 
+    margin-top:5px;
+}
+
+/* 로그인/고객센터 */
+.menu2{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.menu2 a{
+    color:#333;
+    margin-right:5px;
+    font-size:13px;
+    transition: 0.3s;
+}
+
+
+.menu2 a:hover{
+    font-weight: bold;
+    color:#ffaf31;
+}
