@@ -74,9 +74,9 @@
 	<select id="getListWithPaging" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 	select 
-		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum from
+		cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbThumbImg from
 		(select /*+INDEX_DESC(club club_pk) */ 
-			rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbView, CBFINALSTATE
+			rownum rn, cbNum, cbName, cbDistrict, cbCurMbNum, cbMbNum, cbThumbImg, cbView, CBFINALSTATE
 		from club where ]]>
 
 		<include refid="criteria"></include>

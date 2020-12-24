@@ -226,7 +226,7 @@ ul li.tag-item {
       	 </div>
       	 
       	 <div id="regiform">
-      	 	<input type="submit" class="btn" value="개설하기">
+      	 	<input type="submit" class="btn" value="개설하기" style="width:80%;">
    	 	 </div>
    	 	 
 	</div>		
@@ -548,4 +548,4 @@ ul li.tag-item {
    
 </script>
 
-<%-- <%@include file="../includes/footer.jsp"%> --%>
+<%@include file="../includes/footer.jsp"%>

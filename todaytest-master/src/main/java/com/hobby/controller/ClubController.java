@@ -222,6 +222,7 @@ public class ClubController {
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("list", service.boardgetList(cri, cbNum));
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		
 		log.info("#board:" + service.boardgetList(cri, cbNum));
 		
@@ -238,6 +239,7 @@ public class ClubController {
 		// 화면쪽으로 해당 게시물번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		model.addAttribute("club", service.get(cbBno));
 		model.addAttribute("replyVO", new ReplyVO());
 	}
@@ -263,6 +265,7 @@ public class ClubController {
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		// model.addAttribute("boardRegister", service.getList(cbNum));
 		model.addAttribute("boardRegister", service.boardgetList(cri, cbNum));
 	}
