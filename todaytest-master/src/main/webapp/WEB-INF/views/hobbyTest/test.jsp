@@ -325,21 +325,21 @@ function testResult() {
 	function showImageRegular(tr, r, sub, cat){
 		resultImg(sub);
     	tr.style.backgroundImage = "url('" + img + "')";
-    	tr.setAttribute('OnClick',"location.href='http://localhost:8080/regular/list?category=" + sub + "&subclass=" + cat + "'");
+    	tr.setAttribute('OnClick',"location.href='http://localhost:8088/regular/list?category=" + sub + "&subclass=" + cat + "'");
     	r.innerHTML=sub;
 	}
 	
 	function showImageThunder(tr, r, sub, cat){
 		resultImg(sub);
     	tr.style.backgroundImage = "url('" + img + "')";
-    	tr.setAttribute('OnClick',"location.href='http://localhost:8080/thunder/list?category=" + sub + "&subclass=" + cat + "'");
+    	tr.setAttribute('OnClick',"location.href='http://localhost:8088/thunder/list?category=" + sub + "&subclass=" + cat + "'");
     	r.innerHTML=sub;
 	}
 	
 	function resultImg(sub){
 		switch (sub) {
 		case "등산":
-			img = "/resources/img/subclass/subclass/hiking.jpg";
+			img = "/resources/img/subclass/hiking.jpg";
 			break;
 		case "산책/트래킹":
 			img = "/resources/img/subclass/tracking.jpg";

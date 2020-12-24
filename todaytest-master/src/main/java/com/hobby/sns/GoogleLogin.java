@@ -23,7 +23,7 @@ public class GoogleLogin {
 	/* 인증 요청문을 구성하는 파라미터 */
 	private final static String CLIENT_ID = "306036003490-stl04ho7t5kkqj9gji3kifnnnfc72sdt.apps.googleusercontent.com";
 	private final static String CLIENT_SECRET = "uiPTCEBP98l6RYcV1Jl60pKu";
-	private final static String REDIRECT_URI = "http://localhost:8080/login/auth/google/callback";
+	private final static String REDIRECT_URI = "http://localhost:8088/login/auth/google/callback";
 	private final static String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 	
 	// 사용자 이름 정보가져오는 scope

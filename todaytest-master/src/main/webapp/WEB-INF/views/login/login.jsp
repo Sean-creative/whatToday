@@ -34,7 +34,7 @@
                 <hr>
 
                 <div id="sns">
-                    <div OnClick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=http://localhost:8080/login/kakaoLogin&response_type=code'">
+                    <div OnClick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=http://localhost:8088/login/kakaoLogin&response_type=code'">
                         <div class="kakao"></div>
                         <p>카카오<br>로그인</p>
                     </div>
@@ -61,6 +61,12 @@
             </form>
         </div>
     </div>
+    
+<script>
+if("${registerSuccessMsg }" != ""){
+	alert("${registerSuccessMsg}");
+}
+</script>
 </body>
 </html>
 <%@ include file="../includes/footer.jsp"%>

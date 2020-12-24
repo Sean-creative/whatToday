@@ -1,7 +1,6 @@
 package com.hobby.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -109,13 +109,17 @@ public class ClubController {
 		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = customUser.getUser();
+		System.out.println("userVO: " + userVO);
 
 		// 파라미터 model을 통해 회원번호와 회원이름을 결과에 담아 전달 한다.
 		model.addAttribute("usrName", userVO.getUsrName());
 		model.addAttribute("usrNum", userVO.getUsrNum());
+		model.addAttribute("usrPoint", userVO.getUsrPoint());
+
 
 		log.info("##/add 회원번호는 :" + userVO.getUsrNum());
 		log.info("##/add 회원이름는 :" + userVO.getUsrName());
+		log.info("##/add 회원포인트는 :" + userVO.getUsrPoint());
 
 		return "/regular/add";
 	}
@@ -340,32 +344,6 @@ public class ClubController {
 		return "redirect:/index/main";
 	}
 
-	// 정기모임 채팅창 - 지영
-//	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/chat", method = RequestMethod.GET)
-	public void chat(@RequestParam("cbNum") Long cbNum, Model model) {
-		log.info("##/chat");
-
-//		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		String name = customUser.getUser().getUsrName();
-//		Long usrNum = customUser.getUser().getUsrNum();
-
-		System.out.println("cbNum: " + cbNum);
-//		System.out.println("usrNum: " + usrNum);
-
-//		// 모임에 가입한 사람(+가입승인)만 채팅창 입장버튼을 누를 수 있음. 
-//		Long result = service.getCbMember(cbNum, usrNum);
-//		System.out.println(result);
-//
-//		if(result==null) {
-//			model.addAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
-//		}else {
-//			model.addAttribute("cbNum", cbNum);
-//			model.addAttribute("usrName", name);
-//		}
-		model.addAttribute("cbNum", cbNum);
-	}
-
 	// 정기모임 수정
 	@GetMapping("/update")
 	public void updateClub(@RequestParam("cbNum") Long cbNum, Model model) {
@@ -411,5 +389,41 @@ public class ClubController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		return "redirect:/regular/list";
+	}
+	
+	
+	// ##### 정기모임 채팅창 (지영) #####
+	//http://localhost:8080/regular/info?pageNum=1&amount=24&category=&subclass=&city=&district=&keyword=&orderBy=cbNum+desc&cbNum=484
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public String chat(@RequestParam("cbNum") Long cbNum, Model model, RedirectAttributes rtts) {
+		log.info("##/chat");
+
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long usrNum = customUser.getUser().getUsrNum();
+
+		System.out.println("cbNum: " + cbNum);
+		System.out.println("usrNum: " + usrNum);
+
+		// 모임에 가입한 사람(+가입승인)만 채팅창 입장가능
+		Long result = service.getCbMember(cbNum, usrNum, "가입승인");
+		System.out.println(result);
+		
+		if(result==null) {
+			rtts.addFlashAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
+			// 어디로 가지?? -> /regular/info -> 로그인 한사람만 들어 갈수 있음..?
+			return "redirect:/regular/list";
+		}else {
+			// 모임 개설자는 채팅창을 개설할 수 있음.
+			Long cbLeaderNum = service.getCbLeaderNum(cbNum);
+			model.addAttribute("cbNum", cbNum);
+			model.addAttribute("cbLeaderNum", cbLeaderNum);
+			model.addAttribute("usrNum", usrNum);
+			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+		}
+		
+		
+		return "/regular/chat";
+		
 	}
 }
