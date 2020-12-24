@@ -48,7 +48,8 @@
                 <div>
                     <label for="phone">휴대폰 번호</label><br>
                     <input type="text" placeholder="휴대폰 전호('-'없이 입력)" id="phone" name="usrPhone">
-                    <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복 확인</button>
+                    <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복확인</button>
+
                 </div>
 				<span id ="phoneResult" class="hide"></span>
 	
@@ -162,12 +163,14 @@
 		}
 		// 포커스를 잃었을 때 함수 실행됨.
 		emailInput.addEventListener("blur", emailCheck);
-
 		// 비밀번호 유효성 검사
 		let pwdInput = document.getElementById("pwd");
 		let pwdResult = document.getElementById("pwdResult");
 		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 		pwdCheckResult = false;
 		function pwdCheck() {
 			if (pwdInput.value.length === 0) {
@@ -181,15 +184,15 @@
 				pwdResult.innerHTML = "사용할 수 있는 비밀번호 입니다.";
 				pwdCheckResult = true;
 			}
-
-
 		}
 		pwdInput.addEventListener("blur", pwdCheck);
-
 		// 비밀번호 재입력 유효성 검사
 		let pwdReInput = document.getElementById("pwdRe");
 		let pwdReResult = document.getElementById("pwdReResult");
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 		pwdReCheckResult = false;
 		function pwdReCheck() {
 			if (pwdReInput.value.length === 0) {
@@ -207,7 +210,10 @@
 		let nameInput = document.getElementById("name");
 		let nameResult = document.getElementById("nameResult")
 		const namePattern = /^[가-힣]{2,4}$/;
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 		nameCheckResult = false;
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
@@ -228,7 +234,10 @@
 		let phoneResult = document.getElementById("phoneResult")
 		//01012341234
 		const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 		phoneCheckResult = false;
 		function phoneCheck() {
 			if (phoneInput.value.length === 0) {
@@ -241,7 +250,6 @@
 				phoneCheckResult = true;
 			}
 		}
-
 		phoneInput.addEventListener("blur", phoneCheck);
 	
 		function inputCheck(){
@@ -314,7 +322,6 @@
 				alert("개인정보 약관에 동의를 확인하세요");
 				return false;
 			}
-
 			
 			let usrEmailTerm = document.getElementsByName('usrEmailTerm');
 			let emailTerm = null;
@@ -344,10 +351,8 @@
 		if (mm < 10) {
 			mm = '0' + mm
 		}
-
 		today = yyyy + '-' + mm + '-' + dd;
 		document.getElementById("datefield").setAttribute("max", today);
-
 		// 관심분야 선택 값들
 		$(document).ready(
 				function() {
@@ -360,28 +365,23 @@
 								categoryArr[i], categoryArr[i]);
 					}
 				});
-
 		// 지역 선택 - jquery
 		$(function() {
 			$('#city1').change(function() {
 				region(this, $("#district1"));
 			});
 		});
-
 		$(function() {
 			$('#city2').change(function() {
 				region(this, $("#district2"));
 			});
 		});
-
 		function region(o, d) {
 			let city = [ "서울특별시", "경기도" ];
-
 			let seoul = [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구",
 					"금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구",
 					"성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구",
 					"중구", "중랑구" ];
-
 			let gyeonggi = [ "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시",
 					"남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시",
 					"안양시", "양주시", "여주시", "오산시", "용인시", "의왕시", "의정부시", "이천시",
@@ -397,9 +397,7 @@
 			} else if ($(':selected', o).val() == "경기도") {
 				district = gyeonggi;
 			}
-
 			d.empty();
-
 			for (let i = 0; i < district.length; i++) {
 				let option = $("<option value=" + district[i] +">"
 						+ district[i] + "</option>");
@@ -411,14 +409,12 @@
 	<script type="text/javascript">
 		function idDuplicate() {
 			let id = $("#email").val();
-
 			$.ajax({
 				url : 'idDuplicateCheck',
 				type : 'POST',
 				dataType : 'text', //서버로부터 내가 받는 데이터의 타입
 				contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
 				data : id,
-
 				success : function(data) {
 					if (data) {
 						emailResult.innerHTML = data + "는 이미 사용중인 아이디 입니다.";
@@ -435,18 +431,15 @@
 		
 		function phoneDuplicate() {
 			let phone = $("#phone").val();
-
 			$.ajax({
 				url : 'phoneDuplicateCheck',
 				type : 'POST',
 				dataType : 'text', 
 				contentType : 'text/plain; charset=utf-8;',
 				data : phone,
-
 				success : function(data) {
 					if (data) {
 						phoneResult.innerHTML = "이미 사용중인 핸드폰 번호 입니다.";
-
 					} else {
 						phoneResult.innerHTML = "사용하실 수 있는 핸드폰번호입니다.";
 					}

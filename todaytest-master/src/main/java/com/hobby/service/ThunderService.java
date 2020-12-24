@@ -43,5 +43,10 @@ public interface ThunderService {
 	public boolean isLogin(Authentication auth);
 	
 	
+	//스케줄러 테스트
+	public void schedul(); 
+	
+	
+	
 	
 }

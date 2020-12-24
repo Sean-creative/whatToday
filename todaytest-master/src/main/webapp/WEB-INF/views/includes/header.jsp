@@ -11,35 +11,40 @@
 <title>Document</title>
 </head>
 <body>
-   <div id="header">
-      <div id="head">
-         <div class="menu1">
-            <a href="/index/main">
-               <img src="/resources/img/logo.png" alt="logo">
-            </a>
-            <form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-               <input id="serchHeader" type="text" name="search" placeholder="관심분야를 입력해주세요:)">
-            </form>
-         </div>
-         <sec:authorize access="isAnonymous()">
-            <div class="menu2">
-               <li><a href="/login/login">로그인</a></li>
-               <li><a href="/cs/faq">고객센터</a></li>
-            </div>
-         </sec:authorize>
+	<div id="header">
+		<div id="head">
+			<div class="menu1">
+				<a href="/index/main">
+					<img src="/resources/img/logo.png" alt="logo">
+				</a>
+				<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
+					<input id="serchHeader" type="text" name="search" placeholder="관심분야를 입력해주세요:)">
+				</form>
+			</div>
+			<sec:authorize access="isAnonymous()">
+				<div class="menu2">
+					<li><a href="/login/login">로그인</a></li>
+					<li><a href="/cs/faq">고객센터</a></li>
+				</div>
+			</sec:authorize>
 
-         <!-- 로그인되면 보여지는 메뉴 -->
-         <sec:authorize access="isAuthenticated()">
-            <div class="menu2">
-               <li><a href="/mypage/main" id="user">
-                     <sec:authentication property="principal.user.usrName" />
-                     님
-                  </a></li>
-               <li>
-               <div class="tooltip">
-               <img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
-               <div class="tooltiptext">
-               <div class="socketAlert"></div>
+			<!-- 로그인되면 보여지는 메뉴 -->
+			<sec:authorize access="isAuthenticated()">
+				<div class="menu2">
+					<li><a href="/mypage/main" id="user">
+							<sec:authentication property="principal.user.usrName" />
+							님
+						</a></li>
+					<li>
+					<div class="tooltip">
+					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
+					<div class="tooltiptext">
+					<div class="socketAlert"></div>
+
+						</div>
+					</li>
+					<li><a href="/login/logout">로그아웃</a></li>
+					<li><a href="/cs/faq">고객센터</a></li>
 
                   </div>
                </li>
@@ -92,18 +97,18 @@
    <script type="text/javascript">
 var socket = null;  //전역 변수로 선언
 $(document).ready(function() {
-   let loginCheck = null;
-   <sec:authorize access="isAuthenticated()">
-   loginCheck = true;
-   msgNum = <sec:authentication property="principal.user.usrNum"/>;
-   </sec:authorize>
-   if(loginCheck == true){
-      connectWS(msgNum);
-      }
-   
-   $("#alram").on("click",function(){
-      $(".tooltiptext").toggle();   
-   })
+	let loginCheck = null;
+	<sec:authorize access="isAuthenticated()">
+	loginCheck = true;
+	msgNum = <sec:authentication property="principal.user.usrNum"/>;
+	</sec:authorize>
+	if(loginCheck == true){
+		connectWS(msgNum);
+		}
+	
+	$("#alram").on("click",function(){
+		$(".tooltiptext").toggle();	
+	})
 });
    
 function myFunction() {
@@ -165,15 +170,15 @@ socket = ws;
 
 
 ws.onopen = function(message){
-   ws.send(msgNum+","+"접속");
+	ws.send(msgNum+","+"접속");
 
 };
 
 ws.onmessage = function(event){
-   
+	
 console.log(event.data);
 if($(".socketAlert p").length == 5){
-   $(".socketAlert p:last").remove();
+	$(".socketAlert p:last").remove();
 }
 $(".socketAlert").prepend("<p style='margin-left:8%; margin-top:2%;'>"+event.data+"</p>");
 
@@ -191,6 +196,16 @@ console.log("Server Error");
 
 };
 }
+
+		
+		
+		var id = document.getElementById("user");
+		console.log("userId: " +id);
+		
+		if(id != null){
+			$(".main").css("display","none");
+		}
+		
 
       
       

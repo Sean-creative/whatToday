@@ -46,4 +46,9 @@ public interface ThunderMapper {
 	//모임 클릭 시 조회수 올라감
 	public void clubViews(Long cbNum);
 	
+	// 현재시간이 지나면 해당 모임을 '폐쇄'로 바꾼다.
+	public void updateFinalState();
+		
+	
+	
 }
