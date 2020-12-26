@@ -6,135 +6,15 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/thunderAdd.css">
 <%@include file="../includes/header.jsp"%>
-<!-- 
-<style>
-.weather {
-	display: flex;
-	color: white;
-}
-
-.weather div {
-	width: 100px;
-	text-align: center;
-}
-
-.City {
-	background-color: red;
-}
-
-.weatherContent {
-	background-color: black;
-	color: white;
-}
-
-.day {
-	font-size: 0.938rem;
-}
-
-.Icon, .Temp {
-	font-size: 1.375em;
-}
-
-.Icon {
-	margin-right: 2px;
-}
-
-/* 파일 업로드 블로그 style */
-.inputArea {
-	margin: 10px 0px;
-}
-
-select {
-	with: 100px;
-}
-
-label {
-	display: inline-block;
-	width: 70px;
-	padding: 5px;
-}
-
-label[for='gdsDes'] {
-	display: block;
-}
-
-input {
-	width: 150px;
-}
-
-textarea#gdsDes {
-	width: 400px;
-	height: 180px;
-}
-
-.select_img img {
-	margin: 20px 0px;
-}
-
-/* 해시태그 구현 */
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-ul {
-	padding: 16px 0;
-}
-
-ul li {
-	display: inline-block;
-	margin: 0 5px;
-	font-size: 14px;
-	letter-spacing: -.5px;
-}
-
-form {
-	padding-top: 16px;
-}
-
-ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-.tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-
-.del-btn {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 8px;
-}
-
-.thumbImg {
-	width: 200px;
-	height: auto;
-}
-</style> -->
 
 
 <!--  번개 모임 수정 -->
-
 <section>
-	<div class="section_header" style="margin: 0 auto;">
-		<h2>번개 모임 수정</h2>
-		<p>모임 정보를 수정해주세요!</p>
+	<div class="section_header" style="margin: 0 auto; text-align: center;">
+		<span class="half">번개 모임 수정</span>
+		<p>번개 모임을 수정해주세요</p>
 	</div>
 	<div id="container">
-
-
-
-		<!-- ========왼쪽========== -->
-		<div class="header_in3">
-			<ul class="header_weekday">
-			</ul>
-		</div>
-
 
 
 		<!-- ========중앙========== -->
@@ -186,6 +66,12 @@ ul li.tag-item {
 							<label for="request" class="class">모임 마감기간*</label>
 							<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />'>
 						</div>
+						
+												
+						<div class="header_in3">
+							<ul class="header_weekday">
+							</ul>
+						</div>
 					</div>
 
 
@@ -207,7 +93,7 @@ ul li.tag-item {
 
 
 
-					<div>
+					<div id="hash">
 
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class" style="display: block;">해시태그</label>
@@ -218,22 +104,11 @@ ul li.tag-item {
 
 
 						<div style="display: inline-block; width: 300px;">
-							<label for="request" class="class" style="display: block;">모임 준비물</label>
-							<input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50" value='<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />'>
+							<label for="request" class="class" style="display: block;">한줄소개</label>
+							<input type="text" name='thunderDetailVO.cbIntro' id='cbIntro' size="50" value='<c:out value="${clubVO.thunderDetailVO.cbIntro}" />'>
 						</div>
 
 					</div>
-
-
-
-
-					<div class="request">
-						<label for="request" class="class" style="display: block;">모임소개</label>
-						<textarea name='cbIntro' cols="100" rows="7" maxlength="300"><c:out value="${clubVO.cbIntro}" /></textarea>
-
-					</div>
-
-
 
 
 					<div class="request">
@@ -242,8 +117,6 @@ ul li.tag-item {
 							<img class="thumbImg" src="${clubVO.cbThumbImg}" /> <br>
 							<input type="file" id="gdsImg" name="file" />
 						</div>
-
-
 					</div>
 
 

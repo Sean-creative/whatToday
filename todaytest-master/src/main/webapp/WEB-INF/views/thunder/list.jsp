@@ -189,8 +189,8 @@
                   		/* location.href="/thunder/list"; */
                   	}
                   	
-                  	
-                  	timerId = setInterval(test, 10000);
+//                   	1분마다 새로고침 됨
+//                   	timerId = setInterval(test, 60000);
                   	console.log(timerId);
 				</script>
 

@@ -142,12 +142,9 @@
 		</div>
 	</div>
 	<!-- 카카오 맵 END -->
-
-
-
-
-
 </section>
+
+
 
 <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
