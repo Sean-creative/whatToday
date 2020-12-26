@@ -45,11 +45,22 @@ $(function() {
 	});
 
 	
-
-	
-	
-	
+	/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
+	$("#gdsImg").change(
+			function() {
+				if (this.files && this.files[0]) {
+					var reader = new FileReader;
+					reader.onload = function(data) {
+						$(".select_img img").attr("src",
+								data.target.result).width(200)
+								.height(144);
+					}
+					reader.readAsDataURL(this.files[0]);
+				}
+			});
+			
 });
+//load function END 
 
 const cate = function(o, d) {
 

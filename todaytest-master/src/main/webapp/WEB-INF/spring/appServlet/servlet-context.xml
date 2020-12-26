@@ -36,8 +36,7 @@
            <!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정 -->
            <websocket:handshake-interceptors>
                    <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-           </websocket:handshake-interceptors>
-           <websocket:sockjs />   
+           </websocket:handshake-interceptors>  
         </websocket:handlers>
         
         <websocket:handlers>
@@ -48,7 +47,9 @@
                    <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
            </websocket:handshake-interceptors>
            <websocket:sockjs />   
+
         </websocket:handlers>
+       
         
    <beans:bean id="echoHandler" class="com.hobby.controller.EchoHandler" />
    <beans:bean id="echoHandler2" class="com.hobby.controller.EchoHandler2" />

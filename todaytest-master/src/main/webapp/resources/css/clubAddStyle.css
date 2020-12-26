@@ -10,7 +10,7 @@
     background:pink;
 }
 .regubg{
-    width:1600px;
+    width:100%;
     height:1600px;
     background:url('../img/brown.jpg') no-repeat;
     background-size:cover;
@@ -128,6 +128,7 @@
 #regiform{
     width:400px;
     margin:50px auto;
+    display: flex;
 }
 .btn{
     background-color: #ffaf31;
@@ -135,9 +136,9 @@
 	padding: 15px 20px;
 	border: none;
 	cursor: pointer;
-    width: 80%;
     border-radius: 5px;
 	opacity: 0.9;
+	margin-right: 20px;
 }
 
 /* 파일 업로드 style */

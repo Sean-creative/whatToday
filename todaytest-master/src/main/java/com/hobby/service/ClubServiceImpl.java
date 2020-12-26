@@ -210,14 +210,20 @@ public class ClubServiceImpl implements ClubService {
 	
 	
 	
-	// 정기모임에 가입한 사람 - 지영
+	// 정기모임에 가입한 사람인지 확인 - 지영
 	@Override
-	public Long getCbMember(Long cbNum, Long usrNum) {
-		Long result = mapper.getCbMember(cbNum, usrNum);
+	public Long getCbMember(Long cbNum, Long usrNum, String cbMbStResult) {
+		Long result = mapper.getCbMember(cbNum, usrNum, cbMbStResult);
 		System.out.println("result: " + result);
 		return result;
 	}
 	
+	// 모임 개설자 번호 - 지영
+	@Override
+	public Long getCbLeaderNum(Long cbNum) {
+		Long result = mapper.getCbLeaderNum(cbNum);
+		return result;
+	}
 	
 
 	//정기모임 게시판 총 갯수 
@@ -243,6 +249,7 @@ public class ClubServiceImpl implements ClubService {
 		log.info("deleteclub......"+ cbNum);
 		return mapper.deleteClub(cbNum) == 1;
 	}
+
 
 
 

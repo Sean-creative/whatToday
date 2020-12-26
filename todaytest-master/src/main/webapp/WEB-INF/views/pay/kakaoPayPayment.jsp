@@ -17,7 +17,7 @@
 </div>
 <div>
     <p id="myPointHist">내 포인트 내역 > </p>
-    <div id="myPoint"> 0 Point </div>
+    <div id="myPoint"> ${userPoint }p </div>
     <div class="bar"></div><br>
 
     <p id="chargeTitle">충전금액 선택</p>
@@ -87,13 +87,6 @@
 
 <script>
     $('#kakaopayCharge').click(function () {
-    	$.ajax({
-            type: "GET", 
-            url: "/payments/complete", //충전 금액값을 보낼 url 설정
-            data: {
-                "paid_amount" : money
-            },
-        });
         // getter
         var IMP = window.IMP;
         IMP.init('imp27258746');

@@ -9,6 +9,7 @@
     <result property="usrPwd" column="usrPwd"/>
     <result property="usrName" column="usrName"/>
     <result property="usrState" column="usrState"/>
+    <result property="usrPoint" column="usrPoint"/>
     <collection property="authList" resultMap="authMap">
     </collection> 
 </resultMap>
@@ -67,7 +68,7 @@
 
 <select id="read" resultMap="userMap">
 SELECT
-    usr.usrNum, usrId, usrPwd, usrName, usrState, auth
+    usr.usrNum, usrId, usrPwd, usrName, usrState, usrPoint, auth
 FROM 
   tbluser usr LEFT OUTER JOIN userAuth auth on usr.usrNum = auth.usrNum
 WHERE usr.usrId = #{usrId} 
