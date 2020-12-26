@@ -68,11 +68,11 @@
 <!-- 업로드 패스 설정 --> 
 <beans:bean class="java.lang.String" id="uploadPath">
 
- <beans:constructor-arg value="C:\Users\cool1\git\whatToday\todaytest-master\src\main\webapp\resources" />
+ <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
 </beans:bean>
 
 <beans:bean class="java.lang.String" id="uploadFolder">
- <beans:constructor-arg value="C:\Users\cool1\git\whatToday\todaytest-master\src\main\webapp\resources\img\upload" />
+ <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
 
 </beans:bean>
 
