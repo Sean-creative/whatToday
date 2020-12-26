@@ -438,9 +438,9 @@
 	    	let manCnt = 0;
 
 	    	for(let i = 0; i < getUserList().length; i ++){
-	    		if(getUserList()[i].usrGender == 'm'){
+	    		if(getUserList()[i].usrGender == '남'){
 	    			manCnt++;
-	    		}else if(getUserList()[i].usrGender == 'f'){
+	    		}else if(getUserList()[i].usrGender == '여'){
 	    			womanCnt++;
 	    		}
 	    		

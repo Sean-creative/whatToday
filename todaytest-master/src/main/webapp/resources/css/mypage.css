@@ -13,8 +13,8 @@
 }
 #navMenu{
     width: 30%;
-    height: 550px;
-    display: flex;
+    height: 580px;
+    display: flex;	
     flex-direction: column;
     justify-content: flex-start;
 
@@ -31,7 +31,7 @@
 }
 #wrapInfo2{
     width: 60%;
-    height: 550px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,7 +42,7 @@
 }
 #wrapInfo3{
     width: 60%;
-    height: 550px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -64,7 +64,7 @@
 .uInfo{
     margin-top: 3% auto auto 3%;
     width: 80%;
-    height: 300px;
+    height: 250px;
     display: flex;
     border:1px solid transparent;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column; 
     justify-content: center;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	border-radius: .25em; 
     
 }
@@ -93,7 +93,7 @@
     color: white;
     font-size: 18px;
     background-color: #ffaf31;
-    height: 40px;
+    height: 35px;
     width: 100%;
 }
 .info button:hover{

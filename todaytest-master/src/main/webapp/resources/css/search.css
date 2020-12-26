@@ -1,0 +1,46 @@
+#them{
+	 width:1200px;
+    height:100px;
+    /* background:pink; */
+	margin:0 auto;
+    /* margin-top:100px; */
+    display:flex;
+    justify-content: space-between;
+}
+
+
+.regbox{
+	cursor: pointer;
+	width:270px; 
+	height:370px; 
+	margin-right:40px;
+}
+
+.regbox:nth-child(4n){
+	margin-right:0px;
+}
+
+.location{
+	width:270px;
+	height:16px;
+	font-size:16px;
+	font-weight:bold;
+	color:#2f3030;
+}
+
+.nombre{
+	width:270px;
+	height:40px;
+	margin-top:4px;
+	font-size:14px;
+	color:#2f3030
+}
+
+
+.limitmem{
+	width:270px;
+	height:16px;
+	font-size:14px;
+	padding-top:4px;
+	color:#666;
+}

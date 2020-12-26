@@ -12,11 +12,18 @@ $(function() {
 		actionForm.submit();
 	});
 	
-	$(".pagination").change(function(e) {
+/*	$(".pagination").change(function(e) {
 		$("input[name='orderBy']").val(e.target.value);
 		$("#actionForm").submit();
 	});
-
+*/
+	$(".order_button a").on("click", function(e) {
+		e.preventDefault();
+		console.log('order_button click');
+		actionForm.find("input[name='orderBy']").val($(this).attr("href"));
+		actionForm.submit();
+	});
+	
 	// 내부 JS에서 설정한 변수 값들 확인
 	// 카테고리, 모임, 지역, 지역상세
 	console.log(cg, sc, ct, dt);

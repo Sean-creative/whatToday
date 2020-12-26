@@ -36,18 +36,20 @@
            <!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정 -->
            <websocket:handshake-interceptors>
                    <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-           </websocket:handshake-interceptors>
+           </websocket:handshake-interceptors>  
         </websocket:handlers>
         
         <websocket:handlers>
-      		<websocket:mapping handler="echoHandler2" path="/echo2"/>
-            <!-- WebSocket Handshake : 웹소켓 핸들러 클래스(echoHandler)가 호출되기전에 HttpSession에 접속하여  -->
-            <!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정 -->
-            <websocket:handshake-interceptors>
-           		<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-           	</websocket:handshake-interceptors>
-           	<websocket:sockjs />   
+      <websocket:mapping handler="echoHandler2" path="/echo2"/>
+           <!-- WebSocket Handshake : 웹소켓 핸들러 클래스(echoHandler)가 호출되기전에 HttpSession에 접속하여  -->
+           <!-- '이용자 아이디를 추출하는 기능' 등을 인터셉터가 수행하도록 설정 -->
+           <websocket:handshake-interceptors>
+                   <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+           </websocket:handshake-interceptors>
+           <websocket:sockjs />   
+
         </websocket:handlers>
+       
         
    <beans:bean id="echoHandler" class="com.hobby.controller.EchoHandler" />
    <beans:bean id="echoHandler2" class="com.hobby.controller.EchoHandler2" />
@@ -66,11 +68,11 @@
 <!-- 업로드 패스 설정 --> 
 <beans:bean class="java.lang.String" id="uploadPath">
 
- <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
+ <beans:constructor-arg value="C:\Users\cool1\git\whatToday\todaytest-master\src\main\webapp\resources" />
 </beans:bean>
 
 <beans:bean class="java.lang.String" id="uploadFolder">
- <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
+ <beans:constructor-arg value="C:\Users\cool1\git\whatToday\todaytest-master\src\main\webapp\resources\img\upload" />
 
 </beans:bean>
 

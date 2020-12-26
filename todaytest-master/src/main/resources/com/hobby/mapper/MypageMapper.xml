@@ -43,8 +43,8 @@
 	</select>
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
-		select DISTINCT usrNum,cbNum,cbName,cbType from CLUBJOINHISTORY 
-		where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴'
+select usrNum,cbNum,cbName,cbType,max(cbjoinnum) from CLUBJOINHISTORY 
+where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,cbNum,cbName,cbType order by max(cbjoinnum) desc
 	</select>
 	
 	<update id="updateUserAuth">
@@ -121,14 +121,13 @@
 	</select>
 	
 	<select id="getClubManageMemList" resultMap="cbMem">
-		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum)
+		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
 	
 	
 	</select>
 	
 	<insert id="insertClubJoinHistory">
-		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE)  
-		values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
+		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
 	</insert>
 	
 	<update id="updateClubManageMem">
@@ -157,8 +156,7 @@
 	</update>
 	
 	<insert id="insertClubMember">
-		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE)  
-		values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
+		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
 	</insert>
 	
 	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">

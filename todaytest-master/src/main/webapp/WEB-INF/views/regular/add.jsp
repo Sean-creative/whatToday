@@ -3,90 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
-
-<style>
-/* 파일 업로드 블로그 style */
-.inputArea {
-	margin: 10px 0px;
-}
-
-select {
-	with: 100px;
-}
-
-label {
-	display: inline-block;
-	width: 70px;
-	padding: 5px;
-}
-
-label[for='gdsDes'] {
-	display: block;
-}
-
-input {
-	width: 150px;
-}
-
-textarea#gdsDes {
-	width: 400px;
-	height: 180px;
-}
-
-.select_img img {
-	margin: 20px 0px;
-}
-
-/* 해시태그 구현 */
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-ul {
-	padding: 16px 0;
-}
-
-ul li {
-	display: inline-block;
-	margin: 0 5px;
-	font-size: 14px;
-	letter-spacing: -.5px;
-}
-
-form {
-	padding-top: 16px;
-}
-
-ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-.tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-
-.del-btn {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 8px;
-}
-
-.thumbImg {
-	width: 200px;
-	height: auto;
-}
-
-
-
-
-</style>
-
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 <link rel="stylesheet" href="/resources/css/paymentModal.css">
 
@@ -94,52 +10,6 @@ ul li.tag-item {
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
 
 	<div id="reguform">
-	<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
-	<input type="hidden" id="cbType" name="cbType" value="정기모임" />
-	<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
-	<label for="cbCategory">카테고리/분야</label>
-	<select id="cbCategory" name="cbCategory">
-		<option value="아웃도어/여행">아웃도어/여행</option>
-		<option value="문화/공연/축제">문화/공연/축제</option>
-		<option value="운동/스포츠">운동/스포츠</option>
-		<option value="음악/악기">음악/악기</option>
-		<option value="외국/언어">외국/언어</option>
-		<option value="게임/오락">게임/오락</option>
-		<option value="기타">기타</option>
-	</select>
-	<label for="cbSubcat">모임</label>
-	<select id="cbSubcat" name="cbSubcat"></select>
-	<br> <label for="cbName">모임명</label>
-	<input type="text" id="club" name="cbName">
-	<br> <label for="cbCity">지역 </label>
-	<select name="cbCity" id="cbCity">
-		<option value="서울특별시">서울특별시</option>
-		<option value="경기도">경기도</option>
-	</select>
-	<select name="cbDistrict" id="cbDistrict"></select>
-	<label for="cbMbNum">정원</label>
-	<input type="number" id="num" name="cbMbNum" min="1" max="200">
-	<br>
-	<input type="hidden" name="cbMakeDate">
-	<!--개설일자 : sysdate로 기본설정 -->
-	<label for="cbHashtag"> </label>
-	<div>
-				해시태그<br>
-				<input type="hidden" value="" name="cbHashtag" id="rdTag" />
-
-
-				<div>
-					<input type="text" id="tag" size="7" value="#" />
-				</div>
-				<ul id="tag-list"></ul>
-			</div>
-	
-	
-	<br> <label for="cbIntro">한줄소개</label>
-	<input type="text" id="info" name="cbIntro" placeholder="30자이내로 작성하세요">
-	<br> <label for="cbDetailContent">모임 상세내용(필수)</label><br>
-	<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
-	<br>
 	
 		<input type="hidden" id="cbLeaderNum" name="cbLeaderNum" value="${usrNum}" />
 		<input type="hidden" id="cbType" name="cbType" value="정기모임" />
@@ -229,47 +99,6 @@ ul li.tag-item {
       	 	<input type="submit" class="btn" value="개설하기">
    	 	 </div>
    	 	 
-   	 	 <!-- ##### 50명이상일경우 포인트 결제 모달 (지영) ##### -->
-   	 	 <div id="myModal" class="modal">
-		    <!-- Modal content -->
-		    <div class="modal-content">
-		        <div id="pointBanner">
-		            <a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"width="80px"></a>
-		            <span class="close">&times;</span>
-		        </div>
-		        
-		        <main>
-		            <p id="myPointHist">내 포인트 내역 > </p>
-		            <div id="myPoint"> ${usrPoint }p </div>
-		            <div class="bar"></div><br>
-		            <p id="pointPayment">포인트 결제</p>
-		            <div id="pointbx">
-		                <div>
-		                    <img src="/resources/img/coupon.png" alt="coupon" id="couponImg">
-		                    <div class="pointChargeBox">
-		                    <span id="product">모임 정원 범위 확대 (50이상 200명이하) </span>   
-		                    <input type="hidden" id="item" value="10000" >   
-		                    <span id="pointAmount">10,000p</span> 
-		                </div>
-		            </div>     
-		            <div id="chargebtn">
-		                <button type="button" id="chargePoint">결제하기</button>
-		            </div>   
-		            </div>
-		
-		            <div id = warnTitle>
-		                <p id="warnLetter">유의사항</p>
-		                <ul>
-		                    <li>포인트 적립 및 사용처의 변경은 사전 고지 없이 내부 사정에 따라 변경될 수 있습니다.</li>
-		                    <li>포인트의 유효기간은 포인트 지급 경로에 따라 다를 수 있습니다.</li>
-		                    <li>한번 사용하신 포인트에 대해서는 철회가 불가능합니다.</li>
-		                    <li>계정 정보 이전 시에 포인트 이전은 불가능합니다.</li>
-		                </ul>
-		            </div>
-		        </main>
-		    </div>
-		 </div><!--END myModal-->
-   	 	 
 	</div>		
 </form>
 	
@@ -314,10 +143,6 @@ ul li.tag-item {
          alert("상세내용을 입력해주세요.");
          return false;
       }
-      
-      /* 해시태그 관련 */
-      var value = marginTag(); // return array
-		$("#rdTag").val(value);
      
       
    	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
@@ -325,7 +150,6 @@ ul li.tag-item {
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
 		  let usrNum = document.register.cbLeaderNum.value;
-		  let userPoint = document.getElementById("myPoint");
     	  $.ajax({
     		url: "/pay/check/userpoint", 
            	type: 'POST',  
@@ -334,38 +158,28 @@ ul li.tag-item {
             data: usrNum,
             success: function(userPoint){
     	    	console.log("userPoint: " + userPoint);
-    	    	console.log("usrNum: " + usrNum);
     	    	// 모임 개설 = 만원
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8088/pay/kakaoPayPayment?usrNum='+usrNum, '카카오페이 포인트 결제','width=700px, height=600px');
-    	    		
+    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=700px, height=600px');
+    				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
     			}else{
+    				
+					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			
+    				// window.open('http://localhost:8080/pay/pointPayment', '포인트 결제','width=#, height=#');
+    				// document.getElementById('register').submit();
+    				
     				// 포인트 결제 창으로 
+    				// 모달로 바꾸기 - ok!!
     				var modal = document.getElementById("myModal");
     				modal.style.display = "block";
     				var span = document.getElementsByClassName("close")[0];
     				span.onclick = function() {
     					modal.style.display = "none";
     				}
-    				
-    				// 카카오 페이 결제 후 업데이트돤 나의 포인트 확인 
-    				$.ajax({
-    					url: "/pay/check/userpoint", 
-		             	type: 'POST',  
-		         	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
-		         	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
-		                data: usrNum,
-		                success: function(data){ 
-		                	document.getElementById("myPoint").innerText = data+"p";
-		                },
-		    		 	error: function (){ }		    					
-    				});
-    				
     				$('#chargePoint').click(function () {
-    					let money = $('#item').val();
-    					console.log("money: " + money);
+    					let money = $('input[name="cp_item"]:checked').val();
     			    		 $.ajax({
     			                url: "/pay/point", 
     			             	type: 'POST',  
@@ -390,11 +204,6 @@ ul li.tag-item {
 		return false;
 	  }
    }// END ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
-      
-   } 
-   /* END inputCheckclub */
-   
-   
 
    //카테고리/분야 선택, 지역 선택 
    $(function() {
@@ -458,131 +267,6 @@ ul li.tag-item {
       })
    }
    
-   
-   
-   
-   /* 해시태그 관련 */
-	var tag = {};
-	var counter = 0;
-	var maxHash = 0;
-
-	// 태그를 추가한다.
-	function addTag(value) {
-		tag[counter] = value; // 태그를 Object 안에 추가
-		counter++; // counter 증가 삭제를 위한 del-btn 의 고유 id 가 된다.
-		maxHash++;
-	}
-
-	// 최종적으로 서버에 넘길때 tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
-	function marginTag() {
-		return Object.values(tag).filter(function(word) {
-			return word !== "";
-		});
-	}
-
-	// 서버에 넘기기
-	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
-/* 	$("#tag-form").on("submit", function(e) {
-		var value = marginTag(); // return array
-		$("#rdTag").val(value);
-
-		if (inputCheckclub() == true) {
-			alert('개설되었습니다.');
-		} else {
-			e.preventDefault();
-		}
-	});  */
-
-	// 처음 부터 #이 달려있고
-	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
-	// 5개까지 밖에 입력하지 못한다.
-	$("#tag").keyup(function(e) {
-		let text = $(this).val();
-
-		if (text.length == 0) {
-			$(this).val("#");
-		}
-
-		// #은 제외
-		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
-
-		// test() ㅡ 찾는 문자열이 들어있는지 확인
-		if (regExp.test(text)) {
-			text = text.replace(regExp, ""); // 찾은 특수 문자를 제거
-		}
-		$(this).val(text);
-	});
-
-	$("#tag")
-			.on(
-					"keypress",
-					function(e) {
-
-						var self = $(this);
-
-						// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
-						if (e.key === "Enter" || e.keyCode == 32
-								|| e.keyCode == 35) {
-
-							if (maxHash >= 5) {
-								alert("5개가 최대입니다.");
-								self.val("#");
-							} else {
-								var tagValue = self.val(); // 값 가져오기
-								console.log(tagValue);
-
-								// 사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌,
-								// #은 제외
-								var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
-
-								// test() ㅡ 찾는 문자열이 들어있는지 확인
-								if (regExp.test(tagValue)) {
-									tagValue = tagValue.replace(regExp, ""); // 찾은
-									// 특수
-									// 문자를
-									// 제거
-								}
-
-								// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
-								if (tagValue !== "" && tagValue !== "#") {
-
-									// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return
-									// 된다.
-									var result = Object.values(tag).filter(
-											function(word) {
-												return word === tagValue;
-											})
-
-									// 태그 중복 검사
-									if (result.length == 0) {
-										$("#tag-list")
-												.append(
-														"<li class='tag-item'>"
-																+ tagValue
-																+ "<span class='del-btn' idx='"
-																+ counter
-																+ "'>x</span></li>");
-										addTag(tagValue);
-										self.val("#");
-									} else {
-										alert("태그값이 중복됩니다.");
-									}
-								}
-							}
-							e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
-
-						}
-					});
-
-	// 삭제 버튼
-	// 삭제 버튼은 비동기적 생성이므로 document 최초 생성시가 아닌 검색을 통해 이벤트를 구현시킨다.
-	$(document).on("click", ".del-btn", function(e) {
-		var index = $(this).attr("idx");
-		tag[index] = "";
-		$(this).parent().remove();
-		maxHash--;
-	});
-   
    /* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
 	$("#gdsImg").change(
 			function() {
@@ -600,4 +284,4 @@ ul li.tag-item {
    
 </script>
 
-<%-- <%@include file="../includes/footer.jsp"%> --%>
+<%@include file="../includes/footer.jsp"%>
