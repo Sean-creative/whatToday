@@ -32,12 +32,18 @@
 					개설자 정보 : <c:out value="${userVO.usrName}" />(<c:out value="${userVO.usrId}" />)
 				</div>
 				<div class="nam2">
-					모임에 가입된 회원 정보 
+					<%--v1. 모임에 가입된 회원 정보 
 					<div style="border: 1px solid black; width: 100px; height: 100px; display: flex;">
 					<c:forEach items="${joinList}" var="joinList"> 
 						<li><c:out value="${joinList.usrName}" /></li>
 					</c:forEach>
-					</div>
+					</div> --%>
+					<fieldset>
+  						<legend style="width:100px; border:1px solid black;">모임에 가입된 회원 :</legend>
+  							<c:forEach items="${joinList}" var="joinList"> 
+								<li><c:out value="${joinList.usrName}" /></li>
+							</c:forEach>
+  					</fieldset>
 				</div>
 			</div>
 			
@@ -156,10 +162,9 @@
 			<label><b>가입일자</b></label>
 			<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="true">
 			<br> <label><b>이름</b></label>
-			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true">
-			<br> <label><b>가입인사</b></label>
-			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea>
-			<br>
+			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true"><br> 
+			<!-- <label><b>가입인사</b></label>
+			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea><br> -->
 			<div class="clearfix">
 				<button type="submit" onclick="document.getElementById('id01').style.display='none'" class="submitbtn">제출하기</button>
 			</div>
