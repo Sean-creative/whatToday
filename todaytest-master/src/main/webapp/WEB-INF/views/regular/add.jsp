@@ -78,7 +78,7 @@
           	</div>
          </div>
          
-         <p class="cate">해쉬태그</p>
+         <p class="cate">해시태그</p>
       	 <div class="caja2">
          	<div class="lef1">
 	        	<input type="hidden" name="cbMakeDate"> <!--개설일자는 sysdate로 설정 -->

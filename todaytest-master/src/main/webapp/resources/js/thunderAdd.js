@@ -43,11 +43,6 @@ $(function() {
 				}
 			});
 
-
-
-
-
-
 	/* 해시태그 관련 */
 	var tag = {};
 	var counter = 0;
@@ -96,8 +91,9 @@ $(function() {
 		// test() ㅡ 찾는 문자열이 들어있는지 확인
 		if (regExp.test(text)) {
 			text = text.replace(regExp, ""); // 찾은 특수 문자를 제거
+			$(this).val(text);
 		}
-		$(this).val(text);
+		
 	});
 
 	$("#tag")
@@ -114,7 +110,10 @@ $(function() {
 							if (maxHash >= 5) {
 								alert("5개가 최대입니다.");
 								self.val("#");
-							} else {
+							} else if (self.val().length  > 11){
+						        alert("해시태그 글자수는 10글자가 최대입니다.")
+						      } 														
+							else {
 								var tagValue = self.val(); // 값 가져오기
 								console.log(tagValue);
 
@@ -124,10 +123,8 @@ $(function() {
 
 								// test() ㅡ 찾는 문자열이 들어있는지 확인
 								if (regExp.test(tagValue)) {
-									tagValue = tagValue.replace(regExp, ""); // 찾은
-									// 특수
-									// 문자를
-									// 제거
+									// 찾은 특수 문자를 제거
+									tagValue = tagValue.replace(regExp, "");  								
 								}
 
 								// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
@@ -172,9 +169,8 @@ $(function() {
 
 	/* 날씨관련 */
 	let city = 'Seoul';
-	// var apiURI =
-	// "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
-	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
+	//날씨 DATA의 기준인 lat,lon은 종각역 YMCA 건물 기준임!!
+	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.57041580586331&lon=126.98515148702204&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
 	$
 			.ajax({
 				url : apiURI,
@@ -183,7 +179,6 @@ $(function() {
 				async : "false",
 				success : function(resp) {
 					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-					// $('.City').append(resp.timezone.split('/')[1]);
 
 					for ( let idx in resp.daily) {
 						let tmp = '<li>';
@@ -251,6 +246,7 @@ $(function() {
 					}
 				}
 			})
+						
 
 }); // end load
 
@@ -311,9 +307,21 @@ const dating = function(o, d) {
 
 	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함
 	let nowDate = today.toISOString().slice(0, 16);
-	/*
-	 * console.log(nowDate); console.log(today.getDate());
-	 */
+	
+	console.log(nowDate); 
+	console.log(today.getDate());
+	 
+	// 현재시간으로 부터 일주일 더해준 것이 maxDay
+	today.setDate(today.getDate() + 7);	
+	let maxDay = today.toISOString().slice(0, 16);
+	
+	// 일정 다시 돌려놓음
+	today.setDate(today.getDate() - 7);
+	today.setHours(today.getHours() + 1);
+	let minDay = today.toISOString().slice(0, 16);
+		
+	today.setMinutes(today.getMinutes() - 30);
+	let minDayApp = today.toISOString().slice(0, 16);
 
 	if ($(o).val()) {
 		// 값을 입력한 후 일 때 Value는 냅둬야함
@@ -322,19 +330,17 @@ const dating = function(o, d) {
 		// date의 값이 아무것도 없을 때 (초기 설정일 때)는 초기 설정을 해준다
 		// 초기 설정
 
-		$('#cbDate').val(nowDate);
-		$('#cbAppPeriod').val(nowDate);
+		$('#cbDate').val(minDay);
+		$('#cbAppPeriod').val(minDayApp);
 	}
-	// 현재시간으로 부터 일주일 더해준 것이 maxDay
-	today.setDate(today.getDate() + 7);
-	let maxDay = today.toISOString().slice(0, 16);
-	$("#cbDate").attr('min', nowDate);
+	
+	
 	$("#cbDate").attr('max', maxDay);
+	$("#cbDate").attr('min', minDay);
 
-	$("#cbAppPeriod").attr('min', nowDate);
+	$("#cbAppPeriod").attr('min', minDayApp);
 	// 모임 날짜를 클릭 했을 때, 모임 마감기간의 MAX가 설정 되어야 한다.
 	$(d).attr('max', $(o).val());
-
 }
 
 const inputCheck = function() {
@@ -383,8 +389,9 @@ const inputCheck = function() {
 		return false;
 	}
 
-	if (!mbnum || mbnum < 1) {
-		alert("모임인원을 다시 입력해주세요.");
+	//50명 넘어가지 못하게!
+	if (!mbnum || mbnum < 1 || mbnum >50) {
+		alert("모임인원을 다시 입력해주세요. 50명 이하입니다.");
 		return false;
 	}
 
@@ -421,10 +428,13 @@ const inputCheck = function() {
 	}
 
 	/* 값이 없어도 되지만, 길이제한은 둔다. */
-	if (intro.length > 300) {
+	if (intro.length > 100) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
 
 	return true;
 }
+
+
+
