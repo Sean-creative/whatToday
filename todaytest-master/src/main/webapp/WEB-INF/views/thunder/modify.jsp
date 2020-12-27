@@ -54,9 +54,6 @@
 
 					<div>
 						<div style="display: inline-block; width: 300px;">
-							<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
-  					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
-							<!-- JS로 MIN과 MAX를 찍어주자 -->
 							<label for="hp">모임 날짜*</label>
 							<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'>
 						</div>
@@ -66,8 +63,8 @@
 							<label for="request" class="class">모임 마감기간*</label>
 							<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />'>
 						</div>
-						
-												
+
+
 						<div class="header_in3">
 							<ul class="header_weekday">
 							</ul>
@@ -95,8 +92,8 @@
 
 					<div id="hash">
 
-						<div style="display: inline-block; width: 300px;">
-							<label for="request" class="class" style="display: block;">해시태그</label>
+						<div id="hashTagDiv" style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">해시태그 (최대 5개)</label>
 							<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />' />
 							<input type="text" id="tag" size="7" value="#" />
 							<ul id="tag-list"></ul>
@@ -105,7 +102,7 @@
 
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class" style="display: block;">한줄소개</label>
-							<input type="text" name='thunderDetailVO.cbIntro' id='cbIntro' size="50" value='<c:out value="${clubVO.thunderDetailVO.cbIntro}" />'>
+							<input type="text" name='cbIntro' id='cbIntro' size="50" value='<c:out value="${clubVO.cbIntro}" />'>
 						</div>
 
 					</div>
@@ -115,12 +112,9 @@
 						<label for="request" class="class">사진 등록</label>
 						<div class="select_img">
 							<img class="thumbImg" src="${clubVO.cbThumbImg}" /> <br>
-							<input type="file" id="gdsImg" name="file" />
+							<input type="file" id="gdsImg2" name="file" />
 						</div>
 					</div>
-
-
-
 				</fieldset>
 
 
@@ -131,13 +125,11 @@
 
 
 					<div class="btn_faq">
-						<button type="submit" data-oper='modify' class="btn-default">수정하기</button>
-						<button type="submit" data-oper='remove' class="btn-default">삭제하기</button>
-						<button type="submit" data-oper='list' class="btn-default">돌아가기</button>
+						<button type="submit" data-oper='modify' class="btn-default">등록</button>
+						<button type="submit" data-oper='remove' class="btn-default">삭제</button>
+						<button type="submit" data-oper='list' class="btn-default">목록</button>
 					</div>
 				</fieldset>
-
-
 
 
 
@@ -150,6 +142,11 @@
 				<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
 				<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+
+				<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
+
+				<input type="hidden" name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
+				<input type="hidden" name="userLongitude" value='<c:out value="${cri.userLongitude}"/>'>
 
 				<!-- 사진 첨부 안했을 시 사용해야함 -->
 				<input type='hidden' name='cbFile' value='<c:out value="${clubVO.cbFile}"/>'>
@@ -196,11 +193,8 @@
 				</div>
 			</div>
 			<!-- 카카오 맵 END -->
-
-
-
-
 		</div>
+
 
 
 	</div>

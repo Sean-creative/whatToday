@@ -140,12 +140,12 @@
 
 					<!-- 지금 로그인된 유저의 정보와 개설자의 번호가 일치하면(=같은사람 이라면) modify 버튼을 보여준다.-->
 					<c:if test="${usrNum eq clubVO.cbLeaderNum}">
-						<button class="btn btn-default" data-oper='modify'>Modify</button>
+						<button class="btn btn-default" data-oper='modify'>수정</button>
 					</c:if>
 
 
 
-					<button class="btn btn-info" data-oper='list'>List</button>
+					<button class="btn btn-info" data-oper='list'>목록</button>
 				</div>
 			</div>
 
@@ -166,6 +166,12 @@
 		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
 		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+		<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
+		
+		<input type="hidden" name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
+		<input type="hidden" name="userLongitude" value='<c:out value="${cri.userLongitude}"/>'>
+		
+		
 		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 </section>

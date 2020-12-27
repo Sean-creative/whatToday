@@ -18,12 +18,6 @@
 	</div>
 	<div id="container">
 
-
-
-
-
-
-
 		<!-- ========중앙========== -->
 		<div class="section_in" style="display: inline-block; overflow: hidden">
 			<form action="/thunder/add" method="post" id="tag-form" enctype="multipart/form-data">
@@ -35,12 +29,12 @@
 						<div style="display: inline-block; width: 300px;">
 							<!-- 30자 제한 -->
 							<label for="name" style="display: block;">모임명*</label>
-							<input type="text" required="required" name='cbName' size="50">
+							<input type="text" required="required" name='cbName' size="50" placeholder="모임명을 입력하세요">
 						</div>
 
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class" style="display: block;">모임 인원*</label>
-							<input type="number" required="required" name='cbMbnum' min="1" max="1000000">
+							<input type="number" required="required" name='cbMbnum' min="1" max="50">
 						</div>
 					</div>
 
@@ -88,15 +82,15 @@
 					<div>
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class">모임 지역*</label>
-							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress'>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress' placeholder="지도에서 마커를 클릭해주세요">
 						</div>
 
 
 
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class">모임 장소 *</label>
-							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace'>
-						</div>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' placeholder="지도에서 마커를 클릭해주세요">
+						</div>						
 					</div>
 
 
@@ -104,9 +98,9 @@
 					<div id="hash">
 
 						<div id="hashTagDiv" style="display: inline-block; width: 300px;">
-							<label for="request" class="class" style="display: block;">해시태그</label>
-							<input type="hidden" value="" name="cbHashtag" id="rdTag" />
-							<input type="text" id="tag" size="7" value="#" />
+							<label for="request" class="class" style="display: block;">해시태그 (최대 5개)</label>
+							<input type="hidden" value="" name="cbHashtag" id="rdTag"    />
+							<input type="text" id="tag" size="7" value="#"  />
 							<ul id="tag-list"></ul>
 						</div>
 

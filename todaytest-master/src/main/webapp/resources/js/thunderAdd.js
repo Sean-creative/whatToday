@@ -341,7 +341,6 @@ const dating = function(o, d) {
 	$("#cbAppPeriod").attr('min', minDayApp);
 	// 모임 날짜를 클릭 했을 때, 모임 마감기간의 MAX가 설정 되어야 한다.
 	$(d).attr('max', $(o).val());
-
 }
 
 const inputCheck = function() {
@@ -390,8 +389,9 @@ const inputCheck = function() {
 		return false;
 	}
 
-	if (!mbnum || mbnum < 1) {
-		alert("모임인원을 다시 입력해주세요.");
+	//50명 넘어가지 못하게!
+	if (!mbnum || mbnum < 1 || mbnum >50) {
+		alert("모임인원을 다시 입력해주세요. 50명 이하입니다.");
 		return false;
 	}
 
@@ -428,7 +428,7 @@ const inputCheck = function() {
 	}
 
 	/* 값이 없어도 되지만, 길이제한은 둔다. */
-	if (intro.length > 300) {
+	if (intro.length > 100) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
