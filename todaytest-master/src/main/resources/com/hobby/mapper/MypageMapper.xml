@@ -72,7 +72,7 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHIST
 	
 	<insert id="insertUserHistory">
 	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
-	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<select id="getLeaderClubList" resultType="com.hobby.domain.ClubVO">
@@ -125,7 +125,7 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHIST
 	</select>
 	
 	<insert id="insertClubJoinHistory">
-		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
+		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<update id="updateClubManageMem">
@@ -149,12 +149,19 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHIST
 	<update id="shutClub">
 		update CLUB
 		set CBFINALSTATE = '폐쇄',
-		CBSHUTDATE = sysdate
+		CBSHUTDATE = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 		where CBNUM = #{cbNum} 
 	</update>
 	
+	<update id="leaveUserClub">
+		update CLUB
+		set CBFINALSTATE = '폐쇄',
+		CBSHUTDATE = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+		where CBLEADERNUM = #{usrNum} 
+	</update>
+	
 	<insert id="insertClubMember">
-		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
+		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">

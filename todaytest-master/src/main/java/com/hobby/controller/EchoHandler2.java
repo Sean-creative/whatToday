@@ -70,7 +70,7 @@ public class EchoHandler2 extends TextWebSocketHandler {
 				}else {
 					list = messageMap.get(target);
 					System.out.println("list : " + list);
-					if(list.size()==6) {
+					if(list.size()==4) {
 						list.remove(0);
 					}
 					list.add(content);
@@ -84,6 +84,8 @@ public class EchoHandler2 extends TextWebSocketHandler {
 				if(targetSession != null){
 					TextMessage tmpMsg = new TextMessage(content);
 					targetSession.sendMessage(tmpMsg);
+					TextMessage plus = new TextMessage("plus");
+					targetSession.sendMessage(plus);
 				}
 			}else if(content.equals("접속")) {
 				WebSocketSession targetSession = socketMap.get(target);

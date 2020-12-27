@@ -22,7 +22,7 @@
     </association>
 </resultMap>
 	<select id="getUserList" resultType="com.hobby.domain.UserVO">
-		select * from TBLUSER where USRSTATE = '회원'
+		select * from TBLUSER where USRSTATE = '회원' order by usrNum desc
 	</select>
 	
 	<select id="getUser" resultType="com.hobby.domain.UserVO">
@@ -38,7 +38,7 @@
 	<update id="shutClub">
 		update CLUB
 		set CBFINALSTATE = '강제폐쇄',
-		CBSHUTDATE = sysdate
+		CBSHUTDATE = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 		where CBNUM = #{cbNum} 
 	</update>
 	
@@ -58,12 +58,12 @@
 	</select>
 	
 	<select id="getClubMemberList" resultMap="cbMem">
-		select tbluser.usrName,tbluser.usrNum from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult = '가입승인' and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
+		select tbluser.usrId,tbluser.usrName,tbluser.usrNum from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult = '가입승인' and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
 	</select>
 	
 	<insert id="insertUserHistory">
 	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
-	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<update id="updateUserAuth">

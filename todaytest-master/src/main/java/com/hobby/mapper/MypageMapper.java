@@ -48,7 +48,7 @@ public interface MypageMapper {
 	public int updateUserAuth(UserVO userVO);
 	public int updateClubMemNumPlus(ClubVO clubVO);
 	public int updateClubMemNumMinus(ClubVO clubVO);
-
+	public int leaveUserClub(UserVO userVO);
 	
 	public int shutClub(Long cbNum);
 	public int leaveClub(UserVO userVO);

@@ -302,7 +302,7 @@ socket = ws;
 let Num = msgNum;
 ws.onopen = function(message){
   
-  ws.send(Num);
+	ws.send(msgNum+","+"접속");
 };
 
 ws.onmessage = function(event){
