@@ -11,196 +11,182 @@
 
 
 
-  <section>
-    <div class="section_header" style="margin: 0 auto; ">
-      <h2>번개 모임 개설</h2>
-      <p>간단하게 어떤 모임인지 알려주세요</p>
-    </div>
-    <div id="container">
+<section>
+	<div class="section_header" style="margin: 0 auto; text-align: center;">
+		<span class="half">번개 모임 개설</span>
+		<p>간단하게 어떤 모임인지 알려주세요</p>
+	</div>
+	<div id="container">
+
+		<!-- ========중앙========== -->
+		<div class="section_in" style="display: inline-block; overflow: hidden">
+			<form action="/thunder/add" method="post" id="tag-form" enctype="multipart/form-data">
+				<h6 class="form-stxt">*필수 입력사항&nbsp;&nbsp;</h6>
+				<hr>
+				<fieldset class="formContent">
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<!-- 30자 제한 -->
+							<label for="name" style="display: block;">모임명*</label>
+							<input type="text" required="required" name='cbName' size="50" placeholder="모임명을 입력하세요">
+						</div>
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">모임 인원*</label>
+							<input type="number" required="required" name='cbMbnum' min="1" max="50">
+						</div>
+					</div>
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="email">카테고리/분야*</label>
+							<select name="cbCategory" required="required" id='category'></select>
+						</div>
 
 
+						<div style="display: inline-block; width: 300px;">
+							<label for="location">모임*</label>
+							<select name="cbSubcat" required="required" id="subcat">
+								<option value="모임 선택" selected>모임 선택
+							</select>
+						</div>
+					</div>
 
-      <!-- ========왼쪽========== -->
-      <div class="header_in3">
-        <ul class="header_weekday">
-        </ul>
-      </div>
-
-
-
-      <!-- ========중앙========== -->
-      <div class="section_in" style="display : inline-block; overflow:hidden">
-        <form action="/thunder/add" method="post" id="tag-form" enctype="multipart/form-data">
-          <h6 class="form-stxt">*필수 입력사항&nbsp;&nbsp;</h6>
-          <hr>
-          <fieldset class="formContent">
-
-            <div>
-              <div style="display:inline-block; width:300px;">
-              <!-- 30자 제한 -->
-              <label for="name" style="display:block;">모임명*</label>
-              <input type="text" required="required" name='cbName' size="50">
-              </div>
-
-            <div style="display:inline-block; width:300px;">
-              <label for="request" class="class" style="display:block;">모임 인원*</label>
-              <input type="number" required="required" name='cbMbnum' min="1" max="1000000">
-            </div>
-          </div>
-
-          <div>
-            <div style="display:inline-block; width:300px;">
-              <label for="email">카테고리/분야*</label>
-              <select name="cbCategory" required="required" id='category'></select>
-            </div>
-
-
-            <div style="display:inline-block; width:300px;">
-              <label for="location">모임</label>
-              <select name="cbSubcat" required="required" id="subcat">
-                <option value="모임 선택" selected>모임 선택
-              </select>
-            </div>
-          </div>
-
-            <div>
-              <div style="display:inline-block; width:300px;">
-                <!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
   					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
-                <!-- JS로 MIN과 MAX를 찍어주자 -->
-                <label for="hp">모임 날짜*</label>
-                <input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate'>
-              </div>
+							<!-- JS로 MIN과 MAX를 찍어주자 -->
+							<label for="hp">모임 날짜*</label>
+							<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate'>
+						</div>
 
 
-              <div style="display:inline-block; width:300px;">
-                <label for="request" class="class">모임 마감기간*</label>
-                <input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod'>
-              </div>
-            </div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 마감기간*</label>
+							<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod'>
+						</div>
 
 
-
-
-            <div>
-              <div style="display:inline-block; width:300px;">
-                <label for="request" class="class">모임 지역*</label>
-                <input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress'>
-              </div>
-
-
-
-              <div style="display:inline-block; width:300px;">
-                <label for="request" class="class">모임 장소 *</label>
-                <input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace'>
-              </div>
-            </div>
-
-
-
-            <div>
-
-              <div style="display:inline-block; width:300px;">
-                <label for="request" class="class" style="display:block;">해시태그</label>
-                <input type="hidden" value="" name="cbHashtag" id="rdTag" />
-                <input type="text" id="tag" size="7" value="#" />
-                <ul id="tag-list"></ul>
-              </div>
-
-
-              <div style="display:inline-block; width:300px;">
-                <label for="request" class="class" style="display:block;">모임 준비물</label>
-                <input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50">
-              </div>
-
-            </div>
+						<!-- ======== 날씨 ========== -->
+						<div class="header_in3">
+							<ul class="header_weekday">
+							</ul>
+						</div>
+					</div>
 
 
 
 
-            <div class="request">
-              <label for="request" class="class" style="display:block;">모임소개</label>
-              <textarea name='cbIntro' cols="100" rows="7" maxlength="300"></textarea>
-
-            </div>
-
-
-
-
-            <div class="request">
-              <label for="request" class="class">사진 등록</label>
-              <div class="select_img">
-                <img class="thumbImg" src="/resources/img/logo.png" /> <br>
-                <input type="file" id="gdsImg" name="file" />
-              </div>
-
-
-            </div>
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 지역*</label>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbAddress' id='cbAddress' placeholder="지도에서 마커를 클릭해주세요">
+						</div>
 
 
 
-          </fieldset>
-
-
-          <hr>
-
-          <fieldset class="agreebox">
-            <div class="btn_faq">
-              <button type="submit" class="btn_faq2">번개만들기</button>
-              <button type="reset" onclick="alert('리셋되었습니다.')" class="btn_faq2">리셋 하기</button>
-            </div>
-          </fieldset>
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">모임 장소 *</label>
+							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' placeholder="지도에서 마커를 클릭해주세요">
+						</div>						
+					</div>
 
 
 
+					<div id="hash">
 
-          <!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
-          <input type='hidden' name='cbCity'>
-          <input type='hidden' name='cbDistrict'>
+						<div id="hashTagDiv" style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">해시태그 (최대 5개)</label>
+							<input type="hidden" value="" name="cbHashtag" id="rdTag"    />
+							<input type="text" id="tag" size="7" value="#"  />
+							<ul id="tag-list"></ul>
+						</div>
 
-          <input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude'>
-          <input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude'>
-        </form>
 
-      </div>
-      <!-- 중앙 끝  -->
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">한줄소개</label>
+							<input type="text" name='thunderDetailVO.cbIntro' id='cbIntro' size="50">
+						</div>
+
+					</div>
+
+
+
+
+					<div class="request">
+						<label for="request" class="class">사진 등록</label>
+						<div class="select_img">
+							<img class="thumbImg" src="/resources/img/logo.png" /> <br>
+							<input type="file" id="gdsImg" name="file" />
+						</div>
+					</div>
+
+
+
+				</fieldset>
+
+
+				<hr>
+
+				<fieldset class="agreebox">
+					<div class="btn_faq">
+						<button type="submit" class="btn_faq2">번개만들기</button>
+						<button type="reset" onclick="alert('리셋되었습니다.')" class="btn_faq2">리셋 하기</button>
+					</div>
+				</fieldset>
+
+
+
+
+				<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
+				<input type='hidden' name='cbCity'>
+				<input type='hidden' name='cbDistrict'>
+
+				<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude'>
+				<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude'>
+			</form>
+
+		</div>
+		<!-- 중앙 끝  -->
 
 
 
 
 
-      <!-- ========오른쪽========== -->
-      <div style="display : inline-block; width:700px; height:1100px; margin-top:75px; margin-left:40px;">
+		<!-- ========오른쪽========== -->
+		<div style="display: inline-block; width: 700px; height: 1100px; margin-top: 75px; margin-left: 40px;">
 
-        <!-- 카카오 맵 영역 -->
-        <div class="map_wrap">
-          <div id="map"></div>
-          <div id="menu_wrap" class="bg_white">
-            <div class="option">
-              <div>
-                <form role="form" onsubmit="searchPlaces(); return false;">
-                  모임 장소 :
-                  <input type="text" value="종각역" id="keyword" size="15">
-                  <button type="submit">검색하기</button>
-                </form>
-              </div>
-            </div>
-            <hr>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
-          </div>
-        </div>
-        <!-- 카카오 맵 END -->
-
-
+			<!-- 카카오 맵 영역 -->
+			<div class="map_wrap">
+				<div id="map"></div>
+				<div id="menu_wrap" class="bg_white">
+					<div class="option">
+						<div>
+							<form role="form" onsubmit="searchPlaces(); return false;">
+								모임 장소 :
+								<input type="text" value="종각역" id="keyword" size="15">
+								<button type="submit">검색하기</button>
+							</form>
+						</div>
+					</div>
+					<hr>
+					<ul id="placesList"></ul>
+					<div id="pagination"></div>
+				</div>
+			</div>
+			<!-- 카카오 맵 END -->
 
 
-      </div>
 
 
-    </div>
-    <!-- 컨테이너 END -->
-  </section>
+		</div>
+
+
+	</div>
+	<!-- 컨테이너 END -->
+</section>
 
 
 

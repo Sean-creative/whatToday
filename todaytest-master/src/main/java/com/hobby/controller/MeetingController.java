@@ -66,7 +66,6 @@ public class MeetingController {
 		service.register(meeting);
 
 		rttr.addAttribute("cbNum", meeting.getCbNum());
-
 		return "redirect:/regular/info";
 	}
 
@@ -109,7 +108,9 @@ public class MeetingController {
 			rttr.addFlashAttribute("result", "모임 정보가 수정되지 않았습니다.");
 		}
 
-		return "redirect:/regular/list";
+			
+		rttr.addAttribute("cbNum", meeting.getCbNum());
+		return "redirect:/regular/info";
 	}
 	
 	
@@ -125,7 +126,12 @@ public class MeetingController {
 			rttr.addFlashAttribute("result", "모임 정보가 삭제되지 않았습니다.");
 		}
 		
-		return "redirect:/regular/list";
+		MeetingVO meeting = service.getMeeting(mtNum);
+		log.info("/remove(POST) - MeetingVO : " + meeting);
+		
+		
+		rttr.addAttribute("cbNum", meeting.getCbNum());
+		return "redirect:/regular/info";
 	}
 	
 	

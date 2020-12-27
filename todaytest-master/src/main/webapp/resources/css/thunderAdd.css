@@ -1,20 +1,17 @@
-/* =============날씨=============== */
+/* ============= 날씨 =============== */
 .header_in3 {
-	width: 70px;
-	height: 1100px;
-	margin: 0 auto;
-	margin-right: 15px;
+	width: 560px;
+	height: 120px;
 	background: rgba(255, 179, 49, 0.3);
 	border-radius: 15px;
-	display : inline-block;
-	margin-top:75px;
+	display: flex;
+	margin-top: 20px;
 }
 
 .header_weekday {
 	display: flex;
-	align-content: flex-start;
-	flex-direction: column;
 	overflow: hidden;
+	padding: 0px;
 }
 
 .header_in3 .header_weekday li {
@@ -22,7 +19,6 @@
 	margin: 0 auto;
 	text-align: center;
 	box-sizing: border-box;
-	padding: 10px 0;
 }
 
 .header_weekday h4 {
@@ -41,74 +37,58 @@
 
 .header_weekday p {
 	font-size: 18px;
-	/* padding-bottom:15px; */
 	color: #666;
 }
-
-
-
-
 
 /* ================= 업로드 블로그 style ================= */
 /* .inputArea {
 	margin: 10px 0px;
 }
  */
-select {
-	with: 100px;
-}
-
 label {
 	display: inline-block;
 	width: 70px;
 	padding: 5px;
 }
 
-label[for='gdsDes'] {
-	display: block;
-}
-
-input {
-	width: 150px;
-}
-
-textarea#gdsDes {
-	width: 400px;
-	height: 180px;
-}
-
 .select_img img {
 	margin: 20px 0px;
 }
 
+input#gdsImg {
+	padding: 10px 0px 0px 20px;
+}
+
 /* 해시태그 구현 */
-ul {
+div#hash {
+	display: flex;
+}
+
+#hashTagDiv ul {
 	padding: 16px 0;
 }
 
-ul li {
+#hashTagDiv ul li {
 	display: inline-block;
-	margin: 0 5px;
-	font-size: 14px;
-	letter-spacing: -.5px;
+	margin: 3px 5px;
 }
 
 form {
 	padding-top: 16px;
 }
 
-ul li.tag-item {
+#hashTagDiv ul li.tag-item {
 	padding: 4px 8px;
 	background-color: orange;
 	color: white;
 }
 
-.tag-item:hover {
+#hashTagDiv .tag-item:hover {
 	background-color: #262626;
 	color: #fff;
 }
 
-.del-btn {
+#hashTagDiv .del-btn {
 	font-size: 12px;
 	font-weight: bold;
 	cursor: pointer;
@@ -123,7 +103,6 @@ ul li.tag-item {
 /* =================카카오맵================= */
 #keyword {
 	border: 1px solid #ff9f40;
-	padding: 3px 0px;
 }
 
 #map {
@@ -148,11 +127,10 @@ header, section, footer {
 	width: inherit;
 }
 
-
 /* =================section================= */
 section {
 	width: 100%;
-	margin-top : 120px;
+	margin-top: 120px;
 }
 
 #container {
@@ -169,7 +147,6 @@ section {
 
 .section_header>h2 {
 	font-size: 30px;
-	text-align: center;
 	margin-top: 30px;
 	color: #333;
 	letter-spacing: 5px;
@@ -184,10 +161,11 @@ section {
 	font-weight: 100;
 }
 
-
-
-
-
+.half {
+	font-size: 25px;
+	font-weight: bold;
+	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%, transparent 50%);
+}
 
 /* =================form================= */
 #tag-form {
@@ -197,11 +175,20 @@ section {
 	/*background:#333;*/
 }
 
-.form-stxt {
+#modifyForm {
+	width: 600px;
+	/*height:1000px;*/
+	margin: 30px auto;
+	/*background:#333;*/
+}
+
+
+form > .form-stxt {
 	text-align: right;
 	color: #666;
 	font-size: 12px;
 	font-weight: 100;
+	margin-right: 10px;
 }
 
 form hr {
@@ -221,14 +208,12 @@ fieldset {
 	border: none;
 }
 
-
-.formContent > div {
+.formContent>div {
 	color: #333;
 	width: 750px;
 	border-bottom: 1px dotted #9b9b9b;
 	padding: 20px 0;
 }
-
 
 .formContent div:first-child {
 	padding-top: 5px;
@@ -247,24 +232,7 @@ fieldset {
 
 .formContent span {
 	display: inline-block;
-	width: 230px;
-	/*background:#666;*/
 }
-
-
-/* input이 어떻게 나오는지 보여주는 곳!!! */
-.class input[type=text] {
-	width: 100px;
-	border: 1px solid #ccc;
-	text-indent: 5px;
-}
-input[type=text], input[type=number]  {
-	width: 100px;
-	border: 1px solid #ccc;
-	text-indent: 5px;
-}
-/* input이 어떻게 나오는지 보여주는 곳!!! */
-
 
 .agreebox {
 	color: #333;
@@ -274,21 +242,21 @@ input[type=text], input[type=number]  {
 	text-align: center;
 }
 
-
 .btn_faq {
 	text-align: center;
 }
 
 /* btn-default는 modify에서 사용됨 */
-.btn_faq2, .btn-default{
+.btn_faq2, .btn-default {
 	margin-top: 30px;
-	background: #ffaf31;
-	color: #fff;
-	padding: 10px 30px;
-	border: none;
-	font-size: 15px;
-	letter-spacing: 2px;
-	cursor: pointer;
+    background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 40%, transparent 40%);    
+    padding: 10px 0px;
+    border: none;
+    font-size: 20px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 15px;
 }
 
 textarea {
@@ -299,21 +267,48 @@ textarea {
 	border: 1px solid #ccc;
 }
 
-
-
-
-
 /* =================사용자 입력칸================= */
-input {
-	padding: 3px 0px;
+
+/* input이 어떻게 나오는지 보여주는 곳!!! */
+select {
+	width: 160px;
+	height: 35px;
+	border: 1px solid #e0e0e0;
+	border-radius: 20px;
+	margin-top: 10px;
+	padding-left: 10px;
+	color: #999;
 }
 
-input[required] {
+input {
+	width: 260px;
+	height: 30px;
+	border: 1px solid #e0e0e0;
+	border-radius: 20px;
+	margin-top: 10px;
+	padding-left: 10px;
+	color: #999;
+}
+
+input[type="number"] {
+	width: 50px;
+	text-align: center;
+	font-size: 18px;
+}
+
+input[required], select[required] {
 	border: 1px solid #ff9f40;
 }
 
+input#keyword {
+	border-radius: 0px;
+	margin: 8px 0;
+    width: 110px;
+    padding-left: 10px;
+}
+
 input[type="datetime-local"] {
-	width: 200px;
+	width: 265px;
 }
 
 input[type="file"] {
@@ -323,3 +318,17 @@ input[type="file"] {
 img {
 	margin: 0px;
 }
+
+input::placeholder {
+ 	color: #999;
+    font-size: 8px;
+}
+
+textarea {
+	border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding-left: 10px;
+    color: #999;
+}
+
