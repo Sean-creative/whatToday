@@ -4,152 +4,149 @@
 <!-- 작성자 : 김선우 -->
 
 <%@include file="../includes/header.jsp"%>
-<style>
-.weather {
-	display: flex;
-	color: white;
-}
-
-.weather div {
-	width: 100px;
-	text-align: center;
-}
-
-.City {
-	background-color: red;
-}
-
-.weatherContent {
-	background-color: black;
-	color: white;
-}
-
-.day {
-	font-size: 0.938rem;
-}
-
-.Icon, .Temp {
-	font-size: 1.375em;
-}
-
-.Icon {
-	margin-right: 2px;
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="/resources/css/thunderAdd.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
 
-<!--만남 개설 -->
-<section id="wrap">
 
-	<div class='weather'>
-		<div class='City'></div>
+
+
+<!-- 만남수정 -->
+<section>
+	<div class="section_header" style="margin: 0 auto 50px; text-align: center;">
+		<span class="half">만남 수정</span>
+		<p>만남을 수정주세요</p>
 	</div>
+	<div id="container">
 
-	<form action="/meeting/modify" id="modifyForm" method="post">
-		<div>
-			<div>
-				만남명<br>
-				<!-- 30자 제한 -->
-				<input type="text" required="required" name='mtName' size="50" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtName}" />'>
-			</div>
+		<!-- ========중앙========== -->
+		<div class="section_in" style="display: inline-block; overflow: hidden">
+			<form action="/meeting/modify" method="post" onsubmit="return inputCheck()" style="padding-top: 36px;" id="modifyForm">
+				<h6 class="form-stxt">*필수 입력사항&nbsp;&nbsp;</h6>
+				<hr>
+				<fieldset class="formContent">
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<!-- 30자 제한 -->
+							<label for="name" style="display: block;">만남명*</label>
+							<input type="text" required="required" name='mtName' size="50" placeholder="만남명을 입력하세요" value='<c:out value="${meeting.mtName}" />'>
+						</div>
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">만남 인원*</label>
+							<input type="number" required="required" name='mtMbNum'  min="1" max="50" value='<c:out value="${meeting.mtMbNum}" />'>
+						</div>
+					</div>
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="hp">만남 날짜*</label>
+							<input type="datetime-local" required="required" name='mtStartDate' id='mtStartDate' value='<c:out value="${meeting.mtStartDate}" />'>
+						</div>
+
+						<!-- ======== 날씨 ========== -->
+						<div class="header_in3">
+							<ul class="header_weekday">
+							</ul>
+						</div>
+					</div>
+
+
+					<div>
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">만남 지역*</label>
+							<input type="text" required="required" readonly="readonly" name='mtAddress' id='cbAddress' placeholder="지도에서 마커를 클릭해주세요" value='<c:out value="${meeting.mtAddress}" />'>
+						</div>
+
+
+
+						<div style="display: inline-block; width: 300px;">
+							<label for="request" class="class">만남 장소 *</label>
+							<input type="text" required="required" readonly="readonly" name='mtPlace' id='cbPlace' placeholder="지도에서 마커를 클릭해주세요" value='<c:out value="${meeting.mtPlace}" />'>
+						</div>
+					</div>
+
+
+					<div id="hash" style="display: block;">
+						<div style="display: block; width: 300px;">
+							<label for="request" class="class" style="display: block;">만남 준비물</label>
+							<input type="text" name='mtSupplies' id='mtSupplies' size="50" value='<c:out value="${meeting.mtSupplies}" />'>
+						</div>
+
+						<div style="display: block; width: 300px;">
+							<label for="request" class="class" style="display: block;">만남소개</label>
+							<textarea name='mtIntro' cols="100" rows="7" maxlength="100"> <c:out value="${meeting.mtIntro}" /></textarea>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<hr>
+
+				<fieldset class="agreebox">
+					<div class="btn_faq">
+						<button type="submit" data-oper='modify' class="btn-default">등록 하기</button>
+						<button type="submit" data-oper='remove' class="btn-default">삭제 하기</button>
+						<button type="submit" data-oper='list' class="btn-default">목록 으로</button>
+					</div>
+				</fieldset>
+
+
+				<!-- 모임 번호정도만 컨트롤러에 보낸다. -->
+				<input type="hidden" name="cbNum" value='<c:out value="${meeting.cbNum}" />'>
+				<input type="hidden" name="cbName" value='<c:out value="${meeting.cbName}" />'>
+
+				<input type="hidden" name="mtCurMbNum" value='<c:out value="${meeting.mtCurMbNum}" />'>
+				<input type="hidden" name="mtFinalState" value='<c:out value="${meeting.mtFinalState}" />'>
+				<input type="hidden" name="mtNum" value='<c:out value="${meeting.mtNum}" />'>
+			</form>
 
 		</div>
-
-		<div>
-			<div>
-				만남 날짜<br>
-				<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
-					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
-				<!-- JS로 MIN과 MAX를 찍어주자 -->
-				<input type="datetime-local" required="required" name='mtStartDate' id='mtStartDate' style="width: 200px; border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtStartDate}" />'>
-			</div>
-		</div>
+		<!-- 중앙 끝  -->
 
 
-		<div>
-			<div>
-				만남 인원<br>
-				<input type="number" required="required" name='mtMbNum' min="1" max="1000000" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtMbNum}" />'>
-			</div>
-		</div>
+		<!-- ========오른쪽========== -->
+		<div style="display: inline-block; width: 700px; height: 820px; margin-top: 75px; margin-left: 40px;">
 
+			<!-- 카카오 맵 영역 -->
+			<div class="map_wrap">
+				<div id="map"></div>
+				<div id="menu_wrap" class="bg_white">
+					<div class="option">
+						<div>
+							<form role="form" onsubmit="searchPlaces(); return false;">
+								모임 장소 :
+								<input type="text" id="keyword" size="15" <c:choose>
+											<c:when test="${'' eq meeting.mtPlace}">value="종각역"</c:when>
+											<c:otherwise>value='<c:out value="${meeting.mtPlace}" />'</c:otherwise>
+										</c:choose>>
 
-		<div>
-			<div>
-				만남 지역 <br>
-				<!-- 값이 '서울 종로구' 이런식으로 들어오는데,
-                  1. js단에서  ','를 기준으로 값을 분리해주면 되겠다. -->
-				<input type="text" required="required" readonly="readonly" name='mtAddress' id='cbAddress' readonly="readonly" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtAddress}" />'>
-			</div>
-		</div>
+								<button type="submit">검색하기</button>
+							</form>
 
-		<div>
-			<div>
-				만남 장소 <br>
-				<input type="text" required="required" readonly="readonly" name='mtPlace' id='cbPlace' readonly="readonly" style="border: 1px solid #ff9f40; padding: 3px 0px;" value='<c:out value="${meeting.mtPlace}" />'>
-			</div>
-
-			<div>
-				만남 준비물<br>
-				<input type="text" name='mtSupplies' id='mtSupplies' size="50" value='<c:out value="${meeting.mtSupplies}" />'>
-			</div>
-		</div>
-
-		<div>
-			만남소개<br>
-			<!-- 300자 제한 -->
-			<textarea name='mtIntro' cols="100" rows="7" maxlength="300" value='<c:out value="${meeting.mtIntro}" />'></textarea>
-		</div>
-
-		<div style="margin-left: 470px">
-			<button type="submit" data-oper='modify' class="btn-default">Modify</button>
-
-			<button type="submit" data-oper='remove' class="btn-default">Remove</button>
-
-			<button type="submit" data-oper='list' class="btn-default">List</button>
-		</div>
-
-
-		<input type="hidden" name="mtCurMbNum" value="${meeting.mtCurMbNum}" />
-		<input type="hidden" name="mtFinalState" value="${meeting.mtFinalState}" />
-		<input type="hidden" name="mtNum" value="${meeting.mtNum}" />
-	</form>
-
-
-
-
-	<!-- 카카오 맵 영역 -->
-	<div class="map_wrap">
-		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-		<div id="menu_wrap" class="bg_white">
-			<div class="option">
-				<div>
-
-					<form role="form" onsubmit="searchPlaces(); return false;">
-						모임 장소 :
-						<input type="text" value="종각역" id="keyword" size="15" style="border: 1px solid #ff9f40; padding: 3px 0px;">
-						<button type="submit">검색하기</button>
-
-
-					</form>
-
-
+						</div>
+					</div>
+					<hr>
+					<ul id="placesList"></ul>
+					<div id="pagination"></div>
 				</div>
 			</div>
-			<hr>
-			<ul id="placesList"></ul>
-			<div id="pagination"></div>
+			<!-- 카카오 맵 END -->
+
 		</div>
+
+
 	</div>
-	<!-- 카카오 맵 END -->
-
-
-
-
-
+	<!-- 컨테이너 END -->
 </section>
+
+
+
+
+
+
+
 
 <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -162,52 +159,178 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <script>
-	let city = 'Seoul';
-	// var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dfb19fd20ff326431f940b75f34778da";
-	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.537623499999995&lon=127.1580072&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
-	$.ajax({
-		url : apiURI,
-		dataType : "json",
-		type : "GET",
-		async : "false",
-		success : function(resp) {
-			console.log("도시 이름 : " + resp.timezone.split('/')[1]);
-			$('.City').append(resp.timezone.split('/')[1]);
 
-			for ( let idx in resp.daily) {
-				let tmp = '<div class="weatherContent">';
-				let days = new Date();
-				days.setTime(resp.daily[idx].dt * 1000);
-				const today = moment(days);
-				tmp += '<div class="day">' + today.format('MM월 DD일') + '<div>';
+	// Modify, Remove, List 중 버튼을 누른다면,
+	let formObj = $("#modifyForm");
 
-				tmp += '<div class="Temp">'
-						+ Math.floor(resp.daily[idx].temp.min) + '&ordm/'
-						+ Math.floor(resp.daily[idx].temp.max) + '&ordm<div>';
+	$('.btn-default').on("click", function(e) {
+		e.preventDefault();
 
-				imgURL = "http://openweathermap.org/img/w/"
-						+ resp.daily[idx].weather[0].icon + ".png";
-				tmp += '<div class="Icon">' + "<img src="+imgURL+">" + '<div>';
-				tmp += "</div>"
+		let operation = $(this).data("oper");
 
-				$('.weather').append(tmp);
+		console.log(operation);
+
+		if (operation === 'remove') {
+			alert('삭제되었습니다');
+			formObj.attr("action", "/meeting/remove");
+
+		} else if (operation === 'list') {
+			// move to list
+			formObj.attr("action", "/regular/info").attr("method", "get");
+		}
+		// Modify 라고 한다면
+		else {
+			if (inputCheck()) {				
+				console.log("true");
+			} else {
+				console.log("false");
+				return;
 			}
 		}
-	})
+		formObj.submit();
+	});
+
+	/* 날씨관련 */
+	let city = 'Seoul';
+	//날씨 DATA의 기준인 lat,lon은 종각역 YMCA 건물 기준임!!
+	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.57041580586331&lon=126.98515148702204&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
+	$
+			.ajax({
+				url : apiURI,
+				dataType : "json",
+				type : "GET",
+				async : "false",
+				success : function(resp) {
+					console.log("도시 이름 : " + resp.timezone.split('/')[1]);
+
+					for ( let idx in resp.daily) {
+						let tmp = '<li>';
+						let days = new Date();
+						days.setTime(resp.daily[idx].dt * 1000);
+						const today = moment(days);
+
+						tmp += '<h4>' + today.format('ddd') + '</h4>';
+
+						if (resp.daily[idx].weather[0].icon == '01d'
+								|| resp.daily[idx].weather[0].icon == '01n') {
+							imgURL = '/resources/img/animation-ready/clear-day.svg';
+						}
+						// 맑고 구름
+						if (resp.daily[idx].weather[0].icon == '02d'
+								|| resp.daily[idx].weather[0].icon == '02n') {
+							imgURL = '/resources/img/animation-ready/partly-cloudy-day.svg';
+						}
+						// 구름
+						if (resp.daily[idx].weather[0].icon == '03d'
+								|| resp.daily[idx].weather[0].icon == '03n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 먹구름
+						if (resp.daily[idx].weather[0].icon == '04d'
+								|| resp.daily[idx].weather[0].icon == '04n') {
+							imgURL = '/resources/img/animation-ready/cloudy.svg';
+						}
+						// 소나기
+						if (resp.daily[idx].weather[0].icon == '09d'
+								|| resp.daily[idx].weather[0].icon == '09d') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 비
+						if (resp.daily[idx].weather[0].icon == '10d'
+								|| resp.daily[idx].weather[0].icon == '10n') {
+							imgURL = '/resources/img/animation-ready/rain.svg';
+						}
+						// 번개
+						if (resp.daily[idx].weather[0].icon == '11d'
+								|| resp.daily[idx].weather[0].icon == '11n') {
+							imgURL = '/resources/img/animation-ready/thunderstorms.svg';
+						}
+						// 눈
+						if (resp.daily[idx].weather[0].icon == '13d'
+								|| resp.daily[idx].weather[0].icon == '13n') {
+							imgURL = '/resources/img/animation-ready/snow.svg';
+						}
+						// 안개
+						if (resp.daily[idx].weather[0].icon == '50d'
+								|| resp.daily[idx].weather[0].icon == '50n') {
+							imgURL = '/resources/img/animation-ready/mist.svg';
+						}
+
+						tmp += "<img src=" + imgURL + ">";
+
+						tmp += '<p">' + Math.floor(resp.daily[idx].temp.min)
+								+ '&ordm/'
+								+ Math.floor(resp.daily[idx].temp.max)
+								+ '&ordm</p>';
+
+						tmp += "</li>"
+
+						$('.header_weekday').append(tmp);
+					}
+				}
+			})
+
+	const dating = function(o) {
+		// toSOSString()을 이용하기 위해서 사용
+		// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환한다.
+		const offset = new Date().getTimezoneOffset() * 60000;
+		const today = new Date(Date.now() - offset);
+
+		// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함		
+		let nowDate = today.toISOString().slice(0, 16);
+
+		//현재시간으로 부터 한 달 더해준 것이 maxDay
+		today.setDate(today.getDate() + 28);
+		let maxDay = today.toISOString().slice(0, 16);
+
+		today.setDate(today.getDate() - 28);
+		today.setHours(today.getHours() + 1);
+		let minDay = today.toISOString().slice(0, 16);
+
+		if ($(o).val()) {
+			// 값을 입력한 후 일 때 Value는 냅둬야함
+
+		} else if (!($(o).val())) {
+			// date의 값이 아무것도 없을 때 (초기 설정일 때)는 초기 설정을 해준다
+			// 초기 설정
+			$('#mtStartDate').val(minDay);
+		}
+
+		$("#mtStartDate").attr('min', minDay);
+		$("#mtStartDate").attr('max', maxDay);
+	}
+
+	dating();
 
 	const inputCheck = function() {
 
+		// 번개만들기를 클릭 했을 때, 날짜를 한번 더 업데이트 해준다음에 검사한다.
+		dating($('#mtStartDate'));
+
 		let date = $('#mtStartDate').val();
 		let mbNum = $("[name=mtMbNum]").val();
-
+		
 		//공백을 제거해한 뒤에 개수를 세던지 한다.	
 		let name = $.trim($("[name=mtName]").val());
 		let intro = $.trim($("[name=mtIntro]").val());
 		let supplies = $.trim($('#mtSupplies').val());
 
+		let address = $.trim($('#cbAddress').val());
+		let place = $.trim($('#cbPlace').val());
+
 		$('[name=mtName]').val(name);
 		$('[name=mtIntro]').val(intro);
 		$('#mtSupplies').val(supplies);
+
+		if (!address || address.length == 0) {
+			alert("지도에서 마커를 클릭해주세요");
+			return false;
+		}
+
+		if (!place || place.length == 0) {
+			alert("지도에서 마커를 클릭해주세요");
+			return false;
+		}
 
 		if (!name || name.length > 30) {
 			alert("만남명을 다시 입력해주세요.");
@@ -231,56 +354,13 @@
 		}
 
 		/*값이 없어도 되지만, 길이제한은 둔다.*/
-		if (intro.length > 300) {
+		if (intro.length > 100) {
 			alert("만남소개가 너무 깁니다.");
 			return false;
 		}
 
 		return true;
 	}
-
-	// toSOSString()을 이용하기 위해서 사용
-	// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환한다.
-	const offset = new Date().getTimezoneOffset() * 60000;
-	const today = new Date(Date.now() - offset);
-
-	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함		
-	let nowDate = today.toISOString().slice(0, 16);
-
-	$('#mtStartDate').val(nowDate);
-
-	//현재시간으로 부터 일주일 더해준 것이 maxDay
-	today.setDate(today.getDate() + 28);
-	let maxDay = today.toISOString().slice(0, 16);
-	$("#mtStartDate").attr('min', nowDate);
-	$("#mtStartDate").attr('max', maxDay);
-
-	// Modify, Remove, List 중 버튼을 누른다면,
-	let formObj = $("#modifyForm");
-
-	$('.btn-default').on("click", function(e) {
-		e.preventDefault();
-
-		let operation = $(this).data("oper");
-
-		console.log(operation);
-
-		if (operation === 'remove') {
-			alert('삭제되었습니다');
-			formObj.attr("action", "/meeting/remove");
-
-		} else if (operation === 'list') {
-			// move to list
-			formObj.attr("action", "/regular/list").attr("method", "get");
-		}
-		// Modify 라고 한다면
-		else {
-			if (inputCheck() == false) {
-				return;
-			}
-		}
-		formObj.submit();
-	});
 </script>
 
 

@@ -6,7 +6,7 @@
 
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
-			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+			center : new kakao.maps.LatLng(37.570451517820494, 126.98543284246531), // 지도의 중심좌표
 			level : 3
 		// 지도의 확대 레벨
 		};
@@ -25,6 +25,7 @@
 		// 키워드로 장소를 검색합니다
 		searchPlaces();
 
+		
 		// 키워드 검색을 요청하는 함수입니다
 		function searchPlaces() {
 

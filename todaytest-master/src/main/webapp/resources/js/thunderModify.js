@@ -46,7 +46,7 @@ $(function() {
 
 	
 	/* 스크립트는 파일이 등록되면 현재화면에서 어떤 이미지인지 볼 수 있도록 해주는 역할 */
-	$("#gdsImg").change(
+	$("#gdsImg2").change(
 			function() {
 				if (this.files && this.files[0]) {
 					var reader = new FileReader;
@@ -120,6 +120,18 @@ const dating = function(o, d) {
 
 	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함
 	let nowDate = today.toISOString().slice(0, 16);
+	
+	// 현재시간으로 부터 일주일 더해준 것이 maxDay
+	today.setDate(today.getDate() + 7);	
+	let maxDay = today.toISOString().slice(0, 16);
+	
+	// 일정 다시 돌려놓음
+	today.setDate(today.getDate() - 7);
+	today.setHours(today.getHours() + 1);
+	let minDay = today.toISOString().slice(0, 16);
+		
+	today.setMinutes(today.getMinutes() - 30);
+	let minDayApp = today.toISOString().slice(0, 16);
 
 	if ($(o).val()) {
 		// 값을 입력한 후 일 때 Value는 냅둬야함		
@@ -131,13 +143,11 @@ const dating = function(o, d) {
 		$('#cbDate').val(nowDate);
 		$('#cbAppPeriod').val(nowDate);
 	}
-	// 현재시간으로 부터 일주일 더해준 것이 maxDay
-	today.setDate(today.getDate() + 7);
-	let maxDay = today.toISOString().slice(0, 16);
-	$("#cbDate").attr('min', nowDate);
+	
 	$("#cbDate").attr('max', maxDay);
+	$("#cbDate").attr('min', minDay);
 
-	$("#cbAppPeriod").attr('min', nowDate);
+	$("#cbAppPeriod").attr('min', minDayApp);
 	// 모임 날짜를 클릭 했을 때, 모임 마감기간의 MAX가 설정 되어야 한다.
 	$(d).attr('max', $(o).val());
 
@@ -192,8 +202,9 @@ const inputCheck = function(){
 		return false;
 	}
 
-	if (!mbnum || mbnum < 1) {
-		alert("모임인원을 다시 입력해주세요.");
+	//50명 넘어가지 못하게!
+	if (!mbnum || mbnum < 1 || mbnum >50) {
+		alert("모임인원을 다시 입력해주세요. 50명 이하입니다.");
 		return false;
 	}
 
@@ -230,7 +241,7 @@ const inputCheck = function(){
 	}
 	
 	/*값이 없어도 되지만, 길이제한은 둔다.*/
-	if (intro.length > 300) {
+	if (intro.length > 100) {
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}

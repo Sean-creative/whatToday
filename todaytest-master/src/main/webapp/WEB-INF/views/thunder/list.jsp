@@ -47,22 +47,24 @@
 					</div>
 				</div>
 				
-				
-
 
  			    <div id="nav">
  			    	<select name='searchBy' id='searchBy' style="width: 150px; height: 35px; font-size: 20px;">
 						<option value='모임명'>모임명</option>
 						<option value='글작성자'>글작성자</option>
 						<option value='해시태그'>해시태그</option>
-					</select>
-                    <input type="text" name='keyword' placeholder="관심 취미를 검색해주세요." value='<c:out value="${pageMaker.cri.keyword}"/>'>
-                    <button ></button>
+					</select>  
+                    <input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />                    
+                    <button><img src="/resources/img/search.png" alt=""></button>
                 </div>
+
 
 
 			</div>
 		</div>
+		
+		<input type="hidden" name="userLatitude" value='<c:out value="${pageMaker.cri.userLatitude}"/>'>
+		<input type="hidden" name="userLongitude" value='<c:out value="${pageMaker.cri.userLongitude}"/>'>
 	</form>
 
 
@@ -138,7 +140,6 @@
 		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'>
 		<input type='hidden' name='searchBy' value='<c:out value="${pageMaker.cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-
 		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'>
 
 		<!-- list.jsp로 어디서 오는지를 몰라서, 리스트 올 떄마다 값을 전달하는 방식으로! -->
@@ -189,9 +190,9 @@
                   		/* location.href="/thunder/list"; */
                   	}
                   	
-                  	
-                  	timerId = setInterval(test, 10000);
-                  	console.log(timerId);
+//                   	1분마다 새로고침 됨
+//                   	timerId = setInterval(test, 60000);
+//                   	console.log(timerId);
 				</script>
 
 <!-- jQuery -->
