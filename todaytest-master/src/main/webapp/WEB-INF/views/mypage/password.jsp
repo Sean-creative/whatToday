@@ -20,12 +20,11 @@
 			<div class="info">
 				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit">마이페이지</button>
+					<button type="submit">마이페이지</button>
 				</form>
-				<button type="button" class="accordionBtn">모임관리</button>
-				<div class="accordion">
+
 					<form action="/mypage/myclub/main" method="get">
-						<button type="submit">모임관리홈</button>
+						<button type="submit">모임관리</button>
 					</form>
 
 					<form action="/mypage/myclub/main" method="post">
@@ -33,9 +32,9 @@
 					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
-						<button type="submit">회원관리</button>
+						<button type="submit">모임회원관리</button>
 					</form>
-				</div>
+
 				<form action="/mypage/auth_edit" method="get">
 					<button type="submit">회원정보수정</button>
 				</form>
@@ -84,8 +83,7 @@ let currentPassword = document.getElementsByName("currentPassword");
 let newPassword = document.getElementsByName("newPassword");
     /* 유효성검사, 빈칸검사, 새 비밀번호 맞는지 확인검사 */
 let check = function (){
-	if(blankCheck() &&
-			passwordEqualCheck() && validCheck()){
+	if(blankCheck() && validCheck() && passwordEqualCheck()){
         currentPassword[1].setAttribute("value", currentPassword[0].value);
         newPassword[2].setAttribute("value", newPassword[0].value);
 		return true;
@@ -122,32 +120,17 @@ let validCheck = function () {
 	let npwRe = document.getElementsByName("newPassword")[1];
 
 	
-	const pwPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+	const pwPattern = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,}$/;
 
-    if(pwPattern.test(npw.value) == false || pwPattern.test(npwRe.value) == false){
+    if(pwPattern.test(npw.value) == false){
     	swal("새로운 비밀번호는 숫자+영어+특문 포함 8자 이상입니다.", "", "warning");
         return false;
     }
 
     return true;
 
-  
-    
 }
-var acc = document.getElementsByClassName("accordionBtn");
-var i;
 
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-  });
-}
 
 </script>
 

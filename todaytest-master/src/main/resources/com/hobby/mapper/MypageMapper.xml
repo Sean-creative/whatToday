@@ -43,8 +43,8 @@
 	</select>
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
-select usrNum,cbNum,cbName,cbType,max(cbjoinnum) from CLUBJOINHISTORY 
-where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,cbNum,cbName,cbType order by max(cbjoinnum) desc
+select CLUBJOINHISTORY.usrNum,CLUBJOINHISTORY.cbNum,CLUBJOINHISTORY.cbName,CLUBJOINHISTORY.cbType,club.cbFile,max(cbjoinnum) from CLUBJOINHISTORY,club
+where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHISTORY.cbnum = club.cbnum group by CLUBJOINHISTORY.usrNum,CLUBJOINHISTORY.cbNum,CLUBJOINHISTORY.cbName,CLUBJOINHISTORY.cbType,club.cbFile order by max(cbjoinnum) desc
 	</select>
 	
 	<update id="updateUserAuth">
@@ -72,7 +72,7 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,
 	
 	<insert id="insertUserHistory">
 	insert into USERHISTORY(usrHistoryNum, usrNum, usrName, usrState, usrStateUpdateDate)  
-	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, sysdate)
+	values(userhistory_seq.nextval, #{usrNum}, #{usrName}, #{usrState}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<select id="getLeaderClubList" resultType="com.hobby.domain.ClubVO">
@@ -122,12 +122,10 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,
 	
 	<select id="getClubManageMemList" resultMap="cbMem">
 		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
-	
-	
 	</select>
 	
 	<insert id="insertClubJoinHistory">
-		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, sysdate)
+		insert into CLUBJOINHISTORY(CBJOINNUM, USRNUM, CBNUM, CBNAME, CBTYPE,CBJOINSTATERESULT,CBJOINSTATEUPDATEDATE) values(clubjoinhistory_seq.nextval, #{usrNum}, #{cbNum}, #{cbName}, #{cbType}, #{cbJoinStateResult}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<update id="updateClubManageMem">
@@ -151,12 +149,19 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' group by usrNum,
 	<update id="shutClub">
 		update CLUB
 		set CBFINALSTATE = '폐쇄',
-		CBSHUTDATE = sysdate
+		CBSHUTDATE = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 		where CBNUM = #{cbNum} 
 	</update>
 	
+	<update id="leaveUserClub">
+		update CLUB
+		set CBFINALSTATE = '폐쇄',
+		CBSHUTDATE = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+		where CBLEADERNUM = #{usrNum} 
+	</update>
+	
 	<insert id="insertClubMember">
-		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, sysdate)
+		insert into CLUBMEMBER(USRNUM, USRNAME, CBNUM, CBTYPE, CBNAME, CBMBSTRESULT,CBMEMINTRO,CBAPPDATE) values(#{usrNum},#{usrName},#{cbNum}, #{cbType}, #{cbName}, #{cbJoinStateResult}, #{cbMemIntro}, TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<select id="findClubMem" resultType="com.hobby.domain.ClubVO">
