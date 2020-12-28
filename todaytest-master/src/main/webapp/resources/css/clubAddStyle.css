@@ -16,6 +16,7 @@
     background-size:cover;
     filter: grayscale(100%);
     position: relative;
+    margin-top: 50px;
 }
 .half{
     text-align:center;

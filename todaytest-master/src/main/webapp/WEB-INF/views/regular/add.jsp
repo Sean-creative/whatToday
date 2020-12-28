@@ -137,7 +137,7 @@
 		 </div><!--END myModal-->
       	 
       	 <div id="regiform">
-      	 	<input type="submit" class="btn" value="개설하기">
+      	 	<input type="submit" class="btn" value="개설하기" style="width:80%;">
    	 	 </div>
    	 	 
 	</div>		

@@ -12,6 +12,7 @@
     position: relative;
     display: flex;
     justify-content: center;
+    margin-top: 50px;
 }
 
 #detail{
@@ -36,7 +37,8 @@
 #rightinfo{
     width:30%;
     height:400px;
-    background:red;
+    background: #ffffff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
     margin-left:20px;
     border-radius: 20px;
 }
@@ -77,7 +79,9 @@
   	top: 40px;
   	/* margin-left:70%; */
 }
-#body1 {
+
+/* ======해쉬태그  */
+/* #body1 {
     width:100%;
     height:500px;
     background:pink;
@@ -118,7 +122,117 @@
 }
 .content {
 	margin: 30px;
+} */
+
+#phashtag{
+    width:100%;
+    height:80px;
+    /* background:#ab1111; */
+    display:flex;
 }
+.hashpp{
+    width:70px;
+    height:30px;
+    background:#fff;
+    border-radius: 30px;
+    border:1px solid #666;
+    text-align:center;
+    line-height: 30px;
+    font-weight:bold;
+}
+/* ========== */
+#error{
+    width:100%;
+    height:150px;
+    /* background:pink; */
+    display:flex;
+}
+#error .infole{
+    width:30%;
+    /* background:pink; */
+}
+
+#error .infole>p{
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+}
+
+#error .inforig{
+    width:70%;
+    /* background:beige */
+}
+
+/* 상세 내용  */
+
+#pdetail{
+    width:100%;
+    height:auto;
+    /* background:pink; */
+    display:flex;
+}
+
+#pdetail .infole{
+    width:30%;
+    /* background:pink; */
+}
+
+#pdetail .infole>p{
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+}
+
+#pdetail .inforig{
+    width:70%;
+    /* background:beige */
+}
+
+
+/* 모임명  */
+.clubb{
+    font-size:18px;
+    color:#333;
+    padding:20px;
+    padding-top:0;
+}
+
+.clubname{
+    font-size:20px;
+    background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+}
+/* 한줄소개 */
+
+.clubintro{
+    font-size:18px;
+    color:#333;
+    padding:20px;
+}
+.cluban{
+    width:100%;
+    height: 80px;
+    display:flex;
+    justify-content: space-between;
+    background:rgba(241, 237, 237, 0.7);
+    border-radius: 20px;
+    padding:20px;
+}
+/* .moinname{
+    
+    font-weight:bold;
+    font-size:16px;
+    padding-bottom:10px;
+} */
+
+.cluban button{
+    width:100px;
+    height:30px;
+    background:#ffaf31;
+    margin-top:30px;
+    border:none;
+    color:#fff;
+}
+
 /* //////MODAL//////////////////////////////////////////////////// */
 
 /* Add padding and center-align text to the container */
