@@ -6,135 +6,15 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/thunderAdd.css">
 <%@include file="../includes/header.jsp"%>
-<!-- 
-<style>
-.weather {
-	display: flex;
-	color: white;
-}
-
-.weather div {
-	width: 100px;
-	text-align: center;
-}
-
-.City {
-	background-color: red;
-}
-
-.weatherContent {
-	background-color: black;
-	color: white;
-}
-
-.day {
-	font-size: 0.938rem;
-}
-
-.Icon, .Temp {
-	font-size: 1.375em;
-}
-
-.Icon {
-	margin-right: 2px;
-}
-
-/* 파일 업로드 블로그 style */
-.inputArea {
-	margin: 10px 0px;
-}
-
-select {
-	with: 100px;
-}
-
-label {
-	display: inline-block;
-	width: 70px;
-	padding: 5px;
-}
-
-label[for='gdsDes'] {
-	display: block;
-}
-
-input {
-	width: 150px;
-}
-
-textarea#gdsDes {
-	width: 400px;
-	height: 180px;
-}
-
-.select_img img {
-	margin: 20px 0px;
-}
-
-/* 해시태그 구현 */
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-ul {
-	padding: 16px 0;
-}
-
-ul li {
-	display: inline-block;
-	margin: 0 5px;
-	font-size: 14px;
-	letter-spacing: -.5px;
-}
-
-form {
-	padding-top: 16px;
-}
-
-ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-.tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-
-.del-btn {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 8px;
-}
-
-.thumbImg {
-	width: 200px;
-	height: auto;
-}
-</style> -->
 
 
 <!--  번개 모임 수정 -->
-
 <section>
-	<div class="section_header" style="margin: 0 auto;">
-		<h2>번개 모임 수정</h2>
-		<p>모임 정보를 수정해주세요!</p>
+	<div class="section_header" style="margin: 0 auto; text-align: center;">
+		<span class="half">번개 모임 수정</span>
+		<p>번개 모임을 수정해주세요</p>
 	</div>
 	<div id="container">
-
-
-
-		<!-- ========왼쪽========== -->
-		<div class="header_in3">
-			<ul class="header_weekday">
-			</ul>
-		</div>
-
 
 
 		<!-- ========중앙========== -->
@@ -174,9 +54,6 @@ ul li.tag-item {
 
 					<div>
 						<div style="display: inline-block; width: 300px;">
-							<!-- date 타입을 비동기적으로(실시간으로) 계속 찍어줘야 할듯
-  					ex) 1분차이로 현재의 시간이 과거가 될 수 도 있다. -->
-							<!-- JS로 MIN과 MAX를 찍어주자 -->
 							<label for="hp">모임 날짜*</label>
 							<input type="datetime-local" required="required" name='thunderDetailVO.cbDate' id='cbDate' value='<c:out value="${clubVO.thunderDetailVO.cbDate}" />'>
 						</div>
@@ -185,6 +62,12 @@ ul li.tag-item {
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class">모임 마감기간*</label>
 							<input type="datetime-local" required="required" name='thunderDetailVO.cbAppPeriod' id='cbAppPeriod' value='<c:out value="${clubVO.thunderDetailVO.cbAppPeriod}" />'>
+						</div>
+
+
+						<div class="header_in3">
+							<ul class="header_weekday">
+							</ul>
 						</div>
 					</div>
 
@@ -207,10 +90,10 @@ ul li.tag-item {
 
 
 
-					<div>
+					<div id="hash">
 
-						<div style="display: inline-block; width: 300px;">
-							<label for="request" class="class" style="display: block;">해시태그</label>
+						<div id="hashTagDiv" style="display: inline-block; width: 300px;">
+							<label for="request" class="class" style="display: block;">해시태그 (최대 5개)</label>
 							<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${clubVO.cbHashtag}" />' />
 							<input type="text" id="tag" size="7" value="#" />
 							<ul id="tag-list"></ul>
@@ -218,36 +101,20 @@ ul li.tag-item {
 
 
 						<div style="display: inline-block; width: 300px;">
-							<label for="request" class="class" style="display: block;">모임 준비물</label>
-							<input type="text" name='thunderDetailVO.cbSupplies' id='cbSupplies' size="50" value='<c:out value="${clubVO.thunderDetailVO.cbSupplies}" />'>
+							<label for="request" class="class" style="display: block;">한줄소개</label>
+							<input type="text" name='cbIntro' id='cbIntro' size="50" value='<c:out value="${clubVO.cbIntro}" />'>
 						</div>
 
 					</div>
-
-
-
-
-					<div class="request">
-						<label for="request" class="class" style="display: block;">모임소개</label>
-						<textarea name='cbIntro' cols="100" rows="7" maxlength="300"><c:out value="${clubVO.cbIntro}" /></textarea>
-
-					</div>
-
-
 
 
 					<div class="request">
 						<label for="request" class="class">사진 등록</label>
 						<div class="select_img">
 							<img class="thumbImg" src="${clubVO.cbThumbImg}" /> <br>
-							<input type="file" id="gdsImg" name="file" />
+							<input type="file" id="gdsImg2" name="file" />
 						</div>
-
-
 					</div>
-
-
-
 				</fieldset>
 
 
@@ -258,13 +125,11 @@ ul li.tag-item {
 
 
 					<div class="btn_faq">
-						<button type="submit" data-oper='modify' class="btn-default">수정하기</button>
-						<button type="submit" data-oper='remove' class="btn-default">삭제하기</button>
-						<button type="submit" data-oper='list' class="btn-default">돌아가기</button>
+						<button type="submit" data-oper='modify' class="btn-default">등록</button>
+						<button type="submit" data-oper='remove' class="btn-default">삭제</button>
+						<button type="submit" data-oper='list' class="btn-default">목록</button>
 					</div>
 				</fieldset>
-
-
 
 
 
@@ -277,6 +142,11 @@ ul li.tag-item {
 				<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
 				<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+
+				<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
+
+				<input type="hidden" name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
+				<input type="hidden" name="userLongitude" value='<c:out value="${cri.userLongitude}"/>'>
 
 				<!-- 사진 첨부 안했을 시 사용해야함 -->
 				<input type='hidden' name='cbFile' value='<c:out value="${clubVO.cbFile}"/>'>
@@ -323,11 +193,8 @@ ul li.tag-item {
 				</div>
 			</div>
 			<!-- 카카오 맵 END -->
-
-
-
-
 		</div>
+
 
 
 	</div>

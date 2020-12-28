@@ -21,12 +21,11 @@
 			<div class="info">
 				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit" style="color: yellow;">마이페이지</button>
+					<button type="submit" style="color: yellow;">마이페이지</button>
 				</form>
-				<button type="button" class="accordionBtn">모임관리</button>
-				<div class="accordion">
+
 					<form action="/mypage/myclub/main" method="get">
-						<button type="submit">모임관리홈</button>
+						<button type="submit">모임관리</button>
 					</form>
 
 					<form action="/mypage/myclub/main" method="post">
@@ -34,9 +33,9 @@
 					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
-						<button type="submit">회원관리</button>
+						<button type="submit">모임회원관리</button>
 					</form>
-				</div>
+
 				<form action="/mypage/auth_edit" method="get">
 					<button type="submit">회원정보수정</button>
 				</form>
@@ -60,7 +59,7 @@
 		<h5>가입 대기중인 정기모임</h5>
 		<div id="myWaitClubList" class="list">
 		<c:if test="${empty waitClub}">
-		가입 대기중인 정기모임이 없습니다.
+		<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입 대기중인 정기모임이 없습니다.
 		</c:if>
 		<c:forEach var="waitClub" items="${waitClub}">
 		<div class='smallList'><img src='${waitClub.cbFile }'/><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div>
@@ -113,11 +112,11 @@
 												}
 												
 												if(cnt == 0){
-													str = "<a href='/regular/list'>가입한 정기모임이 없습니다. 가입하러가기</a>"
+													str = "<a href='/regular/list'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/regular/list'>가입한 정기모임이 없습니다. 가입하러가기.</a>"
 												}
 												if(cnt2 == 0){
-													str2= "<a href='/thunder/list'>가입한 번개모임이 없습니다. 가입하러가기</a>"
-												}
+													str2= "<a href='/thunder/list'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/thunder/list'>가입한 번개모임이 없습니다. 가입하러가기.</a>"
+												} 
 												myClubReg.empty();
 												myClubReg.append(str);
 												myClubThu.empty();
@@ -194,10 +193,10 @@
 													}
 												}
 												if(cnt == 0){
-													str = "이전에 가입한 정기모임이 없어요."
+													str = "<img class='noClub'src='/resources/img/upload/default/simoo.png'>이전에 가입한 정기모임이 없어요."
 												}
 												if(cnt2 == 0){
-													str2= "이전에 가입한 번개모임이 없어요."
+													str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>이전에 가입한 번개모임이 없어요."
 												}
 												
 												myPrevRegClubList.empty();
@@ -262,20 +261,7 @@
 	})
 
 	
-	var acc = document.getElementsByClassName("accordionBtn");
-	var i;
 
-	for (i = 0; i < acc.length; i++) {
-	  acc[i].addEventListener("click", function() {
-	    this.classList.toggle("active");
-	    var panel = this.nextElementSibling;
-	    if (panel.style.display === "block") {
-	      panel.style.display = "none";
-	    } else {
-	      panel.style.display = "block";
-	    }
-	  });
-	}
 	});
 </script>
 

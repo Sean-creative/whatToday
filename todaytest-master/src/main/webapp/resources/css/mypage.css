@@ -90,41 +90,16 @@
 .info button{
 	border: 0;
     outline: 0;
+    border: 1px solid white;
     color: white;
     font-size: 18px;
     background-color: #ffaf31;
-    height: 35px;
-    width: 100%;
-}
-.info button:hover{
-	color: yellow;
-	transition: 1s;
-}
-.accordionBtn {
-	border: 0;
-    outline: 0;
-    color: white;
-    font-size: 18px;
-    background-color: pink;
     height: 40px;
     width: 100%;
 }
-
-.accordionBtn:hover {
-	background-color: pink; 
-}
-.accordion button{
-	width: 100%;
-	background-color: pink;
-}
-
-.accordion {
-	width: 100%;
-	display: none;
-	background-color: pink;
-	overflow: hidden;
-	flex-direction: column; 
-    justify-content: center;
+.info button:hover{
+	color: pink;
+	transition: 1s;
 }
 
 
@@ -412,4 +387,34 @@ button.swal-button.swal-button--cancel{
 }
 .swal-button{
 	background-color: #ffaf31;
+}
+.noClub{
+	height: 90%;
+}
+.list a{
+	color:black;
+	height: 100%;
+}
+.list a:link{
+	color:black;
+}
+#clubList{
+	height: 35px;
+	width: 30%;
+	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+    text-overflow:ellipsis;
+}
+#tHead th{
+	border-bottom: 1px solid #ffaf31;
+}
+#tFoot th{
+	border-top: 1px solid #ffaf31;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+	color: #333 !important;
+    border: 1px solid #ffaf31 !important;
+    background-color: #ffaf31 !important;
+    background: #ffaf31 !important;
 }
