@@ -102,9 +102,5 @@ $RECYCLE.BIN/
 
 /Servers/
 
-<<<<<<< HEAD
-todaytest-master/src/main/webapp/WEB-INF/views/login/registerOrigin.jsp
-=======
 # spring - configure
 servlet-context.xml
->>>>>>> master
