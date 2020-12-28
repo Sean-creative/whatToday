@@ -10,59 +10,140 @@
 
 
 <link rel="stylesheet" type="text/css" href="/resources/css/thunderList.css">
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#detsrc {
+	width: 1200px;
+	height: 200px;
+	background: #eee;
+	margin: 0 auto;
+}
+
+.src {
+	width: 1100px;
+	height: 150px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	padding: 0 10px;
+}
+
+.dtlfont {
+	width: 1200px;
+	font-size: 18px;
+	margin: 30px 0 10px 0;
+}
+
+.src select {
+	width: 220px;
+	height: 35px;
+	border-radius: 20px;
+	padding: 0 15px 0 15px;
+	margin-right: 30px;
+	margin-top: 0px;
+	border: none;
+}
+
+.src input[type=text] {
+	width: 200px;
+	height: 35px;
+	border-radius: 20px;
+	border: none;
+	margin-top: 10px;
+	position: relative;
+	text-indent: 15px;		
+    background-color: white;    
+    margin-top: 15px;
+	padding-right: 40px;
+}
+
+.src ::placeholder {
+	color: #333;
+}
+
+.btnkeyword {
+    width: 40px;
+    height: 32px;
+    border-radius: 20px;
+    border: none;
+    background: #fff;
+    color: #333;    
+    margin-left: 13px;
+    transition: 0.5s;
+    position: relative;
+    z-index: 5;
+    left: -55px;
+    margin-top: 16px;
+}
+
+
+.btnkeyword:hover {
+	background: #ddd;
+}
+
+select#searchBy {
+	margin-right: 15px;
+	margin-top: 15px;
+}
+
+button>img {
+	width: 17px;
+}
+</style>
+
+
+
 
 <section id="wrap">
 
 	<form action="/thunder/list" method="get" onsubmit="return inputCheck()">
-	
+
+
+
 		<!-- 상세검색창 -->
-		<div id="search">
-			<div id="searchform">
-			
-			
-				<div id="selectThing">
-					<div>
-						<label>관심분야</label>
-						<!-- name은 ThunderVO가 아닌, Criteria의 변수명으로 맞춰줘야한다. -->
-						<select name='category' id='category'></select>
-					</div>
+		<div id="detsrc">
+			<div class="src">
+				<!-- 		<div id="search">
+			<div id="searchform"> -->
 
-					<div>
-						<label>모임선택</label>
-						<select name='subclass' id='subcat'></select>
-					</div>
+				<span class="dtlfont">상세검색</span>
+				<!-- name은 ThunderVO가 아닌, Criteria의 변수명으로 맞춰줘야한다. -->
+				<select name='category' id='category'></select>
+
+				<select name='subclass' id='subcat'></select>
+
+				<select name='city' id='city'></select>
+
+				<select name='district' id='district'></select>
+
+
+
+
+				<select name='searchBy' id='searchBy' style="width: 130px; height: 35px;">
+					<option value='모임명'>모임명</option>
+					<option value='글작성자'>글작성자</option>
+					<option value='해시태그'>해시태그</option>
+					<option value='모임종류'>모임종류</option>
+				</select>
+
+				<div style="display: flex;">
+					
+						<input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />
+						<button class="btnkeyword" >
+							<img src="/resources/img/search.png" alt="">
+						</button>									
 				</div>
-				
-				
-				<div id="selectThing">
-					<div>
-						<label>관심지역</label>
-						<select  name='city' id='city'></select>
-					</div>
-
-
-					<div>
-						<label>세부지역</label>
-						<select name='district' id='district'></select>
-					</div>
-				</div>
-				
-
- 			    <div id="nav">
- 			    	<select name='searchBy' id='searchBy' style="width: 150px; height: 35px; font-size: 20px;">
-						<option value='모임명'>모임명</option>
-						<option value='글작성자'>글작성자</option>
-						<option value='해시태그'>해시태그</option>
-					</select>  
-                    <input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />                    
-                    <button><img src="/resources/img/search.png" alt=""></button>
-                </div>
-
-
 
 			</div>
 		</div>
-		
+
+
+
 		<input type="hidden" name="userLatitude" value='<c:out value="${pageMaker.cri.userLatitude}"/>'>
 		<input type="hidden" name="userLongitude" value='<c:out value="${pageMaker.cri.userLongitude}"/>'>
 	</form>
@@ -71,10 +152,10 @@
 
 
 
-	<div class="header_in3">   
-        <ul class="header_weekday">          
-        </ul>
-    </div>
+	<div class="header_in3">
+		<ul class="header_weekday">
+		</ul>
+	</div>
 
 
 
@@ -85,7 +166,7 @@
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbNum desc'? "active":""}" ><a href="cbNum desc">최신순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbView desc'? "active":""}" ><a href="cbView desc">인기순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbAppperiod desc'? "active":""}" ><a href="cbAppperiod desc">마감임박순</a></li>
-			<li class="order_button ${pageMaker.cri.orderBy eq 'distance'? "active":""}"><a href="distance">거리순</a></li>						
+			<li class="order_button ${pageMaker.cri.orderBy eq 'distance'? "active":""}"><a href="distance">거리순</a></li>
 		</ul>
 	</div>
 
@@ -101,16 +182,15 @@
 				<p class="nombre"><c:out value="${thunderItem.cbName}" /></p>
 				<hr style="color: #eee;">
 				<fmt:parseDate var="dateString" value="${thunderItem.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-				
-				<p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
-				<p class="limitmem">모집인원 : <c:out value="${thunderItem.cbCurMbnum}" /> / <c:out value="${thunderItem.cbMbnum}" /> 명				
 
+				<p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
+				<p class="limitmem">모집인원 : <c:out value="${thunderItem.cbCurMbnum}" /> / <c:out value="${thunderItem.cbMbnum}" /> 명
 			</div>
 		</c:forEach>
 	</div>
 
 
-    
+
 	<div class='pull-right'>
 		<ul class="pagination">
 			<c:if test="${pageMaker.prev}">
@@ -148,6 +228,8 @@
 	</form>
 
 </section>
+
+
 
 
 

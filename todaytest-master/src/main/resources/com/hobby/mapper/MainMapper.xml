@@ -2,24 +2,47 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="com.hobby.mapper.MainMapper">
 
-<!-- 메인 정기  -->
-<select id="getListRegular" resultType="com.hobby.domain.MainVO">
+	<!-- 메인 정기 -->
+	<select id="getListRegular" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
-		select * from club where cbType ='정기모임'order by cbNum desc
+		select * from club where cbType ='정기모임' AND cbFinalState = '진행중' order by cbNum desc
 	]]>
-</select>
+	</select>
 
-<!-- 메인 번개  -->
-<select id="getListThunder" resultType="com.hobby.domain.MainVO">
+	<!-- 메인 번개 최신순으로 정렬 -->
+	<select id="getListThunder" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
-		select * from club where cbType ='번개모임'order by cbNum desc
+		select * from club where cbType ='번개모임' AND cbFinalState = '진행중' order by cbNum desc 
 	]]>
-<!--  -->
-</select>
+		<!-- -->
+	</select>
 
-<!-- 메인 검색처리  -->
+
+
+
+
+	<select id="getListKeyRegular" resultType="com.hobby.domain.ClubVO">
+	<![CDATA[
+		select * from club
+		where (cbcategory like '%'||#{keyword}||'%'  or  cbsubcat like '%'||#{keyword}||'%') AND  cbtype='정기모임' order by cbNum desc	
+	]]>
+	</select>
+
+
+
+	<select id="getListKeyThunder" resultType="com.hobby.domain.ClubVO">
+	<![CDATA[		
+		select * from club
+		where (cbcategory like '%'||#{keyword}||'%'  or  cbsubcat like '%'||#{keyword}||'%') AND  cbtype='번개모임' order by cbNum desc 
+	]]>
+	</select>
+
+
+
+
+	
 </mapper>
 

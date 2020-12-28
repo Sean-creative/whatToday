@@ -5,6 +5,26 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
+<style>
+/* 해시태그  */
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+	
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
+
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+</style>
+
+
 <div id="regularInfo">
 	<div id="detail">
          <div id="leftinfo">
@@ -27,8 +47,9 @@
             <div id="pdetail">
                 <div class="infole"> <p>☀️어떤 모임인가요?</p></div>
                 <div class="inforig">
-                	<p id="hashtag">${club.cbHashtag}</p>
-               
+                	<ul id="tag-list"></ul>
+                	
+                	               
                     <p class="clubb"><pre>${club.cbDetailContent}</pre>
                 </div>
             </div>
@@ -230,6 +251,22 @@
 	// 사용자의 참석상태(joinState)가 '가입승인'이라면 버튼을 활성화 해주고, 그게 아니라면 버튼을 비활성화한다.
 	if ('${joinState}' !== '가입승인') {
 		$("button[data-oper='joinMeeting']").attr("disabled", "disabled");
+	}
+	
+	
+	
+	/* 해시태그 구현관련!! (선우)*/
+	let stringHash = '${club.cbHashtag}';
+	console.log(stringHash);
+
+	let arrayHash = stringHash.split(',');
+	console.log(arrayHash);
+
+	for ( let i in arrayHash) {
+		if (arrayHash[i] != "") {
+			$("#tag-list").append(
+					"<li class='tag-item'>" + arrayHash[i] + "</li>");
+		}
 	}
 	
 </script>
