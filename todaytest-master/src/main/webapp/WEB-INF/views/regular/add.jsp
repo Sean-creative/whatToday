@@ -225,6 +225,10 @@
          alert("상세내용을 입력해주세요.");
          return false;
       }
+      
+      //해시태그값이 hidden에 들어감!  (선우)
+      var value = marginTag(); // return array
+	  $("#rdTag").val(value);
      
       
    	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
@@ -290,6 +294,7 @@
 		  								button: "확인",
 									})
 									.then((value) => {
+										
 										document.getElementById('register').submit();
 									});
     			                },
@@ -308,6 +313,9 @@
 	  }
    }// END ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
 
+   
+   
+   
    //카테고리/분야 선택, 지역 선택 
    $(function() {
       //초기 세팅값
@@ -409,18 +417,6 @@
 		});
 	}
 
-	// 서버에 넘기기
-	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
-	$("#tag-form").on("submit", function(e) {
-		var value = marginTag(); // return array
-		$("#rdTag").val(value);
-
-		if (inputCheck() == true) {
-			alert('개설되었습니다.');
-		} else {
-			e.preventDefault();
-		}
-	});
 
 	// 처음 부터 #이 달려있고
 	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
