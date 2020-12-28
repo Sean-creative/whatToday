@@ -401,6 +401,7 @@ public class ClubController {
 
 		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
+		String usrName = customUser.getUser().getUsrName();
 
 		System.out.println("cbNum: " + cbNum);
 		System.out.println("usrNum: " + usrNum);
@@ -420,6 +421,7 @@ public class ClubController {
 			model.addAttribute("cbLeaderNum", cbLeaderNum);
 			model.addAttribute("usrNum", usrNum);
 			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+			model.addAttribute("usrName", usrName);
 		}
 		
 		

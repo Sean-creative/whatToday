@@ -101,11 +101,12 @@ public class LoginServiceImpl implements LoginService{
 	public boolean sendRegisterMail(String email, String authKey) {
 		log.info("##Service: registerMail");
 
-		String htmlStr = "<h2>메일인증안내입니다.</h2><br><br>"
-				+ "<p>안녕하세요</p>"
-				+ "<p>오늘뭐하지를 이용해 주셔서 진심으로 감사드립니다.</p>"
-				+ "<p>아래 링크를 클릭하여 회원가입을 완료해 주세요.</p>"
-				+ "<p>감사합니다.</p>"
+		String htmlStr = "<h1>메일인증안내입니다.</h1><br>"
+				+ "<img src='http://localhost:8088/resources/img/logo.png' alt='logo' width=\"100px\"><h3>안녕하세요</h3>"
+				+ "<h3>안녕하세요</h3>"
+				+ "<h3>오늘뭐하지를 이용해 주셔서 진심으로 감사드립니다.</h3>"
+				+ "<h3>아래 링크를 클릭하여 회원가입을 완료해 주세요.</h3>"
+				+ "<h3>감사합니다.</h3>"
 				+ "<a href='http://localhost:8088/login/register/confirm?usrId=" + email + "&authKey=" + authKey + "'>로그인하러가기</a>";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();

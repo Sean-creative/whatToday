@@ -73,7 +73,7 @@
          <a class="submenu" href="/regular/list">정기모임</a>
          <a class="submenu" href="/thunder/list">번개모임</a>
          <a class="submenu" href="#">베스트</a>
-         <a class="submenu" href="#">취미Test</a>
+         <a class="submenu" href="/hobbyTest/test">취미Test</a>
          <div class="dropdown">
             <a class="submenu" href="#">모임개설</a>
             <div class="dropdown-content ">
@@ -100,7 +100,7 @@ $(document).ready(function() {
       }
    
    $("#alram").on("click",function(){
-	   $("#alram").attr("src","/resources/img/bell.png")
+      $("#alram").attr("src","/resources/img/bell.png")
       $(".tooltiptext").toggle();   
    })
 });
@@ -172,8 +172,8 @@ ws.onmessage = function(event){
    
 console.log(event.data);
 if(event.data == 'plus'){
-	$("#alram").attr("src","/resources/img/bellplus.png");
-	return;
+   $("#alram").attr("src","/resources/img/bellplus.png");
+   return;
 }
 if($(".socketAlert p").length == 4){
    $(".socketAlert p:last").remove();

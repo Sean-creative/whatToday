@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://www.springframework.org/security/tags"
+<%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 
@@ -21,7 +21,7 @@
                         <li><a href="/hobbyTest/test">추천TEST</a></li>
                         <li><a href="/regular/add">정기개설</a></li>
                         <li><a href="/thunder/add">번개개설</a></li>
-                        <li><a href="">포인트충전소</a></li>
+                        <li><a href="#">포인트충전소</a></li>
                         <li><a href="/cs/notice">고객센터</a></li>
                     </ul>
                     <div class="mainlogo"></div>
