@@ -35,6 +35,11 @@ public class HobbyTestController {
 		log.info("###/test");
 	}
 	
+	@GetMapping("/test222")
+	public void test222() {
+		log.info("###/test");
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/testResult", produces="application/json")
 	public JSONArray testResult(@RequestBody Map<String, String> map) {
@@ -54,8 +59,7 @@ public class HobbyTestController {
 		return getResult;
 	}
 	
-	// ajax가 더 빠름. 이 메소드 활용 안함.
-	@PostMapping
+	@GetMapping("/testResultAction")
 	public String testResultAction(HobbyTestVO test, Model model) {
 		log.info("##/testResultAction" + test);
 		
@@ -67,10 +71,11 @@ public class HobbyTestController {
 		System.out.println("re1: " + getResult.get(1));
 		System.out.println("re1: " + getResult.get(2));
 		
-		model.addAttribute("testReuslt1", getResult.get(0));
-		model.addAttribute("testReuslt2", getResult.get(1));
-		model.addAttribute("testReuslt3", getResult.get(2));
+		model.addAttribute("testReuslt0", getResult.get(0));
+		model.addAttribute("testReuslt1", getResult.get(1));
+		model.addAttribute("testReuslt2", getResult.get(2));
 		
 		return "/hobbyTest/result";
 	}
+	
 }

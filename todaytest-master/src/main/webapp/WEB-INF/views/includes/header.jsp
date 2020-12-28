@@ -30,8 +30,7 @@
          <sec:authorize access="isAuthenticated()">
             <div class="menu2">
                <li><a href="/mypage/main" id="user">
-                     <sec:authentication property="principal.user.usrName" />
-                     님
+                     <sec:authentication property="principal.user.usrName" />님
                   </a></li>
                <li>
                <div class="tooltip">
@@ -72,8 +71,8 @@
          <span class="menubtn" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
          <a class="submenu" href="/regular/list">정기모임</a>
          <a class="submenu" href="/thunder/list">번개모임</a>
-         <a class="submenu" href="#">베스트</a>
-         <a class="submenu" href="#">취미Test</a>
+         <a class="submenu" href="/hobbyTest/test">베스트</a>
+         <a class="submenu" href="/hobbyTest/test">취미Test</a>
          <div class="dropdown">
             <a class="submenu" href="#">모임개설</a>
             <div class="dropdown-content ">
