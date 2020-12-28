@@ -46,7 +46,7 @@
 					alt="logo"></a>
 				<form action="/index/searchlist" method="get"
 					onsubmit="return inputCheckMain()">
-					<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
+					<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)" >
 				</form>
 			</div>
 			<sec:authorize access="isAnonymous()">

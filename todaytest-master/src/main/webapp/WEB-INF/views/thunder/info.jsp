@@ -8,31 +8,261 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/thunderInfo.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
 
-<!--  번개 모임 개설 -->
-<section id="wrap">
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
 
+#bgpic {
+	width: 100%;
+	height: 400px;
+	background: #ffaf31;
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+#detail {
+	width: 1200px;
+	position: absolute;
+	top: 150px;
+	display: flex;
+	justify-content: space-evenly;
+	box-sizing: border-box;
+}
+
+#leftinfo {
+	width: 800px;
+}
+
+#leftinfo img {
+	width: 100%;
+	height: 400px;
+	border-radius: 20px;
+}
+
+#rightinfo {
+	width: 30%;
+	height: 400px;
+	background: #ffffff;
+	/* border:1px solid #eee; */
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	margin-left: 20px;
+	border-radius: 20px;
+}
+
+.uu {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 150px;
+	margin-left: 70%;
+}
+
+/* ======해쉬태그  */
+#phashtag {
+	width: 100%;
+	height: 80px;
+	/* background:#ab1111; */
+	display: flex;
+}
+
+.hashpp {
+	width: 70px;
+	height: 30px;
+	background: #fff;
+	border-radius: 30px;
+	border: 1px solid #666;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+}
+/* ========== */
+#error {
+	width: 100%;
+	height: 150px;
+	background:white;
+	display: flex;
+}
+
+#error .infole {
+	width: 30%;
+	/* background:pink; */
+}
+
+#error .infole>p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+#error .inforig {
+	width: 70%;
+	/* background:beige */
+}
+
+/* 상세 내용  */
+#pdetail {
+	width: 100%;
+	height: auto;
+	/* background:pink; */
+	display: flex;
+}
+
+#pdetail .infole {
+	width: 30%;
+	/* background:pink; */
+}
+
+#pdetail .infole>p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+#pdetail .inforig {
+	width: 70%;
+	/* background:beige */
+}
+
+/* 모임명  */
+.clubb {
+	font-size: 18px;
+	color: #333;
+	padding: 20px;
+	padding-top: 0;
+}
+
+.clubname {
+	font-size: 20px;
+	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%, transparent 50%);
+}
+/* 한줄소개 */
+.clubintro {
+	font-size: 18px;
+	color: #333;
+	padding: 20px;
+}
+
+.cluban {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	background: rgba(241, 237, 237, 0.7);
+	border-radius: 20px;
+	padding: 20px;
+}
+
+.moinname {
+	font-weight: bold;
+	font-size: 16px;
+	padding-bottom: 10px;
+}
+
+.cluban button {
+	width: 100px;
+	height: 30px;
+	background: #ffaf31;
+	margin-top: 30px;
+	border: none;
+	color: #fff;
+}
+
+.sticky {
+	position: sticky;
+	top: 40px;
+	/* margin-left:70%; */
+}
+</style>
+
+
+
+<!--  번개 모임 상세페이지 -->
+<section id="wrap">
 
 	<div id="bgpic">
 		<div id="detail">
 			<div id="leftinfo">
 				<img src="${clubVO.cbThumbImg}" class="thumbImg" />
-				<div id="error">
-					<p>모임 이름 : <b><c:out value="${clubVO.cbName}" /></b>
-					</p>
-					<p>모임 소개: <c:out value="${clubVO.cbIntro}" />
-					</p>
-					<p>모임일정 : <fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" /> <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" />
-					</p>
-					<p>모임장소 : <c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
-					</p>
-					<p>모임인원 : <c:out value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />
-					</p>
-					<p>준비물 : <c:out value="${clubVO.thunderDetailVO.cbSupplies}" />
-					</p>
+
+					<!-- 해시태그 구현 -->
+					<br>
+					<ul id="tag-list"></ul>
+
+				<div id="phashtag">
+					<div class="hashpp">
+						<p>#등산</p>
+					</div>
 				</div>
-				<!-- error END -->
+				
 
+				<div id="error">
+					<div class="infole">
+						<p>모임명이 무엇인가요?</p>
+					</div>
+					<div class="inforig">
+						<span class="clubname">&#8727;모임명 : <c:out value="${clubVO.cbName}" /></span>
+						<p class="clubintro">&#9829; 한줄소개 : <c:out value="${clubVO.cbIntro}" /></p>
+					</div>
+				</div>
 
+				<div id="error">
+					<div class="infole">
+						<p>카테고리는 무엇인가요?</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb">등산 입니다.</p>
+					</div>
+				</div>
+
+				<div id="error">
+					<div class="infole">
+						<p>지역은 어디인가요?</p>
+					</div>
+					<div class="inforig">
+						<%-- <c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" /> --%>
+						<p class="clubb"><c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} " /></p>
+						<p class="clubintro"><c:out value="${clubVO.thunderDetailVO.cbPlace}" /></p>
+					</div>
+				</div>
+
+				<div id="error">
+					<div class="infole">
+						<p>정원은 몇명인가요?</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb"><c:out value="${clubVO.cbCurMbnum}/${clubVO.cbMbnum}" />명 입니다.</p>
+					</div>
+				</div>
+
+				<div id="error">
+					<div class="infole">
+						<p>개설자를 소개합니다.</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb">이름</p>
+						<p class="clubintro">아이디</p>
+					</div>
+				</div>
+
+				<div id="error">
+					<div class="infole">
+						<p>이 모임에 가입된 회원은?</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb">이름</p>
+					</div>
+				</div>
+
+				<div id="pdetail">
+					<div class="infole">
+						<p>이 모임은 어떤 모임인가요?</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb">ㅁㅇㄹㅁㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ</p>
+					</div>
+				</div>
 
 
 				<div id="orange">
@@ -73,7 +303,6 @@
 
 				<div id="ab1111">
 
-
 					<!-- 카카오 맵 -->
 					<div class="map_wrap">
 						<div id="map"></div>
@@ -82,7 +311,8 @@
 								<div>
 									<form role="form" onsubmit="searchPlaces(); return false;">
 										모임 장소 :
-										<input type="text" value="종각역" id="keyword" size="15">
+										<input type="text" value=<c:out value="${clubVO.thunderDetailVO.cbPlace}" /> id="keyword" size="15">
+
 										<button type="submit">검색하기</button>
 									</form>
 								</div>
@@ -93,8 +323,6 @@
 						</div>
 					</div>
 					<!-- 카카오맵 END -->
-
-
 				</div>
 				<!-- ab1111 END -->
 			</div>
@@ -102,9 +330,9 @@
 
 
 
+
 			<div id="rightinfo" class="rightinfo">
 				<div class="content">
-
 
 					<br>
 					<c:out value="${userVO.usrName}" />
@@ -117,10 +345,10 @@
 
 
 					<!-- 해시태그 구현 -->
+					<!-- <br>
+					<ul id="tag-list"></ul> --> 
+
 					<br>
-					<ul id="tag-list"></ul>
-
-
 					<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
 					<c:if test="${usrNum != clubVO.cbLeaderNum}">
 						<button class="btn btn-info" data-oper='join' id="join">
@@ -167,14 +395,14 @@
 		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 		<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
-		
+
 		<input type="hidden" name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
 		<input type="hidden" name="userLongitude" value='<c:out value="${cri.userLongitude}"/>'>
-		
-		
+
 		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 </section>
+
 
 
 
@@ -195,6 +423,8 @@
 		}
 	}
 </script>
+
+
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script> -->
 <script type="text/javascript">

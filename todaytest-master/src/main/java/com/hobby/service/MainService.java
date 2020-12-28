@@ -2,15 +2,17 @@ package com.hobby.service;
 
 import java.util.List;
 
-import com.hobby.domain.MainVO;
-import com.hobby.domain.ThunderVO;
+import com.hobby.domain.ClubVO;
 
 public interface MainService {
-	public List<MainVO> getListRegular();
-	public List<MainVO> getListThunder();
+	public List<ClubVO> getListRegular();
+	public List<ClubVO> getListThunder();
 	
-//검색
-//	public List<ThunderVO> getListWithKeyword(String subCat);
+	//정기모임 검색
+	public List<ClubVO> getListKeyRegular(String keyword);
+	
+	//번개모임 검색
+	public List<ClubVO> getListKeyThunder(String keyword);
 }
 
 

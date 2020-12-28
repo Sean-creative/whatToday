@@ -53,6 +53,7 @@
 						<option value='모임명'>모임명</option>
 						<option value='글작성자'>글작성자</option>
 						<option value='해시태그'>해시태그</option>
+						<option value='모임종류'>모임종류</option>
 					</select>  
                     <input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />                    
                     <button><img src="/resources/img/search.png" alt=""></button>
@@ -148,6 +149,8 @@
 	</form>
 
 </section>
+
+
 
 
 
