@@ -3,6 +3,7 @@
     padding:0;
     text-decoration: none;
     list-style: none;
+	font: inherit;
 }
 /* -------------------------------헤더 */
 #header{
