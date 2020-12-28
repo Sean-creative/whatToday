@@ -15,7 +15,7 @@
 		<input type="hidden" id="cbType" name="cbType" value="정기모임" />
 		<input type="hidden" id="cbLeaderName" name="cbLeaderName" value="${usrName}" />
 		
-      	<span class="half">정기모임개설</span>
+      	<span class="half">정기 모임 개설</span>
       	
       	<p class="cate">모임명</p>
       	<div class="caja1">

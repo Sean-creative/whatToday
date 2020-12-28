@@ -7,7 +7,37 @@
 
 <form action="/regular/list" method="get" onsubmit="return inputCheck()">
 
-	<div id="search">
+	  <!-- 상세검색창 -->
+      <div id="detsrc">
+         <div class="src">
+
+            <span class="dtlfont">상세검색</span>
+            <!-- name은 ThunderVO가 아닌, Criteria의 변수명으로 맞춰줘야한다. -->
+            <select name='category' id='category'></select>
+
+            <select name='subclass' id='subcat'></select>
+
+            <select name='city' id='city'></select>
+
+            <select name='district' id='district'></select>
+
+            <select name='searchBy' id='searchBy' style="width: 130px; height: 35px;">
+               <option value='모임명'>모임명</option>
+               <option value='글작성자'>글작성자</option>
+               <option value='해시태그'>해시태그</option>
+               <option value='모임종류'>모임종류</option>
+            </select>
+
+            <div style="display: flex;">
+               
+                  <input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />
+                  <button class="btnkeyword" >
+                     <img src="/resources/img/search.png" alt="">
+                  </button>                           
+            </div>
+		 </div>
+      </div>
+	<%-- <div id="search">
         <div id="searchform">
             <div id="category1">
                 <div>
@@ -43,7 +73,7 @@
 			</div>
 			
 		</div>
-	</div>
+	</div> --%>
 </form>
 
 		<div id="sort">

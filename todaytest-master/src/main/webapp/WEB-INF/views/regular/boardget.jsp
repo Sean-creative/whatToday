@@ -17,7 +17,7 @@
 				</ul>
 			</div>
 			<div id=bodymain>
-			<h2>조회</h2>
+			<span class="half">글 조회</span>
 			 	
 			 	<div class="rowget">
 				<div class="form-group">
@@ -37,8 +37,7 @@
 				
 				<div class="form-group">
 					<label>내용</label><br>
-					<textarea class="form-control" name='cbBdContent' readonly="readonly">
-						<c:out value="${club.cbBdContent}"/></textarea>
+					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${club.cbBdContent}"/></textarea>
 				</div>
 				
 				<button data-oper='update' class="btn">수정</button>
@@ -59,10 +58,7 @@
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
-				</div>
-				<div class="col-sm-2">
-					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:614px;"/>
 					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
 				</div>	
 			</div>
@@ -71,7 +67,7 @@
 	
 	<!-- 댓글 목록  -->	
 	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<div id="replyList"></div>
+		<div id="replyList" style="margin-left: 25px;"></div>
 	</div>
 	
 		</div>
@@ -137,8 +133,10 @@
 		                htmls += '<span class="d-block">';
 		                htmls += '<strong class="text-gray-dark">' + this.replyer + '</strong>';
 		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                if (this.isReplyer == "true") {
+			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
+			                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                }
 		                htmls += '</span>';
 		                htmls += '</span>';
 		                htmls += '</div>';
@@ -166,7 +164,7 @@
 			url: "${btnReplyInsert}"
 			, headers : headers
 			, data : paramData
-			, type : 'POST'
+			, type : 'GET'
 			, dataType : 'text'
 			, success: function(result){
 				showReplyList();

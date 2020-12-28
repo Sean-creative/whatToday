@@ -17,7 +17,7 @@
 				</ul>
 			</div>
 			<div id=bodymain>
-			<h2>글쓰기</h2> 
+			<span class="half">새글 쓰기</span>
 			
 			<form name="newadd" role="form" action="/regular/boardadd" method="post" onsubmit="return inputCheck();">
 				
@@ -28,7 +28,7 @@
 				
 				<div class="form-group">
 					<label>작성자</label><br>
-					<input type="text" class="form-control" name='cbBdWriter' placeholder="이름을 입력해주세요.">
+					<input type="text" class="form-control" name='cbBdWriter' value="<c:out value="${usrName}"/>" readonly="true">
 				</div>
 				
 				<div class="form-group">
