@@ -114,6 +114,7 @@
     margin-top:10px;
     padding-left:10px;
     color:#999;
+    font: inherit;
 }
 .detailinfo{
     display:flex;
