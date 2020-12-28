@@ -5,7 +5,7 @@
 <!-- 모임 가입한 사람만 채팅창 페이지에 들어올 수 있으며 채팅에 참여하려면 닉네임을 입력후 확인 버튼을 누르면 채팅창에 참여 할 수 있다. -->
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
-<link rel="stylesheet" href="../resources/css/regularChart.css">
+<link rel="stylesheet" href="../resources/css/regularChat.css">
 
 <div id="bgpic">
 	<div id="detail">
@@ -14,33 +14,27 @@
 			 <div id=banner>
 				<ul>
 					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-					<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
-					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
+					<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li>
+					<li><a href="javascript:void(0);">채팅</a></li>
 				</ul>
 			 </div>
 			 <div>
 				<div id=chatroom>
 					<input type="hidden" id="cbNum" value="${cbNum }" placeholder="모임 번호" />
 					<section class="msger">
-						<header class="msger-header">
 						<!-- 모임 개설자만 채팅방을 만들 수 있다. -->
-						<c:if test="${usrNum eq cbLeaderNum }">
-							<button id="enter">채팅방만들기</button>
-						</c:if>
-						<input type="text" id="nickname" class="form-inline" placeholder="닉네임을 입력해주세요(필수)" required autofocus>
-						<button id="name">확인</button>
-						<!--<div class="msger-header-title">
-							<i class="fas fa-comment-alt"></i> ${cbName}
-						</div>-->
-						<div class="msger-header-options">
-							<span><i class="fas fa-cog"></i></span>
+						<div id ="makeChat">
+						<button id="make">채팅방만들기</button>
 						</div>
-						</header>
+						<div id = "enterChat">
+						<input type="text" id="name" class="form-inline" placeholder="${usrName }" value="${usrName }" readonly="readonly">
+						<button id="enter">입장</button>
+						</div>
 						<br>
 						<div class="msger-chat" id="chat"></div>
 						
 						<div class="msger-inputarea">
-							<input type="text" class="msger-input" id="message" placeholder="Enter your message...">
+							<input type="text" class="msger-input" id="message" placeholder="메세지를 입력해주세요">
 							<button type="submit" class="msger-send-btn" id="send">Send</button>
 						</div>
 					</section>
@@ -64,29 +58,42 @@ $(document).ready(function() {
 	var webSocket;
 	
 	var cbNum = document.getElementById('cbNum').value;
-	var nickname;
+	var usrName ="${usrName}";
+	var usrNum = "${usrNum}";
+	var cbLeaderNum = "${cbLeaderNum}";	
 	
-	var mychat = document.getElementById("mychat");
+	var make = document.getElementById("makeChat");
+	var enter = document.getElementById("enterChat");
+
+	// 모임 개설자만 채팅방을 개설 할 수 있다.
+	if(usrNum==cbLeaderNum){
+		make.style.display = "block";
+	}
+	// 모임 가입자는 채팅에 참여 할 수 있다.
+	else{
+		enter.style.display = "block";
+	}
 	
-	var enter = document.getElementById("enter");
-	if(enter!=null){
-		enter.addEventListener("click",function() {
-			document.getElementById("enter").style.display = "none";
+	// 모임 개설자도 모임 개설후 채팅에 입장 버튼을 클릭해야함.
+	if(make!=null){
+		make.addEventListener("click",function() {
+			make.style.display = "none";
+			enter.style.display = "block";
 			connect();
 			onOpen();
 		});
 	}
-	document.getElementById("name").addEventListener("click",function() {
-		nickname = document.getElementById("nickname").value;
-		document.getElementById("nickname").style.display = "none";
-		document.getElementById("name").style.display = "none";
+	
+	// 입장버튼을 누르면 입장버튼 사라지게..
+	enter.addEventListener("click",function() {
+		enter.style.display = "none";
 		connect();
 	});
 	
 	$('#send').click(function() {
 		let message = document.getElementById("message").value;
 		// 나
-		$('#chat').append('<div class="msg right-msg"><div class="msg-bubble"><div class="msg-info"><div class="msg-info-name">나</div></div><div class="msg-text" id ="mytext">'+ message+ ' </div></div></div></div>');
+		$('#chat').append('<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text" id ="mytext">'+ message+ ' </div></div></div></div>');
 		send();
 	});
 	
@@ -103,12 +110,12 @@ $(document).ready(function() {
 	
 	function send() {
 		let msg = document.getElementById("message").value;
-		webSocket.send("채팅," + cbNum + "," + nickname + ","+ msg); //타겟, 내용.
+		webSocket.send("입장," + cbNum + "," + usrName + ","+ msg); //타겟, 내용.
 		document.getElementById("message").value = "";
 	}
 	
 	function onOpen() {
-		webSocket.send("입장," + cbNum + "," + nickname + ",방만들기.");
+		webSocket.send("개설," + cbNum + "," + usrName + ",방만들기.");
 	}
 
 	function onMessage(e) {
