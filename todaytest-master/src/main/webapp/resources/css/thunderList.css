@@ -150,9 +150,6 @@ button {
 	width: 23px;
 }
 
-button>img {
-	width: 28px;
-}
 
 /* =============날씨=============== */
 .header_in3 {
@@ -162,7 +159,7 @@ button>img {
 	background: rgba(255, 179, 49, 0.3);
 	border-radius: 15px;
 	padding: 10px 0 15px 0;
-	/* 	margin-top:50px; */
+	margin-top:50px;
 }
 
 .header_weekday {

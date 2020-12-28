@@ -43,6 +43,8 @@ $(function() {
 				}
 			});
 
+	
+	
 	/* 해시태그 관련 */
 	var tag = {};
 	var counter = 0;
@@ -166,6 +168,9 @@ $(function() {
 		$(this).parent().remove();
 		maxHash--;
 	});
+	
+	
+	
 
 	/* 날씨관련 */
 	let city = 'Seoul';
