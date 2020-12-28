@@ -17,7 +17,7 @@
 </div>
 <div>
     <p id="myPointHist">내 포인트 내역 > </p>
-    <div id="myPoint"> ${userPoint }p </div>
+    <div id="myPoint"> ${userPoint }P </div>
     <div class="bar"></div><br>
 
     <p id="chargeTitle">충전금액 선택</p>
@@ -69,7 +69,7 @@
             </tr>
     </table>
     <div id="payBtn">
-        <button type="button" id="kakaopayCharge">카카오페이 결제</button>
+        <img src="/resources/img/paymentIcon.png" id="kakaoPayImg">
     </div>
 </div>
 

@@ -320,7 +320,7 @@ public class ClubController {
 
 	// 정기모임 가입
 	@PostMapping("/clubjoin")
-	public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr) {
+	public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr, @RequestParam("cbNum") Long cbNum) {
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = customUser.getUser();
@@ -341,7 +341,7 @@ public class ClubController {
 		log.info("##/add 회원이름는 :" + userVO.getUsrName());
 		log.info("###clubjoin: " + club);
 
-		return "redirect:/index/main";
+		return "redirect:/regular/info?cbNum=" + cbNum;
 	}
 
 	// 정기모임 수정
@@ -401,6 +401,7 @@ public class ClubController {
 
 		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
+		String usrName = customUser.getUser().getUsrName();
 
 		System.out.println("cbNum: " + cbNum);
 		System.out.println("usrNum: " + usrNum);
@@ -420,6 +421,7 @@ public class ClubController {
 			model.addAttribute("cbLeaderNum", cbLeaderNum);
 			model.addAttribute("usrNum", usrNum);
 			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+			model.addAttribute("usrName", usrName);
 		}
 		
 		

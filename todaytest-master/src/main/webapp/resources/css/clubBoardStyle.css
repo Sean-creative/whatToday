@@ -12,6 +12,7 @@
     position: relative;
     display: flex;
     justify-content: center;
+    margin-top: 50px;
 }
 
 #detail{
@@ -36,7 +37,8 @@
 #rightinfo{
     width:30%;
     height:400px;
-    background:red;
+    background: #ffffff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
     margin-left:20px;
     border-radius: 20px;
 }

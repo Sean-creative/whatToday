@@ -119,7 +119,7 @@ public class MypageController {
 	// auth_leave 페이지랑 통합하는 방법을 생각해볼것
 	@GetMapping("/auth_edit")
 	public String auth_edit(Authentication auth,Model model) {
-
+		
 		String url = "/mypage/auth_edit";
 		// 0. 만일 로그인이 되어 있지 않은데 주소로 이곳을 접속하려고하면, login page로 redirect시켜버림
 		log.info("##/auth_edit");
@@ -127,7 +127,11 @@ public class MypageController {
 			url = "redirect:/login/login";
 		}else {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		if(!userVO.getUsrType().equals("일반회원가입")) {
+			model.addAttribute("msg","SNS회원은 회원정보를 수정하시려면 1:1문의를 해주세요.");
+		}
+		model.addAttribute("userVO", userVO);
 		}
 		return url;
 	}
@@ -221,7 +225,12 @@ public class MypageController {
 			url = "redirect:/login/login";
 		}else {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		System.out.println(userVO.getUsrType());
+		if(!userVO.getUsrType().equals("일반회원가입")) {
+			model.addAttribute("msg","SNS회원은 비밀번호를 수정하시려면 1:1문의를 해주세요.");
+		}
+		model.addAttribute("userVO", userVO);
 		}
 		return url;
 	}
@@ -281,7 +290,12 @@ public class MypageController {
 			url = "redirect:/login/login";
 		}else {
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
-		model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
+		UserVO userVO = service.getUser(customUser.getUser().getUsrId());
+		if(!userVO.getUsrType().equals("일반회원가입")) {
+			model.addAttribute("msg","SNS회원은 탈퇴하시려면 1:1문의를 해주세요.");
+		}
+		
+		model.addAttribute("userVO", userVO);
 		}
 		return url;
 	}
@@ -306,6 +320,7 @@ public class MypageController {
 				userVO.setUsrState("사이트탈퇴");
 				// 비밀번호 유효성검사에서 통과했는데 탈퇴가 안될 수 있는 케이스
 				if (service.leaveUser(userVO) == 3) {
+					service.leaveUserClub(userVO);
 					url = "redirect:/login/logout";
 				} else {
 					rtts.addFlashAttribute("msg", "회원탈퇴 실패했습니다!");

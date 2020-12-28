@@ -133,15 +133,57 @@
 				<label for="cbDetailContent">상세내용</label>
 				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
 			</div>
-		</div>
-
-		<div id="regiform">
-			<input type="submit" class="btn" value="개설하기">
-		</div>
-
-	</div>
+      	 </div>
+      	 
+      	 <!-- ##### 50명이상일경우 포인트 결제 모달 (지영) ##### -->
+   	 	 <div id="myModal" class="modal">
+		    <!-- Modal content -->
+		    <div class="modal-content">
+		        <div id="pointBanner">
+		            <a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"width="80px"></a>
+		            <span class="close">&times;</span>
+		        </div>
+		        
+		        <main>
+		            <p id="myPointHist">내 포인트 내역 > </p>
+		            <div id="myPoint"> ${usrPoint }P </div>
+		            <div class="bar"></div><br>
+		            <p id="pointPayment">포인트 결제</p>
+		            <div id="pointbx">
+		                <div>
+		                    <img src="/resources/img/coupon.png" alt="coupon" id="couponImg">
+		                    <div class="pointChargeBox">
+		                    <span id="product">모임 정원 범위 확대 ( 50이상 200명이하 ) </span>   
+		                    <input type="hidden" id="item" value="10000" >   
+		                    <span id="pointAmount">10,000P</span> 
+		                </div>
+		            </div>     
+		            <div id="chargebtn">
+		                <button type="button" id="chargePoint">결제하기</button>
+		            </div>   
+		            </div>
+		
+		            <div id = warnTitle>
+		                <p id="warnLetter">유의사항</p><br>
+		                <ul>
+		                    <li>포인트 적립 및 사용처의 변경은 사전 고지 없이 내부 사정에 따라 변경될 수 있습니다.</li>
+		                    <li>포인트의 유효기간은 포인트 지급 경로에 따라 다를 수 있습니다.</li>
+		                    <li>한번 사용하신 포인트에 대해서는 철회가 불가능합니다.</li>
+		                    <li>계정 정보 이전 시에 포인트 이전은 불가능합니다.</li>
+		                </ul>
+		            </div>
+		        </main>
+		    </div>
+		 </div><!--END myModal-->
+      	 
+      	 <div id="regiform">
+      	 	<input type="submit" class="btn" value="개설하기" style="width:80%;">
+   	 	 </div>
+   	 	 
+	</div>		
 </form>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
    //유효성 검사 (빈문자열 체크, 글자 제한(30자이내로), 공백 제한 등)
@@ -190,6 +232,7 @@
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
 		  let usrNum = document.register.cbLeaderNum.value;
+		  let userPoint = document.getElementById("myPoint");
     	  $.ajax({
     		url: "/pay/check/userpoint", 
            	type: 'POST',  
@@ -202,8 +245,7 @@
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8080/pay/kakaoPayPayment', '카카오페이 포인트 결제','width=700px, height=600px');
-    				/**window.open('http://localhost:8080/pay/kakaoPayPayment222', '카카오페이 포인트 결제','width=#, height=#');*/
+    				window.open('http://localhost:8088/pay/kakaoPayPayment?usrNum='+usrNum, '카카오페이 포인트 결제','width=700px, height=600px');
     			}else{
     				
 					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			
@@ -218,8 +260,21 @@
     				span.onclick = function() {
     					modal.style.display = "none";
     				}
+    				// 카카오 페이 결제 후 업데이트돤 나의 포인트 확인 
+    				$.ajax({
+    					url: "/pay/check/userpoint", 
+		             	type: 'POST',  
+		         	    dataType: 'text', //서버로부터 내가 받는 데이터의 타입
+		         	    contentType : 'text/plain; charset=utf-8;',//내가 서버로 보내는 데이터의 타입
+		                data: usrNum,
+		                success: function(data){ 
+		                	document.getElementById("myPoint").innerText = data+"P";
+		                },
+		    		 	error: function (){ }		    					
+    				});
     				$('#chargePoint').click(function () {
-    					let money = $('input[name="cp_item"]:checked').val();
+    					let money = $('#item').val();
+    					console.log("money: " + money);
     			    		 $.ajax({
     			                url: "/pay/point", 
     			             	type: 'POST',  
@@ -228,7 +283,15 @@
     			                data: money,
     			                success: function(){ 
     			                	// 포인트 db로 보내고 성공하면 개설
-    			                	document.getElementById('register').submit();
+    			                	swal({
+		  								title: "결제와 동시에 모임이 개설됩니다.",
+		  								text: "결제 하시겠습니까?",
+		  								icon: "warning",
+		  								button: "확인",
+									})
+									.then((value) => {
+										document.getElementById('register').submit();
+									});
     			                },
     			    		 	error: function (){ }
     			             });

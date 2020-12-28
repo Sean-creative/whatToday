@@ -66,23 +66,23 @@
 						<a href="">번개모임2</a>
 						<a href="">번개모임3</a>
 
-					</div>
-				</div>
-			</div>
-			<span class="menubtn" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
-			<a class="submenu" href="/regular/list">정기모임</a>
-			<a class="submenu" href="/thunder/list">번개모임</a>
-			<a class="submenu" href="#">베스트</a>
-			<a class="submenu" href="#">취미Test</a>
-			<div class="dropdown">
-				<a class="submenu" href="#">모임개설</a>
-				<div class="dropdown-content ">
-					<a href="/regular/add">정기모임</a>
-					<a href="/thunder/add">번개모임</a>
-				</div>
-			</div>
-		</div>
-	</div>
+               </div>
+            </div>
+         </div>
+         <span class="menubtn" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+         <a class="submenu" href="/regular/list">정기모임</a>
+         <a class="submenu" href="/thunder/list">번개모임</a>
+         <a class="submenu" href="#">베스트</a>
+         <a class="submenu" href="/hobbyTest/test">취미Test</a>
+         <div class="dropdown">
+            <a class="submenu" href="#">모임개설</a>
+            <div class="dropdown-content ">
+               <a href="/regular/add">정기모임</a>
+               <a href="/thunder/add">번개모임</a>
+            </div>
+         </div>
+      </div>
+   </div>
 
 
 
@@ -96,13 +96,14 @@ $(document).ready(function() {
    let loginCheck = null;
    <sec:authorize access="isAuthenticated()">
    loginCheck = true;
-   msgNum = <sec:authentication property="principal.user.usrNum"/>;
+   let msgNum = <sec:authentication property="principal.user.usrNum"/>;
    </sec:authorize>
    if(loginCheck == true){
       connectWS(msgNum);
       }
    
    $("#alram").on("click",function(){
+      $("#alram").attr("src","/resources/img/bell.png")
       $(".tooltiptext").toggle();   
    })
 });
@@ -173,10 +174,14 @@ ws.onopen = function(message){
 ws.onmessage = function(event){
    
 console.log(event.data);
-if($(".socketAlert p").length == 5){
+if(event.data == 'plus'){
+   $("#alram").attr("src","/resources/img/bellplus.png");
+   return;
+}
+if($(".socketAlert p").length == 4){
    $(".socketAlert p:last").remove();
 }
-$(".socketAlert").prepend("<p style='margin-left:8%; margin-top:2%;'>"+event.data+"</p>");
+$(".socketAlert").prepend("<p>"+event.data+"</p>");
 
 };
 
