@@ -93,13 +93,14 @@ $(document).ready(function() {
    let loginCheck = null;
    <sec:authorize access="isAuthenticated()">
    loginCheck = true;
-   msgNum = <sec:authentication property="principal.user.usrNum"/>;
+   let msgNum = <sec:authentication property="principal.user.usrNum"/>;
    </sec:authorize>
    if(loginCheck == true){
       connectWS(msgNum);
       }
    
    $("#alram").on("click",function(){
+	   $("#alram").attr("src","/resources/img/bell.png")
       $(".tooltiptext").toggle();   
    })
 });
@@ -170,10 +171,14 @@ ws.onopen = function(message){
 ws.onmessage = function(event){
    
 console.log(event.data);
-if($(".socketAlert p").length == 5){
+if(event.data == 'plus'){
+	$("#alram").attr("src","/resources/img/bellplus.png");
+	return;
+}
+if($(".socketAlert p").length == 4){
    $(".socketAlert p:last").remove();
 }
-$(".socketAlert").prepend("<p style='margin-left:8%; margin-top:2%;'>"+event.data+"</p>");
+$(".socketAlert").prepend("<p>"+event.data+"</p>");
 
 };
 

@@ -20,12 +20,11 @@
 			<div class="info">
 				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit">마이페이지</button>
+					<button type="submit">마이페이지</button>
 				</form>
-				<button type="button" class="accordionBtn">모임관리</button>
-				<div class="accordion">
+
 					<form action="/mypage/myclub/main" method="get">
-						<button type="submit">모임관리홈</button>
+						<button type="submit">모임관리</button>
 					</form>
 
 					<form action="/mypage/myclub/main" method="post">
@@ -33,9 +32,9 @@
 					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
-						<button type="submit">회원관리</button>
+						<button type="submit">모임회원관리</button>
 					</form>
-				</div>
+
 				<form action="/mypage/auth_edit" method="get">
 					<button type="submit" style="color: yellow;">회원정보수정</button>
 				</form>
@@ -456,20 +455,7 @@ function inputCheck(){
 						});
 
 					});
-					var acc = document.getElementsByClassName("accordionBtn");
-					var i;
 
-					for (i = 0; i < acc.length; i++) {
-					  acc[i].addEventListener("click", function() {
-					    this.classList.toggle("active");
-					    var panel = this.nextElementSibling;
-					    if (panel.style.display === "block") {
-					      panel.style.display = "none";
-					    } else {
-					      panel.style.display = "block";
-					    }
-					  });
-					}
 					
 </script>
 <%@include file="../includes/footer.jsp"%>

@@ -20,12 +20,12 @@
 			<div class="info">
 				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit">마이페이지</button>
+					<button type="submit">마이페이지</button>
 				</form>
-				<button type="button" class="accordionBtn" style="color: yellow;">모임관리</button>
-				<div class="accordion">
+				
+				
 					<form action="/mypage/myclub/main" method="get">
-						<button type="submit">모임관리홈</button>
+						<button type="submit" style="color: yellow;">모임관리</button>
 					</form>
 
 					<form action="/mypage/myclub/main" method="post">
@@ -33,9 +33,9 @@
 					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
-						<button type="submit">회원관리</button>
+						<button type="submit">모임회원관리</button>
 					</form>
-				</div>
+				
 				<form action="/mypage/auth_edit" method="get">
 					<button type="submit">회원정보수정</button>
 				</form>
@@ -50,9 +50,9 @@
 	</nav>
 
 	<section id="wrapInfo3">
-		<h5>내가 개설한 정기모임</h5>
+		<h5>내가 모임장인 정기모임</h5>
 		<div id="myRegClubList" class="list" style="height: 182.4px;"></div>
-		<h5>내가 개설한 번개모임</h5>
+		<h5>내가 모임장인 번개모임</h5>
 		<div id="myThuClubList" class="list" style="height: 182.4px;"></div>
 		<form name="manageClub">
 			<input type="hidden" name="cbNum">
@@ -88,10 +88,43 @@ $(document).ready(function() {
 				}
 			
 			if(cnt == 0){
-				str = "<a href='/regular/add'>개설한 정기모임이 없습니다. 개설하러가기.</a>"
+				str = "<a href='/regular/add'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/regular/add'>내가 모임장인 정기모임이 없습니다. 개설하러가기.</a>"
 			}
 			if(cnt2 == 0){
-				str2= "<a href='thunder/add'>개설한 번개모임이 없습니다. 개설하러가기.</a>"
+				str2= "<a href='/thunder/add'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/thunder/add'>내가 모임장인 번개모임이 없습니다. 개설하러가기.</a>"
+			}
+	
+			
+			if(cnt == 0 && cnt2 == 0){
+				swal("모임장인 모임이 없어요", {
+					  buttons: {
+					    regular: {
+					      text: "정기모임 개설",
+					      value: "regular",
+					    },
+					    thunder: {
+					    	text: "번개모임 개설",
+						    value: "thunder",
+					    },
+					    cancel: "마이페이지 홈",
+					  },
+					})
+					.then((value) => {
+					  switch (value) {
+					 
+					    case "regular":
+					    window.location.href='http://localhost:8088/regular/add';
+					     break;
+					 
+					    case "thunder":
+					    window.location.href='http://localhost:8088/thunder/add';
+					      break;
+					 
+					    default:
+					    window.location.href='http://localhost:8088/mypage/main';
+					    break;
+					  }
+					});
 			}
 			myClubReg.empty();
 			myClubReg.append(str);
@@ -183,20 +216,7 @@ $(document).ready(function() {
 		
 	});
 	});
-		var acc = document.getElementsByClassName("accordionBtn");
-		var i;
 
-		for (i = 0; i < acc.length; i++) {
-		  acc[i].addEventListener("click", function() {
-		    this.classList.toggle("active");
-		    var panel = this.nextElementSibling;
-		    if (panel.style.display === "block") {
-		      panel.style.display = "none";
-		    } else {
-		      panel.style.display = "block";
-		    }
-		  });
-		}
 </script>
 
     <%@include file = "../../includes/footer.jsp" %>
