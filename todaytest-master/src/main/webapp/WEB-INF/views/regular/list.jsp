@@ -5,6 +5,7 @@
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubListStyle.css">
 
+<section id="wrap">
 <form action="/regular/list" method="get" onsubmit="return inputCheck()">
 
 	  <!-- 상세검색창 -->
@@ -37,43 +38,7 @@
             </div>
 		 </div>
       </div>
-	<%-- <div id="search">
-        <div id="searchform">
-            <div id="category1">
-                <div>
-					<script type="text/javascript">
-	                  /* 외부 JS에서 JSTL이 적용되지 않아서, 내부스크립트의 var를 써서 해결 */
-	                  var cg = '${pageMaker.cri.category}';
-	                  var sc = '${pageMaker.cri.subclass}';
-	                  var ct = '${pageMaker.cri.city}';
-	                  var dt = '${pageMaker.cri.district}';
-					</script>
-                
-					<!-- name은 ThunderVO가 아닌, Criteria의 변수명으로 맞춰줘야한다. -->
-					<select name='category' id='category'></select>
-				</div>
-				<div>
-					<!-- DB의 컬럼명이 subclass에서 subcat으로 바뀌면서, 코드내에 Criteria를 사용하는 곳은 다 바꿔야함 -->
-					<select name='subclass' id='subcat'></select>
-				</div>
-			</div>
 	
-			<div id="category1">
-                <div>
-				<select name='city' id='city'></select>
-				</div>
-				<div>
-				<select name='district' id='district'></select>
-				</div>	
-			</div>
-
-			<div id="nav">
-				<input type="text" name='keyword' placeholder="검색어를 입력해주세요." value='<c:out value="${pageMaker.cri.keyword}"/>' />
-				<input type="submit" class="searchgg" value="검색">
-			</div>
-			
-		</div>
-	</div> --%>
 </form>
 
 		<div id="sort">
@@ -83,7 +48,8 @@
 				<li class="order_button ${pageMaker.cri.orderBy eq 'cbView desc'? "active":""} "><a href="cbView desc">인기순</a></li>
         	</ul>
 		</div>
-				
+		
+		<!-- 검색결과  -->		
 		<div id="searchresult">	
 			<c:forEach items="${clublist}" var="club"> 
 				<div class='move' onclick='linkToInfo(${club.cbNum})' id ='itemDiv${status.count}'>${status.count}<br>
@@ -123,7 +89,7 @@
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'/>
 	</form>
-
+</section>
 
 
 <!-- jQuery -->
@@ -131,6 +97,15 @@
 
 <!-- 렌더링을 거의 마치고 JS를 해석 할 것  -->
 <script type="text/javascript" src="/resources/js/regularList.js"></script>
+
+<script type="text/javascript">
+                  /* 외부 JS에서 JSTL이 적용되지 않아서, 내부스크립트의 var를 써서 해결 */
+                  var cg = '${pageMaker.cri.category}';
+                  var sc = '${pageMaker.cri.subclass}';
+                  var ct = '${pageMaker.cri.city}';
+                  var dt = '${pageMaker.cri.district}';
+                  var searchBy = '${pageMaker.cri.searchBy}';    
+</script>
 
 <%@include file="../includes/footer.jsp"%>
 
