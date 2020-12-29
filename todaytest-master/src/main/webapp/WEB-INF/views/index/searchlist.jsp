@@ -27,7 +27,7 @@
 						${status.count}<br>
 
 						<ul class="demo">
-							<li><img src="/resources/img/paint.jpg" alt="" style="width: 270px; height: 200px; border-radius: 15px;"></li>
+							<li><img src='<c:out value="${club.cbFile}" />' alt="" style="width: 270px; height: 200px; border-radius: 15px;"></li>
 							<li><p class="location"><c:out value="${club.cbDistrict}" /></p></li>
 							<li><p class="nombre"><c:out value="${club.cbName}" /></p></li>
 							<hr style="color: #eee;">
@@ -38,6 +38,7 @@
 			</div>
 		</div>
 	<input type='hidden' name='searchBy' value='모임종류'>
+		<input type='hidden' name='keyword' value='<c:out value="${cri.headerKeyword}"/>'>
 	</form>
 </div>
 
@@ -69,7 +70,7 @@
 					<div class="regbox" onclick='linkToInfo(${club2.cbNum})' id='itemDiv${status.count}'>
 
 						<ul class="demo">
-							<li><img src="/resources/img/paint.jpg" alt="" style="width: 270px; height: 200px; border-radius: 15px;"></li>
+							<li><img src='<c:out value="${club2.cbFile}"/>' alt="" style="width: 270px; height: 200px; border-radius: 15px;"></li>
 
 							<li><p class="location"><c:out value="${club2.cbDistrict}" /></p></li>
 
@@ -87,7 +88,7 @@
 		</div>
 		
 		<input type='hidden' name='searchBy' value='모임종류'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${cri.headerKeyword}"/>'>
 	</form>
 </div>
 
@@ -116,17 +117,16 @@ const linkToInfo = function(cbNum) {
 }
 
 
-// 정렬 버튼을 눌렀을 떄!
+// 정기 상세검색을 눌렀을 떄!
 $("#regularForm a").on("click", function(e) {
 	e.preventDefault();
-	console.log('#regularForm 더 보기 click');
-	actionForm.find("input[name='orderBy']").val($(this).attr("href"));
+	console.log('#regularForm 더 보기 click');	
 	regularForm.submit();
 });
 
 
 
-//정렬 버튼을 눌렀을 떄!
+//번개 상세검색을 눌렀을 떄!
 $("#thunderForm a").on("click", function(e) {
 	e.preventDefault();
 	console.log('#thunderForm 더 보기 click');	
