@@ -140,7 +140,7 @@ ul li.tag-item {
 
 	<form class="modal-content" action="/regular/clubjoin" method="post">
 		<div class="container">
-			<h2>가입인사</h2>
+			<h2>가입 신청서</h2>
 			<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
 			<input type="hidden" name="usrNum" value="<c:out value="${usrNum}" />" />
 			<input type="hidden" name="cbType" value="정기모임" />
