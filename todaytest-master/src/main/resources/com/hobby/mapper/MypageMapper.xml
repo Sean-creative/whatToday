@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="getMyClubList" resultType="com.hobby.domain.ClubVO">
-		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum, club.cbfile from club,clubmember,tbluser where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.cbleadernum=tbluser.usrnum and tbluser.USRSTATE ='회원' and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate
+		select club.cbtype, club.cbleadernum, club.cbname, club.cbnum, club.cbfile from club,clubmember,tbluser where club.cbnum = clubmember.cbnum and clubmember.usrnum = #{usrNum} and club.cbleadernum=tbluser.usrnum and tbluser.USRSTATE ='회원' and club.CBFINALSTATE = '진행중' and clubmember.cbmbstresult = '가입승인' order by clubmember.cbappdate desc
 	</select>
 	
 	<select id="getWaitClubList" resultType="com.hobby.domain.ClubVO">
@@ -121,7 +121,17 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHIST
 	</select>
 	
 	<select id="getClubManageMemList" resultMap="cbMem">
-		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} and clubjoinhistory.usrnum = tbluser.usrnum and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) order by clubjoinhistory.cbjoinnum desc
+		select * from tbluser, clubjoinhistory where cbnum = #{cbNum} 
+		and clubjoinhistory.usrnum = tbluser.usrnum 
+		and clubjoinhistory.cbjoinstateresult in ('가입승인','승인대기') 
+		and  (clubjoinhistory.cbjoinnum,clubjoinhistory.cbnum,clubjoinhistory.usrnum) 
+		in (SELECT MAX(cbjoinnum),cbnum,usrnum FROM clubjoinhistory GROUP BY cbnum,usrnum) 
+		order by 
+		(case when clubjoinhistory.usrnum = (select cbleadernum from club where cbnum=#{cbNum}) then 3  
+		when clubjoinhistory.cbjoinstateresult = '가입승인' then 2 
+		when clubjoinhistory.cbjoinstateresult = '승인대기' then 1 end)
+		,clubjoinhistory.cbjoinnum desc
+		
 	</select>
 	
 	<insert id="insertClubJoinHistory">
