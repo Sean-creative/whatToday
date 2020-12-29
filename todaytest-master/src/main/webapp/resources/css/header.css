@@ -5,6 +5,44 @@
     list-style: none;
 	font: inherit;
 }
+/* topbtn */
+.top_btn a{
+	position:fixed;
+    z-index:99;
+    bottom:20px;
+    right:10px;
+    width:40px;
+    height:40px;
+    border-radius:50%;   
+    background:#ffaf31;
+    text-align:center;
+    transition:all 0.5s;
+}
+
+.top_btn>a>i{  /*ICON FONT  ㅼ젙*/
+    line-height:40px;
+    color:#fff;
+    font-size:30px;
+}
+
+.top_btn a:hover{background:#f8ca82;}
+.top_btn>a:hover>i{color:#fff;}
+.top_btn a.qnabtn{
+	position:fixed;
+    z-index:99;
+    bottom:70px;
+    right:10px;
+    width:40px;
+    height:40px;
+    border-radius:50%;   
+    background:url(../image/scrollbtn.png) no-repeat;
+    text-align:center;
+    transition:all 0.5s;
+}
+.top_btn .qnabtn:hover{background:url(../image/scrollbtn_on.png) no-repeat;}
+
+
+
 /* -------------------------------헤더 */
 #header{
     width:1200px;
@@ -33,17 +71,14 @@
 }
 
 /* 검색창 */
-
-#serchHeader {
-    width: 190px;
+#head input[type=text] {
+    width: 200px;
     box-sizing: border-box;
     border: 1px solid #333;
     /* border-style: none none solid none;
     border-bottom: 1px solid #666; */
     outline:none;
     border-radius: 20px;
-    
-    /* border-radius: 4px;*/
     font-size: 14px;
     background-color: white;
     background-image: url("../img/search.png");
@@ -53,8 +88,8 @@
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
     margin-top:10px;
-  }
-  
+  }  
+
 /* 로그인/고객센터 */
 .menu2{
     display: flex;
@@ -172,6 +207,9 @@
       margin-top:3px;
       transition: 0.5s;
   }
+  
+  
+  
   .submenu:hover{
       color:#ffaf31;
   }
@@ -212,7 +250,6 @@
 .tooltip {
   position: relative;
   display: inline-block;
-  
 }
 
 .tooltip .tooltiptext {
@@ -221,6 +258,7 @@
   height: 150px;
   background-color: #ffaf31;
   color: #fff;
+  text-align: center;
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
@@ -228,9 +266,7 @@
   top: 150%;
   left: 50%;
   margin-left: -152.5px;
-  
 }
-
 
 .tooltip .tooltiptext::after {
 	content: "";
@@ -250,12 +286,168 @@
     text-overflow:ellipsis;
 }
 
-#footer{
-    width:100%;
-    height:60px;
-    background:#999;
-    text-align: center;
-    line-height:60px;
-    clear:both;
-    margin-top:20px;
+/* 햄 */
+
+.dropbtnr {
+  /* background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer; */
+
+  font-size: 30px; 
+  cursor: pointer;
+  border:none;
+  background:#fff;
+  margin-right:16px;
 }
+
+.dropbtnr:hover, .dropbtnr:focus {
+  background-color: #fff;
+  border:none;
+}
+
+/* .dropdown {
+  position: relative;
+  display: inline-block;
+} */
+
+.dropdown-contentr {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width:1200px;
+  height:400px;
+}
+
+.dropdown-contentr a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  
+}
+
+/* .dropdown a:hover {background-color: #ddd;} */
+
+.show {display: block;}
+
+.dropreg{
+  width:1000px;
+  height:300px;
+  display: flex;
+  margin:20px auto;
+}
+
+.togreg{
+  font-size:20px;
+  font-weight: bold;
+  margin-left:10px;
+  background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+}
+
+.regtim{
+  width:550px;
+  border-right:1px dashed #666;
+  padding:20px;
+  margin-top:40px;
+}
+
+.tunder{
+  display:flex;
+  flex-wrap: wrap;
+  padding-right:10px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+.gvut{
+  border:none;
+  margin-left:30px;
+}
+
+.tunder2{
+  display:flex;
+  flex-wrap: wrap;
+  padding-left:10px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+.tuncate{
+  margin-left:30px;
+}
+
+/* =================footer =================== */
+
+footer{
+    width:100%;
+    height:430px;
+    background:#292c34;
+    margin-top:70px;
+  }
+
+  .canizo{
+    width:1200px;
+    height:60px;
+    margin:0 auto;
+    padding-bottom:40px;
+    display:flex;
+    justify-content: space-between;
+    border-bottom:1px solid #ddd;
+  }
+
+  .canizo>div{
+    margin-top:60px;
+    
+  }
+  .canizo .ftlef a{
+    color:#fff;
+    padding-right:30px;
+  }
+
+  .ftrig{
+    display:flex;
+  }
+  .ftnaver{
+    width:19px;
+    height:19px;
+    background:url(/resources/img/naver.jpg)no-repeat center center;
+    margin-right:20px;
+   cursor:pointer;
+  }
+
+  .ftkakao{
+    width:19px;
+    height:19px;
+    background:url(/resources/img/facebook.jpg)no-repeat center right;
+    cursor:pointer;
+  }
+
+  .canizo2{
+    width:1200px;
+    margin:0 auto;
+  }
+
+  .canizo2 .quetday{
+    color:#ffaf31;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing: 7px;
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+
+  .fotinf{
+    color:#fff;
+    line-height: 30px;
+  }
+  
+  .fotinf2{
+    color:#fff;
+    margin-top:30px;
+  }

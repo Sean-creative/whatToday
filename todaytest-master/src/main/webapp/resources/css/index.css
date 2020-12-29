@@ -27,32 +27,40 @@ input,select{vertical-align:middle;}
 .hidden{display:none;}
 
 /*==================탑버튼 ==================  */
-
-#topbtn{
-	width: 50px;
-	height: 50px;
-	background: #1dcad3;
-	position: fixed;
-	bottom: 1%;
-	right: 1%;
-	z-index: 66666;
-	text-align: center;
-	border-radius: 50%;
-	display: none;
-	cursor: pointer;
+.top_btn a{
+	position:fixed;
+    z-index:99;
+    bottom:20px;
+    right:10px;
+    width:40px;
+    height:40px;
+    border-radius:50%;   
+    background:#ffaf31;
+    text-align:center;
+    transition:all 0.5s;
 }
 
-#topbtn i{
-	color: #fff;
-	padding-top: 5px;
+.top_btn>a>i{  /*ICON FONT  ㅼ젙*/
+    line-height:40px;
+    color:#fff;
+    font-size:30px;
 }
 
-#topbtn span{
-	font-size: 14px;
-	color: #fff;
-	position: relative;
-	top: -5px;
+.top_btn a:hover{background:#f8ca82;}
+.top_btn>a:hover>i{color:#fff;}
+.top_btn a.qnabtn{
+	position:fixed;
+    z-index:99;
+    bottom:70px;
+    right:10px;
+    width:40px;
+    height:40px;
+    border-radius:50%;   
+    background:url(../image/scrollbtn.png) no-repeat;
+    text-align:center;
+    transition:all 0.5s;
 }
+.top_btn .qnabtn:hover{background:url(../image/scrollbtn_on.png) no-repeat;}
 
 
 #mainheader{
@@ -88,7 +96,7 @@ input,select{vertical-align:middle;}
     -moz-background-size: cover;
     -ms-background-size: cover;
 	-o-background-size: cover;
-	opacity: 0.5;
+	/* opacity: 0.5; */
 }
 
 .back_visual li.bv_2{
@@ -97,7 +105,7 @@ input,select{vertical-align:middle;}
     -moz-background-size: cover;
     -ms-background-size: cover;
 	-o-background-size: cover;
-	opacity: 0.5;
+	/* opacity: 0.5; */
 }
 
 .back_visual li.bv_3{
@@ -106,7 +114,7 @@ input,select{vertical-align:middle;}
     -moz-background-size: cover;
     -ms-background-size: cover;
 	-o-background-size: cover;
-	opacity: 0.5;
+	/* opacity: 0.5; */
 }
 
 /*-------------------------------비주얼_FRONT*/
@@ -236,10 +244,67 @@ input,select{vertical-align:middle;}
 	z-index: 100;
 	text-align: center;
 	color: #fff;
+	font-size: 25px;
+	line-height: 30px;
+	font-weight: normal;
+	text-shadow: 0 0 5px rgba(0,0,0,0.8);
+	letter-spacing: 7px;
+}
+.subinfori{
+	width: 30%;
+	height: 20%;
+	position: absolute;
+	top: 74%;
+	left: 35%;
+	z-index: 100;
+	text-align: center;
+	color: #fff;
 	font-size: 20px;
 	line-height: 30px;
 	font-weight: normal;
 	text-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+
+.recomtest{
+	width:100px;
+	height:25px;
+	background:#ffaf31;
+	position: absolute;
+	top: 80%;
+	left: 40%;
+	z-index: 100;
+	text-align: center;
+	font-size: 18px;
+	line-height: 25px;
+	font-weight: normal;
+	padding:10px;
+	letter-spacing: 3px;
+	border-radius:5px;
+	
+}
+
+.recomtest a{
+	color:#fff;
+}
+
+.regumak{
+	width:100px;
+	height:25px;
+	background:#fff;
+	position: absolute;
+	top: 80%;
+	left: 50%;
+	z-index: 100;
+	text-align: center;
+	font-size: 18px;
+	line-height: 25px;
+	font-weight: normal;
+	padding:10px;
+	letter-spacing: 3px;
+}
+
+.regumak a{
+	color:#000;
 }
 
 /* =============================스크롤시 내려오는 메뉴  */
@@ -488,6 +553,101 @@ input,select{vertical-align:middle;}
   border-color: transparent transparent black transparent;
 }
 
+/* 햄 */
+
+.dropbtnr {
+  /* background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer; */
+
+  font-size: 30px; 
+  cursor: pointer;
+  border:none;
+  background:#fff;
+  margin-right:16px;
+}
+
+.dropbtnr:hover, .dropbtnr:focus {
+  background-color: #fff;
+  border:none;
+}
+
+/* .dropdown {
+  position: relative;
+  display: inline-block;
+} */
+
+.dropdown-contentr {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width:1200px;
+  height:400px;
+}
+
+.dropdown-contentr a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  
+}
+
+/* .dropdown a:hover {background-color: #ddd;} */
+
+.show {display: block;}
+
+.dropreg{
+  width:1000px;
+  height:300px;
+  display: flex;
+  margin:20px auto;
+}
+
+.togreg{
+  font-size:20px;
+  font-weight: bold;
+  margin-left:10px;
+  background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+}
+
+.regtim{
+  width:550px;
+  border-right:1px dashed #666;
+  padding:20px;
+  margin-top:40px;
+}
+
+.tunder{
+  display:flex;
+  flex-wrap: wrap;
+  padding-right:10px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+.gvut{
+  border:none;
+  margin-left:30px;
+}
+
+.tunder2{
+  display:flex;
+  flex-wrap: wrap;
+  padding-left:10px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+.tuncate{
+  margin-left:30px;
+}
 
 /* ============================ 정기모임 소개 */
 .regular{
@@ -495,6 +655,17 @@ input,select{vertical-align:middle;}
 	height:70px;
 	margin:0 auto;
 	margin-top:100px;
+	display:flex;
+	justify-content:space-between;
+}
+
+.masmam{
+	margin-top:10px;
+}
+
+.masmam a{
+	cursor:pointer;
+	color:#333;
 }
 
 .half{
@@ -540,6 +711,7 @@ input,select{vertical-align:middle;}
 	font-size:16px;
 	font-weight:bold;
 	color:#2f3030;
+	margin-top:10px;
 }
 
 .nombre{
@@ -560,15 +732,10 @@ input,select{vertical-align:middle;}
 }
 
 /* ==============================중간베너  */
-/* * {box-sizing: border-box;}
-body {font-family: Verdana, sans-serif;}
-.mySlides {display: none;}
-img {vertical-align: middle;} */
 
-/* Slideshow container */
 .slideshow-container {
   width: 100%;
-  height:250px;
+  height:200px;
   position: relative;
   margin: auto;
 }
@@ -580,7 +747,7 @@ img {vertical-align: middle;} */
 }
 .fade img{
   width:1200px;
-  height:250px;
+  height:200px;
 }
 /* Caption text */
 .text {
@@ -624,27 +791,7 @@ img {vertical-align: middle;} */
   background-color: #717171;
 }
 
-/* Fading animation */
-/* .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
 
-@-webkit-keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
-}
-
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
-}
-
-@media only screen and (max-width: 300px) {
-  .text {font-size: 11px}
-} */
 
 /* =============번개모임 ======= */
 
@@ -652,3 +799,71 @@ img {vertical-align: middle;} */
 	margin-top:40px;
 }
 
+
+/* ==========footer */
+
+
+  footer{
+    width:100%;
+    height:430px;
+    background:#292c34;
+  }
+
+  .canizo{
+    width:1200px;
+    height:60px;
+    margin:0 auto;
+    padding-bottom:40px;
+    display:flex;
+    justify-content: space-between;
+    border-bottom:1px solid #ddd;
+  }
+
+  .canizo>div{
+    margin-top:60px;
+    
+  }
+  .canizo .ftlef a{
+    color:#fff;
+    padding-right:30px;
+  }
+
+  .ftrig{
+    display:flex;
+  }
+  .ftnaver{
+    width:19px;
+    height:19px;
+    background:url(/resources/img/naver.jpg)no-repeat center center;
+    margin-right:20px;
+  }
+
+  .ftkakao{
+    width:19px;
+    height:19px;
+    background:url(/resources/img/facebook.jpg)no-repeat center right;
+  }
+
+  .canizo2{
+    width:1200px;
+    margin:0 auto;
+  }
+
+  .canizo2 .quetday{
+    color:#ffaf31;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing: 7px;
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+
+  .fotinf{
+    color:#fff;
+    line-height: 30px;
+  }
+  
+  .fotinf2{
+    color:#fff;
+    margin-top:30px;
+  }
