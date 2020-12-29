@@ -50,25 +50,22 @@
 	</nav>
 	
 	<section id="wrapInfo">
-		<h5>내가 가입한 정기모임</h5>
+		<h3>내가 가입한 정기모임</h3>
 		<div id="myRegClubList" class="list">
 		</div>
-		<h5>내가 가입한 번개모임</h5>
-		<div id="myThuClubList" class="list">
-		</div>
-		<h5>가입 대기중인 정기모임</h5>
-		<div id="myWaitClubList" class="list">
-		<c:if test="${empty waitClub}">
-		<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입 대기중인 정기모임이 없습니다.
-		</c:if>
-		<c:forEach var="waitClub" items="${waitClub}">
-		<div class='smallList'><img src='${waitClub.cbFile }'/><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div>
-		</c:forEach>
-		</div>
-		<h5>이전에 가입한 정기모임</h5>
+		<h3 id="myPrevRegClubH3">이전에 가입한 정기모임</h3>
 		<div id="myPrevRegClubList" class="list">
 		</div>
-		<h5>이전에 가입한 번개모임</h5>
+		<h3 id="myWaitClubH3">가입 대기중인 정기모임</h3>
+		<div id="myWaitClubList" class="list">
+		<c:forEach var="waitClub" items="${waitClub}">
+		<div class='smallList'><img src='${waitClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div></div>
+		</c:forEach>
+		</div>
+		<h3>내가 가입한 번개모임</h3>
+		<div id="myThuClubList" class="list">
+		</div>
+		<h3 id="myPrevThuClubH3">이전에 가입한 번개모임</h3>
 		<div id="myPrevThuClubList" class="list">
 		</div>
 		<form id="detailForm" method="get">
@@ -101,12 +98,12 @@
 												for (let i = 0; i < club.length; i++) {
 													if (club[i].cbType == "정기모임"
 															&& number != club[i].cbLeaderNum) {
-														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
+														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><div><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button></div><p>"+club[i].cbName+"</p></div>";
 														cnt++;
 													}
 													if (club[i].cbType == "번개모임"
 														&& number != club[i].cbLeaderNum) {
-														str2 += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button><p>"+club[i].cbName+"</p></div>";
+														str2 += "<div class='smallList'><img src='"+club[i].cbFile+"'/><div><button class='imgBtn detailBtn' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><button class='imgBtn2 dropBtn' data-usrnum='"+number+"' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"' data-cbmbstresult='모임탈퇴'>탈퇴하기</button></div><p>"+club[i].cbName+"</p></div>";
 														cnt2++;
 													}
 												}
@@ -164,9 +161,9 @@
 
 										},
 										complete : function(list) {
+											swal("탈퇴하셨습니다.");
 											getMyClubList();
 											getPrevClubList();
-											swal("탈퇴하셨습니다.");
 										}
 									});
 						};
@@ -184,19 +181,27 @@
 												for (let i = 0; i < club.length; i++) {
 
 													if ("정기모임" == club[i].cbType) {
-														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><button class='imgBtn detailBtn2' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><p>"+club[i].cbName+"</p></div>";
+														$("#myPrevRegClubH3").show();
+														myPrevRegClubList.show();
+														str += "<div class='smallList'><img src='"+club[i].cbFile+"'/><div><button class='imgBtn detailBtn2' data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button></div><p>"+club[i].cbName+"</p></div>";
 														cnt++;
 													}
 													if ("번개모임" == club[i].cbType) {
-														str2 += "<div class='smallList'><img src="+club[i].cbFile+"/><button class='imgBtn detailBtn2'  data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button><p>"+club[i].cbName+"</p></div>";
+														$("#myPrevThuClubH3").show();
+														myPrevThuClubList.show();
+														str2 += "<div class='smallList'><img src="+club[i].cbFile+"/><div><button class='imgBtn detailBtn2'  data-cbname ='"+club[i].cbName+"'data-cbtype='"+club[i].cbType+"' data-cbnum='"+club[i].cbNum+"'>상세보기</button></div><p>"+club[i].cbName+"</p></div>";
 														cnt2++;
 													}
 												}
 												if(cnt == 0){
-													str = "<img class='noClub'src='/resources/img/upload/default/simoo.png'>이전에 가입한 정기모임이 없어요."
+													$("#myPrevRegClubH3").hide();
+													myPrevRegClubList.hide();
+													//str = "<img class='noClub'src='/resources/img/upload/default/simoo.png'>이전에 가입한 정기모임이 없어요."
 												}
 												if(cnt2 == 0){
-													str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>이전에 가입한 번개모임이 없어요."
+													myPrevThuClubList.hide();
+													$("#myPrevThuClubH3").hide();
+													//str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>이전에 가입한 번개모임이 없어요."
 												}
 												
 												myPrevRegClubList.empty();
@@ -207,23 +212,31 @@
 											});
 						};
 						getPrevClubList();
+						const emptyWait = function (){
+							if('${waitClub}' == '[]'){
+								$("#myWaitClubList").remove();
+								$("#myWaitClubH3").remove();
+							}
+						};
+						emptyWait();
 	
  	 $(document).on('mouseenter','.smallList', function() {
  		 let index = $('.smallList').index(this);
  		 $('.smallList img').eq(index).css("opacity","0");
- 		 $('.imgBtn').eq(index).css("opacity","1");
- 		 $('.imgBtn').eq(index).css("z-index","2");
+ 		 $('.smallList div').eq(index).css("opacity","1");
+ 		 $('.smallList div').eq(index).css("z-index","2");
+/*  		 $('.imgBtn').eq(index).css("z-index","2");
  		 $('.imgBtn2').eq(index).css("opacity","1");
- 		 $('.imgBtn2').eq(index).css("z-index","2");
+ 		 $('.imgBtn2').eq(index).css("z-index","2"); */
 
 		});  
  	$(document).on('mouseleave','.smallList', function() {
 		 let index = $('.smallList').index(this);
 		 $('.smallList img').eq(index).css("opacity","1");
-		 $('.imgBtn').eq(index).css("opacity","0");
-		 $('.imgBtn').eq(index).css("z-index","0");
-		 $('.imgBtn2').eq(index).css("opacity","0");
-		 $('.imgBtn2').eq(index).css("z-index","0");
+		 $('.smallList div').eq(index).css("opacity","0");
+		 $('.smallList div').eq(index).css("z-index","0");
+/* 		 $('.imgBtn2').eq(index).css("opacity","0");
+		 $('.imgBtn2').eq(index).css("z-index","0"); */
 		});  
 	$(document).on('click','.detailBtn,.detailBtn2',function(){
 		let data = $(this).data();
