@@ -25,6 +25,10 @@ ul li.tag-item {
 </style>
 
 
+
+
+
+
 <div id="regularInfo">
 	<div id="detail">
          <div id="leftinfo">

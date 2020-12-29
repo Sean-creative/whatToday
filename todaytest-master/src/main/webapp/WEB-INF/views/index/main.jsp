@@ -1,177 +1,194 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 
 <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
 
-    <!-- main사진  -->
-    <div id="mainheader">
-        <ul class="back_visual">
-              <li class="bv_1"></li>
-              <li class="bv_2"></li>
-              <li class="bv_3"></li>     	   	
-        </ul>
-           <div class="in_visual">  <!-------------------------------비주얼-->
-               <div id="mainnav"> <!------------------------------------- 메뉴 -->
-                    <ul>
-                        <li><a href="/regular/list">정기모임</a></li>
-                        <li><a href="/thunder/list">번개모임</a></li>
-                        <li><a href="/hobbyTest/test">추천TEST</a></li>
-                        <li><a href="/regular/add">정기개설</a></li>
-                        <li><a href="/thunder/add">번개개설</a></li>
-                        <li><a href="#">포인트충전소</a></li>
-                        <li><a href="/cs/notice">고객센터</a></li>
-                    </ul>
-                    <div class="mainlogo"></div>
+<!-- main사진  -->
+<div id="mainheader">
+	<ul class="back_visual">
+		<li class="bv_1"></li>
+		<li class="bv_2"></li>
+		<li class="bv_3"></li>
+	</ul>
+	<div class="in_visual">
+		<!-------------------------------비주얼-->
+		<div id="mainnav">
+			<!------------------------------------- 메뉴 -->
+			<ul>
+				<li><a href="/regular/list">정기모임</a></li>
+				<li><a href="/thunder/list">번개모임</a></li>
+				<li><a href="/hobbyTest/test">추천TEST</a></li>
+				<li><a href="/regular/add">정기개설</a></li>
+				<li><a href="/thunder/add">번개개설</a></li>
+				<li><a href="#">포인트충전소</a></li>
+				<li><a href="/cs/notice">고객센터</a></li>
+			</ul>
+			<div class="mainlogo"></div>
 
-                </div>
-                <h1>오늘뭐하지?<br>당신의 즐거운 취미를 찾아드립니다.</h1>
-                <div class="front_visual">
-                    <ul>
-                        <li class="fv_1"></li>
-                        <li class="fv_2"></li>
-                        <li class="fv_3"></li>
-                    </ul>
-                </div>
-        </div>
-    </div>
-
-    <!-- 스크롤시 내려오는 메뉴 -->
-    <div id="header">
-		<div id="head">
-			<div class="menu1">
-				<a href="/index/main"> <img src="/resources/img/logo.png"
-					alt="logo"></a>
-				<form action="/index/searchlist" method="get"
-					onsubmit="return inputCheckMain()">
-					<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)" >
-				</form>
-			</div>
-			<sec:authorize access="isAnonymous()">
-				<div class="menu2">
-					<li><a href="/login/login">로그인</a></li>
-					<li><a href="/cs/notice">고객센터</a></li>
-				</div>
-			</sec:authorize>
-
-			<!-- 로그인되면 보여지는 페이지 -->
-			<sec:authorize access="isAuthenticated()">
-				<div class="menu2">
-					<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li> 	
-					<li>
-					<div class="tooltip">
-					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
-					<div class="tooltiptext">
-					<div id="socketAlert" class="alert alert-success" role="alert"></div>
-						</div>
-						</div>
-						</li>
-					<li><a href="/login/logout">로그아웃</a></li>
-					<li><a href="/cs/faq">고객센터</a></li>
-					
-				</div>
-			</sec:authorize>
 		</div>
-		<div id="nav">
-			<div id="myNav" class="overlay">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-				<div class="overlay-content">
-					<div class="tab">
-						<button class="tablinks" onclick="openMix(event, 'Regular')"
-							id="defaultOpen">정기모임</button>
-						<button class="tablinks" onclick="openMix(event, 'Thunder')">번개모임</button>
-					</div>
-					<div id="Regular" class="tabcontent">
-						<a href="#hello">정기모임1</a> <a href="">정기모임2</a> <a href="">정기모임3</a>
-					</div>
+		<h1>
+			오늘뭐하지?<br>당신의 즐거운 취미를 찾아드립니다.
+		</h1>
+		<div class="front_visual">
+			<ul>
+				<li class="fv_1"></li>
+				<li class="fv_2"></li>
+				<li class="fv_3"></li>
+			</ul>
+		</div>
+	</div>
+</div>
 
-					<div id="Thunder" class="tabcontent">
-						<a href="">번개모임1</a> <a href="">번개모임2</a> <a href="">번개모임3</a>
-	
+<!-- 스크롤시 내려오는 메뉴 -->
+<div id="header">
+	<div id="head">
+		<div class="menu1">
+			<a href="/index/main">
+				<img src="/resources/img/logo.png" alt="logo">
+			</a>
+			<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
+				<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
+			</form>
+		</div>
+		<sec:authorize access="isAnonymous()">
+			<div class="menu2">
+				<li><a href="/login/login">로그인</a></li>
+				<li><a href="/cs/notice">고객센터</a></li>
+			</div>
+		</sec:authorize>
+
+		<!-- 로그인되면 보여지는 페이지 -->
+		<sec:authorize access="isAuthenticated()">
+			<div class="menu2">
+				<li><a href="/mypage/main" id="user">
+						<sec:authentication property="principal.user.usrName" />
+						님
+					</a></li>
+				<li>
+					<div class="tooltip">
+						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
+						<div class="tooltiptext">
+							<div id="socketAlert" class="alert alert-success" role="alert"></div>
+						</div>
 					</div>
+				</li>
+				<li><a href="/login/logout">로그아웃</a></li>
+				<li><a href="/cs/faq">고객센터</a></li>
+
+			</div>
+		</sec:authorize>
+	</div>
+	<div id="nav">
+		<div id="myNav" class="overlay">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="overlay-content">
+				<div class="tab">
+					<button class="tablinks" onclick="openMix(event, 'Regular')" id="defaultOpen">정기모임</button>
+					<button class="tablinks" onclick="openMix(event, 'Thunder')">번개모임</button>
+				</div>
+				<div id="Regular" class="tabcontent">
+					<a href="#hello">정기모임1</a>
+					<a href="">정기모임2</a>
+					<a href="">정기모임3</a>
+				</div>
+
+				<div id="Thunder" class="tabcontent">
+					<a href="">번개모임1</a>
+					<a href="">번개모임2</a>
+					<a href="">번개모임3</a>
+
 				</div>
 			</div>
-			<span class="menubtn" style="font-size: 30px; cursor: pointer"
-				onclick="openNav()">&#9776;</span> <a class="submenu"
-				href="/regular/list">정기모임</a> <a class="submenu"
-				href="/thunder/list">번개모임</a> <a class="submenu" href="#">베스트</a> <a
-				class="submenu" href="#">취미Test</a>
-			<div class="dropdown">
-				<a class="submenu" href="#">모임개설</a>
-				<div class="dropdown-content ">
-					<a href="/regular/add">정기모임</a> <a href="/thunder/add">번개모임</a>
-				</div>
+		</div>
+		<span class="menubtn" style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+		<a class="submenu" href="/regular/list">정기모임</a>
+		<a class="submenu" href="/thunder/list">번개모임</a>
+		<a class="submenu" href="#">베스트</a>
+		<a class="submenu" href="#">취미Test</a>
+		<div class="dropdown">
+			<a class="submenu" href="#">모임개설</a>
+			<div class="dropdown-content ">
+				<a href="/regular/add">정기모임</a>
+				<a href="/thunder/add">번개모임</a>
 			</div>
 		</div>
 	</div>
-	<!--내려오면 보이는 화면 끝  -->
-    
-    <!-- =================정기모임 ==================== -->
-    <div class="regular">
-        <span class="half">정기모임</span><br>
-        <p class="halfunder">즐거운 정기모임을 만나보세요!</p>
-    </div>
-    <div id="searchresult">
-    	<c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
-	        <div>
-	            <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
-	                <img src="/resources/img/paint.jpg" alt="">
-	                <p class="location"><c:out value="${club.cbCity}" /></p><!-- 위치 -->
-	                <p class="nombre"><c:out value="${club.cbName}" /> </p> <!--이름  -->
-	                <hr style="color:#eee;">
-	                <p class="limitmem"><c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /> 명 </p>
-	            </a>    
-	        </div>
-	     </c:forEach>    
-     </div>   
-     
-     <!-- =================베너======================== -->
-   <div class="slideshow-container">
+</div>
+<!--내려오면 보이는 화면 끝  -->
 
-        <div class="mySlides fade" style="background-color: #ab1111;">
-          <img src="img/basketball.jpg">
-        </div>
-        
-        <div class="mySlides fade" style="background-color: bisque;">
-          <img src="img/mount.jpg">
-        </div>
-        
-        <div class="mySlides fade" style="background-color: cornflowerblue;">
-          <img src="img/paint2.jpg">
-        </div>
-        
-        <div class="dotted">
-          <span class="dot"></span> 
-          <span class="dot"></span> 
-          <span class="dot"></span> 
-        </div>
-    </div>
-     
-    <!-- 번개모임 -->
-    <div class="regular thunder">
-        <span class="half">번개모임</span><br>
-        <p class="halfunder">즐거운 번개모임을 만나보세요!</p>
-    </div>
-    <div id="searchresult">
-    	<c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
-        <div>
-            <a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'>
-                <img src="/resources/img/mount.jpg" alt="">
-                <p class="location"><c:out value="${club.cbCity}" /></p>
-                <p class="nombre"><c:out value="${club.cbName}" /></p>
-                <hr style="color:#eee;">
-                <p class="limitmem">11월 23일 월요일 오후 2시 31분</p>
-                <p class="limitmem"><c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /> 명</p>
-            </a>    
-        </div>
-        </c:forEach>
-      </div>  
-    
+<!-- =================정기모임 ==================== -->
+<div class="regular">
+	<span class="half">정기모임</span><br>
+	<p class="halfunder">즐거운 정기모임을 만나보세요!</p>
+</div>
+<div id="searchresult">
+	<c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
+		<div>
+			<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
+				<img src='<c:out value="${club.cbFile}" />' alt="">
+				<p class="location"><c:out value="${club.cbDistrict}" /></p>
+				<!-- 위치 -->
+				<p class="nombre"><c:out value="${club.cbName}" /></p>
+				<!--이름  -->
+				<hr style="color: #eee;">
+				<p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" />
+				</p>
+			</a>
+		</div>
+	</c:forEach>
+</div>
 
-    
-   <%--  <div id="sub">
+<!-- =================베너======================== -->
+<div class="slideshow-container">
+
+	<div class="mySlides fade" style="background-color: #ab1111;">
+		<img src="img/basketball.jpg">
+	</div>
+
+	<div class="mySlides fade" style="background-color: bisque;">
+		<img src="img/mount.jpg">
+	</div>
+
+	<div class="mySlides fade" style="background-color: cornflowerblue;">
+		<img src="img/paint2.jpg">
+	</div>
+
+	<div class="dotted">
+		<span class="dot"></span> <span class="dot"></span> <span class="dot"></span>
+	</div>
+</div>
+
+<!-- 번개모임 -->
+<div class="regular thunder">
+	<span class="half">번개모임</span><br>
+	<p class="halfunder">즐거운 번개모임을 만나보세요!</p>
+</div>
+<div id="searchresult">
+	<c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
+		<div>
+			<a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'>
+				<img src='<c:out value="${club.cbFile}" />' alt="">
+				<p class="location"><c:out value="${club.cbDistrict}" /></p>
+				<p class="nombre"><c:out value="${club.cbName}" /></p>
+				<hr style="color: #eee;">
+
+
+
+				<fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+				<p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
+
+				<p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /></p>
+			</a>
+		</div>
+	</c:forEach>
+</div>
+
+
+
+<%--  <div id="sub">
         <p class="hhh">지금 뭐하지?</p>
         <ul>
 	          <c:forEach items="${main2}" var="club" varStatus="status" begin="1" end="11">
@@ -203,12 +220,11 @@ $(document).ready(function(){
 	            $(".back_visual li").eq(idx).stop(true,true).fadeIn(300); 
 	            $(".back_visual li").eq(oldidx).stop(true,true).fadeOut(300);
 				$(".front_visual li").eq(idx).stop(true,true).fadeIn(300); 
-	            $(".front_visual li").eq(oldidx).stop(true,true).fadeOut(300); 
+				$(".front_visual li").eq(oldidx).stop(true,true).fadeOut(300); 
 	        }
 	        oldidx=idx; 
 	    }
-	   
-	    function changeAuto(){
+	 function changeAuto(){
 	        idx++;
 	        if(idx>2){ 
 	            idx=0;
@@ -367,8 +383,7 @@ console.log("Server Error");
         }
 </script>
 
-<%@ include file="../includes/footer.jsp"%> 
-    
+<%@ include file="../includes/footer.jsp"%>
+
 </body>
 </html>
-    
