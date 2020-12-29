@@ -18,7 +18,7 @@
 			<div id=banner>
 				<ul>
 					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-					<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
+					<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li><!--cbNum(모임번호)을 가지고 게시판페이지이동-->
 					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
 				</ul>
 			</div>
@@ -45,10 +45,12 @@
 					<label>내용</label><br>
 					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${clubBoard.cbBdContent}"/></textarea>
 				</div>
-				
-				<button data-oper='update' class="btn">수정</button>
-				<button data-oper='list' class="btn">목록</button>
-				
+				<div id = "updateButton">
+					<div>
+					<button data-oper='update' class="btn">수정</button>
+					<button data-oper='list' class="btn">목록</button>
+					</div>
+				</div>
 				</div>
 				<hr>
 				
@@ -59,7 +61,7 @@
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:614px;"/>
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:115%;"/>
 					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
 				</div>	
 			</div>
@@ -77,22 +79,7 @@
 		            <div id="replyList"></div>
 	            </div>
 		
-			<div class='pullright'>
-				<ul class="pagination">
-						
-						<c:if test = "${pageMaker.prev }">
-							<li class="paginate_button previous"><a href="${pageMaker.startPage -1}">Previous</a></li>
-						</c:if>
-						
-						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
-							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""}"><a href="${num}">${num}</a></li>
-						</c:forEach>	
-						
-						<c:if test="${pageMaker.next }">
-							<li class="paginate_button next"><a href="${pageMaker.endPage +1}">Next</a></li>
-						</c:if>						
-					</ul>
-			</div><!-- END pullright -->
+			
 			</div><!-- END bodymain --> 
 		</div><!-- END leftInfo -->
 <div id="rightinfo" class="rightinfo">
@@ -196,24 +183,24 @@
 					htmls += '<span style="padding-left:25px">등록된 댓글이 없습니다.</span>';
 				} else {
 					$(result).each(function(){
-		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0;">';
+		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0; width:925px;">';
 		                htmls += '<title>Placeholder</title>';
 		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 		                htmls += '<div>';
 		                htmls += '<span class="d-block">';
 		                htmls += '<strong class="text-gray-dark">'+'&#127752;'+  '&nbsp;'+ this.replyer + '</strong>';
-		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+		                htmls += '</span>';
+		                htmls += '</div>';
+		                htmls += '<div style="margin:5px;width: 80%;">';
+		                htmls += this.reply;
+		                htmls += '<div style="float:right;"><span style="font-size: 9pt; color:#292c34;">';
 		                if (this.isReplyer == "true") {
 			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
 			                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
 		                }
-		                htmls += '</span>';
-		                htmls += '</span>';
+		                htmls += '</span></div>';
 		                htmls += '</div>';
-		                htmls += '<div style="margin:5px;">';
-		                htmls += this.reply;
-		                htmls += '</div>';
-		                htmls += '<hr width="85%" style="color:#F2F2F2;">';
+		                htmls += '<hr width="81%" style="color:#F2F2F2;">';
 		                htmls += '</p>';
 		                htmls += '</div>';
 		           });	//each end

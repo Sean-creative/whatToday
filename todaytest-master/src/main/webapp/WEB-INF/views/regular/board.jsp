@@ -24,7 +24,7 @@
 			</div>
 			<div id=bodymain>
 			<table id="clubboard">
-				<tr>
+				<tr id ="tHead">
 			  		<th>#번호</th>
 			  		<th>제목</th>
 					<th>작성자</th>
@@ -35,7 +35,7 @@
 				<tr>
 					<td><c:out value="${club.cbBno}" /></td>
 					<td>
-					<a class='move' href='<c:out value="${club.cbBno }"/>'> 
+					<a class='move' style="color: black;"href='<c:out value="${club.cbBno }"/>'> 
 					<c:out value="${club.cbBdTitle }" /></a>(${club.replyCount})</td>
 					<td><c:out value="${club.cbBdWriter}" /></td>
 					<td><c:out value="${club.cbBdDate}" /></td>
