@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<footer>
+<footer>
         <div class="canizo">
           <div class="ftlef">
             <a href="#">서비스 이용약관</a>
@@ -16,7 +16,6 @@
             </li>
           </div>
         </div>
-
         <div class="canizo2">
           <p class="quetday">오늘뭐하지?</p>
           <div class="fotinf">

@@ -50,7 +50,7 @@ public class TestServiceImpl implements TestService{
 			return createJsonArr("외국/언어", "프랑스어", "게임/오락", "온라인게임", "문화/공연/축제", "뮤지컬/오페라");
 //			return "프랑스어,온라인게임,뮤지컬/오페라";
 		case "NNN":
-			return createJsonArr("음악/악기", "클래식", "문화/공연/축제", "헬스/크로스핏", "외국/언어", "중국어");
+			return createJsonArr("음악/악기", "클래식", "운동/스포츠", "헬스/크로스핏", "외국/언어", "중국어");
 //			return "클래식,헬스/크로스핏,중국어";
 		}
 		return null;
