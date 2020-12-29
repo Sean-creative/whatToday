@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -38,32 +37,33 @@
 <form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
 	<div id="reguform">
-	
-		<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
-		
+
+		<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />' />
+
 		<span class="half">정기모임 수정</span>
-		
+
 		<p class="cate">모임명</p>
-      	<div class="caja1">
-        	<div class="lef1">
-            	<div class="select_img">
-            		<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
+		<div class="caja1">
+			<div class="lef1">
+				<div class="select_img">
+					<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
 					<!-- <label for="gdsImg" >이미지 선택</label> -->
 					<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 					<!-- 사진 첨부 안했을 시 사용해야함 -->
 					<input type='hidden' name='cbFile' value='<c:out value="${club.cbFile}"/>'>
 					<input type='hidden' name='cbThumbImg' value='<c:out value="${club.cbThumbImg}"/>'>
-          		</div>
-          	</div>		
-          	<div class="rig1">
-				<input type="text" id="club" name="cbName" value='<c:out value="${club.cbName}"/>'><br>
-				<input type="text" style="width:350px" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'>
+				</div>
 			</div>
-      	</div>
-		
+			<div class="rig1">
+				<input type="text" id="club" name="cbName" value='<c:out value="${club.cbName}"/>'>
+				<br>
+				<input type="text" style="width: 350px" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'>
+			</div>
+		</div>
+
 		<p class="cate">카테고리</p>
-      	<div class="caja2">
-        	<div class="lef1">
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbCategory">카테고리/분야</label>
 				<select id="cbCategory" name="cbCategory">
 					<option value="아웃도어/여행" <c:if test="${club.cbCategory eq '아웃도어/여행'}">selected</c:if>>아웃도어/여행</option>
@@ -75,72 +75,77 @@
 					<option value="기타" <c:if test="${club.cbCategory eq '기타'}">selected</c:if>>기타</option>
 				</select>
 			</div>
-            <div class="rig1">	
+			<div class="rig1">
 				<label for="cbSubcat">모임</label>
 				<select id="cbSubcat" name="cbSubcat"></select>
 			</div>
-        </div>
-        
-        <p class="cate">지역</p>
-      	 <div class="caja2">
-         	<div class="lef1">
+		</div>
+
+		<p class="cate">지역</p>
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbCity">지역 </label>
 				<select name="cbCity" id="cbCity">
 					<option value="서울특별시" <c:if test="${club.cbCity eq '서울특별시'}">selected</c:if>>서울특별시</option>
 					<option value="경기도" <c:if test="${club.cbCity eq '경기도'}">selected</c:if>>경기도</option>
 				</select>
 			</div>
-            <div class="rig1">
-            <label for="cbDistrict">세부지역 </label>
-			<select name="cbDistrict" id="cbDistrict"></select>
+			<div class="rig1">
+				<label for="cbDistrict">세부지역 </label>
+				<select name="cbDistrict" id="cbDistrict"></select>
 			</div>
-         </div>
-		
+		</div>
+
 		<p class="cate">정원</p>
-      	 <div class="caja2">
-          	<div class="lef1">
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbMbNum">정원</label>
 				<input type="number" id="num" name="cbMbNum" min="1" max="200" value='<c:out value="${club.cbMbNum}"/>'>
 			</div>
-            <div class="rig1">
-            	<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
-          	</div>
-         </div>
-		
-      	 
-<!--       	 해시태그 업데이트 추가 (선우) -->
-      	 <p class="cate">해시태그</p>
+			<div class="rig1">
+				<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
+			</div>
+		</div>
+
+
+		<!--       	 해시태그 업데이트 추가 (선우) -->
+		<p class="cate">해시태그</p>
 		<div class="caja2">
 			<div id="hashTagDiv">
 				<label for="cbHashtag" class="class">해시태그 </label>
 				<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${club.cbHashtag}"/>'>
 				<input type="text" id="tag" size="7" value="#" />
 				<ul id="tag-list"></ul>
-			
+
 				<input type="hidden" name="cbMakeDate">
 				<!--개설일자는 sysdate로 설정 -->
-							
+
 			</div>
 		</div>
-		
-		
-	
+
+
+
 		<p class="cate">모임상세내용</p>
-      	 <div class="caja2">
-         	<div class="lef1 detailinfo">
+		<div class="caja2">
+			<div class="lef1 detailinfo">
 				<label for="cbDetailContent">상세내용</label>
-				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}"/></textarea>
+				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}" /></textarea>
 			</div>
-      	 </div>
-      	 
-      	 <div id="regiform">
-      	 	<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
+		</div>
+
+		<div id="regiform">
+			<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
 			<button type="submit" data-oper='remove' class="btn btn-danger">모임 폐쇄하기</button>
 			<button type="submit" data-oper='list' class="btn btn-info">List</button>
-   	 	 </div>
+		</div>
 
 	</div>
 </form>
+
+
+
+
+
 
 <script type="text/javascript">
 

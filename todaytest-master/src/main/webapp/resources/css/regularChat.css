@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 100%;
   max-width: 867px;
-  height: calc(100% - 50px);
+  height: 550px;
   border-radius: 5px;
   box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
 }
@@ -25,7 +25,12 @@
     color: #fff;
     font-weight: bold;
     cursor: pointer;
-    padding: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+	justify-content: space-between; 
+	margin: 10px;
+	float: right;
 }
 #enterChat{
 	display: none;
@@ -67,7 +72,7 @@
   max-width: 450px;
   padding: 15px;
   border-radius: 15px;
-  background: #ececec;
+  background: #eee;
 }
 .msg-info {
   display: flex;
@@ -76,8 +81,11 @@
   margin-bottom: 10px;
 }
 .msg-info-name {
-  margin-right: 10px;
-  font-weight: bold;
+	margin-right: 10px;
+    font-weight: bold;
+    font-size: 13px;
+    margin-left: 8px;
+    margin-bottom: 3px;
 }
 .msg-info-time {
   font-size: 0.85em;
@@ -91,7 +99,7 @@
   flex-direction: row-reverse;
 }
 .right-msg .msg-bubble {
-  background: #579ffb;
+  background: #ffaf31;
   color: #fff;
   border-bottom-right-radius: 0;
 }
@@ -100,6 +108,7 @@
 }
 
 .msger-inputarea {
+  width: 100%;
   display: flex;
   border-top: 2px solid #ddd;
   background: #eee;
@@ -114,12 +123,13 @@
   flex: 1;
   background: #ddd;
   background-image: none;
+  margin: 10px;
 }
 #message{
 	background-image: none;
 }	
 .msger-send-btn {
-  margin-left: 10px;
+  margin: 10px;
   background: #ffaf31;
   color: #fff;
   font-weight: bold;
@@ -127,9 +137,20 @@
   transition: background 0.23s;
 }
 .msger-send-btn:hover {
-  background: rgb(0, 180, 50);
+  background: #ffaf31;
+  color: #black;
 }
 
-.msger-chat {
- 
+#enter{
+	width: auto;
+    background: #ffaf31;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px;
+    float: right;
+    padding: 10px;
+}
+.form-inline{
+	border : 1px solid black;
 }

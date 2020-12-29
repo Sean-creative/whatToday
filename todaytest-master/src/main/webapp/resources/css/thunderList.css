@@ -136,7 +136,6 @@ input[type=text] {
 	background: transparent;
 	border-bottom: 1px solid #000;
 	width: 300px;
-	height: 30px;
 	background: url("/ProjectHobby/src/main/webapp/WEB-INF/views/templates/img/search.png") no-repeat 95%;
 	background-size: 7%;
 }

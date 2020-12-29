@@ -3,23 +3,24 @@
 body{background:#fff;}
 /* #wrap{width:100%;} */
 /* header, section, footer{width:inherit;} */
-
+/* 
 *{
     margin:0;
     padding:0;
 }
-
+ */
 .s-visual{
 	width:100%;
-	height:400px;
-	background:url(../img/brush.jpg) no-repeat center center;
-	background-size:cover;
-	margin-top:40px;
+	height:250px;
+	margin-top:60px;
 }
 .s-visual-in{
-	width:1100px;
+	width:1200px;
+	height:250px;
+	background:url(/resources/img/inqu.jpg) no-repeat center center;
+	background-size:cover;
 	margin:0 auto;
-	padding-top:140px;
+	/* padding-top:140px; */
 }
 .s-visual-in h2{
 	text-align:center;
@@ -76,11 +77,14 @@ body{background:#fff;}
 .top_btn .qnabtn:hover{background:url(../image/scrollbtn_on.png) no-repeat;}
 
 .notimenu{
+     width:1200px;
+	margin:0 auto;
     display: flex;
     justify-content: center;
     text-align: center;
     border-bottom: 1px dotted #333;
     padding:15px 0;
+    margin-bottom: 60px;
 }
 .notisubmenu{
     width:800px;
@@ -162,13 +166,15 @@ section{width:100%;}
 .section_in .tab li:hover span{height:100%;}
 .section_in .tab li a:hover{color:#fff;}
 
-.tab li a.selected{  /*�꾩옱 �좏깮�� ��찓��*/
+.tab li a.selected{  
 	background:#cb1517;
 	color:#fff;
 	font-weight:bold;
 }
-/*____________________________________________________________________��븘�섎궡��*/
-form{
+
+
+/*작성폼 */
+.section_in form{
 	width:800px;
 	/*height:1000px;*/
 	margin:30px auto;
@@ -180,7 +186,7 @@ form{
 	font-size:12px;
 	font-weight:100;
 }
-form hr{
+.section_in form hr{
 	width:800px;
 	height:2px;
 	margin:15px 0;
