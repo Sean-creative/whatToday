@@ -16,7 +16,7 @@
 					<img src="/resources/img/logo.png" alt="logo">
 				</a>
 				<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-					<input id="serchHeader" type="text" name="keyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.keyword}" />'>
+					<input id="serchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
 				</form>
 			</div>
 			<sec:authorize access="isAnonymous()">

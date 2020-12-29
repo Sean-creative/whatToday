@@ -26,6 +26,7 @@ public class Criteria {
 	private String searchBy;
 	
 	private String keyword;
+	private String headerKeyword;
 	
 	
 	private String orderBy;
