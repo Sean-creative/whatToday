@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ include file="../includes/header.jsp"%>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
@@ -12,12 +11,10 @@
 	
 	<div class="s-visual">
 		<div class="s-visual-in">
-			<h2>문의사항</h2>
-			<h4>INQUIRE</h4>
+			<!-- <h2>문의사항</h2>
+			<h4>INQUIRE</h4> -->
 		</div>
 	</div>
-
-
 
 	<!--TOP버튼-->
 	<div class="top_btn">
@@ -57,12 +54,12 @@
 					</div>
 					<div>
 						<label for="email">이메일*</label>
-                        <input type="email" name='qsEmail' class="mgtop" id="email" style="width:200px; height:25px;">
+                        <input type="email" name='qsEmail' id="email" style="width:200px; height:25px;">
                         <span class="required">   *답변받을 이메일을 입력해주세요.</span>
 					</div>
 					<div>
 						<label for="location">제목*</label>
-						<input type="text" name='qsTitle' class="mgtop" id="title" style="width:300px; height:25px;">
+						<input type="text" name='qsTitle' id="title" style="width:300px; height:25px;">
 					</div>
 					<div class="request">
 						<label for="request" class="class">요청사항*</label>
@@ -84,49 +81,6 @@
 		</div>	
 	</section>
 </div> 
-
-<%-- 
- <div class="cs_nav">
-        <ul>
-            <a href="/cs/faq">자주묻는질문</a>
-            <a href="/cs/inquire">1:1문의사항</a>
-        </ul>
-    </div>
-    <form role="form" action="/cs/mailRequest" method="post" name="inquire" onsubmit="return inputCheck()">
-    <div class="cs_all">
-        <h3>1:1 문의하기 </h3>
-        
-        <div class="cs_text">
-        <input type='hidden' name='usrNum' value="${usrNum}">
-        
-            <label>이름 : </label>
-            <input type="text" name='qsName' class="name" value="${usrName}" readonly>
-
-            <label>연락처 :</label>
-            <input type="text" name='qsPhone' class="phone" placeholder="- 빼고 입력해주세요" id="phone">
-            <br>
-            <label>이메일 : </label>
-            <input type="email" name='qsEmail' class="mgtop" id="email">
-            <span class="spec">*답변받을 이메일 주소를 입력해주세요.</span>
-            <br>
-            
-            <label>제목</label>
-            <input type="text" name='qsTitle' class="mgtop" id="title">
-            <br>
-            
-            <label>내용</label>
-            <textarea class="mgtop" name='qsContent' id="content"></textarea>
-            <br>
-
-            <label>첨부파일</label>
-            <input type="file" name='qsFile'>
-            <br>
-        </div>
-        <input type="submit" value="보내기">       
-    </div>
-</form> 
-
- --%>
 
 
 
