@@ -5,6 +5,35 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
+<style>
+#hashTagDiv ul {
+	padding: 16px 0;
+}
+
+#hashTagDiv ul li {
+	display: inline-block;
+	margin: 3px 5px;
+}
+
+#hashTagDiv ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+#hashTagDiv .tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+#hashTagDiv .del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+</style>
+
 
 <form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
@@ -78,14 +107,23 @@
           	</div>
          </div>
 		
-		<p class="cate">해쉬태그</p>
-      	 <div class="caja2">
-         	<div class="lef1">
-	        	<input type="hidden" name="cbMakeDate"> <!--개설일자는 sysdate로 설정 -->
-				<label for="cbHashtag">해시태그</label>
-				<input type="text" id="hash" name="cbHashtag" value='<c:out value="${club.cbHashtag}"/>'>
+      	 
+<!--       	 해시태그 업데이트 추가 (선우) -->
+      	 <p class="cate">해시태그</p>
+		<div class="caja2">
+			<div id="hashTagDiv">
+				<label for="cbHashtag" class="class">해시태그 </label>
+				<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${club.cbHashtag}"/>'>
+				<input type="text" id="tag" size="7" value="#" />
+				<ul id="tag-list"></ul>
+			
+				<input type="hidden" name="cbMakeDate">
+				<!--개설일자는 sysdate로 설정 -->
+							
 			</div>
-      	 </div>
+		</div>
+		
+		
 	
 		<p class="cate">모임상세내용</p>
       	 <div class="caja2">
@@ -188,6 +226,11 @@
 				formObj.attr("action", "/regular/list").attr("method", "get");
 				formObj.empty();
 			}
+			
+			
+			//전송되기 전에 해시태그 값 넘기기 (선우)
+			var value = marginTag(); // return array
+			$("#rdTag").val(value);
 			formObj.submit();
 		});
 	});
@@ -208,6 +251,138 @@
 /* 	현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다.  */
 	<%-- <%=request.getRealPath("/")%> --%>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var tag = {};
+	var counter = 0;
+	var maxHash = 0;
+
+	// 태그를 추가한다.
+	function addTag(value) {
+		tag[counter] = value; // 태그를 Object 안에 추가
+		counter++; // counter 증가 삭제를 위한 del-btn 의 고유 id 가 된다.
+		maxHash++;
+	}
+
+	// 최종적으로 서버에 넘길때 tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+	function marginTag() {
+		return Object.values(tag).filter(function(word) {
+			return word !== "";
+		});
+	}
+
+	// 처음 부터 #이 달려있고
+	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
+	// 5개까지 밖에 입력하지 못한다.
+	$("#tag")
+			.keyup(
+					function(e) {
+						let text = $(this).val();
+
+						if (text.length == 0) {
+							$(this).val("#");
+						}
+						//#은 제외
+						var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+						// test() ㅡ 찾는 문자열이 들어있는지 확인
+						if (regExp.test(text)) {
+							text = text.replace(regExp, ""); // 찾은 특수 문자를 제거													
+						}
+						$(this).val(text);
+					});
+
+	$("#tag")
+			.on(
+					"keypress",
+					function(e) {
+
+						var self = $(this);
+
+						// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+						if (e.key === "Enter"
+								|| e.keyCode == 32
+								|| e.keyCode == 35) {
+
+							if (maxHash >= 5) {
+								alert("5개가 최대입니다.");
+								self.val("#");
+							} else {
+								var tagValue = self.val(); // 값 가져오기
+
+								//사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌, #은 제외
+								var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+								// test() ㅡ 찾는 문자열이 들어있는지 확인
+								if (regExp.test(tagValue)) {
+									tagValue = tagValue
+											.replace(
+													regExp,
+													""); // 찾은 특수 문자를 제거													
+								}
+
+								// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
+								if (tagValue !== ""
+										&& tagValue !== "#") {
+
+									// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
+									var result = Object
+											.values(tag)
+											.filter(
+													function(
+															word) {
+														return word === tagValue;
+													})
+
+									// 태그 중복 검사
+									if (result.length == 0) {
+										$("#tag-list")
+												.append(
+														"<li class='tag-item'>"
+																+ tagValue
+																+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+										addTag(tagValue);
+										self.val("#");
+									} else {
+										alert("태그값이 중복됩니다.");
+									}
+								}
+							}
+							e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
+
+						}
+					});
+
+	// 삭제 버튼
+	// 삭제 버튼은 비동기적 생성이므로 document 최초 생성시가 아닌 검색을 통해 이벤트를 구현시킨다.
+	$(document).on("click", ".del-btn", function(e) {
+		var index = $(this).attr("idx");
+		tag[index] = "";
+		$(this).parent().remove();
+		maxHash--;
+	});
+
+	
+	//초기에 로딩이 되면 해시태그 데이터를 넣어준다! 
+	let stringHash = '${club.cbHashtag}';
+	let arrayHash = stringHash.split(',');
+	for ( let i in arrayHash) {
+		if (arrayHash[i] != "") {
+			$("#tag-list")
+					.append(
+							"<li class='tag-item'>"
+									+ arrayHash[i]
+									+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+			addTag(arrayHash[i]);
+		}
+	}
 </script>
 
 <%@include file="../includes/footer.jsp"%>

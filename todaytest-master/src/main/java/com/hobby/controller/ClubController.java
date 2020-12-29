@@ -263,9 +263,16 @@ public class ClubController {
 
 	// 정기모임 게시판 - 등록
 	@GetMapping("/boardadd")
-	public void boardRegister(Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
-
-		log.info("#boardRegister");
+	public void boardRegister(Authentication auth, Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
+		
+		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		
+		model.addAttribute("usrName", userVO.getUsrName());
+		log.info("###usrName:"+ userVO.getUsrName());
+		
+		log.info("###boardRegister");
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
@@ -320,7 +327,7 @@ public class ClubController {
 
 	// 정기모임 가입
 	@PostMapping("/clubjoin")
-	public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr) {
+	public String clubJoin(Authentication auth, ClubVO club, RedirectAttributes rttr, @RequestParam("cbNum") Long cbNum) {
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		UserVO userVO = customUser.getUser();
@@ -341,7 +348,7 @@ public class ClubController {
 		log.info("##/add 회원이름는 :" + userVO.getUsrName());
 		log.info("###clubjoin: " + club);
 
-		return "redirect:/index/main";
+		return "redirect:/regular/info?cbNum=" + cbNum;
 	}
 
 	// 정기모임 수정
@@ -401,6 +408,7 @@ public class ClubController {
 
 		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
+		String usrName = customUser.getUser().getUsrName();
 
 		System.out.println("cbNum: " + cbNum);
 		System.out.println("usrNum: " + usrNum);
@@ -420,6 +428,7 @@ public class ClubController {
 			model.addAttribute("cbLeaderNum", cbLeaderNum);
 			model.addAttribute("usrNum", usrNum);
 			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
+			model.addAttribute("usrName", usrName);
 		}
 		
 		

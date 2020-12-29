@@ -2,14 +2,16 @@ package com.hobby.mapper;
 
 import java.util.List;
 
-import com.hobby.domain.MainVO;
-import com.hobby.domain.ThunderVO;
+import com.hobby.domain.ClubVO;
 
 public interface MainMapper {
 
 	/////메/////인//////	
-	public List<MainVO> getListRegular();
-	public List<MainVO> getListThunder();
+	public List<ClubVO> getListRegular();
+	public List<ClubVO> getListThunder();
 	
-//	public List<ThunderVO>getListWithKeyword(String subCat);
+
+	public List<ClubVO> getListKeyRegular(String keyword);
+	
+	public List<ClubVO> getListKeyThunder(String keyword);
 }

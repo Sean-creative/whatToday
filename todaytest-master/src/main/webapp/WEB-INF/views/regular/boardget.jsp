@@ -17,7 +17,7 @@
 				</ul>
 			</div>
 			<div id=bodymain>
-			<h2>조회</h2>
+			<span class="half">글 조회</span>
 			 	
 			 	<div class="rowget">
 				<div class="form-group">
@@ -37,20 +37,13 @@
 				
 				<div class="form-group">
 					<label>내용</label><br>
-					<textarea class="form-control" name='cbBdContent' readonly="readonly">
-						<c:out value="${club.cbBdContent}"/></textarea>
+					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${club.cbBdContent}"/></textarea>
 				</div>
 				
 				<button data-oper='update' class="btn">수정</button>
 				<button data-oper='list' class="btn">목록</button>
 				
 				</div>
-				<form id='operForm' action="/regular/boardupdate" method="get">
-					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
-					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
-				</form>		
 				<hr>
 				
 	<!-- 댓글 등록  -->
@@ -59,10 +52,7 @@
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
-				</div>
-				<div class="col-sm-2">
-					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:614px;"/>
 					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
 				</div>	
 			</div>
@@ -71,7 +61,7 @@
 	
 	<!-- 댓글 목록  -->	
 	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<div id="replyList"></div>
+		<div id="replyList" style="margin-left: 25px;"></div>
 	</div>
 	
 		</div>
@@ -84,6 +74,12 @@
         </div>
 	</div>
  </div>
+				<form id='operForm' action="/regular/boardupdate" method="get">
+					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
+					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
+				</form>		
  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -135,16 +131,19 @@
 		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 		                htmls += '<div>';
 		                htmls += '<span class="d-block">';
-		                htmls += '<strong class="text-gray-dark">' + this.replyer + '</strong>';
+		                htmls += '<strong class="text-gray-dark">'+'&#127752;'+  '&nbsp;'+ this.replyer + '</strong>';
 		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                if (this.isReplyer == "true") {
+			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
+			                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                }
 		                htmls += '</span>';
 		                htmls += '</span>';
 		                htmls += '</div>';
-		                htmls += '<div>';
+		                htmls += '<div style="margin:5px;">';
 		                htmls += this.reply;
 		                htmls += '</div>';
+		                htmls += '<hr width="85%" style="color:#F2F2F2;">';
 		                htmls += '</p>';
 		                htmls += '</div>';
 		           });	//each end

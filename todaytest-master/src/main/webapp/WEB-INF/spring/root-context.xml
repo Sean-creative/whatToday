@@ -62,7 +62,7 @@
         <property name="port" value="587" />
         <property name="defaultEncoding" value="utf-8"/>
         <property name="username" value="whattodayhobby@gmail.com" />
-        <property name="password" value="mgkedgibodzvtwvs" />
+        <property name="password" value="ayqqyzgwmdjtidmq" />
        
         <property name="javaMailProperties">
             <props>

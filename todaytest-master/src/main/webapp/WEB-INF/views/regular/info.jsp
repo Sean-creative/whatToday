@@ -5,11 +5,37 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
+<style>
+/* 해시태그  */
+ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+	
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+	letter-spacing: -.5px;
+}
 
-<div id="bgpic">
+.tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+</style>
+
+
+<div id="regularInfo">
 	<div id="detail">
          <div id="leftinfo">
+         	<div>
+            	<p id="topInfo">#${club.cbSubcat} #${club.cbDistrict}</p>
+            </div>
+            <div>
+            	<p id="topcbName">${club.cbIntro}, ${club.cbName}</p>         
+            </div>
          	<img src="${club.cbThumbImg}" alt="">
+         	
 			<div id=banner>
 				<ul>
 					<li><a href="javascript:void(0);">정보</a></li><!--a태그의 페이지이동 기능 무효화 -->
@@ -17,128 +43,95 @@
 					<li><a href="/regular/chat?cbNum=<c:out value="${club.cbNum}" />">채팅</a></li><!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 				</ul>
 			</div>
-
-			<div id=body1>
-				<div class="cod">
-					<c:out value="${club.cbHashtag}" />
-				</div>
-				<div class="nam1">
-					<c:out value="${club.cbName}" />
-				</div>
-				<div class="cod">
-					<c:out value="${club.cbIntro}" />
-				</div>
-				<div class="cod">
-					개설자 정보 : <c:out value="${userVO.usrName}" />(<c:out value="${userVO.usrId}" />)
-				</div>
-				<div class="nam2">
-					모임에 가입된 회원 정보 
-					<div style="border: 1px solid black; width: 100px; height: 100px; display: flex;">
-					<c:forEach items="${joinList}" var="joinList"> 
-						<li><c:out value="${joinList.usrName}" /></li>
-					</c:forEach>
-					</div>
-				</div>
-			</div>
-			
-			<div id="body2">
-			
-				<!-- 로그인 유저가 모임장이면 모임수정하기 버튼을 보여준다. -->
-				<c:if test="${usrNum == club.cbLeaderNum}">
-					<button data-oper='modify' class="btn btn-default">모임 수정</button>
-				</c:if>
-					<button data-oper='list' class="btn btn-info">목록</button>
-
-				<form id='operForm' action="/regular/update" method="get">
-					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-				</form>
-				
-				<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
-				<c:if test="${usrNum != club.cbLeaderNum}">
-					<button class="btn btn-info" data-oper='join' id="join">
-						<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
-						<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
-						<c:choose>
-							<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-							<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }">모임 가입불가</c:when>
-							<c:when test="${joinState eq '승인대기'}">승인 대기 중</c:when>
-			
-							<c:when test="${club.cbMbNum == club.cbCurMbNum}">모임 정원 초과</c:when>
-							<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-						</c:choose>
-					</button>
-				</c:if>
-			</div>
-			
-			<div id="body3">    
-				<pre style="font-size: 15px;"><c:out value="${club.cbDetailContent}" /></pre>
+                        
+            <div id="pdetail">
+                <div class="infole"> <p>☀️어떤 모임인가요?</p></div>
+                <div class="inforig">
+                	<ul id="tag-list"></ul>
+                	
+                	               
+                    <p class="clubb"><pre>${club.cbDetailContent}</pre>
+                </div>
             </div>
-            
-            <div id="body4">
-	            <form action="#" method="get" id="meeting-form">
-				<%-- <c:choose>
-							<c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
-							<c:otherwise>모임원</c:otherwise>
-					 </c:choose> --%>
-					 
-				<div id="plus" style="float: right; border: 1px solid; margin: 30px auto;">
-					<c:forEach items="${meetingList}" var="MeetingVO">
-						<div style="text-align: center; border: 1px solid; margin: 0px; padding: 10px; font-size: 30px;">
-		
-							<br> ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명) <br>
-							<fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-							<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " />
-		
-							<br> ${MeetingVO.mtAddress} ${MeetingVO.mtPlace} <br> ${MeetingVO.mtName} <br> ${MeetingVO.mtSupplies}
-		
-							<button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			
+			<div id="pdetail">
+                <div class="infole"> <p>☀️가입된 회원은?</p></div>
+                <div class="inforig">
+                	   <p>👪모임 멤버 ( ${club.cbCurMbNum} / ${club.cbMbNum}명 )</p>
+                	   <p>${userVO.usrName}( 모임장 )</p>
+                       <c:forEach items="${joinList}" var="joinList"> 
+                    		<p class="clubb">
+							<li><c:out value="${joinList.usrName}" /></li></p>
+					   </c:forEach>
+					   	<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
+						<c:if test="${usrNum != club.cbLeaderNum}">
+							<button class="btn btn-info" data-oper='join' id="join">
+								<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
+								<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
 								<c:choose>
-									<c:when test="${MeetingVO.usrMtState eq '참석중'}">만남 참석 취소</c:when>
-									<c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">만남 참석</c:when>
+									<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
+									<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }">모임 가입불가</c:when>
+									<c:when test="${joinState eq '승인대기'}">승인 대기 중</c:when>
+					
+									<c:when test="${club.cbMbNum == club.cbCurMbNum}">모임 정원 초과</c:when>
+									<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
 								</c:choose>
 							</button>
-		
-		
-							<c:if test="${usrNum == club.cbLeaderNum}">
-								<button class="btn-meeting" data-oper='modifyMeeting' value="${MeetingVO.mtNum}">만남 수정</button>
-							</c:if>
-		
-						</div>
-					</c:forEach>
-				</div>
-	
-	
-				<div style="float: left; margin-right: 50px; margin-left: 230px; margin-bottom: 30px;">
-					<!-- 로그인 유저가 사용자이면 가입하기 버튼을 보여준다 -Sean -->
-					<c:if test="${usrNum == club.cbLeaderNum}">
-						<button style="padding: 5px 80px;" class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
-					</c:if>
-				</div>
-		
-				<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
-				<input type="hidden" name="cbName" value="${club.cbName }" />
-				</form>
+						</c:if>
+                </div>
             </div>
-      
-          
-    	</div>
+			
+			<button data-oper='list' class="btn btn-info" id="clubList">더 많은 모임을 보려면?</button>
+             
+    	</div> <!-- END leftinfo -->
     	
 		<div id="rightinfo" class="rightinfo">
-                <div class="content">
-					모임명: <c:out value="${club.cbName}" /><br>
-					개설자명: <c:out value="${userVO.usrName}" /><br>
-					개설자아이디: <c:out value="${userVO.usrId}" />
-					<c:if test="${usrNum != club.cbLeaderNum}">
-						<c:choose>
-							<c:when test="${joinState eq '모임추방' || joinState eq '승인거부' }"><button class="btn btn-info" data-oper='join' id="join">모임 가입불가</button></c:when>
-							<c:when test="${club.cbMbNum == club.cbCurMbNum}"><button class="btn btn-info" data-oper='join' id="join">모임 정원 초과</button></c:when>
-							<c:when test="${joinState eq '모임탈퇴' || joinState == null}"><button class="btn btn-info" data-oper='join' id="join">모임 가입하기</button></c:when>
-						</c:choose>
-					</c:if>
+            <div class="contentup">
+                <div class="contentl">
+                   <p>만남 일정</p>
                 </div>
-        </div>
-	</div>
-</div>
+                <div class="contentr">
+               <!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
+               <c:if test="${usrNum == club.cbLeaderNum}">
+                  <button class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+               </c:if>
+            </div>
+                </div>
+                <div style="margin: 0 10px">
+                <div class="contentmid">
+                   
+                  <form action="#" method="get" id="meeting-form">
+               <%-- <c:choose>
+                        <c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+                        <c:otherwise>모임원</c:otherwise>
+               </c:choose> --%>
+               <c:forEach items="${meetingList}" var="MeetingVO">
+                     <p id = "meetingName">🔸 ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명)</p>
+			               <button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			                  <c:choose>
+			                     <c:when test="${MeetingVO.usrMtState eq '참석중'}">참석 취소</c:when>
+			                     <c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">참석</c:when>
+			                  </c:choose>
+			               </button>
+                     
+                     <fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+                     <p>🔸 <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " /></p>
+                     
+                    <p>🔸 ${MeetingVO.mtAddress} ${MeetingVO.mtPlace}</p>
+                     
+                     <p>🔸 ${MeetingVO.mtSupplies}</p>
+               
+               <hr width="100%" style="margin: 10px">
+         
+               </c:forEach>
+               <input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+               <input type="hidden" name="cbName" value="${club.cbName }" />
+               </form>
+                </div>      
+                </div>      
+        </div> <!-- rightinfo END -->
+	</div><!-- END detail -->
+	
 
 
 <!-- 가입하기 모달창  -->
@@ -154,19 +147,18 @@
 			<input type="hidden" name="cbName" value="${club.cbName }" />
 			<input type="hidden" name="cbJoinStateResult" value="승인대기" />
 			<label><b>가입일자</b></label>
-			<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="true">
+			<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="readonly">
 			<br> <label><b>이름</b></label>
-			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="true">
-			<br> <label><b>가입인사</b></label>
-			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea>
-			<br>
+			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="readonly"><br> 
+			<label><b>가입인사</b></label>
+			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea><br>
 			<div class="clearfix">
 				<button type="submit" onclick="document.getElementById('id01').style.display='none'" class="submitbtn">제출하기</button>
 			</div>
 		</div>
 	</form>
-</div>
-
+</div><!-- 가입하기 모달창  -->
+</div><!-- END regularInfo --> 
 
 
 <script type="text/javascript">
@@ -259,6 +251,22 @@
 	// 사용자의 참석상태(joinState)가 '가입승인'이라면 버튼을 활성화 해주고, 그게 아니라면 버튼을 비활성화한다.
 	if ('${joinState}' !== '가입승인') {
 		$("button[data-oper='joinMeeting']").attr("disabled", "disabled");
+	}
+	
+	
+	
+	/* 해시태그 구현관련!! (선우)*/
+	let stringHash = '${club.cbHashtag}';
+	console.log(stringHash);
+
+	let arrayHash = stringHash.split(',');
+	console.log(arrayHash);
+
+	for ( let i in arrayHash) {
+		if (arrayHash[i] != "") {
+			$("#tag-list").append(
+					"<li class='tag-item'>" + arrayHash[i] + "</li>");
+		}
 	}
 	
 </script>

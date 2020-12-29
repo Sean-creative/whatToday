@@ -19,7 +19,7 @@
 	
 				<p>회원가입</p>
 				<input type="hidden" name="usrType" value="일반회원가입" >
-				
+				<input type="hidden" name="usrImg" value="경로경로">
                 <div>
                     <label for="id">아이디(이메일)</label><br>
                     <input type="text" placeholder="이메일(아이디)를 입력해주세요." id="email" name="usrId">
@@ -138,6 +138,7 @@
         </div>
     </form>
 
+	
 	<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 	<script>
 		if("${registerFailMsg }" != ""){
@@ -167,10 +168,7 @@
 		let pwdInput = document.getElementById("pwd");
 		let pwdResult = document.getElementById("pwdResult");
 		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 		pwdCheckResult = false;
 		function pwdCheck() {
 			if (pwdInput.value.length === 0) {
@@ -189,10 +187,7 @@
 		// 비밀번호 재입력 유효성 검사
 		let pwdReInput = document.getElementById("pwdRe");
 		let pwdReResult = document.getElementById("pwdReResult");
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 		pwdReCheckResult = false;
 		function pwdReCheck() {
 			if (pwdReInput.value.length === 0) {
@@ -210,10 +205,7 @@
 		let nameInput = document.getElementById("name");
 		let nameResult = document.getElementById("nameResult")
 		const namePattern = /^[가-힣]{2,4}$/;
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 		nameCheckResult = false;
 		function nameCheck() {
 			if (nameInput.value.length === 0) {
@@ -234,10 +226,7 @@
 		let phoneResult = document.getElementById("phoneResult")
 		//01012341234
 		const phonePattern = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 		phoneCheckResult = false;
 		function phoneCheck() {
 			if (phoneInput.value.length === 0) {
@@ -326,7 +315,7 @@
 			let usrEmailTerm = document.getElementsByName('usrEmailTerm');
 			let emailTerm = null;
 			if(usrEmailTerm[0].checked == true){
-				emailTerm = usrEmailTerm[0].value;kplhnn
+				emailTerm = usrEmailTerm[0].value;
 			}
 			if(usrEmailTerm[1].checked == true){
 				emailTerm = usrEmailTerm[1].value;

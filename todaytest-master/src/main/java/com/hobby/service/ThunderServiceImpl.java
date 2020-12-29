@@ -26,7 +26,6 @@ public class ThunderServiceImpl implements ThunderService {
 
 	//Service단에서 log.info가 찍히지 않는다.
 	private ThunderMapper mapper;	
-
 	
 	@Override
 	public List<ThunderVO> getListWithPaging(Criteria cri) {
@@ -43,7 +42,6 @@ public class ThunderServiceImpl implements ThunderService {
 		return mapper.read(cbNum);
 	}
 
-	
 	@Override
 	public List<ClubMemberVO> getJoinList(Long cbnum, String cbmbstresult) {		
 		System.out.println("Service-getJoinHashMap......cbnum: " + cbnum);
@@ -51,7 +49,6 @@ public class ThunderServiceImpl implements ThunderService {
 		
 		return mapper.getJoinList(cbnum, cbmbstresult);
 	}
-
 	
 	
 	@Override
@@ -73,6 +70,8 @@ public class ThunderServiceImpl implements ThunderService {
 		//insert - {call begin  ~ end}는 성공하면 반환값이 -1이 찍힌다..?
 		return result == 1;
 	}
+	
+	
 	
 
 	@Override
@@ -104,7 +103,7 @@ public class ThunderServiceImpl implements ThunderService {
 
 	
 	
-	
+		
 	@Override
 	@Transactional
 	public boolean join(ThunderVO clubVO, UserVO loginUser, String joinState) {
@@ -129,9 +128,7 @@ public class ThunderServiceImpl implements ThunderService {
 			System.out.println("Service-join...... result : " + result);
 			
 			result += mapper.insertJoinHistory(clubVO, loginUser, chagneJoinState);
-			System.out.println("Service-join...... result : " + result);
-			
-			
+			System.out.println("Service-join...... result : " + result);					
 	    }
 		else if(joinState.equals("모임탈퇴")) {
 			//'모임탈퇴'일 때 -> 가입승인 되어야 함
@@ -163,7 +160,10 @@ public class ThunderServiceImpl implements ThunderService {
 		// update가 call-begin-end되있어서 반환값 -1 이라 -> 2-1 =1 나옴
 		return result == 1;
 	}
+	
+	
 
+	
 	@Override
 	public String getCbMemByUsrNum(Long usrNum, Long cbNum) {
 		log.info("getCbMemByUsrNum......" + cbNum);
@@ -172,11 +172,13 @@ public class ThunderServiceImpl implements ThunderService {
 	}
 
 	
+	
+	
 	private static int i = 0;
 	@Override
 	@Scheduled(cron=" */30 * * * * *")
 	public void schedul() {
-		System.out.println(i++ + " Test controller!!");
+		System.out.println("모임 업데이트 (진행중 -> 폐쇄)!! " + i++);
 		
 		mapper.updateFinalState();
 	}

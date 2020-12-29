@@ -17,7 +17,7 @@
 				</ul>
 			</div>
 		 <div id=bodymain>
-		 <h2>수정</h2> 
+		 <span class="half">글 수정</span>
 		 		
 		 <form id="formBoardUpdate" role="form" action="/regular/boardupdate" method="post">
 			
@@ -42,9 +42,7 @@
 			
 			<div class="form-group">
 				<label>내용</label><br>
-				<textarea class="form-control" name='cbBdContent'>
-					<c:out value="${club.cbBdContent}"/>
-				</textarea>
+				<textarea class="form-control" name='cbBdContent'><c:out value="${club.cbBdContent}"/></textarea>
 			</div>
 			
 			<button type="submit" data-oper='update' class="btn btn">수정</button>
