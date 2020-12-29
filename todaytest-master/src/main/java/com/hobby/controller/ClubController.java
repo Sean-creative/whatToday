@@ -218,8 +218,12 @@ public class ClubController {
 
 	// 정기모임 게시판 - 목록list (페이징)
 	@GetMapping("/board")
+	@PreAuthorize("isAuthenticated()")
 	public void list(@RequestParam("cbNum") Long cbNum, NoticeCri cri, Model model) {
 
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long usrNum = customUser.getUser().getUsrNum();
+		
 		log.info("#list page cbNum:" + cbNum);
 		log.info("#list page :" + cri);
 
@@ -233,19 +237,43 @@ public class ClubController {
 		int total = service.boardgetTotal(cri, cbNum);
 		log.info("#board total:" + total);
 		model.addAttribute("pageMaker", new NoticeDTO(cri, total));
+		
+		// 사용자 정보 
+		model.addAttribute("usrNum", usrNum);
+		
+		// 클럽 정보
+		model.addAttribute("club", service.getClub(cbNum));
+		
+		// 만남 정보
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		model.addAttribute("meetingList", meetingList);
 	}
 
 	// 정기모임 게시판 - 조회
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping({ "/boardget", "/boardupdate" })
 	public void get(@RequestParam("cbBno") Long cbBno, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum, Model model) {
-
+		
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long usrNum = customUser.getUser().getUsrNum();
+		
 		log.info("/get or boardupdate");
 		// 화면쪽으로 해당 게시물번호의 정보를 전달하기위해 model에 담는다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
-		model.addAttribute("club", service.get(cbBno));
+		model.addAttribute("clubBoard", service.get(cbBno));
 		model.addAttribute("replyVO", new ReplyVO());
+		
+		// 사용자 정보
+		model.addAttribute("usrNum", usrNum);
+		
+		// 모임 정보
+		model.addAttribute("club", service.getClub(cbNum));
+						
+		// 만남 정보
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		model.addAttribute("meetingList", meetingList);
 	}
 
 	// 정기모임 게시판 - 등록
@@ -263,15 +291,35 @@ public class ClubController {
 
 	// 정기모임 게시판 - 등록
 	@GetMapping("/boardadd")
-	public void boardRegister(Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
-
-		log.info("#boardRegister");
+	public void boardRegister(Authentication auth, Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
+		
+		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		Long usrNum = userVO.getUsrNum();
+		
+		model.addAttribute("usrName", userVO.getUsrName());
+		log.info("###usrName:"+ userVO.getUsrName());
+		
+		log.info("###boardRegister");
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		// model.addAttribute("boardRegister", service.getList(cbNum));
 		model.addAttribute("boardRegister", service.boardgetList(cri, cbNum));
+		
+		model.addAttribute("usrNum", usrNum);
+		
+		// 모임 정보
+		model.addAttribute("club", service.getClub(cbNum));
+						
+		// 만남 정보
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		model.addAttribute("meetingList", meetingList);
+		
+		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
+		
 	}
 
 	// 정기모임 게시판 - 삭제
@@ -418,11 +466,17 @@ public class ClubController {
 			// 모임 개설자는 채팅창을 개설할 수 있음.
 			Long cbLeaderNum = service.getCbLeaderNum(cbNum);
 			model.addAttribute("cbNum", cbNum);
-			model.addAttribute("cbLeaderNum", cbLeaderNum);
 			model.addAttribute("usrNum", usrNum);
-			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 			model.addAttribute("usrName", usrName);
-		}
+			
+			// 모임 정보
+			model.addAttribute("club", service.getClub(cbNum));
+							
+			// 만남 정보
+			List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+			model.addAttribute("meetingList", meetingList);
+			
+			model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());		}
 		
 		
 		return "/regular/chat";

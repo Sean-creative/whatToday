@@ -13,7 +13,7 @@ public class NoticeCri{
 	private int pageNum;
 	private int amount;
 	
-	//header로 인한 cri 이름이 겹쳐서 -> 임시방편 (선우)
+	//header로 인한 cri 이름이 겹쳐서 -> 임시방편(선우)
 	private String keyword;
 	
 	public NoticeCri() {

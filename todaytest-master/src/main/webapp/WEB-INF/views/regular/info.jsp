@@ -9,13 +9,13 @@
 /* 해시태그  */
 ul li.tag-item {
 	padding: 4px 8px;
-	background-color: orange;
+	background-color:#ffaf31;
 	color: white;
 	
 	display: inline-block;
-	margin: 0 5px;
 	font-size: 14px;
 	letter-spacing: -.5px;
+	margin-bottom: 10px;
 }
 
 .tag-item:hover {
@@ -84,9 +84,11 @@ ul li.tag-item {
 						</c:if>
                 </div>
             </div>
-			
-			<button data-oper='list' class="btn btn-info" id="clubList">더 많은 모임을 보려면?</button>
+		  	<button data-oper='list' class="btn btn-info" id="clubList">더 많은 모임을 보려면?</button>
              
+             <form id='operForm' action="/regular/update" method="get">
+                  <input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+        	 </form>	
     	</div> <!-- END leftinfo -->
     	
 		<div id="rightinfo" class="rightinfo">
@@ -135,8 +137,6 @@ ul li.tag-item {
                 </div>      
         </div> <!-- rightinfo END -->
 	</div><!-- END detail -->
-	
-
 
 <!-- 가입하기 모달창  -->
 <div id="id01" class="modal">

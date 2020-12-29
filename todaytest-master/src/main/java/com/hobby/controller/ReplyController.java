@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hobby.domain.ReplyVO;
+import com.hobby.domain.UserVO;
+import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ReplyService;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -101,18 +105,37 @@ public class ReplyController {
 	//댓글 목록
 	@RequestMapping(value="/list", method=RequestMethod.POST)  
 	@ResponseBody
-	private List<ReplyVO> getList(@RequestParam("cbBno") Long cbBno) {
+	private List<ReplyVO> getList(Authentication auth, @RequestParam("cbBno") Long cbBno) {
 		
 		log.info("getList...........");
 		
-		return service.getList(cbBno);
+		Map<String, Object> result = new HashMap<>();
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		
+		List<ReplyVO> replyList = service.getList(cbBno);
+		
+		for (ReplyVO reply : replyList) {
+			log.info("userVO.getUsrName( : " + userVO.getUsrName() + " / reply.getReplyer() : " + reply.getReplyer());
+			if (userVO.getUsrName().equals(reply.getReplyer())) {
+				reply.setIsReplyer("true");
+			} else {
+				reply.setIsReplyer("false");
+			}
+		}
+		log.info("replyList : " + replyList);
+		return replyList;
 	}
 	
 	//댓글 등록
 	@RequestMapping(value="/insert", method=RequestMethod.POST) 
-	public Map<String, Object> register(@RequestBody ReplyVO vo) {
+	public Map<String, Object> register(Authentication auth, @RequestBody ReplyVO vo) {
 		
 		Map<String, Object> result = new HashMap<>();
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		
+		vo.setReplyer(userVO.getUsrName());
 		
 		try {
 			service.register(vo);

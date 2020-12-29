@@ -322,11 +322,20 @@
 	      google.charts.load("current", {packages:['corechart']});
 	      google.charts.setOnLoadCallback(drawChartBar2);
 	      function drawChartBar2() {
-		    	
-		    	
+	    	  
+	    	  let memberCount;
+	    	  let cnt;
+	    	  if('${userVO.memberCount}' == ''){
+		    		memberCount = 0;
+		    		cnt = 10;
+		    	}else{
+		    		memberCount = parseInt('${userVO.memberCount}');
+		    	}
+
+		    	cnt = memberCount * 2;
 		        let data = google.visualization.arrayToDataTable([
 		          ["Element", "명", { role: "style" } ],
-		          ['${userVO.usrLoginDate}', ${userVO.memberCount}, "red"]
+		          ['${userVO.usrLoginDate}', memberCount, "red"]
 		        ]);
 
 		        let view = new google.visualization.DataView(data);
@@ -342,7 +351,14 @@
 	      		 height: '100%',
 		          bar: {groupWidth: "95%"},
 		          legend: { position: "none" },
-		        };
+		             vAxis: {
+		                 viewWindowMode:'explicit',
+		                 viewWindow: {
+		                   min:0,
+		                   max:cnt
+		                 }
+		             },
+		        }
 		        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values2"));
 		        chart.draw(view, options);
 		        window.addEventListener('resize',drawChartBar2,false);

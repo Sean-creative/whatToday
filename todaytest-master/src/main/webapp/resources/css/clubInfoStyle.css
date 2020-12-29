@@ -115,17 +115,15 @@
 } */
 .contentmid button{
     width:auto;
-    height:30px;
     background:#ffaf31;
     border:none;
     color:#fff;
     border-radius: 5px;
     float: right;
+    padding: 8px;
+    margin: 5px;
 }
-#meetingName{
-
-}
-/*rightinfo*/
+/*end rightinfo*/
 
 
 .uu{
@@ -363,10 +361,6 @@
   content: "";
   clear: both;
   display: table;
-}
-
-form {
-	/*padding-top: 16px;*/
 }
 
 .btn{
