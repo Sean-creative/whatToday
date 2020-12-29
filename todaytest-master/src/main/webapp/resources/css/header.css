@@ -19,7 +19,7 @@
     transition:all 0.5s;
 }
 
-.top_btn>a>i{  /*ICON FONT �ㅼ젙*/
+.top_btn>a>i{  /*ICON FONT  ㅼ젙*/
     line-height:40px;
     color:#fff;
     font-size:30px;
@@ -450,6 +450,10 @@ footer{
   .fotinf2{
     color:#fff;
     margin-top:30px;
+<<<<<<< HEAD
+  }
+=======
   }
 
 
+>>>>>>> master
