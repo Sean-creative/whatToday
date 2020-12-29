@@ -21,13 +21,10 @@
 	</select>
 
 
-
-
-
 	<select id="getListKeyRegular" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
 		select * from club
-		where (cbcategory like '%'||#{keyword}||'%'  or  cbsubcat like '%'||#{keyword}||'%') AND  cbtype='정기모임' order by cbNum desc	
+		where (cbcategory like '%'||#{headerKeyword}||'%'  or  cbsubcat like '%'||#{headerKeyword}||'%') AND cbtype='정기모임' AND cbFinalState = '진행중' order by cbNum desc	
 	]]>
 	</select>
 
@@ -36,13 +33,10 @@
 	<select id="getListKeyThunder" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[		
 		select * from club c, thunderdetail td
-		where (c.cbcategory like '%'||#{keyword}||'%'  or c.cbsubcat like '%'||#{keyword}||'%') AND c.cbtype='번개모임' AND  c.cbnum = td.cbnum order by c.cbNum desc
+		where (c.cbcategory like '%'||#{headerKeyword}||'%'  or c.cbsubcat like '%'||#{headerKeyword}||'%') AND c.cbtype='번개모임' AND  c.cbnum = td.cbnum AND c.cbFinalState = '진행중' order by c.cbNum desc
 	]]>
 	</select>
 
 
-
-
-	
 </mapper>
 

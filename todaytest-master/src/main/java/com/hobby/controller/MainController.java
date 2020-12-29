@@ -44,12 +44,12 @@ public class MainController {
 		log.info("searchlist(GET) - cri : " + cri);
 
 		// 정기
-		model.addAttribute("list", service.getListKeyRegular(cri.getKeyword()));
-		log.info("searchlist(GET) - list : " + service.getListKeyRegular(cri.getKeyword()));
+		model.addAttribute("list", service.getListKeyRegular(cri.getHeaderKeyword()));
+//		log.info("searchlist(GET) - list : " + service.getListKeyRegular(cri.getKeyword()));
 
 		// 번개
-		model.addAttribute("clublist", service.getListKeyThunder(cri.getKeyword()));
-		log.info("searchlist(GET) - clublist : " + service.getListKeyThunder(cri.getKeyword()));
+		model.addAttribute("clublist", service.getListKeyThunder(cri.getHeaderKeyword()));
+//		log.info("searchlist(GET) - clublist : " + service.getListKeyThunder(cri.getKeyword()));
 
 	}
 }
