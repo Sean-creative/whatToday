@@ -5,9 +5,15 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="bgpic">
+<div id="regularBoard">
 	<div id="detail">
          <div id="leftinfo">
+         	<div>
+            	<p id="topInfo">#${club.cbSubcat} #${club.cbDistrict}</p>
+            </div>
+            <div>
+            	<p id="topcbName">${club.cbIntro}, ${club.cbName}</p>         
+            </div>
          	<img src="${cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
@@ -18,7 +24,7 @@
 			</div>
 			<div id=bodymain>
 			<table id="clubboard">
-				<tr>
+				<tr id ="tHead">
 			  		<th>#번호</th>
 			  		<th>제목</th>
 					<th>작성자</th>
@@ -29,7 +35,7 @@
 				<tr>
 					<td><c:out value="${club.cbBno}" /></td>
 					<td>
-					<a class='move' href='<c:out value="${club.cbBno }"/>'> 
+					<a class='move' style="color: black;"href='<c:out value="${club.cbBno }"/>'> 
 					<c:out value="${club.cbBdTitle }" /></a>(${club.replyCount})</td>
 					<td><c:out value="${club.cbBdWriter}" /></td>
 					<td><c:out value="${club.cbBdDate}" /></td>
@@ -38,7 +44,7 @@
 				</c:forEach>
 			</table>
 			
- 		<button id="createBtn" type="button">글쓰기</button>
+ 			<button id="createBtn" type="button">글쓰기</button>
 		
 			<div class='pullright'>
 				<ul class="pagination">
@@ -55,16 +61,56 @@
 							<li class="paginate_button next"><a href="${pageMaker.endPage +1}">Next</a></li>
 						</c:if>						
 					</ul>
-			</div>
-			</div> 
-		</div>
-		<div id="rightinfo" class="rightinfo">
-                <div class="content">
-					<c:out value="${cbName}" />
+			</div><!-- END pullright -->
+			</div><!-- END bodymain --> 
+		</div><!-- END leftInfo -->
+<div id="rightinfo" class="rightinfo">
+            <div class="contentup">
+                <div class="contentl">
+                   <p>만남 일정</p>
                 </div>
-        </div>
-    </div>
-</div>
+                <div class="contentr">
+               <!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
+               <c:if test="${usrNum == club.cbLeaderNum}">
+                  <button class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+               </c:if>
+            </div>
+                </div>
+                <div style="margin: 0 10px">
+                <div class="contentmid">
+                   
+                  <form action="#" method="get" id="meeting-form">
+               <%-- <c:choose>
+                        <c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+                        <c:otherwise>모임원</c:otherwise>
+               </c:choose> --%>
+               <c:forEach items="${meetingList}" var="MeetingVO">
+                     <p id = "meetingName">🔸 ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명)</p>
+			               <button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			                  <c:choose>
+			                     <c:when test="${MeetingVO.usrMtState eq '참석중'}">참석 취소</c:when>
+			                     <c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">참석</c:when>
+			                  </c:choose>
+			               </button>
+                     
+                     <fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+                     <p>🔸 <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " /></p>
+                     
+                    <p>🔸 ${MeetingVO.mtAddress} ${MeetingVO.mtPlace}</p>
+                     
+                     <p>🔸 ${MeetingVO.mtSupplies}</p>
+               
+               <hr width="100%" style="margin: 10px">
+         
+               </c:forEach>
+               <input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+               <input type="hidden" name="cbName" value="${club.cbName }" />
+               </form>
+                </div>      
+                </div>      
+        </div> <!-- rightinfo END -->
+        </div><!-- END detail -->
+    </div><!-- END regularBoard -->
 			<!--  end Pagination --> 
 		    <form id='actionForm' action="/regular/board" method='get'>
 		    	<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>

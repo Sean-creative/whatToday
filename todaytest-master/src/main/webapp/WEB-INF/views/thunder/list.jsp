@@ -133,7 +133,7 @@ button>img {
 
 				<div style="display: flex;">
 					
-						<input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="관심 취미를 검색해주세요" />
+						<input type='text' id='keyword' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="취미를 찾아보세요!" />
 						<button class="btnkeyword" >
 							<img src="/resources/img/search.png" alt="">
 						</button>									
@@ -181,10 +181,11 @@ button>img {
 				<p class="location"><c:out value="${thunderItem.cbDistrict}" /></p>
 				<p class="nombre"><c:out value="${thunderItem.cbName}" /></p>
 				<hr style="color: #eee;">
+				
 				<fmt:parseDate var="dateString" value="${thunderItem.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-
 				<p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
-				<p class="limitmem">모집인원 : <c:out value="${thunderItem.cbCurMbnum}" /> / <c:out value="${thunderItem.cbMbnum}" /> 명
+				
+				<p class="limitmem">모집인원 : <c:out value="${thunderItem.cbCurMbnum}" /> / <c:out value="${thunderItem.cbMbnum}" />
 			</div>
 		</c:forEach>
 	</div>

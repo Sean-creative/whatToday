@@ -5,14 +5,20 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="bgpic">
+<div id="regularBoard">
 	<div id="detail">
          <div id="leftinfo">
+         	<div>
+            	<p id="topInfo">#${club.cbSubcat} #${club.cbDistrict}</p>
+            </div>
+            <div>
+            	<p id="topcbName">${club.cbIntro}, ${club.cbName}</p>         
+            </div>
          	<img src="${cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
 					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-					<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+					<li><a href="/regular/board?cbNum=<c:out value="${club.cbNum}" />">게시판</a></li><!--cbNum(모임번호)을 가지고 게시판페이지이동-->
 					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
 				</ul>
 			</div>
@@ -22,37 +28,40 @@
 			 	<div class="rowget">
 				<div class="form-group">
 					<label>게시판 번호</label><br> 
-					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly">
+					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${clubBoard.cbBno}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>제목</label><br> 
-					<input type="text"class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>' readonly="readonly">
+					<input type="text"class="form-control" name='cbBdTitle' value = '<c:out value="${clubBoard.cbBdTitle}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>작성자</label><br>
-					<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly">
+					<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${clubBoard.cbBdWriter}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>내용</label><br>
-					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${club.cbBdContent}"/></textarea>
+					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${clubBoard.cbBdContent}"/></textarea>
 				</div>
-				
-				<button data-oper='update' class="btn">수정</button>
-				<button data-oper='list' class="btn">목록</button>
-				
+				<div id = "updateButton">
+					<div>
+					<button data-oper='update' class="btn">수정</button>
+					<button data-oper='list' class="btn">목록</button>
+					</div>
+				</div>
 				</div>
 				<hr>
 				
+
 	<!-- 댓글 등록  -->
  	<div class="my-3 p-3 bg-white rounded shadow-sm">
 		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
 		<form:hidden path="cbBno" id="cbBno"/>
 			<div class="row">
 				<div class="col-sm-10">
-					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:614px;"/>
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:115%;"/>
 					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
 				</div>	
 			</div>
@@ -63,23 +72,71 @@
 	<div class="my-3 p-3 bg-white rounded shadow-sm">
 		<div id="replyList" style="margin-left: 25px;"></div>
 	</div>
+
 	
-		</div>
-	</div>	
-	
-		<div id="rightinfo" class="rightinfo">
-                <div class="content">
-					<c:out value="${cbName}" />
+	            <!-- 댓글 목록  -->	
+	            <div class="my-3 p-3 bg-white rounded shadow-sm">
+		            <div id="replyList"></div>
+	            </div>
+		
+			
+			</div><!-- END bodymain --> 
+		</div><!-- END leftInfo -->
+<div id="rightinfo" class="rightinfo">
+            <div class="contentup">
+                <div class="contentl">
+                   <p>만남 일정</p>
                 </div>
-        </div>
-	</div>
- </div>
-				<form id='operForm' action="/regular/boardupdate" method="get">
-					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
+                <div class="contentr">
+               <!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
+               <c:if test="${usrNum == club.cbLeaderNum}">
+                  <button class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+               </c:if>
+            </div>
+                </div>
+
+                <div style="margin: 0 10px">
+                <div class="contentmid">
+                   
+                  <form action="#" method="get" id="meeting-form">
+               <%-- <c:choose>
+                        <c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+                        <c:otherwise>모임원</c:otherwise>
+               </c:choose> --%>
+               <c:forEach items="${meetingList}" var="MeetingVO">
+                     <p id = "meetingName">🔸 ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명)</p>
+			               <button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			                  <c:choose>
+			                     <c:when test="${MeetingVO.usrMtState eq '참석중'}">참석 취소</c:when>
+			                     <c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">참석</c:when>
+			                  </c:choose>
+			               </button>
+                     
+                     <fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+                     <p>🔸 <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " /></p>
+                     
+                    <p>🔸 ${MeetingVO.mtAddress} ${MeetingVO.mtPlace}</p>
+                     
+                     <p>🔸 ${MeetingVO.mtSupplies}</p>
+               
+               <hr width="100%" style="margin: 10px">
+         
+               </c:forEach>
+               <input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+               <input type="hidden" name="cbName" value="${club.cbName }" />
+               </form>
+                </div>      
+                </div>      
+        </div> <!-- rightinfo END -->
+        </div><!-- END detail -->
+    </div><!-- END regularBoard -->
+			<!--  end Pagination --> 
+		    <form id='operForm' action="/regular/boardupdate" method="get">
+					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${clubBoard.cbBno}"/>'/>
 					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
-				</form>		
+
  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -113,7 +170,7 @@
 	function showReplyList() {
 		
 		var url = "${pageContext.request.contextPath}/replies/list";
-		var paramData = {"cbBno": "${club.cbBno}"};
+		var paramData = {"cbBno": "${clubBoard.cbBno}"};
 		$.ajax({
             type: 'POST',
             url: url,
@@ -126,24 +183,24 @@
 					htmls += '<span style="padding-left:25px">등록된 댓글이 없습니다.</span>';
 				} else {
 					$(result).each(function(){
-		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0;">';
+		            	htmls += '<div class="media text-muted pt-3" id="rno' + this.rno + '" style="padding: 5px 0 5px 0; width:925px;">';
 		                htmls += '<title>Placeholder</title>';
 		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 		                htmls += '<div>';
 		                htmls += '<span class="d-block">';
 		                htmls += '<strong class="text-gray-dark">'+'&#127752;'+  '&nbsp;'+ this.replyer + '</strong>';
-		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+		                htmls += '</span>';
+		                htmls += '</div>';
+		                htmls += '<div style="margin:5px;width: 80%;">';
+		                htmls += this.reply;
+		                htmls += '<div style="float:right;"><span style="font-size: 9pt; color:#292c34;">';
 		                if (this.isReplyer == "true") {
 			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
 			                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
 		                }
-		                htmls += '</span>';
-		                htmls += '</span>';
+		                htmls += '</span></div>';
 		                htmls += '</div>';
-		                htmls += '<div style="margin:5px;">';
-		                htmls += this.reply;
-		                htmls += '</div>';
-		                htmls += '<hr width="85%" style="color:#F2F2F2;">';
+		                htmls += '<hr width="81%" style="color:#F2F2F2;">';
 		                htmls += '</p>';
 		                htmls += '</div>';
 		           });	//each end
@@ -157,7 +214,7 @@
 		
 		var reply = $('#reply').val();
 		var replyer = $('#replyer').val();
-		var paramData = JSON.stringify({"reply":reply, "replyer":replyer, "cbBno":"${club.cbBno}", "cbNum":"${cbNum}"});
+		var paramData = JSON.stringify({"reply":reply, "replyer":replyer, "cbBno":"${clubBoard.cbBno}", "cbNum":"${cbNum}"});
 	    var headers = {"Content-Type" : "application/json", "X-HTTP-Method-Override" : "POST"};
 		
 	    $.ajax({

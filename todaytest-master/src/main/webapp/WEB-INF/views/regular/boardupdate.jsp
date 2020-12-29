@@ -5,9 +5,15 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="bgpic">
+<div id="regularBoard">
 	<div id="detail">
          <div id="leftinfo">
+         	<div>
+            	<p id="topInfo">#${club.cbSubcat} #${club.cbDistrict}</p>
+            </div>
+            <div>
+            	<p id="topcbName">${club.cbIntro}, ${club.cbName}</p>         
+            </div>
          	<img src="${cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
@@ -27,22 +33,22 @@
 			
 			<div class="form-group">
 				<label>게시판 번호</label><br>
-				<input type="text" class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly"/>
+				<input type="text" class="form-control" name='cbBno' value = '<c:out value="${clubBoard.cbBno}"/>' readonly="readonly"/>
 			</div>
 			
 			<div class="form-group">
 				<label>제목</label><br> 
-				<input type="text" class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>'/>
+				<input type="text" class="form-control" name='cbBdTitle' value = '<c:out value="${clubBoard.cbBdTitle}"/>'/>
 			</div>
 			
 			<div class="form-group">
 				<label>작성자</label><br>
-				<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly"/>
+				<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${clubBoard.cbBdWriter}"/>' readonly="readonly"/>
 			</div>
 			
 			<div class="form-group">
 				<label>내용</label><br>
-				<textarea class="form-control" name='cbBdContent'><c:out value="${club.cbBdContent}"/></textarea>
+				<textarea class="form-control" name='cbBdContent'><c:out value="${clubBoard.cbBdContent}"/></textarea>
 			</div>
 			
 			<button type="submit" data-oper='update' class="btn btn">수정</button>
@@ -51,16 +57,57 @@
 			
 		</form>
 			
-		</div>
-		</div>	
+		</div><!-- END bodymain -->
+		</div><!-- END leftinfo -->
 	
 		<div id="rightinfo" class="rightinfo">
-                <div class="content">
-					<c:out value="${cbName}" />
+            <div class="contentup">
+                <div class="contentl">
+                   <p>만남 일정</p>
                 </div>
-        </div>
-	</div>
- </div>
+                <div class="contentr">
+               <!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
+               <c:if test="${usrNum == club.cbLeaderNum}">
+                  <button class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+               </c:if>
+            </div>
+                </div>
+
+                <div style="margin: 0 10px">
+                <div class="contentmid">
+                   
+                  <form action="#" method="get" id="meeting-form">
+               <%-- <c:choose>
+                        <c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+                        <c:otherwise>모임원</c:otherwise>
+               </c:choose> --%>
+               <c:forEach items="${meetingList}" var="MeetingVO">
+                     <p id = "meetingName">🔸 ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명)</p>
+			               <button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			                  <c:choose>
+			                     <c:when test="${MeetingVO.usrMtState eq '참석중'}">참석 취소</c:when>
+			                     <c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">참석</c:when>
+			                  </c:choose>
+			               </button>
+                     
+                     <fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+                     <p>🔸 <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " /></p>
+                     
+                    <p>🔸 ${MeetingVO.mtAddress} ${MeetingVO.mtPlace}</p>
+                     
+                     <p>🔸 ${MeetingVO.mtSupplies}</p>
+               
+               <hr width="100%" style="margin: 10px">
+         
+               </c:forEach>
+               <input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+               <input type="hidden" name="cbName" value="${club.cbName }" />
+               </form>
+                </div>      
+                </div>      
+        </div> <!-- rightinfo END -->
+        </div><!-- END detail -->
+    </div><!-- END regularBoard -->
  
 <script type="text/javascript">
 	$(document).ready(function() {
