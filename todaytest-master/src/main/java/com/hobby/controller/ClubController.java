@@ -252,7 +252,7 @@ public class ClubController {
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
-		model.addAttribute("club", service.get(cbBno));
+		model.addAttribute("clubBoard", service.get(cbBno));
 		model.addAttribute("replyVO", new ReplyVO());
 		
 		// 모임 정보
@@ -278,9 +278,16 @@ public class ClubController {
 
 	// 정기모임 게시판 - 등록
 	@GetMapping("/boardadd")
-	public void boardRegister(Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
-
-		log.info("#boardRegister");
+	public void boardRegister(Authentication auth, Model model, @ModelAttribute("cri") NoticeCri cri, @RequestParam("cbNum") Long cbNum) {
+		
+		// 로그인을 하면 Authentication을 통해 회원 정보를 가져온다.
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+		UserVO userVO = customUser.getUser();
+		
+		model.addAttribute("usrName", userVO.getUsrName());
+		log.info("###usrName:"+ userVO.getUsrName());
+		
+		log.info("###boardRegister");
 		// 파라미터 model을 통해 cbNum과 clubserviceImpl 객체의 boardgetList 결과를 담아 전달 한다.
 		model.addAttribute("cbNum", cbNum);
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());

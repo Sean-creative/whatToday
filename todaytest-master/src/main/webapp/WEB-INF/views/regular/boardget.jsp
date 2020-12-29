@@ -23,57 +23,54 @@
 				</ul>
 			</div>
 			<div id=bodymain>
-			<h2>조회</h2>
+			<span class="half">글 조회</span>
 			 	
 			 	<div class="rowget">
 				<div class="form-group">
 					<label>게시판 번호</label><br> 
-					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${club.cbBno}"/>' readonly="readonly">
+					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${clubBoard.cbBno}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>제목</label><br> 
-					<input type="text"class="form-control" name='cbBdTitle' value = '<c:out value="${club.cbBdTitle}"/>' readonly="readonly">
+					<input type="text"class="form-control" name='cbBdTitle' value = '<c:out value="${clubBoard.cbBdTitle}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>작성자</label><br>
-					<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${club.cbBdWriter}"/>' readonly="readonly">
+					<input type="text" class="form-control" name='cbBdWriter' value = '<c:out value="${clubBoard.cbBdWriter}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
 					<label>내용</label><br>
-					<textarea class="form-control" name='cbBdContent' readonly="readonly">
-						<c:out value="${club.cbBdContent}"/></textarea>
+					<textarea class="form-control" name='cbBdContent' readonly="readonly"><c:out value="${clubBoard.cbBdContent}"/></textarea>
 				</div>
 				
 				<button data-oper='update' class="btn">수정</button>
 				<button data-oper='list' class="btn">목록</button>
 				
 				</div>
-				<form id='operForm' action="/regular/boardupdate" method="get">
-					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
-					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
-				</form>		
 				<hr>
 				
-	            <!-- 댓글 등록  -->
- 	            <div class="my-3 p-3 bg-white rounded shadow-sm">
-		        <form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
-		            <form:hidden path="cbBno" id="cbBno"/>
-			        <div class="row">
-				        <div class="col-sm-10">
-					        <input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
-				        </div>
-				        <div class="col-sm-2">
-					        <input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
-					        <button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
-				        </div>	
-			        </div> 
-		        </form>
-	            </div> <!--END 댓글 등록-->
+
+	<!-- 댓글 등록  -->
+ 	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
+		<form:hidden path="cbBno" id="cbBno"/>
+			<div class="row">
+				<div class="col-sm-10">
+					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요." style="width:614px;"/>
+					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
+				</div>	
+			</div>
+		</form>
+	</div>  
+	
+	<!-- 댓글 목록  -->	
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<div id="replyList" style="margin-left: 25px;"></div>
+	</div>
+
 	
 	            <!-- 댓글 목록  -->	
 	            <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -110,6 +107,7 @@
                </c:if>
             </div>
                 </div>
+
                 <div style="margin: 0 10px">
                 <div class="contentmid">
                    
@@ -146,11 +144,12 @@
         </div><!-- END detail -->
     </div><!-- END regularBoard -->
 			<!--  end Pagination --> 
-		    <form id='actionForm' action="/regular/board" method='get'>
-		    	<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
-				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-			</form>		
+		    <form id='operForm' action="/regular/boardupdate" method="get">
+					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${clubBoard.cbBno}"/>'/>
+					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
+
  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -184,7 +183,7 @@
 	function showReplyList() {
 		
 		var url = "${pageContext.request.contextPath}/replies/list";
-		var paramData = {"cbBno": "${club.cbBno}"};
+		var paramData = {"cbBno": "${clubBoard.cbBno}"};
 		$.ajax({
             type: 'POST',
             url: url,
@@ -202,16 +201,19 @@
 		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 		                htmls += '<div>';
 		                htmls += '<span class="d-block">';
-		                htmls += '<strong class="text-gray-dark">' + this.replyer + '</strong>';
+		                htmls += '<strong class="text-gray-dark">'+'&#127752;'+  '&nbsp;'+ this.replyer + '</strong>';
 		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
-		                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                if (this.isReplyer == "true") {
+			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
+			                htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rno + ')" >삭제</a>';
+		                }
 		                htmls += '</span>';
 		                htmls += '</span>';
 		                htmls += '</div>';
-		                htmls += '<div>';
+		                htmls += '<div style="margin:5px;">';
 		                htmls += this.reply;
 		                htmls += '</div>';
+		                htmls += '<hr width="85%" style="color:#F2F2F2;">';
 		                htmls += '</p>';
 		                htmls += '</div>';
 		           });	//each end
@@ -225,7 +227,7 @@
 		
 		var reply = $('#reply').val();
 		var replyer = $('#replyer').val();
-		var paramData = JSON.stringify({"reply":reply, "replyer":replyer, "cbBno":"${club.cbBno}", "cbNum":"${cbNum}"});
+		var paramData = JSON.stringify({"reply":reply, "replyer":replyer, "cbBno":"${clubBoard.cbBno}", "cbNum":"${cbNum}"});
 	    var headers = {"Content-Type" : "application/json", "X-HTTP-Method-Override" : "POST"};
 		
 	    $.ajax({
