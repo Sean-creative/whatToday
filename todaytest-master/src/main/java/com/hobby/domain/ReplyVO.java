@@ -21,5 +21,7 @@ public class ReplyVO {
 	private Date replyDate;
 	//댓글 변경일자 
 	private Date updateDate;
+	//댓글 작성자여부 
+	private String isReplyer;
 
 }

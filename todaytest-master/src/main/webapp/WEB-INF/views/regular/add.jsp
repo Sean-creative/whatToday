@@ -51,6 +51,7 @@
 			<div class="lef1">
 				<div class="select_img">
 					<img class="thumbImg" src="/resources/img/logo.png" /> <br>
+
 					<!-- <label for="gdsImg" >이미지 선택</label> -->
 					<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 				</div>

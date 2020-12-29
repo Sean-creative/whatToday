@@ -58,6 +58,7 @@
     	width: 100%;
     	align-items: center;
     	margin: auto;
+    	border-radius: 5px;
 	}
 #banner ul {
     	list-style-type: none;
@@ -85,8 +86,8 @@
 /* board.jsp */
 #bodymain {
         width:100%;
-    	/* height:500px; */
-    	background:pink;
+    	height:auto;
+    	/* background:pink; */
 	}
 #clubboard {
   		font-family: Arial, Helvetica, sans-serif;
@@ -132,10 +133,15 @@
 	}
 	
 /* boardadd.jsp/boardupdate.jsp */
-h2{
-    margin-bottom:40px;
-    padding-left:25px;
-}
+
+.half{
+	margin: 22px;
+	line-height: 3;
+    /* padding-left:25px; */
+    font-size:20px;
+    font-weight:bold;
+    background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+  }
 form {
     text-align: left;
     padding-bottom:30px;
@@ -154,6 +160,7 @@ input[type=text] {
     border:1px solid #e0e0e0;
     border-radius: 5px;
     margin-top:10px;
+    padding-left: 10px;
 }
 ::placeholder{
     padding-left:10px;
@@ -165,6 +172,7 @@ textarea {
 	border:1px solid #e0e0e0;
     border-radius: 5px;
     margin-top:10px;
+    padding-left: 10px;
 }
 .btn{
     background-color: #ffaf31;
