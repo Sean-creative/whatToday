@@ -144,7 +144,7 @@
   }
 form {
     text-align: left;
-    padding-bottom:30px;
+    padding-bottom:20px;
     padding-left:25px;
 }
 label{
@@ -159,7 +159,7 @@ input[type=text] {
     height:40px;
     border:1px solid #e0e0e0;
     border-radius: 5px;
-    margin-top:10px;
+    margin-top:13px;
     padding-left: 10px;
 }
 ::placeholder{
