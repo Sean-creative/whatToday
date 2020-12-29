@@ -28,10 +28,6 @@
 						<button type="submit">모임관리</button>
 					</form>
 
-					<form action="/mypage/myclub/main" method="post">
-						<button type="submit">만남개설</button>
-					</form>
-
 					<form action="/mypage/myclub/userManage" method="get">
 						<button type="submit">모임회원관리</button>
 					</form>
@@ -50,22 +46,22 @@
 	</nav>
 	
 	<section id="wrapInfo">
-		<h3>내가 가입한 정기모임</h3>
+		<h2>내가 가입한 정기모임</h2>
 		<div id="myRegClubList" class="list">
 		</div>
-		<h3 id="myPrevRegClubH3">이전에 가입한 정기모임</h3>
+		<h2 id="myPrevRegClubH3">이전에 가입한 정기모임</h2>
 		<div id="myPrevRegClubList" class="list">
 		</div>
-		<h3 id="myWaitClubH3">가입 대기중인 정기모임</h3>
+		<h2 id="myWaitClubH3">가입 대기중인 정기모임</h2>
 		<div id="myWaitClubList" class="list">
 		<c:forEach var="waitClub" items="${waitClub}">
 		<div class='smallList'><img src='${waitClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div></div>
 		</c:forEach>
 		</div>
-		<h3>내가 가입한 번개모임</h3>
+		<h2>내가 가입한 번개모임</h2>
 		<div id="myThuClubList" class="list">
 		</div>
-		<h3 id="myPrevThuClubH3">이전에 가입한 번개모임</h3>
+		<h2 id="myPrevThuClubH3">이전에 가입한 번개모임</h2>
 		<div id="myPrevThuClubList" class="list">
 		</div>
 		<form id="detailForm" method="get">
