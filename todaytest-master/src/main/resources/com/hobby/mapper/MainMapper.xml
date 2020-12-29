@@ -15,7 +15,7 @@
 	<!-- 메인 번개 최신순으로 정렬 -->
 	<select id="getListThunder" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[
-		select * from club where cbType ='번개모임' AND cbFinalState = '진행중' order by cbNum desc 
+		select * from club c, thunderdetail td where c.cbnum = td.cbnum AND c.cbType ='번개모임' AND c.cbFinalState = '진행중' order by c.cbNum desc 
 	]]>
 		<!-- -->
 	</select>
@@ -35,8 +35,8 @@
 
 	<select id="getListKeyThunder" resultType="com.hobby.domain.ClubVO">
 	<![CDATA[		
-		select * from club
-		where (cbcategory like '%'||#{keyword}||'%'  or  cbsubcat like '%'||#{keyword}||'%') AND  cbtype='번개모임' order by cbNum desc 
+		select * from club c, thunderdetail td
+		where (c.cbcategory like '%'||#{keyword}||'%'  or c.cbsubcat like '%'||#{keyword}||'%') AND c.cbtype='번개모임' AND  c.cbnum = td.cbnum order by c.cbNum desc
 	]]>
 	</select>
 
