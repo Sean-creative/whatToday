@@ -30,8 +30,10 @@ public class MainController {
 		// service.getListRegular(정기모임리스트)를main이라는 이름을 통해 뷰에 보내준다.
 		model.addAttribute("main", service.getListRegular());
 		// service.getListThunder(번개모임리스트)를 main2라는 이름을 통해서 뷰에 보내준다.
-		model.addAttribute("main2", service.getListThunder());
+		model.addAttribute("main2", service.getListThunder());		
 	}
+	
+	
 
 	// 번개 검색결과 보여주기
 	@GetMapping("/searchlist")

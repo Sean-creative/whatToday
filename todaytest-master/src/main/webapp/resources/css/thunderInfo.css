@@ -1,80 +1,358 @@
-*{
-    margin:0;
-    padding:0;
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+/**border-top: 1px solid #eee;*/
+#regularInfo {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+	border-top: 1px solid #eee;
 }
 
-#bgpic{
-    width:100%;
-    height:400px;
-    background:#ffaf31;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-top : 70px;
+#detail {
+	width: 1200px;
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: 23px;
+	box-sizing: border-box;
 }
 
-#detail{
-    width:1200px;
-    position: absolute;
-    top:150px;
-    display: flex;
-    justify-content:space-evenly;
-    box-sizing:border-box;
+#topInfo {
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffaf31;
 }
 
-#leftinfo{
-    width:800px;    
+#topcbName {
+	margin: 6px 0 12px;
+	font-size: 30px;
+	line-height: 42px;
+	font-weight: bold;
 }
 
-#leftinfo img{
-    width:100%;
-    height:400px;
+#topcbIntro {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+#hashtag {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+#leftinfo {
+	width: 800px;
+}
+
+#leftinfo img {
+	width: 100%;
+	height: 400px;
+	border-radius: 10px;
+}
+
+#clubList {
+	padding: 5px 8px 2px 8px;
+	border-radius: 0px;
+	background-color: #FFF;
+	border-bottom: 1.5px solid #999;
+	color: #999;
+	float: right;
+}
+
+/*rightinfo(다혜)*/
+#rightinfo {
+	    width: 30%;
+    height: 450px;
+    background: #ffffff;
+    /* border: 1px solid #eee; */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    margin-top: 80px;
     border-radius: 20px;
 }
 
-#rightinfo{
-    width:30%;
-    height:400px;
-    background:red;
-    margin-left:20px;
+.inforig li {
+    margin-top: 10px;
+}
+
+.contentup {
+	display: flex;
+}
+
+#rightinfo .contentl {
+	width: 70%;
+	height: 80px;
+}
+
+#rightinfo .contentr {
+	width: 30%;
+	height: 95px;
+}
+
+.contentr button {
+	width: 100px;
+	height: 30px;
+	background: #ffaf31;
+	margin-top: 20px;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+}
+
+#rightinfo .contentl>p {
+	line-height: 30px;
+	font-weight: bold;
+	font-size: 30px;
+	margin: 20px;
+}
+
+#rightinfo .contentmid {
+	font-size: 15px;
+	height: 350px;
+	overflow-y: auto;
+	line-height: 1.5;
+}
+
+#rightinfo #appDate {
+	width: 100%;
+    /* height: 400px; */
+    background: #ffffff;
+    /* border: 1px solid #eee; */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* margin-left: 20px; */
+    margin-top: 5px;
     border-radius: 20px;
 }
 
-.uu{
-    position: -webkit-sticky;
-    position: sticky;
-    top:150px;
-    margin-left:70%;
+.contentmid::-webkit-scrollbar {
+	width: 0rem;
 }
-#error{
-    width:100%;
-    height:500px;
-    background:pink;
-}
-
-#error p {
-	font-size:35px;
-}
-
-
-#orange{
-    width:100%;
-    height:500px;
-/*     background:#ffaf31; */
-    background:white;
+/* .contentmid:hover {
+   display: block;
+} */
+.contentmid button {
+	width: auto;
+	height: 40px;
+	background: #ffaf31;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+	float: right;
+	margin-right: 10px;
 }
 
-#ab1111{
-    width:100%;
-    height:500px;
-/*     background:#ab1111; */
+#meetingName {
+	
+}
+/*rightinfo*/
+.uu {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 150px;
+	margin-left: 70%;
 }
 
+#banner {
+	background-color: orange;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	margin: auto;
+	border-radius: 10px;
+}
+
+#banner ul {
+	list-style-type: none;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+#banner li>a {
+	padding: 10px;
+	color: beige;
+	display: flex;
+	margin: 0 100px;
+	text-decoration: none;
+}
+
+#banner li>a:hover {
+	color: orangered;
+}
 
 .sticky {
-  position: sticky;
-  top: 40px;
-  /* margin-left:70%; */
+	position: sticky;
+	top: 40px;
+	/* margin-left:70%; */
+}
+
+#phashtag {
+	width: 100%;
+	height: 80px;
+	/* background:#ab1111; */
+	display: flex;
+}
+
+.hashpp {
+	width: 70px;
+	height: 30px;
+	background: #fff;
+	border-radius: 30px;
+	border: 1px solid #666;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+}
+/* ========== */
+#error {
+	width: 100%;
+	height: 150px;
+	/* background:pink; */
+	display: flex;
+}
+
+#error .infole {
+	width: 30%;
+	/* background:pink; */
+}
+
+#error .infole>p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+#error .inforig {
+	width: 70%;
+	/* background:beige */
+}
+
+/* 상세 내용  */
+#pdetail {
+	width: 100%;
+	height: auto;
+	/* background:pink; */
+	display: flex;
+	margin-top: 20px;
+}
+
+#pdetail .infole {
+	width: 30%;
+	/* background:pink; */
+}
+
+#pdetail .infole>p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+#pdetail .inforig {
+	width: 70%;
+	/* background:beige */
+}
+
+/* 모임명  */
+.clubb {
+	font-size: 18px;
+	color: #333;
+	padding-top: 0;
+}
+
+.clubname {
+	font-size: 20px;
+	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%, transparent 50%);
+}
+/* 한줄소개 */
+.clubintro {
+	font-size: 18px;
+	color: #333;
+	padding: 20px;
+}
+
+.cluban {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	background: rgba(241, 237, 237, 0.7);
+	border-radius: 20px;
+	padding: 20px;
+}
+
+.cluban button {
+	width: 100px;
+	height: 30px;
+	background: #ffaf31;
+	margin-top: 30px;
+	border: none;
+	color: #fff;
+}
+
+/* //////MODAL//////////////////////////////////////////////////// */
+
+/* Add padding and center-align text to the container */
+.container {
+	padding: 16px;
+	text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 80%; /* Full width */
+	height: 80%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Modal Close Button (x) */
+.close {
+	position: absolute;
+	right: 35px;
+	top: 15px;
+	font-size: 40px;
+	font-weight: bold;
+	color: #f44336;
+}
+
+/* Clear floats */
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+form {
+	/*padding-top: 16px;*/
+	
+}
+
+.btn {
+	background-color: #ffaf31;
+	color: #fff;
+	padding: 15px 20px;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+	opacity: 0.9;
+	margin: 10px auto;
 }
 
 
@@ -82,20 +360,14 @@
 
 
 
-section a:link {
-	color: white;
-	text-decoration: none;
-}
 
-section a:visited {
-	color: white;
-	text-decoration: none;
-}
 
-section a:hover {
-	color: red;
-	text-decoration: none;
-}
+
+
+
+
+
+
 
 .thumbImg {
 	width: 200px;
@@ -103,12 +375,10 @@ section a:hover {
 }
 
 /* 해시태그  */
-
 ul li.tag-item {
 	padding: 4px 8px;
 	background-color: orange;
 	color: white;
-	
 	display: inline-block;
 	margin: 0 5px;
 	font-size: 14px;
@@ -120,19 +390,24 @@ ul li.tag-item {
 	color: #fff;
 }
 
-
 /* 카카오맵  */
-#map{
-	width: 100%; 
-	height: 100%; 
-	position: relative; 
-	overflow: hidden;	
+#map {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
 }
+
 #keyword {
-	border: 1px solid #ff9f40; 
+	border: 1px solid #ff9f40;
 	padding: 3px 0px;
 }
 
+/* content */
+.content img {
+	width: 200px;
+	height: 150px;
+}
 
 /* 플러스 버튼 */
 #plusDiv {
@@ -141,50 +416,42 @@ ul li.tag-item {
 
 /* #plusDiv + div는 왜 안되냐 */
 #plusDiv  div {
-	text-align: center; 
+	text-align: center;
 	font-size: 30px;
 }
 
-#plusButton{
-	text-align: center; 
-	width: 120px; 
-	height: 120px; 
-	font-size: 80px; 
-	margin: 0px; 
+#plusButton {
+	text-align: center;
+	width: 120px;
+	height: 120px;
+	font-size: 80px;
+	margin: 0px;
 	overflow: hidden;
 }
 
 #plusDiv #plus {
 	width: 70%;
-	border: 1px solid; 
-	margin: 30px auto; 
+	border: 1px solid;
+	margin: 30px auto;
 	display: none
 }
 
-#plusDiv #plus > div {
-	display: flex; 
-	flex-wrap: wrap; 
-	margin-bottom: 30px; 
+#plusDiv #plus>div {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
 	margin: 0px;
 }
 
-#plusDiv #plus > div > div {
-	text-align: center; 
-	margin: 0px; 
-	width: 40%; 
-	padding: 15px; 
+#plusDiv #plus>div>div {
+	text-align: center;
+	margin: 0px;
+	width: 40%;
+	padding: 15px;
 	font-size: 30px;
 }
 
-#plusDiv #plus > div > div img {
-	width: 150px; 
-	height: 150px;
-}
-
-
-
-/* content */
-.content img {
-	width: 200px; 
+#plusDiv #plus>div>div img {
+	width: 150px;
 	height: 150px;
 }
