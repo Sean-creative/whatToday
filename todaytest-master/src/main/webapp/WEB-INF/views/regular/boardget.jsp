@@ -44,12 +44,6 @@
 				<button data-oper='list' class="btn">목록</button>
 				
 				</div>
-				<form id='operForm' action="/regular/boardupdate" method="get">
-					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
-					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
-					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
-				</form>		
 				<hr>
 				
 	<!-- 댓글 등록  -->
@@ -80,6 +74,12 @@
         </div>
 	</div>
  </div>
+				<form id='operForm' action="/regular/boardupdate" method="get">
+					<input type='hidden' id='cbBno' name='cbBno' value='<c:out value="${club.cbBno}"/>'/>
+					<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'/>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'/>
+				</form>		
  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -131,7 +131,7 @@
 		                htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
 		                htmls += '<div>';
 		                htmls += '<span class="d-block">';
-		                htmls += '<strong class="text-gray-dark">' + this.replyer + '</strong>';
+		                htmls += '<strong class="text-gray-dark">'+'&#127752;'+  '&nbsp;'+ this.replyer + '</strong>';
 		                htmls += '<span style="padding-left: 7px; font-size: 9pt">';
 		                if (this.isReplyer == "true") {
 			                htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rno + ', \'' + this.replyer + '\', \'' + this.reply + '\' )" style="padding-right:5px">수정</a>';
@@ -140,9 +140,10 @@
 		                htmls += '</span>';
 		                htmls += '</span>';
 		                htmls += '</div>';
-		                htmls += '<div>';
+		                htmls += '<div style="margin:5px;">';
 		                htmls += this.reply;
 		                htmls += '</div>';
+		                htmls += '<hr width="85%" style="color:#F2F2F2;">';
 		                htmls += '</p>';
 		                htmls += '</div>';
 		           });	//each end
@@ -164,7 +165,7 @@
 			url: "${btnReplyInsert}"
 			, headers : headers
 			, data : paramData
-			, type : 'GET'
+			, type : 'POST'
 			, dataType : 'text'
 			, success: function(result){
 				showReplyList();
