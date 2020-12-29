@@ -42,8 +42,7 @@
                   <div class="tooltip">
                      <img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
                      <div class="tooltiptext">
-                        <div class="socketAlert"></div>
-
+                         <div id="socketAlert" class="alert alert-success" role="alert"></div>
                      </div>
                </li>
                <li><a href="/login/logout">로그아웃</a></li>
@@ -53,7 +52,7 @@
          </sec:authorize>
       </div>
       <div id="nav">
-        <div class="submenudropdown">
+         <div class="submenudropdown">
             <button onclick="myFunction()" class="dropbtnr" onFocus="this.blur()">&#9776;</button>
             <div id="myDropdown" class="dropdown-contentr">
               <div class="dropreg">
@@ -116,6 +115,7 @@
    <script type="text/javascript">
 var socket = null;  //전역 변수로 선언
 $(document).ready(function() {
+   let msgId;
    let loginCheck = null;
    <sec:authorize access="isAuthenticated()">
    loginCheck = true;
@@ -143,8 +143,8 @@ function myFunction() {
   
   
   window.onclick = function(event) {   
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
+    if (!event.target.matches('.dropbtnr')) {
+      var dropdowns = document.getElementsByClassName("dropdown-contentr");
       var i;
       for (i = 0; i < dropdowns.length; i++) {
         var openDropdown = dropdowns[i];
@@ -185,17 +185,14 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
-var ws = new WebSocket("ws://localhost:8088/echo2/websocket");
+var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
 socket = ws;
-
-
-ws.onopen = function(message){
-   ws.send(msgNum+","+"접속");
-
+let Num = msgNum;
+ws.onopen = function(message){  
+ws.send(Num);
 };
 
 ws.onmessage = function(event){
-   
 console.log(event.data);
 if(event.data == 'plus'){
    $("#alram").attr("src","/resources/img/bellplus.png");
@@ -220,7 +217,6 @@ console.log("Server Error");
 
 };
 }
-
       
       
       var id = document.getElementById("user");

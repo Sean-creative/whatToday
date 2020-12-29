@@ -40,6 +40,7 @@ input,select{vertical-align:middle;}
     transition:all 0.5s;
 }
 
+<<<<<<< HEAD
 .top_btn>a>i{  /*ICON FONT  ㅼ젙*/
     line-height:40px;
     color:#fff;
@@ -866,4 +867,8 @@ input,select{vertical-align:middle;}
   .fotinf2{
     color:#fff;
     margin-top:30px;
+<<<<<<< HEAD
   }
+=======
+  }
+>>>>>>> master
