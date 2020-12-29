@@ -76,7 +76,7 @@
 				<input type="number" id="num" name="cbMbNum" min="1" max="200">
 			</div>
 			<div class="rig1">
-				<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
+				<p class="pil">*60명 이상은 포인트 결제가 필요합니다.</p>
 			</div>
 		</div>
 
@@ -484,5 +484,33 @@
 	
 	
 </script>
-
-<%@include file="../includes/footer.jsp"%>
+<footer style="margin-top:0px;">
+        <div class="canizo">
+          <div class="ftlef">
+            <a href="#">서비스 이용약관</a>
+            <a href="#">개인정보취급방침</a>
+            <a href="/cs/notice">고객센터</a>
+          </div>
+          <div class="ftrig">
+            <li class="ftnaver">
+              <a href=""></a>
+            </li>  
+            <li class="ftkakao"> 
+              <a href=""></a>
+            </li>
+          </div>
+        </div>
+        <div class="canizo2">
+          <p class="quetday">오늘뭐하지?</p>
+          <div class="fotinf">
+            <p>서울특별시 종로구 종로2가 9, 11층</p>
+            <p>김선우,김지영,국민성,조다혜,이수진</p>
+            <p>https://github.com/Sean-creative/whatToday</p>
+            <p>whatToday@gmail.com</p>
+            <p>02-722-1481 (문의시간:10:00~17:00/점심시간 : 13:00~14:00)</p>
+          </div>
+          <div class="fotinf2">
+            <p>© WhatToday Inc. 2020 All Rights Reserved.</p>
+          </div>
+        </div>
+    </footer>
