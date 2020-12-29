@@ -5,14 +5,20 @@
 <%@include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="../resources/css/clubBoardStyle.css">
 
-<div id="bgpic">
+<div id="regularBoard">
 	<div id="detail">
          <div id="leftinfo">
+         	<div>
+            	<p id="topInfo">#${club.cbSubcat} #${club.cbDistrict}</p>
+            </div>
+            <div>
+            	<p id="topcbName">${club.cbIntro}, ${club.cbName}</p>         
+            </div>
          	<img src="${cbThumbImg}" alt="">
 			<div id=banner>
 				<ul>
 					<li><a href="/regular/info?cbNum=<c:out value="${cbNum}" />">정보</a></li> <!--cbNum(모임번호)을 가지고 모임상세페이지이동-->
-					<li><a href="/regular/board?cbNum=<c:out value="${cbNum}" />">게시판</a></li> <!--cbNum(모임번호)을 가지고 게시판페이지이동-->
+					<li><a href="javascript:void(0);">게시판</a></li> <!--a태그의 페이지이동 기능 무효화 -->
 					<li><a href="/regular/chat?cbNum=<c:out value="${cbNum}" />">채팅</a></li>
 				</ul>
 			</div>
@@ -53,37 +59,98 @@
 				</form>		
 				<hr>
 				
-	<!-- 댓글 등록  -->
- 	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
-		<form:hidden path="cbBno" id="cbBno"/>
-			<div class="row">
-				<div class="col-sm-10">
-					<input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
-				</div>
-				<div class="col-sm-2">
-					<input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
-					<button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
-				</div>	
-			</div>
-		</form>
-	</div>  
+	            <!-- 댓글 등록  -->
+ 	            <div class="my-3 p-3 bg-white rounded shadow-sm">
+		        <form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
+		            <form:hidden path="cbBno" id="cbBno"/>
+			        <div class="row">
+				        <div class="col-sm-10">
+					        <input type="text" name="reply" id="reply" class="form-control" placeholder="댓글을 입력해주세요.">
+				        </div>
+				        <div class="col-sm-2">
+					        <input name="replyer" class="form-control" id="replyer" placeholder="댓글 작성자"></input>
+					        <button type="button" class="btn btn-sm btn-promary" id="btnReplyInsert">등록</button>
+				        </div>	
+			        </div> 
+		        </form>
+	            </div> <!--END 댓글 등록-->
 	
-	<!-- 댓글 목록  -->	
-	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<div id="replyList"></div>
-	</div>
-	
-		</div>
-	</div>	
-	
-		<div id="rightinfo" class="rightinfo">
-                <div class="content">
-					<c:out value="${cbName}" />
+	            <!-- 댓글 목록  -->	
+	            <div class="my-3 p-3 bg-white rounded shadow-sm">
+		            <div id="replyList"></div>
+	            </div>
+		
+			<div class='pullright'>
+				<ul class="pagination">
+						
+						<c:if test = "${pageMaker.prev }">
+							<li class="paginate_button previous"><a href="${pageMaker.startPage -1}">Previous</a></li>
+						</c:if>
+						
+						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
+							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""}"><a href="${num}">${num}</a></li>
+						</c:forEach>	
+						
+						<c:if test="${pageMaker.next }">
+							<li class="paginate_button next"><a href="${pageMaker.endPage +1}">Next</a></li>
+						</c:if>						
+					</ul>
+			</div><!-- END pullright -->
+			</div><!-- END bodymain --> 
+		</div><!-- END leftInfo -->
+<div id="rightinfo" class="rightinfo">
+            <div class="contentup">
+                <div class="contentl">
+                   <p>만남 일정</p>
                 </div>
-        </div>
-	</div>
- </div>
+                <div class="contentr">
+               <!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
+               <c:if test="${usrNum == club.cbLeaderNum}">
+                  <button class="btn-meeting" data-oper='addMeeting'>만남 추가</button>
+               </c:if>
+            </div>
+                </div>
+                <div style="margin: 0 10px">
+                <div class="contentmid">
+                   
+                  <form action="#" method="get" id="meeting-form">
+               <%-- <c:choose>
+                        <c:when test="${ClubMemberVO.usrNum == clubVO.cbLeaderNum}">모임장</c:when>
+                        <c:otherwise>모임원</c:otherwise>
+               </c:choose> --%>
+               <c:forEach items="${meetingList}" var="MeetingVO">
+                     <p id = "meetingName">🔸 ${MeetingVO.mtName} (${MeetingVO.mtCurMbNum}/${MeetingVO.mtMbNum}명)</p>
+			               <button class="btn-meeting" data-oper='joinMeeting' value="${MeetingVO.mtNum}">
+			                  <c:choose>
+			                     <c:when test="${MeetingVO.usrMtState eq '참석중'}">참석 취소</c:when>
+			                     <c:when test="${MeetingVO.usrMtState eq '미참석' || MeetingVO.usrMtState==null || MeetingVO.usrMtState eq '모임탈퇴'}">참석</c:when>
+			                  </c:choose>
+			               </button>
+                     
+                     <fmt:parseDate var="dateString" value="${MeetingVO.mtStartDate}" pattern="yyyy-MM-dd'T'HH:mm" />
+                     <p>🔸 <fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분 " /></p>
+                     
+                    <p>🔸 ${MeetingVO.mtAddress} ${MeetingVO.mtPlace}</p>
+                     
+                     <p>🔸 ${MeetingVO.mtSupplies}</p>
+               
+               <hr width="100%" style="margin: 10px">
+         
+               </c:forEach>
+               <input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
+               <input type="hidden" name="cbName" value="${club.cbName }" />
+               </form>
+                </div>      
+                </div>      
+        </div> <!-- rightinfo END -->
+        </div><!-- END detail -->
+    </div><!-- END regularBoard -->
+			<!--  end Pagination --> 
+		    <form id='actionForm' action="/regular/board" method='get'>
+		    	<input type="hidden" id="cbNum" name="cbNum" value="<c:out value="${cbNum}" />"/>
+				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
+			</form>		
  
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">

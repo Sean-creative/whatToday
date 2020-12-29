@@ -218,6 +218,7 @@ public class ClubController {
 
 	// 정기모임 게시판 - 목록list (페이징)
 	@GetMapping("/board")
+	@PreAuthorize("isAuthenticated()")
 	public void list(@RequestParam("cbNum") Long cbNum, NoticeCri cri, Model model) {
 
 		log.info("#list page cbNum:" + cbNum);
@@ -233,6 +234,13 @@ public class ClubController {
 		int total = service.boardgetTotal(cri, cbNum);
 		log.info("#board total:" + total);
 		model.addAttribute("pageMaker", new NoticeDTO(cri, total));
+		
+		// 클럽 정보
+		model.addAttribute("club", service.getClub(cbNum));
+		
+		// 만남 정보
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		model.addAttribute("meetingList", meetingList);
 	}
 
 	// 정기모임 게시판 - 조회
@@ -246,6 +254,13 @@ public class ClubController {
 		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		model.addAttribute("club", service.get(cbBno));
 		model.addAttribute("replyVO", new ReplyVO());
+		
+		// 모임 정보
+		model.addAttribute("club", service.getClub(cbNum));
+						
+		// 만남 정보
+		List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+		model.addAttribute("meetingList", meetingList);
 	}
 
 	// 정기모임 게시판 - 등록
@@ -418,11 +433,17 @@ public class ClubController {
 			// 모임 개설자는 채팅창을 개설할 수 있음.
 			Long cbLeaderNum = service.getCbLeaderNum(cbNum);
 			model.addAttribute("cbNum", cbNum);
-			model.addAttribute("cbLeaderNum", cbLeaderNum);
 			model.addAttribute("usrNum", usrNum);
-			model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 			model.addAttribute("usrName", usrName);
-		}
+			
+			// 모임 정보
+			model.addAttribute("club", service.getClub(cbNum));
+							
+			// 만남 정보
+			List<MeetingVO> meetingList = meetingservice.getMeetingList(cbNum);
+			model.addAttribute("meetingList", meetingList);
+			
+			model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());		}
 		
 		
 		return "/regular/chat";

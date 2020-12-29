@@ -110,8 +110,6 @@
                 </div>      
         </div> <!-- rightinfo END -->
 	</div><!-- END detail -->
-	
-
 
 <!-- 가입하기 모달창  -->
 <div id="id01" class="modal">
