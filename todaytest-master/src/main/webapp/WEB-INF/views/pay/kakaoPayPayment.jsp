@@ -86,7 +86,7 @@
 </div>
 
 <script>
-    $('#kakaopayCharge').click(function () {
+    $('#kakaoPayImg').click(function () {
         // getter
         var IMP = window.IMP;
         IMP.init('imp27258746');

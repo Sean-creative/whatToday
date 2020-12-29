@@ -6,32 +6,12 @@
 
 <link rel="stylesheet" href="<c:url value='../resources/css/boardStyle2.css?after'/>">
 
-<%-- <div class="ntc">
-<div class="bcoran">
-	<a href="/cs/faq">자주묻는질문 </a>
-	<a href="/cs/inquire">1:1 문의사항  </a>
-	<a href="/cs/notice">공지사항</a>
-</div>
 
-<h4>자주묻는 질문입니다.</h4>
-<p>FAQ</p>
-
-	<c:forEach items="${faqContent}" var="faq">
-	
-	<button class="collapsible">
-		<span class="cleft"><c:out value="${faq.faqNum}" /></span>
-		<c:out value="${faq.faqTitle}" />
-	</button>
-		<div class="content">
-		  	<p>내용 <c:out value="${faq.faqContent}"/> </p>
-		</div>
-	 </c:forEach> 
-</div> --%>
 
 	<div class="s-visual">
 		<div class="s-visual-in">
-			<h2>자주묻는질문</h2>
-			<h4>FAQ</h4>
+			<!-- <h2>자주묻는질문</h2>
+			<h4>FAQ</h4> -->
 		</div>
     </div>
     
