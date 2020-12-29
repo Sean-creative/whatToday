@@ -3,6 +3,7 @@
     padding:0;
     text-decoration: none;
     list-style: none;
+	font: inherit;
 }
 /* topbtn */
 .top_btn a{
@@ -47,6 +48,7 @@
     width:1200px;
     height:80px;
     margin:0 auto;
+    z-index: 99;
 }
 #head{
     width:1200px;
@@ -55,6 +57,7 @@
     display:flex;
     justify-content:space-between;
     align-items: center;
+    z-index: 99;
 }
 .menu1{
     display: flex;
@@ -252,28 +255,35 @@
 .tooltip .tooltiptext {
   display: none;
   width: 300px;
-  height: 200px;
-  background-color: black;
+  height: 150px;
+  background-color: #ffaf31;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: 150%;
   left: 50%;
   margin-left: -152.5px;
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent #ffaf31 transparent;
+
+}
+.socketAlert p{
+	margin: 4% 2% 0 4%;
+	white-space: nowrap;
+	overflow: hidden;
+    text-overflow:ellipsis;
 }
 
 /* 햄 */

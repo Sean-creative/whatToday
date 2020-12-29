@@ -6,7 +6,7 @@
 }
 #totalMenu{
     width: 1200px;
-    margin: 50px auto;
+    margin: 60px auto;
     display: flex;
     justify-content: flex-start;
 	
@@ -20,41 +20,38 @@
 
 }
 #wrapInfo{
-    width: 60%;
-    height: 1000px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     border:1px solid transparent;
 	border-radius: .25em; 
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	padding: 10px;
 }
 #wrapInfo2{
-    width: 60%;
-    height: 580px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border:1px solid transparent;
 	border-radius: .25em; 
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	padding: 10px;
 }
 #wrapInfo3{
-    width: 60%;
-    height: 580px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     border:1px solid transparent;
 	border-radius: .25em; 
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	padding: 10px;
 }
 .mypageMenu{
     height: 50%;
-    position: sticky;
-    top: 0;
+    width: 400px;
+    padding: 10px 0 0 0;
 }
 .mypageMenu h5{
     text-align: center;
@@ -90,48 +87,23 @@
 .info button{
 	border: 0;
     outline: 0;
+    border: 1px solid white;
     color: white;
     font-size: 18px;
     background-color: #ffaf31;
-    height: 35px;
-    width: 100%;
-}
-.info button:hover{
-	color: yellow;
-	transition: 1s;
-}
-.accordionBtn {
-	border: 0;
-    outline: 0;
-    color: white;
-    font-size: 18px;
-    background-color: pink;
     height: 40px;
     width: 100%;
 }
-
-.accordionBtn:hover {
-	background-color: pink; 
-}
-.accordion button{
-	width: 100%;
-	background-color: pink;
-}
-
-.accordion {
-	width: 100%;
-	display: none;
-	background-color: pink;
-	overflow: hidden;
-	flex-direction: column; 
-    justify-content: center;
+.info button:hover{
+	color: pink;
+	transition: 1s;
 }
 
 
 .list{
     margin: 0 0 0 0;
     max-width: 100%;
-    height: 20%; 
+    height: 200px; 
     overflow:visible;
     display: flex;
     overflow-x: scroll;
@@ -214,8 +186,9 @@
 	top:20%;
 	width:100%;
 	height: 33.11px;
-	opacity:0;
+	opacity:inherit;
 	transition:all 0.5s ease-in;
+	z-index: inherit;
 
 }
 
@@ -229,8 +202,9 @@
 	top:60%;
 	width:100%;
 	height: 33.11px;
-	opacity:0;
+	opacity:inherit;
 	transition:all 0.5s ease-in;
+	z-index: inherit;
 
 } 
 .detailBtn2{
@@ -243,8 +217,9 @@
 	top:40%;
 	width:100%;
 	height: 33.11px;
-	opacity:0;
+	opacity:inherit;
 	transition:all 0.5s ease-in;
+	z-index: inherit;
 
 }
 .pwdInput{
@@ -252,6 +227,7 @@
 	height:50%;
 	flex-direction: column;
 	justify-content: center;
+	margin-right:100px;
 }
 .pwdInput h3{
 	text-align: center;
@@ -278,7 +254,8 @@
     border-radius: 0.25em;
 }
 .pwWord{
-	margin-left: 25%;
+	margin: 8px 0 8px 25%;
+	/* margin-left: 25%; */
 }
 .modifyInfo{
 	text-align:center; 
@@ -286,33 +263,33 @@
 #preview img{
 	width: 100px;
 	height: 120px;
+	margin-right:100px;
     margin-bottom:5px;
 }
 .userInfo{
 	width: 380px;
-	margin: 0 0 0 210px;
+	margin: 0 0 15px 210px;
 	text-align: left;
 }
 .userInfo input{
-	width: 300px;
+	width: 288px;
     height: 30px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     margin-top: 10px;
-    
+    padding-left: 10px;
+       
 }
 button.swal-button.swal-button--cancel{
 	background-color: #efefef;
 }
 
-.userInfo input:focus{
-	width: 300px;
-}
 .userInfo2{
 	margin-left: 210px;
 	width: 600px;
 }
 .smallInfo{
+	margin: 0 0 5px 0;
 	text-align: left;
 }
 .smallInfo select{
@@ -321,6 +298,7 @@ button.swal-button.swal-button--cancel{
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     margin-right: 2px;
+    padding-left: 5px;
 }
 #phoneDuplicateCheck{
 	width: 70px;
@@ -337,6 +315,7 @@ button.swal-button.swal-button--cancel{
 }
 .labelSt{
 	 width: 120px;
+	 margin: 10px 0 10px 0;
 	 display:inline-block;
 }
 
@@ -351,6 +330,7 @@ button.swal-button.swal-button--cancel{
   cursor: pointer;
   border: orange;
   border-radius: .25em;
+  margin-right: 100px;
 }
 #uploadBtn{
   position: absolute;
@@ -363,9 +343,10 @@ button.swal-button.swal-button--cancel{
   border: 0;
 }
 .modifyBtn{
-	margin-top:5%;
+	margin-top:5px;
 	width: 300px;
 	height: 40px;
+	margin-right: 100px;
 	color: white;
 	background-color: #ffaf31;
     border:none;
@@ -412,4 +393,34 @@ button.swal-button.swal-button--cancel{
 }
 .swal-button{
 	background-color: #ffaf31;
+}
+.noClub{
+	height: 90%;
+}
+.list a{
+	color:black;
+	height: 100%;
+}
+.list a:link{
+	color:black;
+}
+#clubList{
+	height: 35px;
+	width: 30%;
+	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+    text-overflow:ellipsis;
+}
+#tHead th{
+	border-bottom: 1px solid #ffaf31;
+}
+#tFoot th{
+	border-top: 1px solid #ffaf31;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+	color: #333 !important;
+    border: 1px solid #ffaf31 !important;
+    background-color: #ffaf31 !important;
+    background: #ffaf31 !important;
 }

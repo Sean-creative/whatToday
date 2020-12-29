@@ -47,7 +47,7 @@ public class EchoHandler extends TextWebSocketHandler {
 				// msg
 				String content = strs[3];
 
-				if(enter.equals("입장")) {
+				if(enter.equals("개설")) {
 					// 현재 소켓맵에 채팅방이 없을 경우 채팅창을 만든다.
 					if(socketMap.get(target)==null) {
 						System.out.println("### map Put");
@@ -61,7 +61,7 @@ public class EchoHandler extends TextWebSocketHandler {
 					}
 				}
 				
-				// 채팅일 경우
+				// 입장(=채팅)일 경우
 				else {
 					 // 현재 채팅방을 찾아 현재 채팅창에 접속한 사람들에게만 메시지를 전송한다. 
 					 List<WebSocketSession> llist222 = socketMap.get(target);

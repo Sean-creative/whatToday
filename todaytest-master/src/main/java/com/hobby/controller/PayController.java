@@ -84,9 +84,6 @@ public class PayController {
 		Long updatePoint = currentUserPoint -  Long.parseLong(amount);
 		System.out.println("updatePoint: " +  updatePoint);
 		service.pointInsert(usrNum, updatePoint);
-		
-		System.out.println("OKKKKKKKKKKKKK");
-		
 	}
 	
 	// 사용자가 포인트가 얼마있는지 확인

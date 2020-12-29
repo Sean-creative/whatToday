@@ -307,6 +307,8 @@
 			.ready(
 					function() {
 
+						
+						
 						var tag = {};
 						var counter = 0;
 						var maxHash = 0;

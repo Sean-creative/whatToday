@@ -66,23 +66,59 @@
 				</div>
 			</sec:authorize>
 
-			<!-- 로그인되면 보여지는 페이지 -->
-			<sec:authorize access="isAuthenticated()">
-				<div class="menu2">
-					<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li> 	
-					<li>
+		</div>
+		<h1>
+			오늘뭐하지?<br>당신의 즐거운 취미를 찾아드립니다.
+		</h1>
+		<div class="front_visual">
+			<ul>
+				<li class="fv_1"></li>
+				<li class="fv_2"></li>
+				<li class="fv_3"></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- 스크롤시 내려오는 메뉴 -->
+<div id="header">
+	<div id="head">
+		<div class="menu1">
+			<a href="/index/main">
+				<img src="/resources/img/logo.png" alt="logo">
+			</a>
+			<form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
+				<input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
+			</form>
+		</div>
+		<sec:authorize access="isAnonymous()">
+			<div class="menu2">
+				<li><a href="/login/login">로그인</a></li>
+				<li><a href="/cs/notice">고객센터</a></li>
+			</div>
+		</sec:authorize>
+
+		<!-- 로그인되면 보여지는 페이지 -->
+		<sec:authorize access="isAuthenticated()">
+			<div class="menu2">
+				<li><a href="/mypage/main" id="user">
+						<sec:authentication property="principal.user.usrName" />
+						님
+					</a></li>
+				<li>
 					<div class="tooltip">
-					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: -10px 5px 0px 0px;">
-					<div class="tooltiptext">
-					<div id="socketAlert" class="alert alert-success" role="alert"></div>
+					<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px;">
+						<div class="tooltiptext">
+							<div id="socketAlert" class="alert alert-success" role="alert"></div>
 						</div>
-						</div>
-						</li>
-					<li><a href="/login/logout">로그아웃</a></li>
-					<li><a href="/cs/notice">고객센터</a></li>
-					
-				</div>
-			</sec:authorize>
+					</div>
+				</li>
+				<li><a href="/login/logout">로그아웃</a></li>
+				<li><a href="/cs/faq">고객센터</a></li>
+
+			</div>
+		</sec:authorize>
+		
 		</div>
 		<!--  -->
 		<div id="nav">
@@ -232,12 +268,11 @@ $(document).ready(function(){
 	            $(".back_visual li").eq(idx).stop(true,true).fadeIn(300); 
 	            $(".back_visual li").eq(oldidx).stop(true,true).fadeOut(300);
 				$(".front_visual li").eq(idx).stop(true,true).fadeIn(300); 
-	            $(".front_visual li").eq(oldidx).stop(true,true).fadeOut(300); 
+				$(".front_visual li").eq(oldidx).stop(true,true).fadeOut(300); 
 	        }
 	        oldidx=idx; 
 	    }
-	   
-	    function changeAuto(){
+	 function changeAuto(){
 	        idx++;
 	        if(idx>2){ 
 	            idx=0;
@@ -351,7 +386,7 @@ socket = ws;
 let Num = msgNum;
 ws.onopen = function(message){
   
-  ws.send(Num);
+	ws.send(msgNum+","+"접속");
 };
 
 ws.onmessage = function(event){
@@ -412,7 +447,6 @@ console.log("Server Error");
             </li>
           </div>
         </div>
-
         <div class="canizo2">
           <p class="quetday">오늘뭐하지?</p>
           <div class="fotinf">
@@ -430,4 +464,3 @@ console.log("Server Error");
     
 </body>
 </html>
-    

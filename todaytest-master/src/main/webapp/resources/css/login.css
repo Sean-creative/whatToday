@@ -18,6 +18,10 @@
 h1{
     font-family: 'Baloo Tamma 2', cursive;
 }
+#loginToMain{ 
+	text-decoration: none;
+    color: black;
+}
 hr{
     border: 1px solid #ffaf31;
 }

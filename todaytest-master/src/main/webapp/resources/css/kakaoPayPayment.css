@@ -53,7 +53,7 @@ table td{
 #kakaoPaybox{
     padding: 10px;
 }
-
+/*
 #kakaopayCharge{
     background-color: yellow;
     border: none;
@@ -65,7 +65,7 @@ table td{
     cursor: pointer;
     border-radius: 5px; 
 }
-
+*/
 #warnTitle{
     padding: 10px 20px;
     background-color: rgb(248, 248, 249);
@@ -91,11 +91,13 @@ li{
 }
 
 #payBtn{
-    width: 230px;
-    height: 52px;
-    margin : 20px auto; 
+    margin-top: 20px;
+    display: flex;
 }
-
+#kakaoPayImg{
+    width: 140px;
+    margin: 0 auto;
+}
 #imgBanner{
     padding-bottom: 25px;
 }
