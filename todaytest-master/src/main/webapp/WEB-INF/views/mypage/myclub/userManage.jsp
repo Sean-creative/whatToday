@@ -167,7 +167,7 @@ $(document).ready(function() {
 				{"data": "usrName"},
 				{"data": "userVO.usrGender"},
 				{"data": "userVO.usrBirth"},
-				{"data": "cbAppDate"},
+				{"data": "cbJoinStateUpdateDate"},
 				{"data": function (data, type, dataToSet) {
 					console.log(data);
 					let str = "";
