@@ -109,10 +109,10 @@
 												}
 												
 												if(cnt == 0){
-													str = "<a href='/regular/list'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/regular/list'>가입한 정기모임이 없습니다. 가입하러가기.</a>"
+													str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입한 정기모임이 없습니다. <a style='height:15%;' href='/regular/list'>🥺모임 가입하러가기.</a>"
 												}
 												if(cnt2 == 0){
-													str2= "<a href='/thunder/list'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/thunder/list'>가입한 번개모임이 없습니다. 가입하러가기.</a>"
+													str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입한 번개모임이 없습니다. <a style='height:15%;' href='/thunder/list'>🥺모임 가입하러가기.</a>"
 												} 
 												myClubReg.empty();
 												myClubReg.append(str);

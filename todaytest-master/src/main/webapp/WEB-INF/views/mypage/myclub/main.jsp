@@ -88,10 +88,10 @@ $(document).ready(function() {
 				}
 			
 			if(cnt == 0){
-				str = "<a href='/regular/add'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/regular/add'>내가 모임장인 정기모임이 없습니다. 개설하러가기.</a>"
+				str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 정기모임이 없습니다. <a style='height:15%;' href='/regular/add'>🥺모임 개설하러가기.</a>"
 			}
 			if(cnt2 == 0){
-				str2= "<a href='/thunder/add'><img class='noClub' src='/resources/img/upload/default/simoo.png'></a><a href='/thunder/add'>내가 모임장인 번개모임이 없습니다. 개설하러가기.</a>"
+				str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 번개모임이 없습니다. <a style='height:15%;' href='/thunder/add'>🥺 개설하러가기.</a>"
 			}
 	
 			
