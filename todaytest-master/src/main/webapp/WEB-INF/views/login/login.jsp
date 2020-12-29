@@ -13,7 +13,7 @@
 <body>
     <div id="login">
         <div class="loginbx">
-            <h1>LOGIN</h1>
+            <h1><a href="/index/main" id="loginToMain">LOGIN</a></h1>
             <hr>
             <form method="post" action="/login">
                 <div>
@@ -61,12 +61,17 @@
             </form>
         </div>
     </div>
-    
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 if("${registerSuccessMsg }" != ""){
-	alert("${registerSuccessMsg}");
+	swal({
+		  title: "환영합니다.",
+		  text: "${registerSuccessMsg }",
+		  icon: "warning",
+		  button: "확인",
+	});
 }
 </script>
 </body>
 </html>
-<%@ include file="../includes/footer.jsp"%>

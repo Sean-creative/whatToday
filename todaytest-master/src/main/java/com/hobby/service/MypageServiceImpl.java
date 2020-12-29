@@ -267,6 +267,12 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.getUserN(usrNum);
 	}
 
+	@Override
+	public int leaveUserClub(UserVO userVO) {
+
+		return mapper.leaveUserClub(userVO);
+	}
+
 
 
 

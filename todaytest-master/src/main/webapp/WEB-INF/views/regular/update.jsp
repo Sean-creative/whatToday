@@ -1,40 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
+<style>
+#hashTagDiv ul {
+	padding: 16px 0;
+}
+
+#hashTagDiv ul li {
+	display: inline-block;
+	margin: 3px 5px;
+}
+
+#hashTagDiv ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+}
+
+#hashTagDiv .tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+#hashTagDiv .del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+</style>
+
 
 <form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
 	<div id="reguform">
-	
-		<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />'/>
-		
+
+		<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />' />
+
 		<span class="half">정기모임 수정</span>
-		
+
 		<p class="cate">모임명</p>
-      	<div class="caja1">
-        	<div class="lef1">
-            	<div class="select_img">
-            		<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
+		<div class="caja1">
+			<div class="lef1">
+				<div class="select_img">
+					<img class="thumbImg" src="${club.cbThumbImg}" style="margin: 0px;" /> <br>
 					<!-- <label for="gdsImg" >이미지 선택</label> -->
 					<input type="file" id="gdsImg" name="file" style="width: 200px;" />
 					<!-- 사진 첨부 안했을 시 사용해야함 -->
 					<input type='hidden' name='cbFile' value='<c:out value="${club.cbFile}"/>'>
 					<input type='hidden' name='cbThumbImg' value='<c:out value="${club.cbThumbImg}"/>'>
-          		</div>
-          	</div>		
-          	<div class="rig1">
-				<input type="text" id="club" name="cbName" value='<c:out value="${club.cbName}"/>'><br>
-				<input type="text" style="width:350px" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'>
+				</div>
 			</div>
-      	</div>
-		
+			<div class="rig1">
+				<input type="text" id="club" name="cbName" value='<c:out value="${club.cbName}"/>'>
+				<br>
+				<input type="text" style="width: 350px" id="info" name="cbIntro" value='<c:out value="${club.cbIntro}"/>'>
+			</div>
+		</div>
+
 		<p class="cate">카테고리</p>
-      	<div class="caja2">
-        	<div class="lef1">
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbCategory">카테고리/분야</label>
 				<select id="cbCategory" name="cbCategory">
 					<option value="아웃도어/여행" <c:if test="${club.cbCategory eq '아웃도어/여행'}">selected</c:if>>아웃도어/여행</option>
@@ -46,63 +75,77 @@
 					<option value="기타" <c:if test="${club.cbCategory eq '기타'}">selected</c:if>>기타</option>
 				</select>
 			</div>
-            <div class="rig1">	
+			<div class="rig1">
 				<label for="cbSubcat">모임</label>
 				<select id="cbSubcat" name="cbSubcat"></select>
 			</div>
-        </div>
-        
-        <p class="cate">지역</p>
-      	 <div class="caja2">
-         	<div class="lef1">
+		</div>
+
+		<p class="cate">지역</p>
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbCity">지역 </label>
 				<select name="cbCity" id="cbCity">
 					<option value="서울특별시" <c:if test="${club.cbCity eq '서울특별시'}">selected</c:if>>서울특별시</option>
 					<option value="경기도" <c:if test="${club.cbCity eq '경기도'}">selected</c:if>>경기도</option>
 				</select>
 			</div>
-            <div class="rig1">
-            <label for="cbDistrict">세부지역 </label>
-			<select name="cbDistrict" id="cbDistrict"></select>
+			<div class="rig1">
+				<label for="cbDistrict">세부지역 </label>
+				<select name="cbDistrict" id="cbDistrict"></select>
 			</div>
-         </div>
-		
+		</div>
+
 		<p class="cate">정원</p>
-      	 <div class="caja2">
-          	<div class="lef1">
+		<div class="caja2">
+			<div class="lef1">
 				<label for="cbMbNum">정원</label>
 				<input type="number" id="num" name="cbMbNum" min="1" max="200" value='<c:out value="${club.cbMbNum}"/>'>
 			</div>
-            <div class="rig1">
-            	<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
-          	</div>
-         </div>
-		
-		<p class="cate">해쉬태그</p>
-      	 <div class="caja2">
-         	<div class="lef1">
-	        	<input type="hidden" name="cbMakeDate"> <!--개설일자는 sysdate로 설정 -->
-				<label for="cbHashtag">해시태그</label>
-				<input type="text" id="hash" name="cbHashtag" value='<c:out value="${club.cbHashtag}"/>'>
+			<div class="rig1">
+				<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
 			</div>
-      	 </div>
-	
+		</div>
+
+
+		<!--       	 해시태그 업데이트 추가 (선우) -->
+		<p class="cate">해시태그</p>
+		<div class="caja2">
+			<div id="hashTagDiv">
+				<label for="cbHashtag" class="class">해시태그 </label>
+				<input type="hidden" value="" name="cbHashtag" id="rdTag" value='<c:out value="${club.cbHashtag}"/>'>
+				<input type="text" id="tag" size="7" value="#" />
+				<ul id="tag-list"></ul>
+
+				<input type="hidden" name="cbMakeDate">
+				<!--개설일자는 sysdate로 설정 -->
+
+			</div>
+		</div>
+
+
+
 		<p class="cate">모임상세내용</p>
-      	 <div class="caja2">
-         	<div class="lef1 detailinfo">
+		<div class="caja2">
+			<div class="lef1 detailinfo">
 				<label for="cbDetailContent">상세내용</label>
-				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}"/></textarea>
+				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none"><c:out value="${club.cbDetailContent}" /></textarea>
 			</div>
-      	 </div>
-      	 
-      	 <div id="regiform">
-      	 	<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
+		</div>
+
+		<div id="regiform">
+			<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
 			<button type="submit" data-oper='remove' class="btn btn-danger">모임 폐쇄하기</button>
 			<button type="submit" data-oper='list' class="btn btn-info">List</button>
-   	 	 </div>
+		</div>
 
 	</div>
 </form>
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -188,6 +231,11 @@
 				formObj.attr("action", "/regular/list").attr("method", "get");
 				formObj.empty();
 			}
+			
+			
+			//전송되기 전에 해시태그 값 넘기기 (선우)
+			var value = marginTag(); // return array
+			$("#rdTag").val(value);
 			formObj.submit();
 		});
 	});
@@ -208,6 +256,138 @@
 /* 	현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다.  */
 	<%-- <%=request.getRealPath("/")%> --%>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var tag = {};
+	var counter = 0;
+	var maxHash = 0;
+
+	// 태그를 추가한다.
+	function addTag(value) {
+		tag[counter] = value; // 태그를 Object 안에 추가
+		counter++; // counter 증가 삭제를 위한 del-btn 의 고유 id 가 된다.
+		maxHash++;
+	}
+
+	// 최종적으로 서버에 넘길때 tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
+	function marginTag() {
+		return Object.values(tag).filter(function(word) {
+			return word !== "";
+		});
+	}
+
+	// 처음 부터 #이 달려있고
+	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
+	// 5개까지 밖에 입력하지 못한다.
+	$("#tag")
+			.keyup(
+					function(e) {
+						let text = $(this).val();
+
+						if (text.length == 0) {
+							$(this).val("#");
+						}
+						//#은 제외
+						var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+						// test() ㅡ 찾는 문자열이 들어있는지 확인
+						if (regExp.test(text)) {
+							text = text.replace(regExp, ""); // 찾은 특수 문자를 제거													
+						}
+						$(this).val(text);
+					});
+
+	$("#tag")
+			.on(
+					"keypress",
+					function(e) {
+
+						var self = $(this);
+
+						// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
+						if (e.key === "Enter"
+								|| e.keyCode == 32
+								|| e.keyCode == 35) {
+
+							if (maxHash >= 5) {
+								alert("5개가 최대입니다.");
+								self.val("#");
+							} else {
+								var tagValue = self.val(); // 값 가져오기
+
+								//사용자가 갑자기 엔터같은걸 누르면 특수문자가 들어갈 수 있으므로 한번 더 써줌, #은 제외
+								var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\$%&\\\=\(\'\"]/gi;
+
+								// test() ㅡ 찾는 문자열이 들어있는지 확인
+								if (regExp.test(tagValue)) {
+									tagValue = tagValue
+											.replace(
+													regExp,
+													""); // 찾은 특수 문자를 제거													
+								}
+
+								// 값이 없으면 동작 안함, '#'만 실수로 들어가도 동작 안함
+								if (tagValue !== ""
+										&& tagValue !== "#") {
+
+									// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
+									var result = Object
+											.values(tag)
+											.filter(
+													function(
+															word) {
+														return word === tagValue;
+													})
+
+									// 태그 중복 검사
+									if (result.length == 0) {
+										$("#tag-list")
+												.append(
+														"<li class='tag-item'>"
+																+ tagValue
+																+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+										addTag(tagValue);
+										self.val("#");
+									} else {
+										alert("태그값이 중복됩니다.");
+									}
+								}
+							}
+							e.preventDefault(); // SpaceBar 시 빈공간이 생기지 않도록 방지
+
+						}
+					});
+
+	// 삭제 버튼
+	// 삭제 버튼은 비동기적 생성이므로 document 최초 생성시가 아닌 검색을 통해 이벤트를 구현시킨다.
+	$(document).on("click", ".del-btn", function(e) {
+		var index = $(this).attr("idx");
+		tag[index] = "";
+		$(this).parent().remove();
+		maxHash--;
+	});
+
+	
+	//초기에 로딩이 되면 해시태그 데이터를 넣어준다! 
+	let stringHash = '${club.cbHashtag}';
+	let arrayHash = stringHash.split(',');
+	for ( let i in arrayHash) {
+		if (arrayHash[i] != "") {
+			$("#tag-list")
+					.append(
+							"<li class='tag-item'>"
+									+ arrayHash[i]
+									+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
+			addTag(arrayHash[i]);
+		}
+	}
 </script>
 
 <%@include file="../includes/footer.jsp"%>

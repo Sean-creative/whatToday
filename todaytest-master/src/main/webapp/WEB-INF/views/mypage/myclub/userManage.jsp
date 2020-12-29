@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file = "../../includes/header.jsp" %>
+
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage.css' />?after">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <div id="totalMenu">
@@ -21,12 +22,11 @@
 			<div class="info">
 				<h1>메뉴</h1>
 				<form action="/mypage/main" method="get">
-					<button class="btn1" type="submit">마이페이지</button>
+					<button type="submit">마이페이지</button>
 				</form>
-				<button type="button" class="accordionBtn"  style="color: yellow;">모임관리</button>
-				<div class="accordion">
+				
 					<form action="/mypage/myclub/main" method="get">
-						<button type="submit">모임관리홈</button>
+						<button type="submit">모임관리</button>
 					</form>
 
 					<form action="/mypage/myclub/main" method="post">
@@ -34,9 +34,9 @@
 					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
-						<button type="submit">회원관리</button>
+						<button type="submit" style="color: yellow;">모임회원관리</button>
 					</form>
-				</div>
+				
 				<form action="/mypage/auth_edit" method="get">
 					<button type="submit">회원정보수정</button>
 				</form>
@@ -56,7 +56,7 @@
 	<div id="memberList">
 			<table id="memberTable">
 				<thead>
-					<tr>
+					<tr id ="tHead">
 						<th>이름</th>
 						<th>성별</th>
 						<th>생일</th>
@@ -65,7 +65,7 @@
 					</tr>
 				</thead>
 				<tfoot>
-					<tr>
+					<tr id="tFoot">
 						<th>이름</th>
 						<th>성별</th>
 						<th>생일</th>
@@ -81,11 +81,13 @@
 
 
 <script type="text/javascript" src="/resources/js/club.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	let number = <c:out value="${usrNum}"/>;
 	let clubList = $("#clubList");
+	let wrapInfo3 = $("#wrapInfo3")
 	let memberTable = $("#memberTable tbody");
 	let memList = [];
 	let type;
@@ -96,8 +98,38 @@ $(document).ready(function() {
 		let str = "";
 		console.log(club)
 		if(club.length == 0){
-			alert("만든거없음 이건 나중에 바꿀거 지금 테스트용임");
-			return;
+			wrapInfo3.empty();
+			wrapInfo3.append("<img style='width:50%; height:50%;'src='/resources/img/upload/default/simoo.png'>");
+			swal("모임장인 모임이 없어요", {
+				  buttons: {
+				    regular: {
+				      text: "정기모임 개설",
+				      value: "regular",
+				    },
+				    thunder: {
+				    	text: "번개모임 개설",
+					    value: "thunder",
+				    },
+				    cancel: "마이페이지 홈",
+				  },
+				})
+				.then((value) => {
+				  switch (value) {
+				 
+				    case "regular":
+				    window.location.href='http://localhost:8088/regular/add';
+				     break;
+				 
+				    case "thunder":
+				    window.location.href='http://localhost:8088/thunder/add';
+				      break;
+				 
+				    default:
+				    window.location.href='http://localhost:8088/mypage/main';
+				    break;
+				  }
+				});
+			return; 
 		}
 		for (let i = 0; i < club.length; i++) {
 			str += "<option value='"+club[i].cbNum+"' data-cbname='"+club[i].cbName+"' data-cbtype='"+club[i].cbType+"'>"
@@ -111,6 +143,18 @@ $(document).ready(function() {
 	
 	const drawTable = function(cbNum,number){
 		table =	$('#memberTable').DataTable({
+			"bInfo": false,
+			"language": {
+				"search" : "검색 : ",
+				"lengthMenu" : "_MENU_ 개씩 보기",
+				"paginate" : {
+		            "first" : "첫 페이지",
+		            "last" : "마지막 페이지",
+		            "next" : "다음",
+		            "previous" : "이전"
+		        }
+			},
+			
 			"order": [],
 			"createdRow": function( row, data, dataIndex ) {
 				
@@ -123,7 +167,7 @@ $(document).ready(function() {
 				{"data": "usrName"},
 				{"data": "userVO.usrGender"},
 				{"data": "userVO.usrBirth"},
-				{"data": "cbAppDate"},
+				{"data": "cbJoinStateUpdateDate"},
 				{"data": function (data, type, dataToSet) {
 					console.log(data);
 					let str = "";
@@ -143,6 +187,7 @@ $(document).ready(function() {
 				}
 				],
 			"columnDefs":[{
+				"className": "dt-center", "targets": "_all"
 			}]
 		});
 	}
@@ -214,13 +259,14 @@ $(document).ready(function() {
 											if (socket.readyState != 1) {
 												return;
 											}
-
-											socket.send(socData.usrid
-													+ "," + "["
-													+ socData.cbtype + "]"
-													+ socData.cbname
-													+ "에 가입되셨습니다."); //타겟, 내용.
-
+											if(socData.cbJoinStateResult == '가입승인'){
+												socket.send(socData.usrid+ "," + "["+ socData.cbtype + "]"+ socData.cbname+ "에 가입되셨습니다."); //타겟, 내용.
+											}else if(socData.cbJoinStateResult == '승인거부'){
+												socket.send(socData.usrid+ "," + "["+ socData.cbtype + "]"+ socData.cbname+ "에서 가입 거부당하셨습니다."); //타겟, 내용.
+											}else if (socData.cbJoinStateResult == '모임추방'){
+												socket.send(socData.usrid+ "," + "["+ socData.cbtype + "]"+ socData.cbname+ "에서 추방되셨습니다."); //타겟, 내용.
+											}
+	
 										}
 										
 									});
@@ -258,33 +304,64 @@ $(document).ready(function() {
 							data.cbJoinStateResult = status;
 							console.log(data);
 							  if (status == '가입승인') {
-								changeClubMemStatePlus(data);
-								alert("가입승인하셨습니다.");
-								} else if (status == '승인거부') {
-									insertClubJoinHistory(data);
-									alert("승인거부하셨습니다.");
-									} else if (status == '모임추방') {
-										changeClubMemStateMinus(data);
-										alert("모임추방하셨습니다.");
-										}  
+								  swal({
+									  title: "가입승인하시겠습니까?",
+									  text: "승인하면 모임원으로 등록됩니다.",
+									  icon: "warning",
+									  buttons: true,
+									  dangerMode: true,
+									})
+									.then((willDelete) => {
+									  if (willDelete) {
+										  changeClubMemStatePlus(data);
+									    }
+									   else {
+									    swal("취소하셨습니다.");
+									    table.ajax.reload(null,false);
+									  }
+							  })
+									}
+								 else if (status == '승인거부') {
+									swal({
+										  title: "승인거부하시겠습니까?",
+										  text: "거부하시면 이 회원은 모임에 가입이 불가능합니다.",
+										  icon: "warning",
+										  buttons: true,
+										  dangerMode: true,
+										})
+										.then((willDelete) => {
+										  if (willDelete) {
+											  insertClubJoinHistory(data);
+										    }
+										   else {
+										    swal("취소하셨습니다.");
+										    table.ajax.reload(null,false);
+										  }
+										})
+								 }
+									 else if (status == '모임추방') {
+										swal({
+											  title: "모임에서 추방하시겠습니까?",
+											  text: "추방하시면 이 회원은 모임에 가입이 불가능합니다.",
+											  icon: "warning",
+											  buttons: true,
+											  dangerMode: true,
+											})
+											.then((willDelete) => {
+											  if (willDelete) {
+												changeClubMemStateMinus(data);
+											    }
+											   else {
+											    swal("취소하셨습니다.");
+											    table.ajax.reload(null,false);
+											  }
+										}  )
+									 }
 							});
 						
 
 					});
-	var acc = document.getElementsByClassName("accordionBtn");
-	var i;
 
-	for (i = 0; i < acc.length; i++) {
-		acc[i].addEventListener("click", function() {
-			this.classList.toggle("active");
-			var panel = this.nextElementSibling;
-			if (panel.style.display === "block") {
-				panel.style.display = "none";
-			} else {
-				panel.style.display = "block";
-			}
-		});
-	}
 	
 </script>
 

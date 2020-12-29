@@ -1,0 +1,9 @@
+diff a/todaytest-master/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml b/todaytest-master/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml	(rejected hunks)
+@@ -68,6 +68,7 @@
+ <!-- 업로드 패스 설정 --> 
+ <beans:bean class="java.lang.String" id="uploadPath">
+ 
++ <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
+ </beans:bean>
+ 
+ <beans:bean class="java.lang.String" id="uploadFolder">
