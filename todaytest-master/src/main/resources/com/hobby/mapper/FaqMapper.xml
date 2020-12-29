@@ -40,7 +40,7 @@
 <!--공지사항    -->
 <select id="noticeList" resultType="com.hobby.domain.NoticeVO">
 	<![CDATA[
-		select * from notice where ntNum > 0
+		select * from notice where ntNum > 0 order by ntNum desc
 	]]>
 </select>
 
