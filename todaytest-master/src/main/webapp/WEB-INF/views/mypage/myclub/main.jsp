@@ -28,9 +28,6 @@
 						<button type="submit" style="color: yellow;">모임관리</button>
 					</form>
 
-					<form action="/mypage/myclub/main" method="post">
-						<button type="submit">만남개설</button>
-					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
 						<button type="submit">모임회원관리</button>
@@ -50,9 +47,9 @@
 	</nav>
 
 	<section id="wrapInfo3">
-		<h5>내가 모임장인 정기모임</h5>
+		<h3>내가 모임장인 정기모임</h3>
 		<div id="myRegClubList" class="list" style="height: 182.4px;"></div>
-		<h5>내가 모임장인 번개모임</h5>
+		<h3>내가 모임장인 번개모임</h3>
 		<div id="myThuClubList" class="list" style="height: 182.4px;"></div>
 		<form name="manageClub">
 			<input type="hidden" name="cbNum">
@@ -88,10 +85,10 @@ $(document).ready(function() {
 				}
 			
 			if(cnt == 0){
-				str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 정기모임이 없습니다. <a style='height:15%;' href='/regular/add'>🥺모임 개설하러가기.</a>"
+				str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 정기모임이 없습니다.<a style='height:15%;' href='/regular/add'>🥺모임 개설하러가기.</a>"
 			}
 			if(cnt2 == 0){
-				str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 번개모임이 없습니다. <a style='height:15%;' href='/thunder/add'>🥺 개설하러가기.</a>"
+				str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 번개모임이 없습니다.<a style='height:15%;' href='/thunder/add'>🥺모임 개설하러가기.</a>"
 			}
 	
 			

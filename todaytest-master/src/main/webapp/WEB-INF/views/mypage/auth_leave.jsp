@@ -26,9 +26,6 @@
 						<button type="submit">모임관리</button>
 					</form>
 
-					<form action="/mypage/myclub/main" method="post">
-						<button type="submit">만남개설</button>
-					</form>
 
 					<form action="/mypage/myclub/userManage" method="get">
 						<button type="submit">모임회원관리</button>
