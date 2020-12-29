@@ -139,22 +139,29 @@ ul li.tag-item {
 	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
 
 	<form class="modal-content" action="/regular/clubjoin" method="post">
+			
 		<div class="container">
-			<h2>가입 신청서</h2>
+			<h4>가입 신청서</h4>
 			<input type="hidden" name="cbNum" value="<c:out value="${club.cbNum}" />" />
 			<input type="hidden" name="usrNum" value="<c:out value="${usrNum}" />" />
 			<input type="hidden" name="cbType" value="정기모임" />
 			<input type="hidden" name="cbName" value="${club.cbName }" />
 			<input type="hidden" name="cbJoinStateResult" value="승인대기" />
+		</div>
+		<div class="container1">
 			<label><b>가입일자</b></label>
 			<input type="text" name="cbAppDate" value="<c:out value="${toDate}"/>" readonly="readonly">
-			<br> <label><b>이름</b></label>
-			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="readonly"><br> 
+		</div>	 
+		<div class="container1">
+			<label><b>회원이름</b></label>
+			<input type="text" name="usrName" value="<c:out value="${usrName}"/>" readonly="readonly"> 
+		</div>
+		<div class="container2">	
 			<label><b>가입인사</b></label>
-			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea><br>
-			<div class="clearfix">
-				<button type="submit" onclick="document.getElementById('id01').style.display='none'" class="submitbtn">제출하기</button>
-			</div>
+			<textarea rows="5" cols="50" style="resize: none" name="cbMemIntro"></textarea>
+		</div>
+		<div class="clearfix">
+			<button type="submit" onclick="document.getElementById('id01').style.display='none'" class="submitbtn">제출하기</button>
 		</div>
 	</form>
 </div><!-- 가입하기 모달창  -->

@@ -141,9 +141,43 @@
     border-radius: 5px;
 	opacity: 0.9;
 	margin-right: 20px;
+	margin-left: 50px;
 }
 
 /* 파일 업로드 style */
 .select_img img {
 	margin: 20px 0px;
+}
+
+/* 해시태그 */
+#hashTagDiv {
+	display:flex;
+}
+
+#hashTagDiv ul {
+	padding: 16px 0;
+}
+
+#hashTagDiv ul li {
+	display: inline-block;
+	margin: 3px 5px;
+}
+
+#hashTagDiv ul li.tag-item {
+	padding: 4px 8px;
+	background-color: orange;
+	color: white;
+	font-size: 12px;
+}
+
+#hashTagDiv .tag-item:hover {
+	background-color: #262626;
+	color: #fff;
+}
+
+#hashTagDiv .del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
 }
