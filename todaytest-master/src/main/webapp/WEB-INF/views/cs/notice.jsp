@@ -3,12 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp"%>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" href="<c:url value='../resources/css/notice.css?after'/>">
 
  <div class="s-visual">
 		<div class="s-visual-in">
-			<h2>공지사항</h2>
-			<h4>NOTICE</h4>
+			<!-- <h2>공지사항</h2>
+			<h4>NOTICE</h4> -->
 		</div>
     </div>
     
@@ -126,5 +127,6 @@ $(".move").on("click",function(e){
 });	
   });   
 </script>
+<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>
