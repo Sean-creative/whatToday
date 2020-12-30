@@ -71,8 +71,8 @@
 }
 
 /* 검색창 */
-#head input[type=text] {
-    width: 200px;
+#searchHeader{
+    width: 220px;
     box-sizing: border-box;
     border: 1px solid #333;
     /* border-style: none none solid none;
