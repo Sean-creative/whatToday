@@ -91,7 +91,7 @@
 	      select notice_seq.nextval from dual 
 	   </selectKey>
 	   insert into notice (ntNum, ntUsrClassification, ntTitle, ntDate)
-	   values (#{ntNum}, 0, #{ntTitle}, sysdate) 
+	   values (#{ntNum}, 0, #{ntTitle}, TO_CHAR(sysdate, 'YYYY-MM-DD')) 
 	</insert> 
 	<!-- 공지사항 내용   -->
 	<insert id="insertNotiCon">
@@ -104,7 +104,7 @@
 	<!--==========공지사항 수정 ===============  -->
 	<update id="updateNotice">
 		update notice
-		set ntTitle=#{ntTitle},ntDate= sysdate
+		set ntTitle=#{ntTitle},ntDate= TO_CHAR(sysdate, 'YYYY-MM-DD')
 		where ntNum = #{ntNum}
 	</update>
 
