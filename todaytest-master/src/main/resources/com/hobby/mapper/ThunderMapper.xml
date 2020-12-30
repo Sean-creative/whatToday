@@ -252,7 +252,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				</when>
 				<when test="'모임종류'.equals(searchBy)">
 					<if test="keyword != null and keyword!= ''">
-						AND  (cbcategory like '%'||#{keyword}||'%'  or  cbsubcat like '%'||#{keyword}||'%')
+						AND (cbcategory like '%'||#{keyword}||'%' or cbsubcat like '%'||#{keyword}||'%')
 					</if>
 				</when>
 

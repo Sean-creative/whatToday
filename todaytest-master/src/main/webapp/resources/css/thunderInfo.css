@@ -1,5 +1,46 @@
 @charset "UTF-8";
 
+@font-face {
+	font-family: 'MaplestoryOTFBold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'MaplestoryOTFLight';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font3 {
+	font-family: 'MaplestoryOTFLight';
+	font-size: 20px;
+	/* font-weight: bold; */
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -28,6 +69,7 @@
 }
 
 #topcbName {
+	font-family: 'BMHANNAAir';
 	margin: 6px 0 12px;
 	font-size: 30px;
 	line-height: 42px;
@@ -61,22 +103,23 @@
 	border-bottom: 1.5px solid #999;
 	color: #999;
 	float: right;
+	border: none;
 }
 
 /*rightinfo(다혜)*/
 #rightinfo {
-	    width: 30%;
-    height: 450px;
-    background: #ffffff;
-    /* border: 1px solid #eee; */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin-left: 20px;
-    margin-top: 80px;
-    border-radius: 20px;
+	width: 30%;
+	height: 450px;
+	background: #ffffff;
+	/* border: 1px solid #eee; */
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	margin-left: 20px;
+	margin-top: 80px;
+	border-radius: 20px;
 }
 
 .inforig li {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .contentup {
@@ -85,7 +128,7 @@
 
 #rightinfo .contentl {
 	width: 70%;
-	height: 80px;
+	height: 70px;
 }
 
 #rightinfo .contentr {
@@ -110,40 +153,48 @@
 	margin: 20px;
 }
 
+.contentmid img {
+    margin: 10px 0 0 100px;
+}
+
 #rightinfo .contentmid {
 	font-size: 15px;
-	height: 350px;
-	overflow-y: auto;
-	line-height: 1.5;
+    height: 400px;
+    overflow-y: auto;
+    line-height: 1.5;
+    padding-left: 15px;
 }
 
 #rightinfo #appDate {
-	width: 100%;
-    /* height: 400px; */
-    background: #ffffff;
-    /* border: 1px solid #eee; */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    /* margin-left: 20px; */
-    margin-top: 5px;
-    border-radius: 20px;
+	width: 315px;
+	background: #ffffff;	
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);		
+	border-radius: 20px;
+	margin: 20px 1px 0 1px;
 }
 
 .contentmid::-webkit-scrollbar {
 	width: 0rem;
 }
-/* .contentmid:hover {
-   display: block;
-} */
+
+
 .contentmid button {
-	width: auto;
+	width: 70px;
 	height: 40px;
 	background: #ffaf31;
-	border: none;
 	color: #fff;
+	border: none;
+	
 	border-radius: 5px;
 	float: right;
 	margin-right: 10px;
+				;
+	cursor: pointer;	
+	opacity: 0.9;
+	margin: 10px 5px;
 }
+
+
 
 #meetingName {
 	
@@ -216,11 +267,13 @@
 }
 
 #error .infole {
+	font-family: 'paybooc-Bold';
 	width: 30%;
 	/* background:pink; */
 }
 
 #error .infole>p {
+	
 	font-size: 20px;
 	font-weight: bold;
 	color: #333;
@@ -256,9 +309,15 @@
 	/* background:beige */
 }
 
+#appDate .clubb {    
+  padding: 6px 45px 6px 70px;
+}
+
 /* 모임명  */
 .clubb {
-	font-size: 18px;
+	/* font-family: 'paybooc-Light'; */
+	font-family: 'BMHANNAAir';
+	font-size: 20px;
 	color: #333;
 	padding-top: 0;
 }
@@ -343,30 +402,6 @@ form {
 	/*padding-top: 16px;*/
 	
 }
-
-.btn {
-	background-color: #ffaf31;
-	color: #fff;
-	padding: 15px 20px;
-	border: none;
-	cursor: pointer;
-	border-radius: 5px;
-	opacity: 0.9;
-	margin: 10px auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .thumbImg {
