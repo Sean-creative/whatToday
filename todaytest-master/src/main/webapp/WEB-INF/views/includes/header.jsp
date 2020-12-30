@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
-<title>Document</title>
+<title>오늘뭐하지?</title>
 </head>
 <body>
    <!--TOP버튼-->
@@ -27,7 +27,7 @@
          <sec:authorize access="isAnonymous()">
             <div class="menu2">
                <li><a href="/login/login">로그인</a></li>
-               <li><a href="/cs/faq">고객센터</a></li>
+               <li><a href="/cs/notice">고객센터</a></li>
             </div>
          </sec:authorize>
 
@@ -45,7 +45,7 @@
                      </div>
                </li>
                <li><a href="/login/logout">로그아웃</a></li>
-               <li><a href="/cs/faq">고객센터</a></li>
+               <li><a href="/cs/notice">고객센터</a></li>
 
             </div>
          </sec:authorize>
@@ -94,7 +94,7 @@
          </div><!-- END <div class="submenudropdown"> -->
          <a class="submenu" href="/regular/list">정기모임</a>
          <a class="submenu" href="/thunder/list">번개모임</a>
-         <a class="submenu" href="/hobbyTest/test">취미Test</a>
+         <a class="submenu" href="/hobbyTest/test">추천테스트</a>
          <div class="dropdown">
             <a class="submenu" href="#">모임개설</a>
             <div class="dropdown-content ">

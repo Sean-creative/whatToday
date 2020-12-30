@@ -47,8 +47,9 @@
 .notisubmenu a{
     color:#333;
     text-decoration: none;
-    margin-right: 30px;
-    font-size:15px;
+    margin-right: 40px;
+    font-size:18px;
+    font-family: 'paybooc-Bold';
 }
 .notisubmenu a:nth-child(2){
     color: #ffaf31;
@@ -60,6 +61,8 @@
 #faq{
     width:1000px;
     margin:0 auto;
+     font-family: 'paybooc-Medium';
+     font-size:15px;
 }
 .accordion {
     background:#fff;

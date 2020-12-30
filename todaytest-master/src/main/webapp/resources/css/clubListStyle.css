@@ -1,5 +1,24 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *{
 	margin:0;
 	padding:0;	
@@ -13,6 +32,9 @@ a {
 	text-decoration: none;
 }
 /* =======================검색창 ========== */
+#wrap {
+    font-family: 'paybooc-Light';
+}
 section#wrap>form {
 	margin-top: 50px;
 }
@@ -38,6 +60,7 @@ section#wrap>form {
    width: 1200px;
    font-size: 18px;
    margin: 30px 0 10px 0;
+   font-family: 'paybooc-Medium';
 }
 
 .src select {
@@ -48,6 +71,7 @@ section#wrap>form {
    margin-right: 30px;
    margin-top: 0px;
    border: none;
+   font-family: 'paybooc-Light';
 }
 
 .src input[type=text] {
@@ -58,9 +82,10 @@ section#wrap>form {
    margin-top: 10px;
    position: relative;
    text-indent: 15px;      
-    background-color: white;    
-    margin-top: 15px;
+   background-color: white;    
+   margin-top: 15px;
    padding-right: 40px;
+   font-family: 'paybooc-Light';
 }
 
 .src ::placeholder {
@@ -103,6 +128,7 @@ button>img {
     font-size:25px;
     font-weight:bold;
     margin: 0 15px;
+    font-family: 'paybooc-Bold';
 }
 #sort{	
 	width:1200px;
@@ -111,6 +137,7 @@ button>img {
 	margin:0 auto 30px;
 	border-bottom:1px solid #eee;
 	padding-bottom:10px;
+	font-family: 'paybooc-Medium';
 }
 
 #sort ul {

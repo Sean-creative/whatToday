@@ -76,18 +76,18 @@
 				<input type="number" id="num" name="cbMbNum" min="1" max="200">
 			</div>
 			<div class="rig1">
-				<p class="pil">*60명 이상은 포인트 결제가 필요합니다.</p>
+				<p class="pil">*50명 초과는 포인트 결제가 필요합니다.</p>
 			</div>
 		</div>
 
 
 
-		<p class="cate">해시태그</p>
+		<p class="cate">해시태그 (최대 5개)</p>
 		<div class="caja2">
 			<div id="hashTagDiv">
 				<label for="cbHashtag" class="class" style="margin-top: 17px;">해시태그 </label>
 				<input type="hidden" value="" name="cbHashtag" id="rdTag" />
-				<input type="text" id="tag" size="7" placeholder="최대 5개" />
+				<input type="text" id="tag" size="7" value="#"/>
 				<ul id="tag-list"></ul>
 			
 				<input type="hidden" name="cbMakeDate">
@@ -149,7 +149,7 @@
 		 </div><!--END myModal-->
       	 
       	 <div id="regiform">
-      	 	<input type="submit" class="btn" value="개설하기" style="width:80%;">
+      	 	<input type="submit" class="btn" value="개설하기">
    	 	 </div>
    	 	 
 	</div>		
