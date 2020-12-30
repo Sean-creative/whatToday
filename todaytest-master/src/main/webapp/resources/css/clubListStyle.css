@@ -44,7 +44,6 @@ section#wrap>form {
    height: 200px;
    background: #eee;
    margin: 0 auto;
-   font-family: 'paybooc-Light';
 }
 
 .src {
@@ -72,6 +71,7 @@ section#wrap>form {
    margin-right: 30px;
    margin-top: 0px;
    border: none;
+   font-family: 'paybooc-Light';
 }
 
 .src input[type=text] {
@@ -82,9 +82,10 @@ section#wrap>form {
    margin-top: 10px;
    position: relative;
    text-indent: 15px;      
-    background-color: white;    
-    margin-top: 15px;
+   background-color: white;    
+   margin-top: 15px;
    padding-right: 40px;
+   font-family: 'paybooc-Light';
 }
 
 .src ::placeholder {
