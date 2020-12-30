@@ -182,7 +182,7 @@
 						<div>
 							<form role="form" onsubmit="searchPlaces(); return false;">
 								모임 장소 :
-								<input type="text" value="종각역" id="keyword" size="15">
+								<input type="text" value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" id="keyword" size="15">
 								<button type="submit">검색하기</button>
 							</form>
 						</div>

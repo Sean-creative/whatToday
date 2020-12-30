@@ -61,14 +61,16 @@
 						<p>⚡️대기중인 회원은?</p>
 					</div>
 					<div class="inforig">
-						<p>👪모임 멤버 ( ${clubVO.cbCurMbnum} / ${clubVO.cbMbnum}명 )</p>
+						<p class="clubb">👪모임 멤버 ( ${clubVO.cbCurMbnum} / ${clubVO.cbMbnum}명 )</p>
 
 						<c:forEach items="${joinList}" var="joinList">
+							
+							<li>
 							<p class="clubb">
-							<li><c:out value="${joinList.usrName}" /> <c:if test="${joinList.usrNum == clubVO.cbLeaderNum}">
+							<c:out value="${joinList.usrName}" /> <c:if test="${joinList.usrNum == clubVO.cbLeaderNum}">
 							(모임장)
-							</c:if></li>
-							</p>
+							</c:if> </p> </li>
+							
 						</c:forEach>
 					
 					</div>
@@ -80,8 +82,10 @@
 						<p>⚡️언제 시작되나요?</p>
 					</div>
 					<div class="inforig">
+					<p class="clubb">
 							<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
 						<fmt:formatDate value="${dateString}" pattern="yyyy년  M월 d일  E'요일' a h시  m분에 시작합니다!!" />
+						</p>
 					</div>
 				</div>
 				
@@ -98,9 +102,9 @@
 								<div class="option">
 									<div>
 										<form role="form" onsubmit="searchPlaces(); return false;">
-											모임 장소 :
-											<input type="text" value='<c:out value="${clubVO.thunderDetailVO.cbPlace}" />' id="keyword" size="15">
-
+											<p class="clubb">모임 장소 :
+											<input type="text" value='${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}' id="keyword" size="15">
+											</p>
 											<button type="submit">검색하기</button>
 										</form>
 									</div>
@@ -117,7 +121,7 @@
 
 
 
-				<button data-oper='list' class="btn btn-info" id="clubList">더 많은 모임을 보려면?</button>
+				<button data-oper='list' class="btn btn-info" id="clubList"><p class="clubb">더 많은 모임을 보려면?</p></button>
 			</div>
 			<!-- END leftinfo -->
 
@@ -138,11 +142,14 @@
 						<p class="clubb"> <c:out value="${userVO.usrName}" /> </p>						
 						<p class="clubb">(<c:out value="${userVO.usrId}" />)</p>
 
-						<br> <img src="../resources/img/thunderHuman.png"> 
+						<img src="../resources/img/thunderHuman.png"> 
 						
 						<div id="appDate">
+						<p class="clubb">
 						<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
-						<fmt:formatDate value="${dateString}" pattern="yyyy년 M월 d일  E'요일' a h시  m분 까지 신청" />
+						<fmt:formatDate value="${dateString}" pattern="yyyy년 M월 d일  E'요일'" /> <br>
+						<fmt:formatDate value="${dateString}" pattern="a h시  m분 까지 신청" />
+						</p>
 						</div>
 
 						<br>
@@ -153,12 +160,12 @@
 								<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
 								<!-- 모임 마감 까지도 아니면, 모임 가입하기 보여주는 것으로 한다. 그러면 순서가 맞음 -->
 								<c:choose>
-									<c:when test="${joinState eq '가입승인'}">모임 나가기</c:when>
-									<c:when test="${joinState eq '모임추방'}">모임 가입불가</c:when>
-									<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">모임 정원 초과</c:when>
+									<c:when test="${joinState eq '가입승인'}">탈퇴</c:when>
+									<c:when test="${joinState eq '모임추방'}">가입불가</c:when>
+									<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">정원초과</c:when>
 
-									<c:when test="${joinState eq '모임탈퇴' || joinState == null}">모임 가입하기</c:when>
-								</c:choose>
+									<c:when test="${joinState eq '모임탈퇴' || joinState == null}">가입</c:when>
+								</c:choose> 
 							</button>
 						</c:if>
 
@@ -280,19 +287,19 @@
 	// 1. 개설한한 사람이 아니다.
 	// 2. 신청을 한 사람
 	/* 2차 구현 예정........... */
-
+// 탈퇴/가입불가/정원초과/가입
 	console.log($("#join").text().trim());
-	if ($("#join").text().trim() == '모임 나가기') {
+	if ($("#join").text().trim() == '탈퇴') {
 		//모임에 참석중일 때
 		document.getElementById("plusDiv").style.display = "block";
 		document.getElementById("pulsButton").value = "🐵";
-	} else if ($("#join").text().trim() == '모임 가입하기') {
+	} else if ($("#join").text().trim() == '가입') {
 		//모임에 참석 중이 아닐 때
 		document.getElementById("plusDiv").style.display = "none";
 		document.getElementById("plus").style.display = 'none';
 
-	} else if ($("#join").text().trim() == '모임 가입불가'
-			|| $("#join").text().trim() == '모임 정원 초과') {
+	} else if ($("#join").text().trim() == '가입불가'
+			|| $("#join").text().trim() == '정원 초과') {
 		//모임에 가입이 불가능 할 때
 		document.getElementById('join').disabled = 'disabled';
 		document.getElementById("plusDiv").style.display = "none";
