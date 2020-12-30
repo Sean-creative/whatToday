@@ -4,39 +4,11 @@
 
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
-<style>
-#hashTagDiv ul {
-	padding: 16px 0;
-}
 
-#hashTagDiv ul li {
-	display: inline-block;
-	margin: 3px 5px;
-}
-
-#hashTagDiv ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-#hashTagDiv .tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-
-#hashTagDiv .del-btn {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 8px;
-}
-</style>
-
-
+<div style="width:100%; height:1600px;"></div>
 <form role="form" id="formclubUpdate" action="/regular/update" method="post" enctype="multipart/form-data">
 
-	<div id="reguform">
+	<div id="reguform" style="margin:460px auto;">
 
 		<input type="hidden" id="cbNum" name="cbNum" value='<c:out value="${cbNum}" />' />
 
@@ -133,7 +105,7 @@
 			</div>
 		</div>
 
-		<div id="regiform">
+		<div id="regiform1">
 			<button type="submit" data-oper='modify' class="btn btn-default">모임 수정하기</button>
 			<button type="submit" data-oper='remove' class="btn btn-danger">모임 폐쇄하기</button>
 			<button type="submit" data-oper='list' class="btn btn-info">List</button>
@@ -141,11 +113,6 @@
 
 	</div>
 </form>
-
-
-
-
-
 
 <script type="text/javascript">
 
@@ -255,15 +222,7 @@
 	});
 /* 	현재 프로젝트의 실제 경로를 표시합니다. 스프링 파일이 저장되는 워크스페이스와 다르므로, 파일을 저장할 때 실제 경로를 알아야합니다.  */
 	<%-- <%=request.getRealPath("/")%> --%>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	var tag = {};
 	var counter = 0;

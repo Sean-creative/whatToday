@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
    
@@ -21,7 +22,7 @@
                     <ul>
                         <li><a href="/regular/list">정기모임</a></li>
                         <li><a href="/thunder/list">번개모임</a></li>
-                        <li><a href="/hobbyTest/test">추천TEST</a></li>
+                        <li><a href="/hobbyTest/test">추천테스트</a></li>
                         <li><a href="/regular/add">정기개설</a></li>
                         <li><a href="/thunder/add">번개개설</a></li>
                         <li><a href="">포인트충전소</a></li>
@@ -31,7 +32,7 @@
 
                 </div>
                 <h1>오늘뭐하지?</h1>
-                <p class="subinfori">당신의 즐거운 취미를 찾아드립니다.</p>
+                <p class="subinfori">오늘뭐하지를 통해서<br> 즐겨보고 싶었던 취미를 만나보세요!</p>
                <!--  <div class="recomtest"><a href="">추천Test</a></div>
                 <div class="regumak"><a href="">정기모임 </a></div> -->
                 <div class="front_visual">
@@ -74,7 +75,7 @@
                      </div>
                      </li>
                   <li><a href="/login/logout">로그아웃</a></li>
-                  <li><a href="/cs/faq">고객센터</a></li>
+                  <li><a href="/cs/notice">고객센터</a></li>
                   
                </div>
             </sec:authorize>
@@ -126,7 +127,7 @@
           </div>
             <a class="submenu" href="/regular/list">정기모임</a>
             <a class="submenu" href="/thunder/list">번개모임</a>
-            <a class="submenu" href="/hobbyTest/test">추천Test</a>
+            <a class="submenu" href="/hobbyTest/test">추천테스트</a>
             <div class="dropdown">
             <a class="submenu" href="#">모임개설</a>
             <div class="dropdown-content ">
@@ -150,7 +151,7 @@
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
       <div>
          <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
-            <img src='<c:out value="${club.cbThumbImg}" />' alt="">
+            <img src='<c:out value="${club.cbFile}" />' alt="">
             <p class="location"><c:out value="${club.cbDistrict}" /></p>
             <!-- 위치 -->
             <p class="nombre"><c:out value="${club.cbName}" /></p>
@@ -173,7 +174,7 @@
         </div>
         
         <div class="mySlides fade">
-           <a href="/thunder/list">
+           <a href="/regular/list">
                 <img src="/resources/img/banner2.jpg">
            </a>
         </div>
@@ -205,8 +206,6 @@
             <p class="location"><c:out value="${club.cbDistrict}" /></p>
             <p class="nombre"><c:out value="${club.cbName}" /></p>
             <hr style="color: #eee;">
-
-
 
             <fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
             <p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
@@ -340,7 +339,6 @@ tablinks[i].className = tablinks[i].className.replace(" active", "");
 document.getElementById(cityName).style.display = "block";
 evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
 
@@ -354,10 +352,16 @@ ws.onopen = function(message){
 };
 
 ws.onmessage = function(event){
-console.log(event.data);
-$("#socketAlert").prepend(event.data);
+	console.log(event.data);
+	if(event.data == 'plus'){
+	   $("#alram").attr("src","/resources/img/bellplus.png");
+	}
+	if($("#socketAlert p").length == 4){
+	   $("#socketAlert p:last").remove();
+	}
+	$("#socketAlert").prepend("<p>"+event.data+"</p>");
 
-};
+	};
 
 ws.onclose = function(event){
 

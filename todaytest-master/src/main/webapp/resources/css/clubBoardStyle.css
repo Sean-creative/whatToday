@@ -1,6 +1,11 @@
-@charset "UTF-8";
-
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 *{
+    font-family: 'paybooc-Medium';
     margin:0;
     padding:0;
 }
@@ -125,7 +130,7 @@
     	width: 100%;
     	align-items: center;
     	margin: auto;
-    	border-radius: 10px;
+    	border-radius: 10px 10px 0 0;
 	}
 #banner ul {
     	list-style-type: none;
@@ -159,7 +164,7 @@
 #clubboard {
   		font-family: Arial, Helvetica, sans-serif;
   		width: 100%;
-  		margin-top: 3px;
+  		border-collapse: collapse;
     }		
 #clubboard td, #clubboard th {
   		border: 1px solid #ddd;

@@ -54,7 +54,7 @@ ul li.tag-item {
                 	<ul id="tag-list"></ul>
                 	
                 	               
-                    <p class="clubb"><pre>${club.cbDetailContent}</pre>
+                    <p class="clubb"><pre style="font-family: 'paybooc-Medium'; line-height: 30px;">${club.cbDetailContent}</pre>
                 </div>
             </div>
 			

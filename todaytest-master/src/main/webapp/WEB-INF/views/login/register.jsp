@@ -131,9 +131,7 @@
                     </div>
                 </div>
 
-                <div id="regiform">
-                    <input type="submit" class="btn" value="가입하기">
-                </div>
+                <button type="submit" class="btn">가입하기</button>
             </div>
         </div>
     </form>
@@ -446,5 +444,3 @@
 
 </body>
 </html>
-
-<%@include file="../includes/footer.jsp"%>
