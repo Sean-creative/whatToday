@@ -3,7 +3,7 @@
     padding:0;
     text-decoration: none;
     list-style: none;
-	font: inherit;
+	font-style: inherit;
 }
 /* topbtn */
 .top_btn a{
@@ -450,10 +450,6 @@ footer{
   .fotinf2{
     color:#fff;
     margin-top:30px;
-<<<<<<< HEAD
-  }
-=======
+
   }
 
-
->>>>>>> master
