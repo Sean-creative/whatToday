@@ -73,10 +73,11 @@
  <beans:constructor-arg value="C:\Users\jiyeong\Documents\projectWhatToday\todaytest-master\src\main\webapp\resources\img\upload" /> -->
 <!-- 민성 -->
 <beans:bean class="java.lang.String" id="uploadPath">
- <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources" />
 </beans:bean>
+
 <beans:bean class="java.lang.String" id="uploadFolder">
- <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources/img/upload" />
 </beans:bean>
  <!-- <beans:constructor-arg value="C:\Users\jiyeong\Documents\projectWhatToday\todaytest-master\src\main\webapp\resources\img\upload" /> --> 
 

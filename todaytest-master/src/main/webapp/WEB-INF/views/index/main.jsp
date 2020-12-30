@@ -150,7 +150,7 @@
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
       <div>
          <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
-            <img src='<c:out value="${club.cbThumbImg}" />' alt="">
+            <img src='<c:out value="${club.cbFile}" />' alt="">
             <p class="location"><c:out value="${club.cbDistrict}" /></p>
             <!-- 위치 -->
             <p class="nombre"><c:out value="${club.cbName}" /></p>
