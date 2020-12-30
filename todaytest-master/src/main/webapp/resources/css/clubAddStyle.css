@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *{
     margin:0;
     padding:0;
@@ -18,11 +31,13 @@
     position: relative;
     margin-top: 50px;
 }
+
 .half{
     text-align:center;
     font-size:25px;
     font-weight:bold;
     background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+    font-family: 'paybooc-Bold';
   }
 /* ============작성폼============ */
 #reguform{
@@ -36,6 +51,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-family: 'paybooc-Light';
 }
 .caja1{
     display:flex;
@@ -58,6 +74,7 @@
     padding-top:40px;
     font-weight:bold;
     font-size:20px;
+    font-family: 'paybooc-Bold';
 }
 .rig1 input[type=text]{
     width:225px;
@@ -67,6 +84,7 @@
     margin-top:30px;
     padding-left:10px;
     color:#999;
+    font-family: 'paybooc-Light';
 }
 /* ============카테고리 박스 ============== */
 .caja2{
@@ -87,6 +105,7 @@
     margin-top:10px;
     padding-left:10px;
     color:#999;
+    font-family: 'paybooc-Light';
 }
 .caja2 input[type=text]{
     width:225px;
@@ -96,6 +115,7 @@
     margin-top:10px;
     padding-left:10px;
     color:#999;
+    font-family: 'paybooc-Light';
 }
 .caja2 input[type=number]{
     width:225px;
@@ -114,7 +134,7 @@
     margin-top:10px;
     padding-left:10px;
     color:#999;
-    font: inherit;
+    font-family: 'paybooc-Light';
 }
 .detailinfo{
     display:flex;
@@ -127,13 +147,15 @@
     color: #ab1111;
     font-size:13px;
 }
+/* 버튼  */
 #regiform{
     width:400px;
     margin:50px auto;
     display: flex;
 }
-.btn{
-    background-color: #ffaf31;
+#regiform >.btn {
+	width:80%;
+	background-color: #ffaf31;
 	color:#fff;
 	padding: 15px 20px;
 	border: none;
@@ -142,6 +164,22 @@
 	opacity: 0.9;
 	margin-right: 20px;
 	margin-left: 50px;
+	font-family: 'paybooc-Bold';
+}
+#regiform1{
+    margin:50px 200px;
+    display: flex;
+}
+#regiform1 >.btn {
+	background-color: #ffaf31;
+	color:#fff;
+	padding: 15px 15px;
+	border: none;
+	cursor: pointer;
+    border-radius: 5px;
+	opacity: 0.9;
+	margin-right: 25px;
+	font-family: 'paybooc-Bold';
 }
 
 /* 파일 업로드 style */
