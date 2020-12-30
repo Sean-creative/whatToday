@@ -279,7 +279,7 @@
 	border-color: transparent transparent #ffaf31 transparent;
 
 }
-.socketAlert p{
+#socketAlert p{
 	margin: 4% 2% 0 4%;
 	white-space: nowrap;
 	overflow: hidden;

@@ -5,7 +5,7 @@
 <html lang="ko">
 <style>
 .modalSpan{
-	width:100px;
+	width:130px;
 	display: inline-block;
 }
 .modalSpan2{

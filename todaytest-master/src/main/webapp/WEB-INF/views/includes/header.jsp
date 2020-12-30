@@ -193,12 +193,11 @@ ws.onmessage = function(event){
 console.log(event.data);
 if(event.data == 'plus'){
    $("#alram").attr("src","/resources/img/bellplus.png");
-   return;
 }
-if($(".socketAlert p").length == 4){
-   $(".socketAlert p:last").remove();
+if($("#socketAlert p").length == 4){
+   $("#socketAlert p:last").remove();
 }
-$(".socketAlert").prepend("<p>"+event.data+"</p>");
+$("#socketAlert").prepend("<p>"+event.data+"</p>");
 
 };
 
