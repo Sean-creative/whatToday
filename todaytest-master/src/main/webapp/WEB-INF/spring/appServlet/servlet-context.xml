@@ -72,14 +72,25 @@
 <!-- <beans:bean class="java.lang.String" id="uploadFolder">
  <beans:constructor-arg value="C:\Users\jiyeong\Documents\projectWhatToday\todaytest-master\src\main\webapp\resources\img\upload" /> -->
 <!-- 민성 -->
+<<<<<<< HEAD
+<beans:bean class="java.lang.String" id="uploadPath">
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources" />
+=======
 <!-- <beans:bean class="java.lang.String" id="uploadPath">
  <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
+>>>>>>> master
 </beans:bean>
+
 <beans:bean class="java.lang.String" id="uploadFolder">
+<<<<<<< HEAD
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources/img/upload" />
+</beans:bean>
+=======
  <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
 </beans:bean> -->
 
 <!--지영-->
+>>>>>>> master
  <!-- <beans:constructor-arg value="C:\Users\jiyeong\Documents\projectWhatToday\todaytest-master\src\main\webapp\resources\img\upload" /> --> 
 
 <!--다혜 -->
