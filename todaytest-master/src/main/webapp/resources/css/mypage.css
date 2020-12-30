@@ -1,4 +1,9 @@
-
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 *{
     margin:0;
@@ -6,13 +11,18 @@
 }
 
 h3{
+	font-family: 'paybooc-Light';
 	margin-bottom: 30px;
+}
+p{
+	font-family: 'paybooc-Light';
 }
 #totalMenu{
     width: 1200px;
     margin: 60px auto;
     display: flex;
     justify-content: flex-start;
+    font-family: 'paybooc-Light';
 	
 }
 #navMenu{
@@ -21,6 +31,7 @@ h3{
     display: flex;	
     flex-direction: column;
     justify-content: flex-start;
+    font-family: 'paybooc-Light';
 
 }
 #wrapInfo{
@@ -31,6 +42,7 @@ h3{
 	border-radius: .25em; 
 	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	padding: 10px;
+	font-family: 'paybooc-Light';
 }
 #wrapInfo2{
     width: 70%;
@@ -41,6 +53,7 @@ h3{
 	border-radius: .25em; 
 	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	padding: 10px;
+	font-family: 'paybooc-Light';
 }
 #wrapInfo3{
     width: 70%;
@@ -72,6 +85,7 @@ h3{
 	border-radius: .25em; 
     flex-direction: column;
     justify-content: center;
+    font-family: 'paybooc-Light';
 }
 .uInfo img{
     margin: 0 auto;
@@ -86,6 +100,7 @@ h3{
     justify-content: center;
     /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 	border-radius: .25em; 
+	font-family: 'paybooc-Light';
     
 }
 .info button{
@@ -97,6 +112,7 @@ h3{
     height: 45px;
     width: 100%;
     padding: 5px 0px 5px 0px;
+    font-family: 'paybooc-Light';
 }
 
 .info button:hover{

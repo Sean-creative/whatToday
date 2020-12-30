@@ -21,7 +21,7 @@
                <img src="/resources/img/logo.png" alt="logo">
             </a>
             <form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-               <input id="serchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
+               <input id="searchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
             </form>
          </div>
          <sec:authorize access="isAnonymous()">
@@ -35,8 +35,7 @@
          <sec:authorize access="isAuthenticated()">
             <div class="menu2">
                <li><a href="/mypage/main" id="user">
-                     <sec:authentication property="principal.user.usrName" />
-                     님
+                     <sec:authentication property="principal.user.usrName" />님
                   </a></li>
                <li>
                   <div class="tooltip">
