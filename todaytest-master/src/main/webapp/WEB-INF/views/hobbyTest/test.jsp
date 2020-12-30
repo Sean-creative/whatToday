@@ -18,8 +18,8 @@
     <div class="mySlides fade">
         <div class="question"><h2>1. 당신은 사람들과 어울려 노는 것을 좋아하십니까?</h2>
         <br><br>
-        <label for="selectYes1">YES</label><input type="radio" id ="selectYes1" name="userResult1" value="Y" onclick="plusSlides(1);">
-        <label for="selectNo1">NO</label><input type="radio" id ="selectNo1" name="userResult1" value="N" onclick="plusSlides(1);">
+        <label for="selectYes1"> YES</label><input type="radio" id ="selectYes1" name="userResult1" value="Y" onclick="plusSlides(1);">
+        <label for="selectNo1"> NO</label><input type="radio" id ="selectNo1" name="userResult1" value="N" onclick="plusSlides(1);">
         <br><br><br>
         </div>
     </div>
@@ -27,8 +27,8 @@
     <div class="mySlides fade">
         <div class="question"><h2>2.당신은 야외에서 활동하는 것을 좋아하십니까? </h2>
         <br><br>
-        <label for="selectYes2">YES</label><input type="radio" id ="selectYes2" name="userResult2" value="Y" onclick="plusSlides(1);">
-        <label for="selectNo2">NO</label><input type="radio" id ="selectNo2" name="userResult2" value="N" onclick="plusSlides(1);">
+        <label for="selectYes2"> YES</label><input type="radio" id ="selectYes2" name="userResult2" value="Y" onclick="plusSlides(1);">
+        <label for="selectNo2"> NO</label><input type="radio" id ="selectNo2" name="userResult2" value="N" onclick="plusSlides(1);">
         <br><br><br>
         </div>
     </div>
@@ -36,8 +36,8 @@
     <div class="mySlides fade">
         <div class="question"><h2>3. 당신은 새로운 도전을 즐겨 하십니까? </h2>
         <br><br>
-        <label for="selectYes3">YES</label><input type="radio" id ="selectYes3" name="userResult3" value="Y" onclick="plusSlides(1);">
-        <label for="selectNo3">NO</label><input type="radio" id ="selectNo3" name="userResult3" value="N" onclick="plusSlides(1);">
+        <label for="selectYes3"> YES</label><input type="radio" id ="selectYes3" name="userResult3" value="Y" onclick="plusSlides(1);">
+        <label for="selectNo3"> NO</label><input type="radio" id ="selectNo3" name="userResult3" value="N" onclick="plusSlides(1);">
         <br><br><br>
         </div>
     </div>
@@ -45,8 +45,8 @@
     <div class="mySlides fade">
         <div class="question"><h2>4. 당신은 계획적인 사람 입니까?</h2>
         <br><br>
-        <label for="selectYes4">YES</label><input type="radio" id ="selectYes4" name="userResult4" value="Y" onclick="plusSlides(1);">
-        <label for="selectNo4">NO</label><input type="radio" id ="selectNo4" name="userResult4" value="N" onclick="plusSlides(1);">
+        <label for="selectYes4"> YES</label><input type="radio" id ="selectYes4" name="userResult4" value="Y" onclick="plusSlides(1);">
+        <label for="selectNo4"> NO</label><input type="radio" id ="selectNo4" name="userResult4" value="N" onclick="plusSlides(1);">
         <br><br><br>
         </div>
     </div>

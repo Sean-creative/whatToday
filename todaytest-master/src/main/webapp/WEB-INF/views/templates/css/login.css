@@ -21,6 +21,10 @@ h1{
 hr{
     border: 1px solid #ffaf31;
 }
+
+form{
+	font-family: 'paybooc-Bold';
+}
 form>div{
     margin:20px 0;
 }
