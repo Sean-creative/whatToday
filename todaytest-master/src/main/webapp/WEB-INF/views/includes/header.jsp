@@ -21,7 +21,7 @@
                <img src="/resources/img/logo.png" alt="logo">
             </a>
             <form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-               <input id="serchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
+               <input id="searchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
             </form>
          </div>
          <sec:authorize access="isAnonymous()">
@@ -35,8 +35,7 @@
          <sec:authorize access="isAuthenticated()">
             <div class="menu2">
                <li><a href="/mypage/main" id="user">
-                     <sec:authentication property="principal.user.usrName" />
-                     님
+                     <sec:authentication property="principal.user.usrName" />님
                   </a></li>
                <li>
                   <div class="tooltip">
@@ -182,14 +181,12 @@ evt.currentTarget.className += " active";
 }
 
 
-document.getElementById("defaultOpen").click();
-
 function connectWS(msgNum){
-var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
+var ws = new WebSocket("ws://localhost:8088/echo2/websocket");
 socket = ws;
 let Num = msgNum;
 ws.onopen = function(message){  
-ws.send(Num);
+	ws.send(msgNum+","+"접속");
 };
 
 ws.onmessage = function(event){
