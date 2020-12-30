@@ -339,7 +339,6 @@ tablinks[i].className = tablinks[i].className.replace(" active", "");
 document.getElementById(cityName).style.display = "block";
 evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
 
 function connectWS(msgNum){
 
@@ -353,10 +352,16 @@ ws.onopen = function(message){
 };
 
 ws.onmessage = function(event){
-console.log(event.data);
-$("#socketAlert").prepend(event.data);
+	console.log(event.data);
+	if(event.data == 'plus'){
+	   $("#alram").attr("src","/resources/img/bellplus.png");
+	}
+	if($("#socketAlert p").length == 4){
+	   $("#socketAlert p:last").remove();
+	}
+	$("#socketAlert").prepend("<p>"+event.data+"</p>");
 
-};
+	};
 
 ws.onclose = function(event){
 

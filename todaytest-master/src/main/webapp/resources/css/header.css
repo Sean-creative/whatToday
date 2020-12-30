@@ -28,7 +28,6 @@
     padding:0;
     text-decoration: none;
     list-style: none;
-	font-style: inherit;
 }
 /* topbtn */
 .top_btn a{
@@ -308,7 +307,7 @@
 	border-color: transparent transparent #ffaf31 transparent;
 
 }
-.socketAlert p{
+#socketAlert p{
 	margin: 4% 2% 0 4%;
 	white-space: nowrap;
 	overflow: hidden;
