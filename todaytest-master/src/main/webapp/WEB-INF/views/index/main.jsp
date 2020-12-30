@@ -52,7 +52,7 @@
             <img src="/resources/img/logo.png" alt="logo">
          </a>
          <form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-            <input type="text" name="keyword" placeholder="관심분야를 입력해주세요:)">
+            <input type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)">
          </form>
       </div>
          <sec:authorize access="isAnonymous()">
@@ -150,7 +150,7 @@
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
       <div>
          <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
-            <img src='<c:out value="${club.cbThumbImg}" />' alt="">
+            <img src='<c:out value="${club.cbFile}" />' alt="">
             <p class="location"><c:out value="${club.cbDistrict}" /></p>
             <!-- 위치 -->
             <p class="nombre"><c:out value="${club.cbName}" /></p>
@@ -382,11 +382,11 @@ console.log("Server Error");
       const inputCheckMain = function(){
 
          // 공백을 제거해한 뒤에 개수를 세던지 한다.
-         let keyword = $.trim($("[name=keyword]").val());
-         $('[name=keyword]').val(keyword);
+         let headerKeyword = $.trim($("[name=headerKeyword]").val());
+         $('[name=headerKeyword]').val(headerKeyword);
 
-         console.log(keyword.length);
-         if (keyword.length > 30) {
+         console.log(headerKeyword.length);
+         if (headerKeyword.length > 30) {
             alert("키워드가 너무 깁니다 (30자 이하)");
             return false;
          }

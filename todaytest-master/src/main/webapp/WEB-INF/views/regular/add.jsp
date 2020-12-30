@@ -5,35 +5,6 @@
 <%@include file="../includes/header.jsp"%>
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 <link rel="stylesheet" href="/resources/css/paymentModal.css">
-<style>
-#hashTagDiv ul {
-	padding: 16px 0;
-}
-
-#hashTagDiv ul li {
-	display: inline-block;
-	margin: 3px 5px;
-}
-
-#hashTagDiv ul li.tag-item {
-	padding: 4px 8px;
-	background-color: orange;
-	color: white;
-}
-
-#hashTagDiv .tag-item:hover {
-	background-color: #262626;
-	color: #fff;
-}
-
-#hashTagDiv .del-btn {
-	font-size: 12px;
-	font-weight: bold;
-	cursor: pointer;
-	margin-left: 8px;
-}
-</style>
-
 
 <div class="regubg"></div>
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
@@ -59,7 +30,7 @@
 			<div class="rig1">
 				<input type="text" id="club" name="cbName" placeholder="모임명을 입력하세요.">
 				<br>
-				<input type="text" style="width: 350px" id="info" name="cbIntro" placeholder="한줄소개를 30자이내로 작성하세요.">
+				<input type="text" style="width: 350px" id="info" name="cbIntro" placeholder="한줄소개를 10자이내로 작성하세요.">
 			</div>
 		</div>
 
@@ -105,7 +76,7 @@
 				<input type="number" id="num" name="cbMbNum" min="1" max="200">
 			</div>
 			<div class="rig1">
-				<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
+				<p class="pil">*60명 이상은 포인트 결제가 필요합니다.</p>
 			</div>
 		</div>
 
@@ -114,9 +85,9 @@
 		<p class="cate">해시태그</p>
 		<div class="caja2">
 			<div id="hashTagDiv">
-				<label for="cbHashtag" class="class">해시태그 </label>
+				<label for="cbHashtag" class="class" style="margin-top: 17px;">해시태그 </label>
 				<input type="hidden" value="" name="cbHashtag" id="rdTag" />
-				<input type="text" id="tag" size="7" value="#" />
+				<input type="text" id="tag" size="7" placeholder="최대 5개" />
 				<ul id="tag-list"></ul>
 			
 				<input type="hidden" name="cbMakeDate">
@@ -131,8 +102,8 @@
 		<p class="cate">모임상세내용</p>
 		<div class="caja2">
 			<div class="lef1 detailinfo">
-				<label for="cbDetailContent">상세내용</label>
-				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="30자이내로 작성하세요"></textarea>
+				<label for="cbDetailContent" style="margin-top: 12px;">상세내용</label>
+				<textarea name="cbDetailContent" rows="10" cols="100" style="resize: none" placeholder="자세하게 작성하세요 (모임설명,강퇴조건 등)"></textarea>
 			</div>
       	 </div>
       	 
@@ -513,5 +484,33 @@
 	
 	
 </script>
-
-<%@include file="../includes/footer.jsp"%>
+<footer style="margin-top:0px;">
+        <div class="canizo">
+          <div class="ftlef">
+            <a href="#">서비스 이용약관</a>
+            <a href="#">개인정보취급방침</a>
+            <a href="/cs/notice">고객센터</a>
+          </div>
+          <div class="ftrig">
+            <li class="ftnaver">
+              <a href=""></a>
+            </li>  
+            <li class="ftkakao"> 
+              <a href=""></a>
+            </li>
+          </div>
+        </div>
+        <div class="canizo2">
+          <p class="quetday">오늘뭐하지?</p>
+          <div class="fotinf">
+            <p>서울특별시 종로구 종로2가 9, 11층</p>
+            <p>김선우,김지영,국민성,조다혜,이수진</p>
+            <p>https://github.com/Sean-creative/whatToday</p>
+            <p>whatToday@gmail.com</p>
+            <p>02-722-1481 (문의시간:10:00~17:00/점심시간 : 13:00~14:00)</p>
+          </div>
+          <div class="fotinf2">
+            <p>© WhatToday Inc. 2020 All Rights Reserved.</p>
+          </div>
+        </div>
+    </footer>

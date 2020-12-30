@@ -324,6 +324,7 @@ public class ThunderController {
 			return "redirect:/login/login";
 	}
 
+	
 	@GetMapping("/list")
 	// String userLatitudeStr, String userLongitudeStr
 	public String list(Criteria cri, Model model) {
@@ -337,8 +338,6 @@ public class ThunderController {
 			return "redirect:/thunder/gps" + cri.getListLink();			
 		}
 		
-
-
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
 		List<ThunderVO> thunderList = service.getListWithPaging(cri);
 		model.addAttribute("list", thunderList);
