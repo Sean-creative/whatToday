@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
-<title>Document</title>
+<title>오늘뭐하지?</title>
 </head>
 <body>
    <!--TOP버튼-->
@@ -21,13 +21,13 @@
                <img src="/resources/img/logo.png" alt="logo">
             </a>
             <form action="/index/searchlist" method="get" onsubmit="return inputCheckMain()">
-               <input id="serchHeader" type="text" name="keyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.keyword}" />'>
+               <input id="searchHeader" type="text" name="headerKeyword" placeholder="관심분야를 입력해주세요:)" value='<c:out value="${cri.headerKeyword}" />'>
             </form>
          </div>
          <sec:authorize access="isAnonymous()">
             <div class="menu2">
                <li><a href="/login/login">로그인</a></li>
-               <li><a href="/cs/faq">고객센터</a></li>
+               <li><a href="/cs/notice">고객센터</a></li>
             </div>
          </sec:authorize>
 
@@ -35,8 +35,7 @@
          <sec:authorize access="isAuthenticated()">
             <div class="menu2">
                <li><a href="/mypage/main" id="user">
-                     <sec:authentication property="principal.user.usrName" />
-                     님
+                     <sec:authentication property="principal.user.usrName" />님
                   </a></li>
                <li>
                   <div class="tooltip">
@@ -46,7 +45,7 @@
                      </div>
                </li>
                <li><a href="/login/logout">로그아웃</a></li>
-               <li><a href="/cs/faq">고객센터</a></li>
+               <li><a href="/cs/notice">고객센터</a></li>
 
             </div>
          </sec:authorize>
@@ -95,7 +94,7 @@
          </div><!-- END <div class="submenudropdown"> -->
          <a class="submenu" href="/regular/list">정기모임</a>
          <a class="submenu" href="/thunder/list">번개모임</a>
-         <a class="submenu" href="/hobbyTest/test">취미Test</a>
+         <a class="submenu" href="/hobbyTest/test">추천테스트</a>
          <div class="dropdown">
             <a class="submenu" href="#">모임개설</a>
             <div class="dropdown-content ">
@@ -182,26 +181,23 @@ evt.currentTarget.className += " active";
 }
 
 
-document.getElementById("defaultOpen").click();
-
 function connectWS(msgNum){
-var ws = new WebSocket("ws://localhost:8080/echo2/websocket");
+var ws = new WebSocket("ws://localhost:8088/echo2/websocket");
 socket = ws;
 let Num = msgNum;
 ws.onopen = function(message){  
-ws.send(Num);
+	ws.send(msgNum+","+"접속");
 };
 
 ws.onmessage = function(event){
 console.log(event.data);
 if(event.data == 'plus'){
    $("#alram").attr("src","/resources/img/bellplus.png");
-   return;
 }
-if($(".socketAlert p").length == 4){
-   $(".socketAlert p:last").remove();
+if($("#socketAlert p").length == 4){
+   $("#socketAlert p:last").remove();
 }
-$(".socketAlert").prepend("<p>"+event.data+"</p>");
+$("#socketAlert").prepend("<p>"+event.data+"</p>");
 
 };
 
@@ -230,11 +226,11 @@ console.log("Server Error");
       const inputCheckMain = function(){
 
          // 공백을 제거해한 뒤에 개수를 세던지 한다.
-         let keyword = $.trim($("[name=keyword]").val());
-         $('[name=keyword]').val(keyword);
+         let headerKeyword = $.trim($("[name=headerKeyword]").val());
+         $('[name=headerKeyword]').val(headerKeyword);
 
-         console.log(keyword.length);
-         if (keyword.length > 30) {
+         console.log(headerKeyword.length);
+         if (headerKeyword.length > 30) {
             alert("키워드가 너무 깁니다 (30자 이하)");
             return false;
          }

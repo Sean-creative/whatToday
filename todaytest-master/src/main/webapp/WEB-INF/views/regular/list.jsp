@@ -86,6 +86,7 @@
 		<input type='hidden' name='subclass' value='<c:out value="${pageMaker.cri.subclass}"/>'/>
 		<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'/>
 		<input type='hidden' name='district' value='<c:out value="${pageMaker.cri.district}"/>'/>
+		<input type='hidden' name='searchBy' value='<c:out value="${pageMaker.cri.searchBy}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 		<input type='hidden' name='orderBy' value='<c:out value="${pageMaker.cri.orderBy}"/>'/>
 	</form>
@@ -105,6 +106,13 @@
                   var ct = '${pageMaker.cri.city}';
                   var dt = '${pageMaker.cri.district}';
                   var searchBy = '${pageMaker.cri.searchBy}';    
+                  
+                  if (searchBy == null) {
+              		$("#searchBy option[value='모임명']").attr('selected', 'selected');
+              	} else {
+              		$("#searchBy option[value='" + searchBy + "']").attr('selected',
+              				'selected');
+              	}
 </script>
 
 <%@include file="../includes/footer.jsp"%>
