@@ -85,10 +85,10 @@ $(document).ready(function() {
 				}
 			
 			if(cnt == 0){
-				str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 정기모임이 없습니다.<a style='height:15%;' href='/regular/add'>🥺모임 개설하러가기.</a>"
+				str = "<a href='/regular/add'>내가 모임장인 정기모임이 없습니다.🥺모임 개설하러가기.</a>"
 			}
 			if(cnt2 == 0){
-				str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>내가 모임장인 번개모임이 없습니다.<a style='height:15%;' href='/thunder/add'>🥺모임 개설하러가기.</a>"
+				str2= "<a href='/thunder/add'>내가 모임장인 번개모임이 없습니다.🥺모임 개설하러가기.</a>"
 			}
 	
 			
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
 	 	 $(document).on('mouseenter','.smallList', function() {
 	 		 let index = $('.smallList').index(this);
-	 		 $('.smallList img').eq(index).css("opacity","0");
+	 		 $('.smallList img').eq(index).css("opacity","0.6");
 	 		 $('.imgBtn').eq(index).css("opacity","1");
 	 		 $('.imgBtn').eq(index).css("z-index","2");
 	 		 $('.imgBtn2').eq(index).css("opacity","1");

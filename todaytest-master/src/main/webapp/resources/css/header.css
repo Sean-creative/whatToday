@@ -3,7 +3,7 @@
     padding:0;
     text-decoration: none;
     list-style: none;
-	font: inherit;
+	font-style: inherit;
 }
 /* topbtn */
 .top_btn a{
@@ -71,8 +71,8 @@
 }
 
 /* 검색창 */
-#head input[type=text] {
-    width: 200px;
+#searchHeader{
+    width: 220px;
     box-sizing: border-box;
     border: 1px solid #333;
     /* border-style: none none solid none;
@@ -450,10 +450,6 @@ footer{
   .fotinf2{
     color:#fff;
     margin-top:30px;
-<<<<<<< HEAD
-  }
-=======
+
   }
 
-
->>>>>>> master
