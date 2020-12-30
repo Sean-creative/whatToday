@@ -1,6 +1,26 @@
 
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
-body{background:#fff;}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* #wrap{width:100%;} */
 /* header, section, footer{width:inherit;} */
 /* 
@@ -92,8 +112,9 @@ body{background:#fff;}
 .notisubmenu a{
     color:#333;
     text-decoration: none;
-    margin-right: 30px;
-    font-size:15px;
+    margin-right: 40px;
+    font-size:18px;
+    font-family: 'paybooc-Bold';
 }
 .notisubmenu a:nth-child(3){
     color: #ffaf31;
@@ -114,6 +135,7 @@ section{width:100%;}
 	text-align:right;
 	margin-top:20px;
 	margin-right:120px;
+	font-family: 'paybooc-Light';
 }
 .section_in>h2{
 	font-size:30px;
@@ -122,6 +144,7 @@ section{width:100%;}
 	color:#333;
 	letter-spacing:5px;
 	font-weight:900;
+	font-family: 'paybooc-Bold';
 }
 .section_in>p{
 	color:#666;
@@ -129,6 +152,7 @@ section{width:100%;}
 	text-align:center;
 	margin-top:10px;
 	font-weight:100;
+	font-family: 'paybooc-Light';
 }
 
 .section_in .tab{
@@ -185,6 +209,7 @@ section{width:100%;}
 	color:#666;
 	font-size:12px;
 	font-weight:100;
+	font-family: 'paybooc-Light';
 }
 .section_in form hr{
 	width:800px;
@@ -216,6 +241,7 @@ fieldset{
 	display:inline-block;
     width:230px;
     color:#666;
+    font-family: 'paybooc-Medium';
 	/*background:#666;*/
 }
 .formContent span{
@@ -244,7 +270,7 @@ input[type=text]{
 input[type=radio]{margin-right:3px;}
 
 .agreebox{color:#333;}
-.agreebox>p{text-align:center;}
+.agreebox>p{text-align:center;font-family: 'paybooc-Medium';}
 
 input[type=checkbox]{
 	width:15px;
@@ -252,7 +278,7 @@ input[type=checkbox]{
 	margin-right:3px;
 }
 
-.btn_faq{text-align:center;}
+.btn_faq{text-align:center;font-family: 'paybooc-Medium';}
 
 .btn_faq2{
 	margin-top:30px;
