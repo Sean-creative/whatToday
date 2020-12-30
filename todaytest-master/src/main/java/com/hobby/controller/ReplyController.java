@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +17,6 @@ import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ReplyService;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
