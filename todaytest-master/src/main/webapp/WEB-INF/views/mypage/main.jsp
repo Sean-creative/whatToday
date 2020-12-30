@@ -46,22 +46,22 @@
 	</nav>
 	
 	<section id="wrapInfo">
-		<h2>내가 가입한 정기모임</h2>
+		<h3>내가 가입한 정기모임</h3>
 		<div id="myRegClubList" class="list">
 		</div>
-		<h2 id="myPrevRegClubH3">이전에 가입한 정기모임</h2>
+		<h3 id="myPrevRegClubH3">이전에 가입한 정기모임</h3>
 		<div id="myPrevRegClubList" class="list">
 		</div>
-		<h2 id="myWaitClubH3">가입 대기중인 정기모임</h2>
+		<h3 id="myWaitClubH3">가입 대기중인 정기모임</h3>
 		<div id="myWaitClubList" class="list">
 		<c:forEach var="waitClub" items="${waitClub}">
 		<div class='smallList'><img src='${waitClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div></div>
 		</c:forEach>
 		</div>
-		<h2>내가 가입한 번개모임</h2>
+		<h3>내가 가입한 번개모임</h3>
 		<div id="myThuClubList" class="list">
 		</div>
-		<h2 id="myPrevThuClubH3">이전에 가입한 번개모임</h2>
+		<h3 id="myPrevThuClubH3">이전에 가입한 번개모임</h3>
 		<div id="myPrevThuClubList" class="list">
 		</div>
 		<form id="detailForm" method="get">
@@ -105,10 +105,10 @@
 												}
 												
 												if(cnt == 0){
-													str = "<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입한 정기모임이 없습니다. <a style='height:15%;' href='/regular/list'>🥺모임 가입하러가기.</a>"
+													str = "<a href='/regular/list'>가입한 정기모임이 없습니다. 🥺모임 가입하러가기.</a>"
 												}
 												if(cnt2 == 0){
-													str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>가입한 번개모임이 없습니다. <a style='height:15%;' href='/thunder/list'>🥺모임 가입하러가기.</a>"
+													str2= "<a href='/thunder/list'>가입한 번개모임이 없습니다. 🥺모임 가입하러가기.</a>"
 												} 
 												myClubReg.empty();
 												myClubReg.append(str);
@@ -192,12 +192,12 @@
 												if(cnt == 0){
 													$("#myPrevRegClubH3").hide();
 													myPrevRegClubList.hide();
-													//str = "<img class='noClub'src='/resources/img/upload/default/simoo.png'>이전에 가입한 정기모임이 없어요."
+													
 												}
 												if(cnt2 == 0){
 													myPrevThuClubList.hide();
 													$("#myPrevThuClubH3").hide();
-													//str2= "<img class='noClub' src='/resources/img/upload/default/simoo.png'>이전에 가입한 번개모임이 없어요."
+													
 												}
 												
 												myPrevRegClubList.empty();
@@ -218,12 +218,9 @@
 	
  	 $(document).on('mouseenter','.smallList', function() {
  		 let index = $('.smallList').index(this);
- 		 $('.smallList img').eq(index).css("opacity","0");
+ 		 $('.smallList img').eq(index).css("opacity","0.6");
  		 $('.smallList div').eq(index).css("opacity","1");
  		 $('.smallList div').eq(index).css("z-index","2");
-/*  		 $('.imgBtn').eq(index).css("z-index","2");
- 		 $('.imgBtn2').eq(index).css("opacity","1");
- 		 $('.imgBtn2').eq(index).css("z-index","2"); */
 
 		});  
  	$(document).on('mouseleave','.smallList', function() {
@@ -231,8 +228,7 @@
 		 $('.smallList img').eq(index).css("opacity","1");
 		 $('.smallList div').eq(index).css("opacity","0");
 		 $('.smallList div').eq(index).css("z-index","0");
-/* 		 $('.imgBtn2').eq(index).css("opacity","0");
-		 $('.imgBtn2').eq(index).css("z-index","0"); */
+
 		});  
 	$(document).on('click','.detailBtn,.detailBtn2',function(){
 		let data = $(this).data();
