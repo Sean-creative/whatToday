@@ -1,3 +1,37 @@
+/* 폰트모음  */
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+
 *{
 	margin:0;
 	padding:0;	
@@ -213,6 +247,8 @@ input,select{vertical-align:middle;}
 	-moz-transition: all 0.5s;
 	-ms-transition: all 0.5s;
 	-o-transition: all 0.5s;
+	font-family: 'paybooc-Bold';
+	
 }
 
 #mainnav ul li:hover a{border-bottom: 3px solid rgba(255,255,255,1);}
@@ -243,17 +279,18 @@ input,select{vertical-align:middle;}
 	z-index: 100;
 	text-align: center;
 	color: #fff;
-	font-size: 25px;
+	font-size: 35px;
 	line-height: 30px;
-	font-weight: normal;
+	font-weight: bold;
 	text-shadow: 0 0 5px rgba(0,0,0,0.8);
 	letter-spacing: 7px;
+	font-family: 'paybooc-Bold';
 }
 .subinfori{
 	width: 30%;
 	height: 20%;
 	position: absolute;
-	top: 74%;
+	top: 76%;
 	left: 35%;
 	z-index: 100;
 	text-align: center;
@@ -262,6 +299,7 @@ input,select{vertical-align:middle;}
 	line-height: 30px;
 	font-weight: normal;
 	text-shadow: 0 0 5px rgba(0,0,0,0.8);
+	font-family: 'paybooc-Medium';
 }
 
 .recomtest{
@@ -343,7 +381,7 @@ input,select{vertical-align:middle;}
 
 /* 검색창 */
 .menu1 input[type=text] {
-    width: 200px;
+    width: 220px;
     box-sizing: border-box;
     border: 1px solid #333;
     /* border-style: none none solid none;
@@ -377,6 +415,7 @@ input,select{vertical-align:middle;}
     margin-right:5px;
     font-size:13px;
     transition: 0.3s;
+    font-family: 'paybooc-Medium';
 }
 
 
@@ -394,6 +433,8 @@ input,select{vertical-align:middle;}
     justify-content:flex-start;
     align-items: center;
     margin: 0 auto;
+    font-family: 'paybooc-Bold';
+    
 }
 /* 햄버거 메뉴  */
 
@@ -528,30 +569,36 @@ input,select{vertical-align:middle;}
 .tooltip .tooltiptext {
   display: none;
   width: 300px;
-  height: 200px;
-  background-color: black;
+  height: 150px;
+  background-color: #ffaf31;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: 150%;
   left: 50%;
   margin-left: -152.5px;
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
-}
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent #ffaf31 transparent;
 
+}
+#socketAlert p{
+	margin: 4% 2% 0 4%;
+	white-space: nowrap;
+	overflow: hidden;
+    text-overflow:ellipsis;
+}
 /* 햄 */
 
 .dropbtnr {
@@ -595,6 +642,7 @@ input,select{vertical-align:middle;}
   color: black;
   padding: 12px 16px;
   text-decoration: none;
+  font-family: 'paybooc-Medium';
   
 }
 
@@ -665,16 +713,23 @@ input,select{vertical-align:middle;}
 .masmam a{
 	cursor:pointer;
 	color:#333;
+	font-family: 'paybooc-Light';
+	font-size:14px;
+	
 }
 
 .half{
   font-size:25px;
   font-weight:bold;
   background:linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);
+  font-family: 'paybooc-Bold';
 }
 
 .halfunder{
-  font-size:18px;
+  font-size:16px;
+  font-family: 'paybooc-Medium';
+  color:#333;
+  
 }
 
 /* ========================= 정기모임 */
@@ -711,14 +766,17 @@ input,select{vertical-align:middle;}
 	font-weight:bold;
 	color:#2f3030;
 	margin-top:10px;
+	font-family: 'paybooc-Bold';
 }
 
 .nombre{
 	width:270px;
 	height:40px;
-	margin-top:4px;
+	margin-top:8px;
 	font-size:14px;
-	color:#2f3030
+	color:#2f3030;
+	font-family: 'paybooc-Medium';
+	
 }
 
 
@@ -728,6 +786,8 @@ input,select{vertical-align:middle;}
 	font-size:14px;
 	padding-top:4px;
 	color:#666;
+	font-family: 'paybooc-Medium';
+	
 }
 
 /* ==============================중간베너  */
@@ -806,6 +866,8 @@ input,select{vertical-align:middle;}
     width:100%;
     height:430px;
     background:#292c34;
+    font-family: 'paybooc-Medium';
+    font-size:14px;
   }
 
   .canizo{
@@ -865,8 +927,4 @@ input,select{vertical-align:middle;}
   .fotinf2{
     color:#fff;
     margin-top:30px;
-<<<<<<< HEAD
   }
-=======
-  }
->>>>>>> master

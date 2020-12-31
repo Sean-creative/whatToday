@@ -1,3 +1,27 @@
+/* 폰트 */
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
 *{
     margin:0;
     padding:0;
@@ -48,8 +72,9 @@
 .notisubmenu a{
     color:#333;
     text-decoration: none;
-    margin-right: 30px;
-    font-size:15px;
+    margin-right: 40px;
+    font-size:18px;
+    font-family: 'paybooc-Bold';
 }
 .notisubmenu a:nth-child(1){
     color: #ffaf31;
@@ -62,6 +87,8 @@
 #table{
     width:1200px;
     margin: 0 auto;
+    font-family: 'paybooc-Medium';
+    font-size:15px;
 }
 #table table {
     border-collapse: collapse;

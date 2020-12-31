@@ -72,19 +72,28 @@
 <!-- <beans:bean class="java.lang.String" id="uploadFolder">
  <beans:constructor-arg value="C:\Users\jiyeong\Documents\projectWhatToday\todaytest-master\src\main\webapp\resources\img\upload" /> -->
 <!-- 민성 -->
-<beans:bean class="java.lang.String" id="uploadPath">
+
+
+
+<!-- <beans:bean class="java.lang.String" id="uploadPath">
  <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
 </beans:bean>
 <beans:bean class="java.lang.String" id="uploadFolder">
  <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
-</beans:bean>
+</beans:bean> -->
 <!-- <beans:bean class="java.lang.String" id="uploadPath">
  <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources" />
  -->
-<!-- <beans:bean class="java.lang.String" id="uploadPath">
- <beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
+
+<beans:bean class="java.lang.String" id="uploadPath">
+	<beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources" />
 </beans:bean>
+
 <beans:bean class="java.lang.String" id="uploadFolder">
+	<beans:constructor-arg value="C:\Users\sudal\Desktop\workspace\todaytest-master\src\main\webapp\resources\img\upload" />
+</beans:bean>
+<!-- 민성 -->
+<!-- 
  <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources/img/upload" />
 </beans:bean>
 
@@ -103,12 +112,19 @@
  <beans:constructor-arg value="C:\Users\cool1\git\whatToday\todaytest-master\src\main\webapp\resources\img\upload" />
 </beans:bean> -->
 
+<!--수 진 -->
+<!-- <beans:bean class="java.lang.String" id="uploadPath">
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources" />
+</beans:bean>
 
+<beans:bean class="java.lang.String" id="uploadFolder">
+ <beans:constructor-arg value="/Users/sujinlee/HobbyNEW/todaytest-master/src/main/webapp/resources/img/upload" />
+</beans:bean> -->
 
 <!-- 선우 -->
 <!-- <beans:bean class="java.lang.String" id="uploadPath">
 <beans:constructor-arg value="E:\whatTodayGit\whatToday\todaytest-master\src\main\webapp\resources" />
->>>>>>> master
+
 </beans:bean>
 
 <beans:bean class="java.lang.String" id="uploadFolder">
