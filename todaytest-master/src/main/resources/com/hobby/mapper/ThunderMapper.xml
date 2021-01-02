@@ -9,7 +9,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.hobby.mapper.ThunderMapper">
 
 
-	<resultMap type="com.hobby.domain.ThunderDetailVO" id="ThunderDetailVO">
+	<resultMap type="com.hobby.domain.ThunderDetailVO"
+		id="ThunderDetailVO">
 		<result column="cbNum" property="cbNum" />
 		<result column="cbDate" property="cbDate" />
 		<result column="cbAppPeriod" property="cbAppPeriod" />
@@ -48,7 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-		<collection property="thunderDetailVO" resultMap="ThunderDetailVO"></collection>
+		<collection property="thunderDetailVO"
+			resultMap="ThunderDetailVO"></collection>
 	</resultMap>
 
 
@@ -57,14 +59,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from club c, thunderDetail
 		td
 		where c.cbNum =
-		td.cbNum AND c.cbNum=#{cbNum} AND c.cbFinalState = '진행중'
+		td.cbNum AND c.cbNum=#{cbNum} AND c.cbFinalState =
+		'진행중'
 	</select>
 
 
 
 	<insert id="insert">
 		<!-- 기본키(cl_number)는 club객체에서 꺼내다 쓴다. -->
-		<selectKey keyProperty="cbNum" resultType="long" order="BEFORE">
+		<selectKey keyProperty="cbNum" resultType="long"
+			order="BEFORE">
 			select club_seq.nextval FROM DUAL
 		</selectKey>
 
@@ -105,7 +109,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		END
 		}
-		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, #{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, cl_place, cl_supplies, cl_file) values(#{cl_number}, #{club_detailVO.cl_date}, #{club_detailVO.cl_app_date} ,#{club_detailVO.cl_place}, #{club_detailVO.cl_supplies}, #{club_detailVO.cl_file}) select * from dual -->
+		<!-- INSERT ALL into club(cl_number, cl_name, cl_subclass) values(#{cl_number}, 
+			#{cl_name}, #{cl_subclass}) into club_detail(cl_number,cl_date, cl_app_date, 
+			cl_place, cl_supplies, cl_file) values(#{cl_number}, #{club_detailVO.cl_date}, 
+			#{club_detailVO.cl_app_date} ,#{club_detailVO.cl_place}, #{club_detailVO.cl_supplies}, 
+			#{club_detailVO.cl_file}) select * from dual -->
 	</insert>
 
 
@@ -145,7 +153,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 해당 클럽에 대한 멤버들의 가입 정보를 가져오는 SQL -->
-	<select id='getJoinList' resultType="com.hobby.domain.ClubMemberVO">
+	<select id='getJoinList'
+		resultType="com.hobby.domain.ClubMemberVO">
 		select usrnum, cbnum, cbtype, cbname, usrname,
 		cbmbstresult,CBAPPDATE
 		from clubmember
@@ -159,7 +168,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="delete">
 		update club set
 		cbFinalState = '폐쇄'
-		where cbNum= #{cbNum}
+		where cbNum=
+		#{cbNum}
 	</update>
 
 
@@ -217,11 +227,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=") AND " prefixOverrides="AND|OR">
 
 
-			<if test="category != null  and category != '관심분야 선택' and category != '' ">
+			<if
+				test="category != null  and category != '관심분야 선택' and category != '' ">
 				AND cbCategory = #{category}
 			</if>
 
-			<if test="subclass != null and subclass != '모임 선택' and subclass != ''">
+			<if
+				test="subclass != null and subclass != '모임 선택' and subclass != ''">
 				AND cbSubcat = #{subclass}
 			</if>
 
@@ -229,7 +241,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND cbCity = #{city}
 			</if>
 
-			<if test="district != null and district != '세부지역 선택' and district != ''">
+			<if
+				test="district != null and district != '세부지역 선택' and district != ''">
 				AND cbDistrict = #{district}
 			</if>
 
@@ -252,7 +265,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				</when>
 				<when test="'모임종류'.equals(searchBy)">
 					<if test="keyword != null and keyword!= ''">
-						AND (cbcategory like '%'||#{keyword}||'%' or cbsubcat like '%'||#{keyword}||'%')
+						AND (cbcategory like '%'||#{keyword}||'%' or cbsubcat
+						like '%'||#{keyword}||'%')
 					</if>
 				</when>
 
@@ -312,5 +326,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
+
+	<select id="readLike" resultType="HashMap">
+		select likeCheck
+		from clublike
+		where usrNum = #{usrNum} AND cbNum = #{cbNum}
+	</select>
 </mapper>
 

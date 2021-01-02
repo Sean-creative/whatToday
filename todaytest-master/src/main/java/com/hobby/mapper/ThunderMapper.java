@@ -1,9 +1,9 @@
 package com.hobby.mapper;
+import java.util.HashMap;
 /**
  * 작성자: 김선우
  */
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -48,6 +48,17 @@ public interface ThunderMapper {
 	
 	// 현재시간이 지나면 해당 모임을 '폐쇄'로 바꾼다.
 	public void updateFinalState();
+	
+	
+	// 좋아요가 눌렸는지 조사!!
+	public HashMap readLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	
+//	public int insertLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);	
+//	public int updateLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	
+	
+	
+	
 		
 	
 	

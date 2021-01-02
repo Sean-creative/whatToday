@@ -4,6 +4,7 @@ package com.hobby.service;
  */
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.Authentication;
 
 import com.hobby.domain.ClubMemberVO;
@@ -46,6 +47,8 @@ public interface ThunderService {
 	//스케줄러 테스트
 	public void schedul(); 
 	
+	
+	public int readLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
 	
 	
 	

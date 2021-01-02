@@ -1,5 +1,6 @@
 package com.hobby.service;
 
+import java.util.HashMap;
 /**
  * 작성자: 김선우
  */
@@ -181,6 +182,20 @@ public class ThunderServiceImpl implements ThunderService {
 		System.out.println("모임 업데이트 (진행중 -> 폐쇄)!! " + i++);
 		
 		mapper.updateFinalState();
+	}
+
+	@Override
+	public int readLike(Long usrNum, Long cbNum) { 
+//		{LIKECHECK=1}
+		HashMap<?, ?> like =  mapper.readLike(usrNum, cbNum);
+		System.out.println("readLike......like : " + like);
+						
+		                  
+		if ( like == null) {
+			return 0;
+		}
+		
+		return 1;				
 	}
 
 

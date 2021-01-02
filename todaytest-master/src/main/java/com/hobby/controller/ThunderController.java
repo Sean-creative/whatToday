@@ -105,6 +105,12 @@ public class ThunderController {
 		}
 
 		model.addAttribute("joinList", joinList);
+		
+		
+		int likecheck = service.readLike(loginUser.getUsrNum(), clubVO.getCbNum());
+		log.info("/info(GET) - likecheck : " + likecheck);
+		model.addAttribute("likecheck", likecheck);
+		
 
 		return "/thunder/info";
 	}

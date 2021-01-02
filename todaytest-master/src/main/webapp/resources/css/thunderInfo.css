@@ -490,3 +490,26 @@ ul li.tag-item {
 	width: 150px;
 	height: 150px;
 }
+
+
+
+
+
+
+
+  #sss>img {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      top: -5px;
+      cursor: pointer;
+    }
+
+    #sss {
+      width: 50px;
+      overflow: hidden;
+      height: 50px;
+    }
+
+
+
