@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600;700&display=swap');
 
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+	font-family: 'paybooc-Bold';
+}
 
 #login{
     height:100vh;
@@ -10,23 +20,27 @@
 }
 
 .loginbx{
-    width:520px;
-    height:670px;
+    width:450px;
+    height:620px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     text-align:center;    
 }
 h1{
     font-family: 'Baloo Tamma 2', cursive;
 }
+form{
+	font-family: 'paybooc-Bold';
+}
 #loginToMain{ 
 	text-decoration: none;
     color: black;
+    font: inherit;
 }
 hr{
     border: 1px solid #ffaf31;
 }
 form>div{
-    margin:20px 0;
+    margin:23px 0;
 }
 
 form>div:first-child{
@@ -34,21 +48,21 @@ form>div:first-child{
 }
 
 input[type=text]{
-    width:480px;
+    width:430px;
     height:50px;
     border:1px solid #e0e0e0;
     border-radius: 5px;
 }
 
 input[type=password]{
-    width:480px;
+    width:430px;
     height:50px;
     border:1px solid #e0e0e0;
     border-radius: 5px;
 }
 
 button[type=submit]{
-    width:480px;
+    width:436px;
     height:50px;
     border:none;
     /* border:1px solid #999; */
@@ -105,17 +119,17 @@ button[type=submit]{
 }
 
 #membership{
-    width:480px;
-    height:35px;
-    text-align:center;
-    border:1px solid #e0e0e0;
-    border-radius: 5px;
-    margin-left:20px;
+	width: 440px;
+    height: 20px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    /* border-radius: 5px; */
+    margin-left: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top:30px;
-    padding:5px 0;
+    margin-top: 30px;
+    padding: 5px 0;
 }
 #membership p{
     padding:0 20px;
