@@ -142,7 +142,7 @@
 .msger-send-btn {
   margin: 10px;
   background: #f7e600;
-  color: #ececec;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
