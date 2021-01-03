@@ -184,18 +184,59 @@ public class ThunderServiceImpl implements ThunderService {
 		mapper.updateFinalState();
 	}
 
+	
+	
 	@Override
 	public int readLike(Long usrNum, Long cbNum) { 
 //		{LIKECHECK=1}
 		HashMap<?, ?> like =  mapper.readLike(usrNum, cbNum);
+						 
 		System.out.println("readLike......like : " + like);
 						
-		                  
+		
+		
+		
+		
 		if ( like == null) {
+			return -1;
+		} 
+		
+		String check = like.get("LIKECHECK")+"";
+		System.out.println("check : " + check);
+		
+		if (check.equals("0")) {
+			
 			return 0;
 		}
 		
 		return 1;				
+	}
+
+	
+	@Override
+	public int insertLikeBtn(Long usrNum, Long cbNum) {
+		System.out.println("insertLikeBtn......usrNum : " + usrNum);
+		System.out.println("insertLikeBtn......cbNum : " + cbNum);
+		
+		return mapper.insertLikeBtn(usrNum, cbNum);
+	}
+
+	@Override
+	public int updateLikeCheck(Long usrNum, Long cbNum, int check) {
+		System.out.println("updateLikeCheck......usrNum : " + usrNum);
+		System.out.println("updateLikeCheck......cbNum : " + cbNum);
+		System.out.println("updateLikeCheck......check : " + check);
+		
+		if (check == 1) {
+			System.out.println("1번!!!");
+			return mapper.updateLikeCheck(usrNum, cbNum);
+		}
+		else {
+			System.out.println("2번!!!");
+			return mapper.updateLikeCheck1(usrNum, cbNum);
+		}
+		
+		
 	}
 
 

@@ -53,8 +53,9 @@ public interface ThunderMapper {
 	// 좋아요가 눌렸는지 조사!!
 	public HashMap readLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
 	
-//	public int insertLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);	
-//	public int updateLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public int insertLikeBtn(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);		
+	public int updateLikeCheck(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public int updateLikeCheck1(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
 	
 	
 	

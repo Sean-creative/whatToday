@@ -1,19 +1,18 @@
 package com.hobby.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -114,6 +113,56 @@ public class ThunderController {
 
 		return "/thunder/info";
 	}
+	
+	@RequestMapping("/clickLike")
+    @ResponseBody
+    public Map<String,Object> clickLike(@RequestParam Map<String,Object> commandMap){
+		log.info("/clickLike(POST) - commandMap : " + commandMap);
+		
+		
+		log.info("usrNum " + commandMap.get("usrNum"));
+        log.info("cbNum " + commandMap.get("cbNum"));
+    
+        Long usrNum = Long.parseLong((String)commandMap.get("usrNum")) ;
+        Long cbNum = Long.parseLong((String)commandMap.get("cbNum")) ;
+        
+     
+        int resultCode = 1;
+        int likecheck = 1;               
+        Map<String,Object> resultMap = new HashMap<>();
+     
+  
+        try {
+            int check = service.readLike(usrNum, cbNum);            
+            log.info("/clickLike(POST) - check : " + check);
+            if(check == -1) {
+                //처음 좋아요 누른것 likecheck=1, 좋아요 빨간색이 되야됨
+                service.insertLikeBtn(usrNum, cbNum); //좋아요 테이블 인서트                
+                resultCode = 1;
+            }
+            else if(check == 0) {
+                //좋아요 처음은 아니고 취소했다가 다시 눌렀을때 likecheck=1, 좋아요 빨간색 되야됨                
+                service.updateLikeCheck(usrNum, cbNum,check); //좋아요 테이블 업데이트
+                resultCode = 1;
+            }
+            else {
+                //좋아요 취소한거 likecheck=0, 빈하트 되야됨
+                likecheck = 0;                
+                service.updateLikeCheck(usrNum, cbNum,check);                
+                resultCode = 0;
+            }                        // 
+            resultMap.put("likecheck", likecheck);
+        } catch (Exception e) {
+        	log.info("요거 여태 문제였다고??? ");
+            log.info(e.getMessage());
+            resultCode = -1;
+        }
+        
+        resultMap.put("resultCode", resultCode);
+        //resultCode가 1이면 빨간하트 0이면 빈하트
+        return resultMap;
+    }
+
 
 	
 	

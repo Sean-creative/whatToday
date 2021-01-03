@@ -307,7 +307,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<![CDATA[	select  count(*)
 				from
 				(
-							select   ROUND(DISTNACE_WGS84(37.537623499999995, 127.1580072, cblatitude, cblongitude) ,2) distance
+							select   ROUND(DISTNACE_WGS84(#{userLatitude}, #{userLongitude}, cblatitude, cblongitude) ,2) distance
 							from club c, thunderDetail td				
 							where ]]>
 		<include refid="criteria"></include>
@@ -328,9 +328,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="readLike" resultType="HashMap">
+		<![CDATA[ 
 		select likeCheck
 		from clublike
 		where usrNum = #{usrNum} AND cbNum = #{cbNum}
+			]]>
 	</select>
+
+	<insert id="insertLikeBtn">
+<![CDATA[ 	insert into clubLike values (clubLike_seq.nextval, #{usrNum}, #{cbNum}, 1) ]]>
+	</insert>
+
+
+	<update id="updateLikeCheck" >
+		<![CDATA[ 
+	    update clublike 
+		set likeCheck = 0				
+		where usrNum = #{usrNum} AND cbNum = #{cbNum}		
+			]]>
+	</update>
+	
+	<update id="updateLikeCheck1" >
+		<![CDATA[ 
+		update clublike 
+		set likeCheck = 1				
+		where usrNum = #{usrNum} AND cbNum = #{cbNum}		
+			]]>
+	</update>
+	
+	
+	
+	
 </mapper>
 

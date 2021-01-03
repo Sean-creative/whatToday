@@ -48,8 +48,11 @@ public interface ThunderService {
 	public void schedul(); 
 	
 	
-	public int readLike(@Param("usrNum") Long usrNum, @Param("cbNum") Long cbNum);
+	public int readLike(Long usrNum, Long cbNum);
 	
+	
+	public int insertLikeBtn(Long usrNum, Long cbNum);	
+	public int updateLikeCheck(Long usrNum, Long cbNum, int check);
 	
 	
 }

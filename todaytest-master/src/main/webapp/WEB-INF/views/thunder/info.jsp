@@ -186,16 +186,13 @@
 						<!-- 하트버튼 -->
 						<div id="sss">
 						<c:choose>
-							<c:when test="${likecheck eq '0' or empty likecheck}">
-								<!-- likecheck가0이면 빈하트-->
-								<img id="qqq" src="/resources/img/heartCancle.gif" />
-								
+							<c:when test="${likecheck eq '1'}">
+							<!-- likecheck가1이면 빨간 하트-->								
+								<img id="qqq" src="/resources/img/heart.gif" />																															
 							</c:when>
 							<c:otherwise>
-								<!-- likecheck가1이면 빨간 하트-->
-								<img id="qqq" src="/resources/img/heart.gif" />
-								
-								
+								<!-- likecheck가0이면 빈하트-->
+								<img id="qqq" src="/resources/img/heartCancle.gif" />																								
 							</c:otherwise>
 						</c:choose>
 						</div>
@@ -205,16 +202,40 @@
 						  
         
       <script>
-        $("#qqq").on("click", function(e) {
-          e.preventDefault();
-          console.log($("#qqq"));
+        var usrNum = ${usrNum};
+        var cbNum = ${clubVO.cbNum};
+         
+         var qqq = document.getElementById("qqq");        
+         qqq.onclick = function(){ changeHeart(); }    
 
-          if ($('#qqq').attr('src') === '/resources/img/heart.gif') {
-            $("#qqq").attr('src', '/resources/img/heartCancle.gif');
-          } else {
-            $("#qqq").attr('src', '/resources/img/heart.gif');
-          }
-        });
+        /* 좋아요 버튼 눌렀을떄 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "/thunder/clickLike",       
+                    dataType : "json",   
+                    data : "usrNum="+usrNum+"&cbNum="+cbNum,
+                    error : function(){
+                        alert("통신 에러");
+                    },
+                    
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                           alert("좋아요 오류");
+                        }
+                        else{
+                        	console.log(jdata.likecheck);
+                            if(jdata.likecheck == 1){
+                            	 $("#qqq").attr('src', '/resources/img/heart.gif');
+                            }
+                            else if (jdata.likecheck == 0){
+                            	$("#qqq").attr('src', '/resources/img/heartCancle.gif');                         
+                                
+                            }
+                        }
+                    }
+                });
+         }
       </script>
 
 

@@ -2,37 +2,47 @@
 
 @font-face {
 	font-family: 'MaplestoryOTFBold';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff')
+		format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'MaplestoryOTFLight';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff')
+		format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
-    font-family: 'paybooc-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'paybooc-Bold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-    font-family: 'paybooc-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'paybooc-Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-    font-family: 'BMHANNAAir';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'BMHANNAAir';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 .font3 {
@@ -154,21 +164,21 @@
 }
 
 .contentmid img {
-    margin: 10px 0 0 100px;
+	margin: 10px 0 0 100px;
 }
 
 #rightinfo .contentmid {
 	font-size: 15px;
-    height: 400px;
-    overflow-y: auto;
-    line-height: 1.5;
-    padding-left: 15px;
+	height: 400px;
+	overflow-y: auto;
+	line-height: 1.5;
+	padding-left: 15px;
 }
 
 #rightinfo #appDate {
 	width: 315px;
-	background: #ffffff;	
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);		
+	background: #ffffff;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 	border-radius: 20px;
 	margin: 20px 1px 0 1px;
 }
@@ -177,24 +187,19 @@
 	width: 0rem;
 }
 
-
 .contentmid button {
 	width: 70px;
 	height: 40px;
 	background: #ffaf31;
 	color: #fff;
 	border: none;
-	
 	border-radius: 5px;
 	float: right;
-	margin-right: 10px;
-				;
-	cursor: pointer;	
+	margin-right: 10px;;
+	cursor: pointer;
 	opacity: 0.9;
 	margin: 10px 5px;
 }
-
-
 
 #meetingName {
 	
@@ -273,7 +278,6 @@
 }
 
 #error .infole>p {
-	
 	font-size: 20px;
 	font-weight: bold;
 	color: #333;
@@ -309,8 +313,8 @@
 	/* background:beige */
 }
 
-#appDate .clubb {    
-  padding: 6px 45px 6px 70px;
+#appDate .clubb {
+	padding: 6px 45px 6px 70px;
 }
 
 /* 모임명  */
@@ -324,7 +328,8 @@
 
 .clubname {
 	font-size: 20px;
-	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%, transparent 50%);
+	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%,
+		transparent 50%);
 }
 /* 한줄소개 */
 .clubintro {
@@ -376,7 +381,8 @@
 /* Modal Content/Box */
 .modal-content {
 	background-color: #fefefe;
-	margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+	margin: 5% auto 15% auto;
+	/* 5% from the top, 15% from the bottom and centered */
 	border: 1px solid #888;
 	width: 80%; /* Could be more or less, depending on screen size */
 }
@@ -402,7 +408,6 @@ form {
 	/*padding-top: 16px;*/
 	
 }
-
 
 .thumbImg {
 	width: 200px;
@@ -491,25 +496,21 @@ ul li.tag-item {
 	height: 150px;
 }
 
+#sss>img {
+	    width: 100%;
+    height: 100%;
+    position: relative;
+    top: -4px;
+    cursor: pointer;
+    margin: 0;
+}
 
-
-
-
-
-
-  #sss>img {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      top: -5px;
-      cursor: pointer;
-    }
-
-    #sss {
-      width: 50px;
-      overflow: hidden;
-      height: 50px;
-    }
-
-
-
+#sss {
+	    width: 42px;
+    overflow: hidden;
+    height: 42px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+}
