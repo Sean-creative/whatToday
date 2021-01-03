@@ -57,7 +57,8 @@
 					<p class="location"><c:out value="${club.cbDistrict}" /></p>
 					<p class="nombre"><c:out value="${club.cbName}" /></p>
 					<hr style="color:#eee;">
-					<p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /></p>					
+					<p class="limitmem"><c:out value="${club.cbCurMbNum}" />
+					명이 모였습니다</p>					
 				</div>
 			</c:forEach>
 		</div>
