@@ -351,7 +351,7 @@
 	        		   if(e.cbLeaderNum == list[i].usrNum){
 	        			   continue;
 	        		   }
-	        		   str += "<span class='modalSpan2'>ID : "+list[i].userVO.usrId+" 이름 : "+list[i].usrName+"</span><button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
+	        		   str += "<span class='modalSpan2'><span style='width:225px; display:inline-block;'>ID:"+list[i].userVO.usrId+"</span> 이름:"+list[i].usrName+"</span><button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
 	        	   }
 	       		
 
