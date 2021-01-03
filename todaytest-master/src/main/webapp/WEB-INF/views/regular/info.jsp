@@ -41,8 +41,9 @@ ul li.tag-item {
 	overflow: hidden;
 	height: 42px;
 	display: inline-block;
-	margin-left: 10px;
-	margin-top: 20px;
+/* 	margin-left: 149px; */
+	position: relative;
+	top: 20px;
 }
 
 ul#tag-list {
@@ -63,6 +64,59 @@ ul#tag-list {
 			</div>
 			<div>
 				<p id="topcbName">${club.cbIntro},${club.cbName}</p>
+				<!-- 하트버튼 -->
+				<div id="sss">
+					<c:choose>
+						<c:when test="${likecheck eq '1'}">
+							<!-- likecheck가1이면 빨간 하트-->
+							<img id="qqq" src="/resources/img/heart.gif" />
+						</c:when>
+						<c:otherwise>
+							<!-- likecheck가0이면 빈하트-->
+							<img id="qqq" src="/resources/img/heartCancle.gif" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+
+
+		<script>
+        var usrNum = ${usrNum};
+        var cbNum = ${club.cbNum};
+         
+         var qqq = document.getElementById("qqq");        
+         qqq.onclick = function(){ changeHeart(); }    
+
+        /* 좋아요 버튼 눌렀을떄 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "/thunder/clickLike",       
+                    dataType : "json",   
+                    data : "usrNum="+usrNum+"&cbNum="+cbNum,
+                    error : function(){
+                        alert("통신 에러");
+                    },
+                    
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                           alert("좋아요 오류");
+                        }
+                        else{
+                        	console.log(jdata.likecheck);
+                            if(jdata.likecheck == 1){
+                            	 $("#qqq").attr('src', '/resources/img/heart.gif');
+                            }
+                            else if (jdata.likecheck == 0){
+                            	$("#qqq").attr('src', '/resources/img/heartCancle.gif');                         
+                                
+                            }
+                        }
+                    }
+                });
+         }
+      </script>
+      
+      
 			</div>
 			<img src="${club.cbThumbImg}" alt="">
 
@@ -138,60 +192,7 @@ ul#tag-list {
 				<div class="contentl">
 					<p>만남 일정</p>
 				</div>
-				<!-- 하트버튼 -->
-				<div id="sss">
-					<c:choose>
-						<c:when test="${likecheck eq '1'}">
-							<!-- likecheck가1이면 빨간 하트-->
-							<img id="qqq" src="/resources/img/heart.gif" />
-						</c:when>
-						<c:otherwise>
-							<!-- likecheck가0이면 빈하트-->
-							<img id="qqq" src="/resources/img/heartCancle.gif" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-
-
-
-
-
-				<script>
-        var usrNum = ${usrNum};
-        var cbNum = ${club.cbNum};
-         
-         var qqq = document.getElementById("qqq");        
-         qqq.onclick = function(){ changeHeart(); }    
-
-        /* 좋아요 버튼 눌렀을떄 */
-         function changeHeart(){ 
-             $.ajax({
-                    type : "POST",  
-                    url : "/thunder/clickLike",       
-                    dataType : "json",   
-                    data : "usrNum="+usrNum+"&cbNum="+cbNum,
-                    error : function(){
-                        alert("통신 에러");
-                    },
-                    
-                    success : function(jdata) {
-                        if(jdata.resultCode == -1){
-                           alert("좋아요 오류");
-                        }
-                        else{
-                        	console.log(jdata.likecheck);
-                            if(jdata.likecheck == 1){
-                            	 $("#qqq").attr('src', '/resources/img/heart.gif');
-                            }
-                            else if (jdata.likecheck == 0){
-                            	$("#qqq").attr('src', '/resources/img/heartCancle.gif');                         
-                                
-                            }
-                        }
-                    }
-                });
-         }
-      </script>
+				
 				<div class="contentr">
 					<!-- 로그인 유저가 모임장이면 만남 추가 버튼을 보여준다 -->
 					<c:if test="${usrNum == club.cbLeaderNum}">
