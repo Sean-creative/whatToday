@@ -1,14 +1,16 @@
 package com.hobby.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +28,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.Criteria;
-import com.hobby.domain.MeetingVO;
 import com.hobby.domain.PageDTO;
 import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
@@ -314,36 +315,10 @@ public class ThunderController {
 
 	@PostMapping("/add")
 	// 메서드의 매개변수에 MultipartFile file이 추가
-	public String add(Authentication auth, ThunderVO clubVO, MultipartFile file, RedirectAttributes rttr) throws Exception {
-		log.info("/add(POST) - file : " + file);
-
-		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
-		// 저장한 뒤,
-		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
-
-		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
-		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
-
-		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
-			// 파일 인풋박스에 첨부된 파일이 없다면(=첨부된 파일이 이름이 없다면)
-
-			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-
-			// file에 원본 파일 경로 + 파일명 저장
-			clubVO.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
-			clubVO.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-
-		} else { // 첨부된 파일이 없으면
-			fileName = File.separator + "img" + File.separator + "none.png";
-			// 미리 준비된 none.png파일을 대신 출력함
-
-			// file에 원본 파일 경로 + 파일명 저장
-			clubVO.setCbFile(fileName);
-			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
-			clubVO.setCbThumbImg(fileName);
-		}
+	public String add(Authentication auth, ThunderVO clubVO, RedirectAttributes rttr) throws Exception {
+		
+		
+		
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
@@ -368,6 +343,62 @@ public class ThunderController {
 
 		return "redirect:/thunder/list";
 	}
+	
+	
+	@PostMapping(value = "/uploadFormAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public Map<String,Object> uploadFormPost(MultipartFile file) throws Exception {
+		log.info("/uploadFormPost(POST) - file : " + file);
+
+		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
+		// 저장한 뒤,
+		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
+
+		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
+		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
+		
+		String cbFile = null;
+		String cbThumbImg = null;
+		 Map<String,Object> resultMap = new HashMap<>();
+		 
+
+		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+			// 파일 인풋박스에 첨부된 파일이 없다면(=첨부된 파일이 이름이 없다면)
+
+			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+
+			// file에 원본 파일 경로 + 파일명 저장
+			cbFile = File.separator + "imgUpload" + ymdPath + File.separator + fileName;
+//			clubVO.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			
+			
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			cbThumbImg = File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName;
+//			clubVO.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+		} else { // 첨부된 파일이 없으면
+			fileName = File.separator + "img" + File.separator + "none.png";
+			// 미리 준비된 none.png파일을 대신 출력함
+
+			// file에 원본 파일 경로 + 파일명 저장
+			cbFile = fileName;
+//			clubVO.setCbFile(fileName);
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			cbThumbImg = fileName;
+//			clubVO.setCbThumbImg(fileName);
+		}
+		
+		resultMap.put("cbFile", cbFile);
+		resultMap.put("cbThumbImg", cbThumbImg);	
+		log.info("/uploadFormPost(POST) - resultMap : " + resultMap);
+		
+		return resultMap;
+	}
+	
+	
+	
+	
 
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
@@ -398,7 +429,7 @@ public class ThunderController {
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
 		List<ThunderVO> thunderList = service.getListWithPaging(cri);
 		model.addAttribute("list", thunderList);
-		log.info("list(GET) - thunderList : " + thunderList);
+//		log.info("list(GET) - thunderList : " + thunderList);
 		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
 
 		if(thunderList.size() != 0) {

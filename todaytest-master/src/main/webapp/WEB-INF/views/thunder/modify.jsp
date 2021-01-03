@@ -442,14 +442,14 @@
 								title : '',
 								text : msg,
 								type : type,
-								timer : 4000,
+								timer : 1500,
 								customClass : 'sweet-size',
 								showConfirmButton : true
 							});
 						}
 						
 						function Alert() {
-							alert('모임이 수정되었습니다.', 'success');
+							alert('모임이 수정되었습니다', 'success');
 						}
 						
 						var alert2 = function(msg, type) {
@@ -457,14 +457,15 @@
 								title : '',
 								text : msg,
 								type : "error",
-								timer : 2000,
+								timer : 1500,
 								customClass : 'sweet-size',
 								showConfirmButton : true
 							});
 						}
 
 						function Alert2() {
-							alert2('모임이 삭제되었습니다.', 'success');
+							
+							alert2('모임이 삭제되었습니다', 'success');
 						}
 						
 						
@@ -495,14 +496,18 @@
 										if (inputCheck()) {
 											var value = marginTag(); // return array
 											$("#rdTag").val(value);
-											Alert();
+ 											Alert();
+
 											console.log("true");
 										} else {
 											console.log("false");
 											return;
 										}
 									}
-									formObj.submit();
+									
+									setTimeout(function() {
+										formObj.submit();
+									},1000)																		
 								});
 
 					})
