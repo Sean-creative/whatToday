@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- 작성자 : 김선우 -->
 <%@include file="../includes/header.jsp"%>
-<link rel="stylesheet" type="text/css" href="/resources/css/thunderInfo.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/kakaoMap.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/thunderInfo.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/kakaoMap.css">
 
 
 
@@ -24,6 +27,58 @@
 				</div>
 				<div>
 					<p id="topcbName">${clubVO.cbName}</p>
+					
+					<!-- 하트버튼 -->
+						<div id="sss">
+						<c:choose>
+							<c:when test="${likecheck eq '1'}">
+							<!-- likecheck가1이면 빨간 하트-->								
+								<img id="qqq" src="/resources/img/heart.gif" />																															
+							</c:when>
+							<c:otherwise>
+								<!-- likecheck가0이면 빈하트-->
+								<img id="qqq" src="/resources/img/heartCancle.gif" />																								
+							</c:otherwise>
+						</c:choose>
+						</div>																				
+        
+      <script>
+        var usrNum = ${usrNum};
+        var cbNum = ${clubVO.cbNum};
+         
+         var qqq = document.getElementById("qqq");        
+         qqq.onclick = function(){ changeHeart(); }    
+
+        /* 좋아요 버튼 눌렀을떄 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "/thunder/clickLike",       
+                    dataType : "json",   
+                    data : "usrNum="+usrNum+"&cbNum="+cbNum,
+                    error : function(){
+                        alert("통신 에러");
+                    },
+                    
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                           alert("좋아요 오류");
+                        }
+                        else{
+                        	console.log(jdata.likecheck);
+                            if(jdata.likecheck == 1){
+                            	 $("#qqq").attr('src', '/resources/img/heart.gif');
+                            }
+                            else if (jdata.likecheck == 0){
+                            	$("#qqq").attr('src', '/resources/img/heartCancle.gif');                         
+                                
+                            }
+                        }
+                    }
+                });
+         }
+      </script>
+					
 				</div>
 				<img src="${clubVO.cbFile}" class="thumbImg" />
 
@@ -31,7 +86,8 @@
 					<ul>
 						<li><a href="javascript:void(0);">정보</a></li>
 						<!--a태그의 페이지이동 기능 무효화 -->
-						<li><a href="/thunder/chat?cbNum=<c:out value="${clubVO.cbNum}" />">채팅</a></li>
+						<li><a
+							href="/thunder/chat?cbNum=<c:out value="${clubVO.cbNum}" />">채팅</a></li>
 						<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 					</ul>
 				</div>
@@ -44,13 +100,17 @@
 						<ul id="tag-list"></ul>
 
 						<p class="clubb">
-						<c:out value="${clubVO.cbIntro}" />						
-
+							<c:out value="${clubVO.cbIntro}" />
 						<div class="inforig">
-							 
-							<p class="clubb"><c:out value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" /></p>							
-							
-							<p class="clubb"><c:out value="${clubVO.cbCategory} ${clubVO.cbSubcat}" /></p>
+
+							<p class="clubb">
+								<c:out
+									value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
+							</p>
+
+							<p class="clubb">
+								<c:out value="${clubVO.cbCategory} ${clubVO.cbSubcat}" />
+							</p>
 						</div>
 					</div>
 				</div>
@@ -61,34 +121,41 @@
 						<p>⚡️대기중인 회원은?</p>
 					</div>
 					<div class="inforig">
-						<p class="clubb">👪모임 멤버 ( ${clubVO.cbCurMbnum} / ${clubVO.cbMbnum}명 )</p>
+						<p class="clubb">👪모임 멤버 ( ${clubVO.cbCurMbnum} /
+							${clubVO.cbMbnum}명 )</p>
 
 						<c:forEach items="${joinList}" var="joinList">
-							
+
 							<li>
-							<p class="clubb">
-							<c:out value="${joinList.usrName}" /> <c:if test="${joinList.usrNum == clubVO.cbLeaderNum}">
+								<p class="clubb">
+									<c:out value="${joinList.usrName}" />
+									<c:if test="${joinList.usrNum == clubVO.cbLeaderNum}">
 							(모임장)
-							</c:if> </p> </li>
-							
+							</c:if>
+								</p>
+							</li>
+
 						</c:forEach>
-					
+
 					</div>
 				</div>
-				
-				
+
+
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️언제 시작되나요?</p>
+						<p>⚡️언제 모이나요?</p>
 					</div>
 					<div class="inforig">
-					<p class="clubb">
-							<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbDate}" pattern="yyyy-MM-dd'T'HH:mm" />
-						<fmt:formatDate value="${dateString}" pattern="yyyy년  M월 d일  E'요일' a h시  m분에 시작합니다!!" />
+						<p class="clubb">
+							<fmt:parseDate var="dateString"
+								value="${clubVO.thunderDetailVO.cbDate}"
+								pattern="yyyy-MM-dd'T'HH:mm" />
+							<fmt:formatDate value="${dateString}"
+								pattern="yyyy년  M월 d일  E'요일' a h시  m분에 시작합니다!!" />
 						</p>
 					</div>
 				</div>
-				
+
 
 				<div id="pdetail">
 					<div class="infole">
@@ -102,8 +169,10 @@
 								<div class="option">
 									<div>
 										<form role="form" onsubmit="searchPlaces(); return false;">
-											<p class="clubb">모임 장소 :
-											<input type="text" value='${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}' id="keyword" size="15">
+											<p class="clubb">
+												모임 장소 : <input type="text"
+													value='${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}'
+													id="keyword" size="15">
 											</p>
 											<button type="submit">검색하기</button>
 										</form>
@@ -121,7 +190,9 @@
 
 
 
-				<button data-oper='list' class="btn btn-info" id="clubList"><p class="clubb">더 많은 모임을 보려면?</p></button>
+				<button data-oper='list' class="btn btn-info" id="clubList">
+					<p class="clubb">더 많은 모임을 보려면?</p>
+				</button>
 			</div>
 			<!-- END leftinfo -->
 
@@ -132,29 +203,45 @@
 			<div id="rightinfo" class="rightinfo">
 				<div class="contentup">
 					<div class="contentl">
-						<p>⚡️작성자는?</p>
+						<p>⚡️모임장은?</p>
 					</div>
 				</div>
-				
+
 				<div style="margin: 0 10px">
 					<div class="contentmid">
-						
-						<p class="clubb"> <c:out value="${userVO.usrName}" /> </p>						
-						<p class="clubb">(<c:out value="${userVO.usrId}" />)</p>
 
-						<img src="../resources/img/thunderHuman.png"> 
-						
-						<div id="appDate">
 						<p class="clubb">
-						<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
-						<fmt:formatDate value="${dateString}" pattern="yyyy년 M월 d일  E'요일'" /> <br>
-						<fmt:formatDate value="${dateString}" pattern="a h시  m분 까지 신청" />
+							<c:out value="${userVO.usrName}" />
 						</p>
+						<p class="clubb">
+							(
+							<c:out value="${userVO.usrId}" />
+							)
+						</p>
+
+						<img src="../resources/img/thunderHuman.png">
+
+						<div id="appDate">
+							<p class="clubb">
+								<fmt:parseDate var="dateString"
+									value="${clubVO.thunderDetailVO.cbAppPeriod}"
+									pattern="yyyy-MM-dd'T'HH:mm" />
+								<fmt:formatDate value="${dateString}"
+									pattern="yyyy년 M월 d일  E'요일'" />
+								<br>
+								<fmt:formatDate value="${dateString}" pattern="a h시  m분 까지 신청" />
+							</p>
 						</div>
 
 						<br>
+
 						
-							<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
+		
+
+
+
+
+						<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
 						<c:if test="${usrNum != clubVO.cbLeaderNum}">
 							<button class="btn btn-info" data-oper='join' id="join">
 								<!-- joinState - 모임추방, 모임만료, 모임탈퇴, 가입승인, Null (아직 데이터 넣기 전) -->
@@ -165,7 +252,7 @@
 									<c:when test="${clubVO.cbCurMbnum == clubVO.cbMbnum}">정원초과</c:when>
 
 									<c:when test="${joinState eq '모임탈퇴' || joinState == null}">가입</c:when>
-								</c:choose> 
+								</c:choose>
 							</button>
 						</c:if>
 
@@ -199,21 +286,26 @@
 
 	<!-- controller로 넘어가야하는 정보들 -->
 	<form id='operForm' action="/thunder/modify" method="get">
-		<input type='hidden' id='cbNum' name='cbNum' value='<c:out value="${clubVO.cbNum}"/>'>
-		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-		<input type='hidden' name='category' value='<c:out value="${cri.category}"/>'>
-		<input type='hidden' name='subclass' value='<c:out value="${cri.subclass}"/>'>
-		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
-		<input type='hidden' name='district' value='<c:out value="${cri.district}"/>'>
-		<input type='hidden' name='searchBy' value='<c:out value="${cri.searchBy}"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-		<input type='hidden' name='orderBy' value='<c:out value="${cri.orderBy}"/>'>
-
-		<input type="hidden" name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
-		<input type="hidden" name="userLongitude" value='<c:out value="${cri.userLongitude}"/>'>
-
-		<input type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
+		<input type='hidden' id='cbNum' name='cbNum'
+			value='<c:out value="${clubVO.cbNum}"/>'> <input
+			type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+		<input type='hidden' name='amount'
+			value='<c:out value="${cri.amount}"/>'> <input type='hidden'
+			name='category' value='<c:out value="${cri.category}"/>'> <input
+			type='hidden' name='subclass'
+			value='<c:out value="${cri.subclass}"/>'> <input
+			type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+		<input type='hidden' name='district'
+			value='<c:out value="${cri.district}"/>'> <input
+			type='hidden' name='searchBy'
+			value='<c:out value="${cri.searchBy}"/>'> <input
+			type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+		<input type='hidden' name='orderBy'
+			value='<c:out value="${cri.orderBy}"/>'> <input type="hidden"
+			name="userLatitude" value='<c:out value="${cri.userLatitude}"/>'>
+		<input type="hidden" name="userLongitude"
+			value='<c:out value="${cri.userLongitude}"/>'> <input
+			type='hidden' name='joinState' value='<c:out value="${joinState}"/>'>
 	</form>
 </section>
 
@@ -287,7 +379,7 @@
 	// 1. 개설한한 사람이 아니다.
 	// 2. 신청을 한 사람
 	/* 2차 구현 예정........... */
-// 탈퇴/가입불가/정원초과/가입
+	// 탈퇴/가입불가/정원초과/가입
 	console.log($("#join").text().trim());
 	if ($("#join").text().trim() == '탈퇴') {
 		//모임에 참석중일 때
@@ -333,10 +425,12 @@
 </script>
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e19ea28cff4b871b68b2fabda7855cab&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e19ea28cff4b871b68b2fabda7855cab&libraries=services,clusterer,drawing"></script>
 
 <script type="text/javascript" src="/resources/js/kakaoMap.js"></script>
 

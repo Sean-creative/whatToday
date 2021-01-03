@@ -245,8 +245,7 @@ const inputCheck = function(){
 		alert("모임소개를 다시 입력해주세요.");
 		return false;
 	}
-
-	alert('수정되었습니다.');
+	
 
 	return true;
 }
