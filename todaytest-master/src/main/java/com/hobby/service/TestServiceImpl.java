@@ -29,7 +29,7 @@ public class TestServiceImpl implements TestService{
 		switch (userResult) {	
 		case "YYY":
 			//"캠핑/백패킹,파티/페스티벌,배드민턴"
-			return createJsonArr("아웃도어/여행", "캠핑/백패킹", "문화/공연/축제", "파티/페스티벌", "운동/스포츠", "배드민턴");
+			return createJsonArr("아웃도어/여행", "낚시", "문화/공연/축제", "파티/페스티벌", "운동/스포츠", "배드민턴");
 // 			return "캠핑/백패킹,파티/페스티벌,배드민턴";
 		case "YYN":	
 			return createJsonArr("아웃도어/여행", "등산", "운동/스포츠", "축구/풋살", "아웃도어/여행", "낚시");
@@ -41,7 +41,7 @@ public class TestServiceImpl implements TestService{
 			return createJsonArr("운동/스포츠", "볼링", "게임/오락", "다트", "외국/언어", "영어");
 //			return "볼링,다트,영어";
 		case "NYY":
-			return createJsonArr("아웃도어/여행", "낚시", "운동/스포츠", "자전거", "문화/공연/축제", "전시회");
+			return createJsonArr("아웃도어/여행", "캠핑/백패킹 ", "운동/스포츠", "자전거", "문화/공연/축제", "전시회");
 //			return "낚시,자전거,전시회";
 		case "NYN":
 			return createJsonArr("아웃도어/여행", "산책/트래킹", "운동/스포츠", "스케이트/인라인", "문화/공연/축제", "공연/연극");

@@ -76,7 +76,7 @@
 				<input type="number" id="num" name="cbMbNum" min="1" max="200">
 			</div>
 			<div class="rig1">
-				<p class="pil">*50명 초과는 포인트 결제가 필요합니다.</p>
+				<p class="pil">*50명 이상은 포인트 결제가 필요합니다.</p>
 			</div>
 		</div>
 
@@ -204,7 +204,7 @@
      
       
    	  //START ##### 50명이상일경우 포인트 결제 창으로 이동 (지영) #####
-      if(!number.value || (number.value <= 0) || (number.value > 50)){
+      if(!number.value || (number.value <= 0) || (number.value >= 50)){
     	  console.log("모임 정원: " + number.value);
 		  // 현재 개설자가 포인트가 있는 지 확인한다.
 		  let usrNum = document.register.cbLeaderNum.value;
@@ -221,7 +221,7 @@
     			// 포인트가 만원이하 있을 경우
     			// 카카오 페이 포인트 결제 창으로 
     			if(userPoint<'10000'){
-    				window.open('http://localhost:8088/pay/kakaoPayPayment?usrNum='+usrNum, '카카오페이 포인트 결제','width=700px, height=600px');
+    				window.open('http://localhost:8088/pay/kakaoPayPayment?usrNum='+usrNum, '카카오페이 포인트 결제','width=700px, height=700px');
     			}else{
     				
 					// 결제 완료되었는지 체크전에 미리 개설 되어 있음.. 수정필요..    			

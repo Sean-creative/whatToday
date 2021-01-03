@@ -215,7 +215,31 @@
       </div>
    </c:forEach>
 </div>
-    
+
+
+<div class="regular todayHot">
+	<div>
+	   <span class="half">TODAY</span><br>
+	   <p class="halfunder">오늘의 추천 취미는?</p>
+	</div>
+</div>
+<div id ="today">
+	<div class="todayImg">
+		<a href="http://localhost:8088/regular/list?category=문화/공연/축제&subclass=뮤지컬/오페라"><img src="/resources/img/subclass/musical.jpg" alt="musical">
+			<div class="middle"><div class="Imgtext">#뮤지컬/오페라</div></div>
+		</a>
+	</div>
+	<div class="todayImg">
+		<a href="http://localhost:8088/regular/list?category=외국/언어&subclass=프랑스어"><img src="/resources/img/subclass/french.jpg" alt="french">
+			<div class="middle"><div class="Imgtext">#프랑스어</div></div>
+		</a>
+	</div>
+	<div class="todayImg">
+		<a href="http://localhost:8088/regular/list?category=게임/오락&subclass=보드게임"><img src="/resources/img/subclass/boardGame.jpg" alt="boardGame">
+			<div class="middle"><div class="Imgtext">#보드게임</div></div>
+		</a>
+	</div>
+</div>
 
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -421,7 +445,7 @@ console.log("Server Error");
             <p>서울특별시 종로구 종로2가 9, 11층</p>
             <p>김선우,김지영,국민성,조다혜,이수진</p>
             <p>https://github.com/Sean-creative/whatToday</p>
-            <p>whatToday@gmail.com</p>
+            <p>whattodayhobby@gmail.com</p>
             <p>02-722-1481 (문의시간:10:00~17:00/점심시간 : 13:00~14:00)</p>
           </div>
           <div class="fotinf2">
