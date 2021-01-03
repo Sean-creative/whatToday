@@ -22,7 +22,7 @@
             <p>서울특별시 종로구 종로2가 9, 11층</p>
             <p>김선우,김지영,국민성,조다혜,이수진</p>
             <p>https://github.com/Sean-creative/whatToday</p>
-            <p>whatToday@gmail.com</p>
+            <p>whattodayhobby@gmail.com</p>
             <p>02-722-1481 (문의시간:10:00~17:00/점심시간 : 13:00~14:00)</p>
           </div>
           <div class="fotinf2">
