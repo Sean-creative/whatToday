@@ -13,17 +13,18 @@
     <form name ="register" method="post" action="/login/registerAction" onsubmit="return inputCheck()">
         <div id="member">
             <div id="memberform">
-            	<a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"></a>
-                <!--<img src="/resources/css/img/logo.png" alt="">-->
-                <!-- <h2>오늘뭐하지 회원가입을 환영합니다!</h2> -->
-	
-				<p>회원가입</p>
+            	<div style="text-align: center;padding-left: 70px;">
+            		<a href="/index/main"> <img src="/resources/img/logo.png" alt="logo"></a>
+                	<!--<img src="/resources/css/img/logo.png" alt="">-->
+                	<h2>회 원 가 입  </h2>
+				</div>
+				<div style="padding-left:133px;">
+				<p>기본정보</p>
 				<input type="hidden" name="usrType" value="일반회원가입" >
 				<input type="hidden" name="usrImg" value="경로경로">
                 <div>
-                    <label for="id">아이디(이메일)</label><br>
+                    <label for="id">아이디(이메일)</label><button id="idDuplicateCheck" type="button" onclick="idDuplicate();">중복확인</button><br>
                     <input type="text" placeholder="이메일(아이디)를 입력해주세요." id="email" name="usrId">
-                    <button id="idDuplicateCheck" type="button" onclick="idDuplicate();">중복확인</button>
                 </div>
 				<span id ="emailResult" class="hide"></span>
 				
@@ -46,10 +47,8 @@
 				<span id="nameResult" class="hide"></span>
 				
                 <div>
-                    <label for="phone">휴대폰 번호</label><br>
+                    <label for="phone">휴대폰 번호</label><button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();" style="margin-left: 276px;">중복확인</button><br>
                     <input type="text" placeholder="휴대폰 전호('-'없이 입력)" id="phone" name="usrPhone">
-                    <button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();">중복확인</button>
-
                 </div>
 				<span id ="phoneResult" class="hide"></span>
 	
@@ -67,10 +66,7 @@
                     <label for="female" class="especi">여자</label>
                 </div>
 
-                <p>* 관심정보<br>
-                <span>관심정보는 선택사항이며, 선택하지 않아도 회원가입이 가능합니다.</span>
-                </p>
-
+                <p>관심정보<br></p>
                 
                 <div>
                     <label for="interest">관심지역1</label><br>
@@ -110,7 +106,7 @@
                     </select>
                 </div>
 
-                <p>이용약관 / 개인정보 수집 및 이용 동의</p>
+                <p style="width: 330px;">이용약관 / 개인정보 수집 및 이용 동의</p>
                 <div id="agreeform">
                     <div>
                         <label class="agre">이용약관 동의</label> 
@@ -129,11 +125,13 @@
                         <input type="radio" name="usrEmailTerm" value="Y"><label for="agree" class="especi" >동의</label> 
                         <input type="radio" name="usrEmailTerm" value="N"><label for="disagree" class="especi" >비동의</label>
                     </div>
+                    
+                    
                 </div>
-
-                <button type="submit" class="btn">가입하기</button>
+               	</div>
             </div>
         </div>
+        		<input type="submit" class="btn" value="가입하기">
     </form>
 
 	
@@ -165,7 +163,7 @@
 		// 비밀번호 유효성 검사
 		let pwdInput = document.getElementById("pwd");
 		let pwdResult = document.getElementById("pwdResult");
-		const pwdPattern = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W))(?=.*[0-9]).{8,16}$/;
+		const pwdPattern = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,}$/;
 
 		pwdCheckResult = false;
 		function pwdCheck() {
