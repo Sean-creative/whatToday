@@ -63,7 +63,26 @@ $(function() {
 			return word !== "";
 		});
 	}
-
+	
+	
+	
+	var alert = function(msg, type) {
+		swal({
+			title : '',
+			text : msg,
+			type : type,
+			timer : 4000,
+			customClass : 'sweet-size',
+			showConfirmButton : true
+		});
+	}
+	
+	function Alert() {
+		alert('모임이 개설되었습니다.', 'success');
+	}
+	
+	
+	
 	// 서버에 넘기기
 	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
 	$("#tag-form").on("submit", function(e) {
@@ -71,7 +90,7 @@ $(function() {
 		$("#rdTag").val(value);
 
 		if (inputCheck() == true) {
-			alert('개설되었습니다.');
+			Alert();
 		} else {
 			e.preventDefault();
 		}

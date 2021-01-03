@@ -157,7 +157,7 @@
             <p class="nombre"><c:out value="${club.cbName}" /></p>
             <!--이름  -->
             <hr style="color: #eee;">
-            <p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" />
+            <p class="limitmem"><c:out value="${club.cbMbNum}" />명이  모였습니다
             </p>
          </a>
       </div>

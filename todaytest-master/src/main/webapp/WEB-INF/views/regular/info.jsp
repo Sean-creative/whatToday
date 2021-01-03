@@ -11,12 +11,14 @@
 /* 해시태그  */
 ul li.tag-item {
 	padding: 4px 8px;
-	background-color: #ffaf31; color : white;
+	background-color: #ffaf31;
+	color: white;
 	display: inline-block;
 	font-size: 14px;
 	letter-spacing: -.5px;
 	margin-bottom: 10px;
 	color: white;
+	margin: 0 5px;
 }
 
 .tag-item:hover {
@@ -24,24 +26,27 @@ ul li.tag-item {
 	color: #fff;
 }
 
-
 /* 찜하기 구현 */
 #sss>img {
-	    width: 100%;
-    height: 100%;
-    position: relative;
-    top: -4px;
-    cursor: pointer;
-    margin: 0;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	top: -4px;
+	cursor: pointer;
+	margin: 0;
 }
 
 #sss {
-	  width: 42px;
-    overflow: hidden;
-    height: 42px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 20px;
+	width: 42px;
+	overflow: hidden;
+	height: 42px;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+
+ul#tag-list {
+	margin-bottom: 15px;
 }
 </style>
 
@@ -93,10 +98,12 @@ ul li.tag-item {
 				</div>
 				<div class="inforig">
 					<p>👪모임 멤버 ( ${club.cbCurMbNum} / ${club.cbMbNum}명 )</p>
-					<p>${userVO.usrName}(모임장)</p>
 					<c:forEach items="${joinList}" var="joinList">
 						<p class="clubb">
-						<li><c:out value="${joinList.usrName}" /></li>
+						<li><c:out value="${joinList.usrName}" /> <c:if
+								test="${joinList.usrNum == club.cbLeaderNum}">
+						(모임장)
+						</c:if></li>
 						</p>
 					</c:forEach>
 					<!-- 로그인 유저의 정보와 개설자의 번호가 일치하지 않으면 버튼을 보여줘야한다. -->
@@ -129,27 +136,27 @@ ul li.tag-item {
 		<div id="rightinfo" class="rightinfo">
 			<div class="contentup">
 				<div class="contentl">
-					<p>만남 일정</p>				
+					<p>만남 일정</p>
 				</div>
 				<!-- 하트버튼 -->
-					<div id="sss">
-						<c:choose>
-							<c:when test="${likecheck eq '1'}">
-								<!-- likecheck가1이면 빨간 하트-->
-								<img id="qqq" src="/resources/img/heart.gif" />
-							</c:when>
-							<c:otherwise>
-								<!-- likecheck가0이면 빈하트-->
-								<img id="qqq" src="/resources/img/heartCancle.gif" />
-							</c:otherwise>
-						</c:choose>
-					</div>
+				<div id="sss">
+					<c:choose>
+						<c:when test="${likecheck eq '1'}">
+							<!-- likecheck가1이면 빨간 하트-->
+							<img id="qqq" src="/resources/img/heart.gif" />
+						</c:when>
+						<c:otherwise>
+							<!-- likecheck가0이면 빈하트-->
+							<img id="qqq" src="/resources/img/heartCancle.gif" />
+						</c:otherwise>
+					</c:choose>
+				</div>
 
 
 
 
 
-					<script>
+				<script>
         var usrNum = ${usrNum};
         var cbNum = ${club.cbNum};
          

@@ -172,7 +172,7 @@
 
 
 		<!-- ========오른쪽========== -->
-		<div style="display: inline-block; background-color: red; width: 700px; height: 1100px; margin-top: 75px; margin-left: 40px;">
+		<div style="display: inline-block; background-color: white; width: 700px; height: 1100px; margin-top: 75px; margin-left: 40px;">
 
 			<!-- 카카오 맵 영역 -->
 			<div class="map_wrap">
@@ -205,6 +205,11 @@
 </section>
 
 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -432,6 +437,37 @@
 							}
 						}
 
+						var alert = function(msg, type) {
+							swal({
+								title : '',
+								text : msg,
+								type : type,
+								timer : 4000,
+								customClass : 'sweet-size',
+								showConfirmButton : true
+							});
+						}
+						
+						function Alert() {
+							alert('모임이 수정되었습니다.', 'success');
+						}
+						
+						var alert2 = function(msg, type) {
+							swal({
+								title : '',
+								text : msg,
+								type : "error",
+								timer : 2000,
+								customClass : 'sweet-size',
+								showConfirmButton : true
+							});
+						}
+
+						function Alert2() {
+							alert2('모임이 삭제되었습니다.', 'success');
+						}
+						
+						
 						// Modify, Remove, List 중 버튼을 누른다면,
 						let formObj = $("#modifyForm");
 
@@ -445,7 +481,7 @@
 									console.log(operation);
 
 									if (operation === 'remove') {
-										alert('삭제되었습니다');
+										Alert2();
 										formObj.attr("action",
 												"/thunder/remove");
 
@@ -459,6 +495,7 @@
 										if (inputCheck()) {
 											var value = marginTag(); // return array
 											$("#rdTag").val(value);
+											Alert();
 											console.log("true");
 										} else {
 											console.log("false");

@@ -91,7 +91,7 @@
 
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️언제 시작되나요?</p>
+						<p>⚡️언제 모이나요?</p>
 					</div>
 					<div class="inforig">
 						<p class="clubb">
@@ -151,7 +151,7 @@
 			<div id="rightinfo" class="rightinfo">
 				<div class="contentup">
 					<div class="contentl">
-						<p>⚡️작성자는?</p>
+						<p>⚡️모임장은?</p>
 					</div>
 				</div>
 
