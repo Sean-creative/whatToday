@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.MeetingVO;
 import com.hobby.domain.PageDTO;
 import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
@@ -39,11 +43,11 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ThunderController {
 
-	
+
 	private ThunderService service;	
 	private UserService userService;
 
-//	servlet-context.xml에서 설정했던 uploadPath를 추가
+	//	servlet-context.xml에서 설정했던 uploadPath를 추가
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
@@ -63,7 +67,7 @@ public class ThunderController {
 		// 할 듯
 		if (!service.isLogin(auth))
 			return "redirect:/login/login";
-		
+
 		// 들어온 파라미터 값 확인
 		log.info("/info(GET) - cri : " + cri);
 		log.info("/info(GET) - cbNum : " + cbNum);
@@ -91,7 +95,7 @@ public class ThunderController {
 		model.addAttribute("clubVO", clubVO);
 
 		// info로 넘어가는 데이터 - 1.로그인한 유저의 번호, 2.club의 정보, 3.해당 club 개설자의 정보 4, criteria
-									
+
 
 		String joinState = service.getCbMemByUsrNum(loginUser.getUsrNum(), clubVO.getCbNum());
 		log.info("/info(GET) - joinState : " + joinState);
@@ -109,11 +113,11 @@ public class ThunderController {
 		return "/thunder/info";
 	}
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
@@ -150,10 +154,10 @@ public class ThunderController {
 		return "/thunder/modify";
 	}
 
-	
-	
-	
-	
+
+
+
+
 	@PostMapping("/modify")
 	public String modify(ThunderVO Club, @ModelAttribute("cri") Criteria cri, MultipartFile file, RedirectAttributes rttr) throws Exception {
 
@@ -192,9 +196,9 @@ public class ThunderController {
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
-	
-	
-	
+
+
+
 	@PostMapping("/join")
 	// join 할때도 cri가 유지되어 있어야 하나???
 	public String join(Authentication auth, String joinState, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri,
@@ -226,8 +230,8 @@ public class ThunderController {
 		return "redirect:/thunder/info" + cri.getListLink();
 	}
 
-	
-	
+
+
 	@PostMapping("/remove")
 	public String remove(@RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("/remove(POST) - cbNum : " + cbNum);
@@ -239,19 +243,19 @@ public class ThunderController {
 			rttr.addFlashAttribute("result", "모임 정보가 삭제되지 않았습니다.");
 		}
 
-//		원래는 이렇게 써야하는데, 아래처럼  '+cri.getListLink()' 해주면 가독성이 좋아진다.
-//		rttr.addAttribute("pageNum", cri.getPageNum());
-//		rttr.addAttribute("amount", cri.getAmount());
-//		rttr.addAttribute("type" , cri.getType());
-//		rttr.addAttribute("keyword", cri.getKeyword());
+		//		원래는 이렇게 써야하는데, 아래처럼  '+cri.getListLink()' 해주면 가독성이 좋아진다.
+		//		rttr.addAttribute("pageNum", cri.getPageNum());
+		//		rttr.addAttribute("amount", cri.getAmount());
+		//		rttr.addAttribute("type" , cri.getType());
+		//		rttr.addAttribute("keyword", cri.getKeyword());
 		// PR 테스트!
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
-	
-	
-	
-	
+
+
+
+
 	@PostMapping("/add")
 	// 메서드의 매개변수에 MultipartFile file이 추가
 	public String add(Authentication auth, ThunderVO clubVO, MultipartFile file, RedirectAttributes rttr) throws Exception {
@@ -309,9 +313,6 @@ public class ThunderController {
 		return "redirect:/thunder/list";
 	}
 
-	
-	
-	
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
 	public String add(Authentication auth, Model model) {
@@ -324,7 +325,7 @@ public class ThunderController {
 			return "redirect:/login/login";
 	}
 
-	
+
 	@GetMapping("/list")
 	// String userLatitudeStr, String userLongitudeStr
 	public String list(Criteria cri, Model model) {
@@ -337,13 +338,13 @@ public class ThunderController {
 			log.info("list(GET) - gps(GET)으로 forward ");
 			return "redirect:/thunder/gps" + cri.getListLink();			
 		}
-		
+
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
 		List<ThunderVO> thunderList = service.getListWithPaging(cri);
 		model.addAttribute("list", thunderList);
 		log.info("list(GET) - thunderList : " + thunderList);
 		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
-		
+
 		if(thunderList.size() != 0) {
 			log.info("list(GET) - firstOne : " + thunderList.get(0));
 		}
@@ -357,16 +358,41 @@ public class ThunderController {
 		return "/thunder/list";
 	}
 
-	
-	
-	
 	@GetMapping("/gps")
 	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감
 	public void gps(Criteria cri, Model model) {		
 		log.info("gps(GET) - cri : " + cri);		
 		model.addAttribute("cri", cri);		
 	}
-	
-	
+
+	// ##### 번개모임 채팅창 (지영) #####
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/chat", method = RequestMethod.GET)
+	public String chat(@RequestParam("cbNum") Long cbNum, Model model, RedirectAttributes rtts) {
+		log.info("##/chat");
+		CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		UserVO userVO = customUser.getUser();
+		Long usrNum = userVO.getUsrNum();
+		String usrName = userVO.getUsrName();
+		
+		// 모임에 가입한 사람만 채팅창에 들어 갈수 있음
+		String joinState = service.getCbMemByUsrNum(usrNum, cbNum);
+		if(!joinState.equals("가입승인")) {
+			rtts.addFlashAttribute("msg", "모임에 가입한 사람만 입장할 수 있습니다.");
+			return "redirect:/thunder/list";
+		}else {		
+			ThunderVO clubVO = service.get(cbNum);
+
+			model.addAttribute("userVO", userVO);
+			model.addAttribute("usrNum", usrNum);
+			model.addAttribute("usrName", usrName);
+			model.addAttribute("clubVO", clubVO);
+
+			return "/thunder/chat";
+		}
+
+	}
+
 
 }

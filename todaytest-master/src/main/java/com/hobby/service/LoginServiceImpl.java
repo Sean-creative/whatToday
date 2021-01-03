@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hobby.domain.UserVO;
 import com.hobby.mapper.LoginMapper;
+import com.hobby.mapper.MypageMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -102,11 +103,10 @@ public class LoginServiceImpl implements LoginService{
 		log.info("##Service: registerMail");
 
 		String htmlStr = "<h1>메일인증안내입니다.</h1><br>"
-				+ "<img src='http://localhost:8088/resources/img/logo.png' alt='logo' width=\"100px\"><h3>안녕하세요</h3>"
-				+ "<h3>안녕하세요</h3>"
-				+ "<h3>오늘뭐하지를 이용해 주셔서 진심으로 감사드립니다.</h3>"
-				+ "<h3>아래 링크를 클릭하여 회원가입을 완료해 주세요.</h3>"
-				+ "<h3>감사합니다.</h3>"
+				+ "<h2>안녕하세요</h2>"
+				+ "<h2><span style='font-size:25px; background: linear-gradient(to top, rgba(255,175,49,0.7) 50%, transparent 50%);'>오늘뭐하지?</span>를 이용해 주셔서 진심으로 감사드립니다.</h2>"
+				+ "<h2>아래 링크를 클릭하여 회원가입을 완료해 주세요.</h2>"
+				+ "<h2>감사합니다.</h2>"
 				+ "<a href='http://localhost:8088/login/register/confirm?usrId=" + email + "&authKey=" + authKey + "'>로그인하러가기</a>";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -167,13 +167,32 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public String findUserPwd(String usrId) {
 		log.info("##Service: findUserPwd");
-		return mapper.findPwd(usrId);
+		
+		String usrPwd = mapper.findPwd(usrId);
+		if(usrPwd==null) {
+			return null;
+		}else {
+			// 암호화된 비밀번호로 DB업데이트
+			usrPwd = usrPwd.substring(10,20); 
+			mapper.updateUserPwd(usrId, pwencoder.encode(usrPwd));
+			
+			// 암호화된 비밀번호 사용자의 메일로 전송
+			return usrPwd;
+		}
 	}
-
+	
 	@Override
 	public boolean sendPassword(String email, String pwd) {
 		log.info("##Service: sendPassword");
 		boolean result = true;
+		
+		String htmlStr = "<h1>비밀번호 재설정 메일 안내입니다.</h1><br>"
+				+ "<h3>안녕하세요</h3>"
+				+ "<h3>오늘뭐하지를 이용해 주셔서 진심으로 감사드립니다.</h3>"
+				+ "<h3>요청하신 임시 비밀번호는 다음과 같습니다.</h3>"
+				+ "<h3>임시 비밀번호: " + pwd + "</h3>"
+				+ "<h3>임시 비밀번호를 사용해서 로그인하신후 비밀번호를 변경하셔야 정상적으로 로그인이 가능합니다.</h3>"
+				+ "<a href='http://localhost:8088/mypage/password?'>비밀번호 변경하러 가기</a>";
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -181,7 +200,7 @@ public class LoginServiceImpl implements LoginService{
 			messageHelper.setFrom("whattodayhobby@gmail.com", "오늘뭐하지"); // 보내는사람 생략하거나 하면 정상작동을 안함
 			messageHelper.setTo(email); // 받는사람 이메일
 			messageHelper.setSubject("비밀번호를 확인하세요"); // 메일제목은 생략이 가능하다
-			messageHelper.setText(pwd); // 메일 내용
+			messageHelper.setText(htmlStr, true); // 메일 내용
 
 			mailSender.send(message);
 		}catch (Exception e) {

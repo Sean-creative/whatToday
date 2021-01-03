@@ -171,7 +171,11 @@ public class LoginController {
 		log.info("##/find_pwd");
 
 		String result = "";
+		
+		// 비밀번호 가져올 때 암호화 된 비밀번호를 찾아옴.
 		String pwd = service.findUserPwd(inputEmail);
+
+		// 암호화된 비밀번호 + 비밀번호 재설정 링크를 메일로 전송 
 		log.info("##/find pwd:  " + pwd);
 
 		// 사용자가 입력한 이메일(아이디)로 사용자의 비밀번호를 찾는다.		

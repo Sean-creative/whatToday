@@ -11,8 +11,8 @@
 
 <div class="bg-image"></div>
 <div class="bg-text">
-    <h1>취미 분석 테스트</h1>
-    <p>당신의 취미를 찾아드립니다.</p><br><br>
+    <h1>취미 분석 테스트 결과</h1>
+    <p>추천하고 싶은 취미는?</p><br><br>
     <div id = "testResult">
         <div><div class = "result" id="sub0"></div><p>${testReuslt0.subclass}</p></div>
         <div><div class = "result" id="sub1"></div><p>${testReuslt1.subclass}</p></div>

@@ -30,4 +30,6 @@ public interface LoginMapper {
 	
 	public int updateUsrState(UserVO user);
 	
+	public int updateUserPwd(@Param("usrId")String usrId, @Param("usrPwd")String usrPwd);
+	
 }
