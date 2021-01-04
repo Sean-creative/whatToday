@@ -204,8 +204,8 @@ public class ThunderController {
 		model.addAttribute("clubVO", clubVO);
 
 		// 로그인한 유저와 개설자의 번호가 일치하지 않으면 list로 돌려보낸다. (사용자가 url로 장난 쳤을 떄 방지)
-		if (loginUser.getUsrNum() != userVO.getUsrNum())
-			return "redirect:/thunder/list";
+//		if (loginUser.getUsrNum() != userVO.getUsrNum())
+//			return "redirect:/thunder/list";
 
 		// modify로 넘어가는 데이터 - 1.club의 정보, 2. criteria
 		return "/thunder/modify";
