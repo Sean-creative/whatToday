@@ -40,8 +40,51 @@ $(function() {
 								.width(200).height(144);
 					}
 					reader.readAsDataURL(this.files[0]);
+					
+					fileUpload();
 				}
 			});
+	
+	
+	let fileUpload = function() {
+		var formData = new FormData();
+		var inputFile = $("input[name='file']");
+		var files = inputFile[0].files[0];
+		console.log(files);
+		
+		/*
+		 * if (!checkExtension(files.name, files.size)) { return false; }
+		 */
+
+		formData.append("file", files);
+
+		$.ajax({
+			url : '/thunder/uploadFormAction',
+			processData : false,
+			contentType : false,
+			data : formData,
+			type : 'POST',
+			dataType : 'json',
+			success : function(result) {
+				console.log(result);
+				
+				$("input[name=cbFile]").attr("value", result.cbFile);
+				$("input[name=cbThumbImg]").attr("value", result.cbThumbImg);
+
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	
@@ -63,19 +106,45 @@ $(function() {
 			return word !== "";
 		});
 	}
-
+	
+	
+	
+	var alert = function(msg, type) {
+		swal({
+			title : '',
+			text : msg,
+			type : type,
+			timer : 1500,
+			customClass : 'sweet-size',
+			showConfirmButton : true
+		});
+	}
+	
+	function Alert() {
+		alert('모임이 개설되었습니다.', 'success');
+	}
+	
+	
+	let formObj = $("#tag-form");
 	// 서버에 넘기기
 	// form에 넘기기 전에 inputCheck하고 해시태그 값을 String 형태로 보낸다.
-	$("#tag-form").on("submit", function(e) {
+	$("#addButton").on("click", function(e) {
+		e.preventDefault();
 		var value = marginTag(); // return array
 		$("#rdTag").val(value);
 
 		if (inputCheck() == true) {
-			alert('개설되었습니다.');
+			Alert();
 		} else {
-			e.preventDefault();
+			console.log("???");
+			return;
 		}
+		
+		setTimeout(function() {
+			formObj.submit();
+		},1000)																		
 	});
+			
 
 	// 처음 부터 #이 달려있고
 	// 엔터, 스페이스바 , # 을 누르면 -> #까지 해서 올라간다.
@@ -174,7 +243,7 @@ $(function() {
 
 	/* 날씨관련 */
 	let city = 'Seoul';
-	//날씨 DATA의 기준인 lat,lon은 종각역 YMCA 건물 기준임!!
+	// 날씨 DATA의 기준인 lat,lon은 종각역 YMCA 건물 기준임!!
 	var apiURI = "https://api.openweathermap.org/data/2.5/onecall?lat=37.57041580586331&lon=126.98515148702204&exclude=current,minutely,hourly,alerts&appid=dfb19fd20ff326431f940b75f34778da&lang=kr&units=metric";
 	$
 			.ajax({
@@ -253,6 +322,14 @@ $(function() {
 			})
 						
 
+			
+			
+			
+			
+			
+			
+			
+			
 }); // end load
 
 const cate = function(o, d) {
@@ -394,7 +471,7 @@ const inputCheck = function() {
 		return false;
 	}
 
-	//50명 넘어가지 못하게!
+	// 50명 넘어가지 못하게!
 	if (!mbnum || mbnum < 1 || mbnum >50) {
 		alert("모임인원을 다시 입력해주세요. 50명 이하입니다.");
 		return false;

@@ -36,7 +36,7 @@
 .dtlfont {
 	width: 1200px;
 	font-size: 18px;
-	margin: 30px 0 10px 0;
+	margin: 30px 0 15px 5px;
 }
 
 .src select {
@@ -158,14 +158,14 @@ button>img {
 	</div>
 
 
-
-
-
+		
+		
 	<div id="sort">
 		<ul>
+			<span class="half">번개모임</span>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbNum desc'? "active":""}" ><a href="cbNum desc">최신순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'cbView desc'? "active":""}" ><a href="cbView desc">인기순</a></li>
-			<li class="order_button ${pageMaker.cri.orderBy eq 'cbAppperiod desc'? "active":""}" ><a href="cbAppperiod desc">마감임박순</a></li>
+			<li class="order_button ${pageMaker.cri.orderBy eq 'cbAppperiod'? "active":""}" ><a href="cbAppperiod">마감임박순</a></li>
 			<li class="order_button ${pageMaker.cri.orderBy eq 'distance'? "active":""}"><a href="distance">거리순</a></li>
 		</ul>
 	</div>

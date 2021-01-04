@@ -273,6 +273,11 @@ public class MypageServiceImpl implements MypageService {
 		return mapper.leaveUserClub(userVO);
 	}
 
+	@Override
+	public List<ClubVO> getLikeClub(Long usrNum) {
+		return mapper.getLikeClub(usrNum);
+	}
+
 
 
 
