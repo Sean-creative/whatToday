@@ -150,13 +150,9 @@
 		<span class="half">정기모임</span><br>
 		<p class="halfunder">즐거운 정기모임을 만나보세요!</p>
 	</div>
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
-<<<<<<< HEAD
+	
+
 	<div class="masmam"><a href="/regular/list">더보기 ></a></div>
-=======
->>>>>>> master
 </div>
 <div id="searchresult">
 	<c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
@@ -181,7 +177,6 @@
 <!-- =================베너======================== -->
 <div class="slideshow-container">
 
-<<<<<<< HEAD
         <div class="mySlides fade">
           <a href="/hobbyTest/test">
              <img src="/resources/img/banner1.jpg">
@@ -206,28 +201,8 @@
           <span class="dot"></span> 
           <span class="dot"></span>
         </div>
-    </div>
-=======
-	<div class="mySlides fade">
-		<a href="/hobbyTest/test"> <img src="/resources/img/banner1.jpg">
-		</a>
-	</div>
-
-	<div class="mySlides fade">
-		<a href="/regular/list"> <img src="/resources/img/banner2.jpg">
-		</a>
-	</div>
-
-	<!--  <div class="mySlides fade">
-          <img src="img/paint2.jpg">
-        </div> -->
-
-	<div class="dotted">
-		<span class="dot"></span> <span class="dot"></span>
-		<!-- <span class="dot"></span>  -->
-	</div>
 </div>
->>>>>>> master
+
 
 <!-- 번개모임 -->
 <div class="regular thunder">
@@ -235,13 +210,9 @@
 		<span class="half">번개모임</span><br>
 		<p class="halfunder">즐거운 번개모임을 만나보세요!</p>
 	</div>
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
-<<<<<<< HEAD
+
 	<div class="masmam"><a href="/thunder/list">더보기 ></a></div>
-=======
->>>>>>> master
+
 </div>
 <div id="searchresult">
 	<c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
