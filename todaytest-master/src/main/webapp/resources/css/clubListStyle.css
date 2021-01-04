@@ -203,12 +203,57 @@ button>img {
 	color:#2f3030;
 }
 
+/**searchresult**/
 .nombre{
-	width:270px;
-	height:40px;
-	margin-top:4px;
-	font-size:14px;
-	color:#2f3030
+	width: 270px;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    margin-bottom: 11px;
+}
+
+.topinfo{
+	font-size: 11px;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    overflow: hidden;
+    font-weight: 600;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+}
+
+.count{
+	font-size: 12px;
+    line-height: 16px;
+    color: #999;
+    padding-bottom: 10px;
+}
+
+.cbName{
+	width: 270px;
+    margin-top: 3px;
+    font-size: 15px;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    margin-bottom: 6px;
+}
+
+.meetDday{
+	font-size: 10px;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    overflow: hidden;
+    font-weight: 600;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    background-color: #f6f6f6;
+    color: #292c34;
+    padding: 1px 10px;
+    width: 30px;
+    border-radius: 3px;;
 }
 
 

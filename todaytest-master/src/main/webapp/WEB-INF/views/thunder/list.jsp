@@ -172,7 +172,7 @@ button>img {
 
 
 
-	<!-- 검색결과  -->
+	<!-- 검색결과 
 	<div id="searchresult">
 		<c:forEach items="${list}" var="thunderItem" varStatus="status">
 			<div class='move' onclick='linkToInfo(${thunderItem.cbNum})' id='itemDiv${status.count}'>
@@ -188,8 +188,41 @@ button>img {
 				<p class="limitmem">모집인원 : <c:out value="${thunderItem.cbCurMbnum}" /> / <c:out value="${thunderItem.cbMbnum}" />
 			</div>
 		</c:forEach>
-	</div>
+	</div>-->
 
+		<!-- UI 변경(지영)  -->
+		<div id="searchresult">
+		   <c:forEach items="${list}" var="thunderItem" varStatus="status">
+		      <div class='move' onclick='linkToInfo(${thunderItem.cbNum})' id='itemDiv${status.count}'>
+		         <a href='/thunder/info?cbNum=<c:out value="${thunderItem.cbNum}" />'>
+		            <img src="${thunderItem.cbThumbImg}" alt="">
+		            
+		            <p class="topinfo">#${thunderItem.cbCategory} #${thunderItem.cbSubcat} #${thunderItem.cbDistrict}</p>
+		            <p class="cbName">${thunderItem.cbName}</p>
+					
+					<c:set var="today" value="<%=new java.util.Date()%>" />
+					<fmt:formatDate var="today" value="${today}" pattern="yyyyMMdd"/>
+					<fmt:parseDate var="meetDay" value='${thunderItem.thunderDetailVO.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+					<fmt:formatDate var="meetDay" value="${meetDay}" pattern="yyyyMMdd"/>
+					
+					<c:set var="cbMbNum" value = "${thunderItem.cbMbnum}" />
+					<c:set var="cbCurMbNum" value = "${hunderItem.cbCurMbnum}" />
+					
+					<p class="count">⍣ ${thunderItem.cbView}명이 보고있습니다.</p>
+					
+					<span class="meetDday">D-<c:out value="${meetDay-today}"/></span>
+		       		<span class="meetDday"><c:out value="${cbMbNum-cbCurMbNum}" />명</span>
+		       		<br>
+					
+					<!--  
+		            <fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+		            <p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
+					-->
+					
+		         </a>
+		      </div>
+		   </c:forEach>
+		</div>
 
 
 	<div class='pull-right'>

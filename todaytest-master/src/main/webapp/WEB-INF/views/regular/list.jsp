@@ -49,7 +49,7 @@
         	</ul>
 		</div>
 		
-		<!-- 검색결과  -->		
+		<!-- 검색결과  	
 		<div id="searchresult">	
 			<c:forEach items="${clublist}" var="club"> 
 				<div class='move' onclick='linkToInfo(${club.cbNum})' id ='itemDiv${status.count}'>${status.count}<br>
@@ -60,6 +60,21 @@
 					<p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /></p>					
 				</div>
 			</c:forEach>
+		</div>
+		-->	
+		<!-- UI 변경(지영) -->
+		<div id="searchresult">
+		   <c:forEach items="${clublist}" var="club">
+		      <div>
+		         <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
+		            <img src='<c:out value="${club.cbFile}" />' alt="">
+		            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} 
+		            <br> #${club.cbDistrict} #${club.cbName}</p>
+		            <p class="nombre">${club.cbIntro}</p>
+		            <p class="count">⍤ ${club.cbCurMbNum}명이 모였습니다.</p>
+		         </a>
+		      </div>
+		   </c:forEach>
 		</div>
 
 	<div class='pull-right'>
