@@ -21,36 +21,36 @@
 				<div style="padding-left:133px;">
 				<p>기본정보</p>
 				<input type="hidden" name="usrType" value="일반회원가입" >
-				<input type="hidden" name="usrImg" value="thunderHuman.png">
+				<input type="hidden" name="usrImg" value="경로경로">
                 <div>
                     <label for="id">아이디(이메일)</label><button id="idDuplicateCheck" type="button" onclick="idDuplicate();">중복확인</button><br>
                     <input type="text" placeholder="이메일(아이디)를 입력해주세요." id="email" name="usrId">
-                	<br><span id ="emailResult" class="hide"></span>
                 </div>
+				<span id ="emailResult" class="hide"></span>
 				
                 <div>
                     <label for="password">비밀번호</label><br>
                     <input type="password" placeholder="비밀번호(영문,숫자,특수문자 8-16자)" id="pwd" name="usrPwd">
-                	<br><span id="pwdResult" class="hide"></span>
                 </div>
+                <span id="pwdResult" class="hide"></span>
 
                 <div>
                     <label for="password">비밀번호 재입력</label><br>
                     <input type="password" placeholder="비밀번호 재입력" id="pwdRe" name="usrPwdRe">
-                	<br><span id="pwdReResult" class="hide"></span>	
                 </div>
+                <span id="pwdReResult" class="hide"></span>	
 
                 <div>
                     <label for="name">이름</label><br>
                     <input type="text" placeholder="이름 입력" id="name" name="usrName">
-                    <br><span id="nameResult" class="hide"></span>
                 </div>
+				<span id="nameResult" class="hide"></span>
 				
                 <div>
                     <label for="phone">휴대폰 번호</label><button id="phoneDuplicateCheck" type="button" onclick="phoneDuplicate();" style="margin-left: 276px;">중복확인</button><br>
                     <input type="text" placeholder="휴대폰 전호('-'없이 입력)" id="phone" name="usrPhone">
-                    <br><span id ="phoneResult" class="hide"></span>
                 </div>
+				<span id ="phoneResult" class="hide"></span>
 	
                 <div>
                     <label for ="date" >생년월일 </label><br> 
