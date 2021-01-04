@@ -22,7 +22,7 @@
                 <li><span class="espec">READ</span> <span class="numero"><c:out value="${noticePage.readCnt }"/></span></li>
             </ul>    
             <div class="noticont">
-                <p><c:out value="${noticePage.ntContent}" /></p>
+                <pre><c:out value="${noticePage.ntContent}" /></pre>
             </div>
         </div>
      </c:forEach>   
