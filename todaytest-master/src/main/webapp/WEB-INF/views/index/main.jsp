@@ -2,9 +2,16 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
-   
+<title>오늘뭐하지?</title>
+</head>
+<body>
    <!--TOP버튼-->
    <div class="top_btn">
       <a href="#"><i class="material-icons">keyboard_arrow_up</i></a>
@@ -145,7 +152,7 @@
 	   <span class="half">정기모임</span><br>
 	   <p class="halfunder">즐거운 정기모임을 만나보세요!</p>
 	</div>
-	<div class="masmam"><a href="">전체취미보기 ></a></div>
+	<div class="masmam"><a href="/regular/list">더보기 ></a></div>
 </div>
 <div id="searchresult">
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
@@ -179,14 +186,17 @@
            </a>
         </div>
         
-       <!--  <div class="mySlides fade">
-          <img src="img/paint2.jpg">
-        </div> -->
+         <div class="mySlides fade">
+           <a href="/thunder/list">
+                <img src="/resources/img/ban3.jpg">
+           </a>
+        </div>
+       
         
         <div class="dotted">
           <span class="dot"></span> 
           <span class="dot"></span> 
-          <!-- <span class="dot"></span>  -->
+          <span class="dot"></span>
         </div>
     </div>
 
@@ -196,7 +206,7 @@
 	   <span class="half">번개모임</span><br>
 	   <p class="halfunder">즐거운 번개모임을 만나보세요!</p>
 	</div>
-	<div class="masmam"><a href="">전체취미보기 ></a></div>
+	<div class="masmam"><a href="/thunder/list">더보기 ></a></div>
 </div>
 <div id="searchresult">
    <c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">

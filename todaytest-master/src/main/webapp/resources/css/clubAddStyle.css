@@ -25,9 +25,9 @@
 .regubg{
     width:100%;
     height:1600px;
-    background:url('../img/brown.jpg') no-repeat;
+    background:url('../img/brown1.jpg') no-repeat;
     background-size:cover;
-    filter: grayscale(100%);
+    
     position: relative;
     margin-top: 50px;
 }
@@ -44,7 +44,7 @@
     width:800px;
     height:1300px;
     background:#fff;
-    margin: 520px auto;
+    margin: 0 auto;
     padding:30px;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
     position: absolute;
