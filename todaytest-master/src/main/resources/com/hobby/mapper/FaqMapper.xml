@@ -40,7 +40,7 @@
 <!--공지사항    -->
 <select id="noticeList" resultType="com.hobby.domain.NoticeVO">
 	<![CDATA[
-		select * from notice where ntNum > 0 order by ntNum desc
+		select * from notice order by ntdate desc
 	]]>
 </select>
 
@@ -64,7 +64,7 @@
 		from notice n, noticeContent nc
 		where rownum <= #{pageNum} * #{amount} and n.ntNum = nc.ntNum
 		)
-		where rn > (#{pageNum} -1) * #{amount}
+		where rn > (#{pageNum} -1) * #{amount} order by ntDate desc
 	]]>
 </select>
 
