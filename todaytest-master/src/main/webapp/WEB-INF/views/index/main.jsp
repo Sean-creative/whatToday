@@ -1,43 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
+<title>오늘뭐하지?</title>
+</head>
+<body>
+   <!--TOP버튼-->
+   <div class="top_btn">
+      <a href="#"><i class="material-icons">keyboard_arrow_up</i></a>
+   </div>
+   
+    <!-- main사진  -->
+    <div id="mainheader">
+        <ul class="back_visual">
+              <li class="bv_1"></li>
+              <li class="bv_2"></li>
+              <li class="bv_3"></li>              
+        </ul>
+           <div class="in_visual">  <!-------------------------------비주얼-->
+               <div id="mainnav"> <!------------------------------------- 메뉴 -->
+                    <ul>
+                        <li><a href="/regular/list">정기모임</a></li>
+                        <li><a href="/thunder/list">번개모임</a></li>
+                        <li><a href="/hobbyTest/test">추천테스트</a></li>
+                        <li><a href="/regular/add">정기개설</a></li>
+                        <li><a href="/thunder/add">번개개설</a></li>
+                        <li><a href="">포인트충전소</a></li>
+                        <li><a href="/cs/notice">고객센터</a></li>
+                    </ul>
+                    <div class="mainlogo"></div>
 
-<!--TOP버튼-->
-<div class="top_btn">
-	<a href="#"><i class="material-icons">keyboard_arrow_up</i></a>
-</div>
+                </div>
+                <h1>오늘뭐하지?</h1>
+                <p class="subinfori">오늘뭐하지를 통해서<br> 즐겨보고 싶었던 취미를 만나보세요!</p>
+               <!--  <div class="recomtest"><a href="">추천Test</a></div>
 
-<!-- main사진  -->
-<div id="mainheader">
-	<ul class="back_visual">
-		<li class="bv_1"></li>
-		<li class="bv_2"></li>
-		<li class="bv_3"></li>
-	</ul>
-	<div class="in_visual">
-		<!-------------------------------비주얼-->
-		<div id="mainnav">
-			<!------------------------------------- 메뉴 -->
-			<ul>
-				<li><a href="/regular/list">정기모임</a></li>
-				<li><a href="/thunder/list">번개모임</a></li>
-				<li><a href="/hobbyTest/test">추천테스트</a></li>
-				<li><a href="/regular/add">정기개설</a></li>
-				<li><a href="/thunder/add">번개개설</a></li>
-				<li><a href="">포인트충전소</a></li>
-				<li><a href="/cs/notice">고객센터</a></li>
-			</ul>
-			<div class="mainlogo"></div>
-
-		</div>
-		<h1>오늘뭐하지?</h1>
-		<p class="subinfori">
-			오늘뭐하지를 통해서<br> 즐겨보고 싶었던 취미를 만나보세요!
-		</p>
-		<!--  <div class="recomtest"><a href="">추천Test</a></div>
                 <div class="regumak"><a href="">정기모임 </a></div> -->
 		<div class="front_visual">
 			<ul>
@@ -72,7 +76,7 @@
 				<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li>
 				<li>
 					<div class="tooltip">
-						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px; margin-top: -10px;">
+						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 8px 5px 0px 0px;">
 						<div class="tooltiptext">
 							<div id="socketAlert" class="alert alert-success" role="alert"></div>
 						</div>
@@ -146,52 +150,54 @@
 		<span class="half">정기모임</span><br>
 		<p class="halfunder">즐거운 정기모임을 만나보세요!</p>
 	</div>
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
+
+	
+	<div class="masmam"><a href="">모임 더 보 기 ></a></div>
+
 </div>
 <div id="searchresult">
-	<c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
-		<div>
-			<a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'> <img src='<c:out value="${club.cbFile}" />' alt="">
-				<p class="location">
-					<c:out value="${club.cbDistrict}" />
-				</p> <!-- 위치 -->
-				<p class="nombre">
-					<c:out value="${club.cbName}" />
-				</p> <!--이름  -->
-				<hr style="color: #eee;">
-				<p class="limitmem">
-					<c:out value="${club.cbCurMbNum}" />
-					명이 모였습니다
-				</p>
-			</a>
-		</div>
-	</c:forEach>
+   <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
+      <div>
+         <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
+            <img src='<c:out value="${club.cbFile}" />' alt="">
+            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} 
+            <br> #${club.cbDistrict} #${club.cbName}</p>
+            <p class="nombre">${club.cbIntro}</p>
+            <p class="count">⍤ ${club.cbCurMbNum}명이 모였습니다.</p>
+         </a>
+      </div>
+   </c:forEach>
 </div>
 
 <!-- =================베너======================== -->
 <div class="slideshow-container">
 
-	<div class="mySlides fade">
-		<a href="/hobbyTest/test"> <img src="/resources/img/banner1.jpg">
-		</a>
-	</div>
-
-	<div class="mySlides fade">
-		<a href="/regular/list"> <img src="/resources/img/banner2.jpg">
-		</a>
-	</div>
-
-	<!--  <div class="mySlides fade">
-          <img src="img/paint2.jpg">
-        </div> -->
-
-	<div class="dotted">
-		<span class="dot"></span> <span class="dot"></span>
-		<!-- <span class="dot"></span>  -->
-	</div>
+        <div class="mySlides fade">
+          <a href="/hobbyTest/test">
+             <img src="/resources/img/banner1.jpg">
+          </a>   
+        </div>
+        
+        <div class="mySlides fade">
+           <a href="/regular/list">
+                <img src="/resources/img/banner2.jpg">
+           </a>
+        </div>
+        
+         <div class="mySlides fade">
+           <a href="/thunder/list">
+                <img src="/resources/img/ban3.jpg">
+           </a>
+        </div>
+       
+        
+        <div class="dotted">
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span>
+        </div>
 </div>
+
 
 <!-- 번개모임 -->
 <div class="regular thunder">
@@ -199,32 +205,43 @@
 		<span class="half">번개모임</span><br>
 		<p class="halfunder">즐거운 번개모임을 만나보세요!</p>
 	</div>
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
-</div>
-<div id="searchresult">
-	<c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
-		<div>
-			<a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'> <img src='<c:out value="${club.cbFile}" />' alt="">
-				<p class="location">
-					<c:out value="${club.cbDistrict}" />
-				</p>
-				<p class="nombre">
-					<c:out value="${club.cbName}" />
-				</p>
-				<hr style="color: #eee;"> <fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
-				<p class="limitmem">
-					<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" />
-				</p>
 
-				<p class="limitmem">
-					<c:out value="${club.cbCurMbNum}" />
-					명이 모였습니다
-				</p>
-			</a>
-		</div>
-	</c:forEach>
+	
+
+	<div class="masmam"><a href="/thunder/list">모임 더 보 기 ></a></div>
+</div>
+
+<div id="searchresult">
+   <c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
+      <div>
+         <a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'>
+            <img src='<c:out value="${club.cbFile}" />' alt="">
+            
+            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} #${club.cbDistrict}</p>
+            <p class="cbName">${club.cbName}</p>
+			
+			<c:set var="today" value="<%=new java.util.Date()%>" />
+			<fmt:formatDate var="today" value="${today}" pattern="yyyyMMdd"/>
+			<fmt:parseDate var="meetDay" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+			<fmt:formatDate var="meetDay" value="${meetDay}" pattern="yyyyMMdd"/>
+			
+			<c:set var="cbMbNum" value = "${club.cbMbNum}" />
+			<c:set var="cbCurMbNum" value = "${club.cbCurMbNum}" />
+			
+			<p class="count">⍣ ${club.cbView}명이 보고있습니다.</p>
+			
+			<span class="meetDday">D-<c:out value="${meetDay-today}"/></span>
+       		<span class="meetDday"><c:out value="${cbMbNum-cbCurMbNum}" />명</span>
+       		<br>
+			
+			<!--  
+            <fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+            <p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
+			-->
+			
+         </a>
+      </div>
+   </c:forEach>
 </div>
 
 
@@ -436,6 +453,7 @@ console.log("Server Error");
 
       };
 
+      
 </script>
 <footer>
 	<div class="canizo">
