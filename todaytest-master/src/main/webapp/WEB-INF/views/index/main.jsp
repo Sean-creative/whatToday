@@ -76,7 +76,9 @@
 				<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li>
 				<li>
 					<div class="tooltip">
-						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 8px 5px 0px 0px;">
+
+						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 6px 5px 0px 0px; ">
+
 						<div class="tooltiptext">
 							<div id="socketAlert" class="alert alert-success" role="alert"></div>
 						</div>

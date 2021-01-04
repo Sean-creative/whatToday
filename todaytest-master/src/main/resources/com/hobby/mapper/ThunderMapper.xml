@@ -279,12 +279,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 거리제한 두고 리스트 페이징 처리 -->
 	<select id="getListWithPaging" resultMap="ThunderVO">
 	<![CDATA[
-	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance , cbView, cbappperiod,cbThumbImg,cbFile
+	select cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance , cbView, cbappperiod,cbThumbImg,cbFile, cbCategory, cbSubcat
 	from ( 	
-				select rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance, cbView,cbappperiod,cbThumbImg,cbFile
+				select rownum rn, cbNum, cbName, cbMakeDate, cbDistrict, cbCurMbnum, cbMbnum, cbDate, distance, cbView,cbappperiod,cbThumbImg,cbFile, cbCategory, cbSubcat
 				from
 				(
-							select  c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate,    ROUND(DISTNACE_WGS84(#{userLatitude}, #{userLongitude}, cblatitude, cblongitude) ,2) distance, c.cbView, td.cbappperiod,c.cbThumbImg, c.cbFile
+							select  c.cbNum, c.cbName, c.cbMakeDate, c.cbDistrict, c.cbCurMbnum, c.cbMbnum, td.cbDate,    ROUND(DISTNACE_WGS84(#{userLatitude}, #{userLongitude}, cblatitude, cblongitude) ,2) distance, c.cbView, td.cbappperiod,c.cbThumbImg, c.cbFile, c.cbCategory, c.cbSubcat
 							from club c, thunderDetail td				
 							where  
 								]]>

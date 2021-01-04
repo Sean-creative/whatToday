@@ -6,6 +6,7 @@
 	prefix="sec"%>
 
 <%@include file="../includes/header.jsp"%>
+
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
 <style>
 /* 해시태그  */
@@ -118,7 +119,7 @@ ul#tag-list {
       
       
 			</div>
-			<img src="${club.cbThumbImg}" alt="">
+			<img src="${club.cbFile}" alt="">
 
 			<div id=banner>
 				<ul>
@@ -132,19 +133,16 @@ ul#tag-list {
 					<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 				</ul>
 			</div>
-
-			<div id="pdetail">
-				<div class="infole">
-					<p>☀️어떤 모임인가요?</p>
-				</div>
-				<div class="inforig">
-					<ul id="tag-list"></ul>
-
-
-					<p class="clubb">
-					<pre style="font-family: 'paybooc-Medium'; line-height: 30px;">${club.cbDetailContent}</pre>
-				</div>
-			</div>
+                        
+            <div id="pdetail">
+                <div class="infole"> <p>☀️어떤 모임인가요?</p></div>
+                <div class="inforig">
+                	<ul id="tag-list"></ul>
+                	
+                	               
+                    <p class="clubb"><pre style="font-family: 'BMHANNAAir'; line-height: 30px;">${club.cbDetailContent}</pre>
+                </div>
+            </div>
 
 			<div id="pdetail">
 				<div class="infole">
