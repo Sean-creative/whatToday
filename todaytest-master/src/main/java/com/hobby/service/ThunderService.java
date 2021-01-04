@@ -4,6 +4,7 @@ package com.hobby.service;
  */
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.Authentication;
 
 import com.hobby.domain.ClubMemberVO;
@@ -47,6 +48,11 @@ public interface ThunderService {
 	public void schedul(); 
 	
 	
+	public int readLike(Long usrNum, Long cbNum);
+	
+	
+	public int insertLikeBtn(Long usrNum, Long cbNum);	
+	public int updateLikeCheck(Long usrNum, Long cbNum, int check);
 	
 	
 }

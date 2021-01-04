@@ -28,7 +28,7 @@ public interface MypageMapper {
 	public List<ClubVO> getMyCreateTypeClubList(Long usrNum);
 	public List<ClubVO> getClubManageMemList(Long cbNum);
 	
-	
+	public List<ClubVO> getLikeClub(Long usrNum);
 	
 	public List<RegionVO> getCityList();
 	public List<RegionVO> getDistrictList(String rgName);

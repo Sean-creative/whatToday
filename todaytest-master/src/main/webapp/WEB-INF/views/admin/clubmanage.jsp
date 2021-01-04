@@ -218,7 +218,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">유저 정보</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">모임 정보</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -351,7 +351,7 @@
 	        		   if(e.cbLeaderNum == list[i].usrNum){
 	        			   continue;
 	        		   }
-	        		   str += "<span class='modalSpan2'>ID : "+list[i].userVO.usrId+" 이름 : "+list[i].usrName+"</span><button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
+	        		   str += "<span class='modalSpan2'><span style='width:225px; display:inline-block;'>ID:"+list[i].userVO.usrId+"</span> 이름:"+list[i].usrName+"</span><button name='updateLeader'class='btn btn-primary' type='button' data-dismiss='modal' data-cbnum='"+e.cbNum+"' data-usrname='"+list[i].usrName+"' data-usrnum='"+list[i].usrNum+"'>모임장위임</button><br>";
 	        	   }
 	       		
 

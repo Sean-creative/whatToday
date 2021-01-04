@@ -80,6 +80,14 @@ set usrState = #{usrState}
 where usrId = #{usrId} 
 </update>
 
+<update id="updateUserPwd">
+	update TBLUSER
+	set 
+	USRPWD = #{usrPwd},
+	USRCHANGEPWDDATE = sysdate
+	where usrId = #{usrId}
+</update>
+
 </mapper>
 
 

@@ -44,7 +44,7 @@
 	
 	<select id="getPrevClubList" resultType="com.hobby.domain.ClubVO">
 select CLUBJOINHISTORY.usrNum,CLUBJOINHISTORY.cbNum,CLUBJOINHISTORY.cbName,CLUBJOINHISTORY.cbType,club.cbFile,max(cbjoinnum) from CLUBJOINHISTORY,club
-where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHISTORY.cbnum = club.cbnum group by CLUBJOINHISTORY.usrNum,CLUBJOINHISTORY.cbNum,CLUBJOINHISTORY.cbName,CLUBJOINHISTORY.cbType,club.cbFile order by max(cbjoinnum) desc
+where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and cbfinalstate = '진행중' and CLUBJOINHISTORY.cbnum = club.cbnum group by CLUBJOINHISTORY.usrNum,CLUBJOINHISTORY.cbNum,CLUBJOINHISTORY.cbName,CLUBJOINHISTORY.cbType,club.cbFile order by max(cbjoinnum) desc
 	</select>
 	
 	<update id="updateUserAuth">
@@ -180,6 +180,10 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and CLUBJOINHIST
 	
 	<select id="getUserN" resultType="com.hobby.domain.UserVO">
 		select * from tbluser where usrNum = #{usrNum}
+	</select>
+	
+	<select id="getLikeClub" resultType="com.hobby.domain.ClubVO">
+		select club.cbFile,club.cbName,club.cbType,club.cbNum,club.cbname from clublike,club where usrNum = #{usrNum} and likecheck = 1 and clublike.cbnum  = club.cbnum and  club.cbfinalstate = '진행중'
 	</select>
 	
 
