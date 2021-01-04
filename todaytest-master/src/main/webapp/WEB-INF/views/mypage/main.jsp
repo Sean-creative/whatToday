@@ -49,7 +49,7 @@
 	<h3 id="myLikeClubH3">내가 찜한 모임</h3>
 		<div id="myLikeClubList" class="list">
 		<c:forEach var="likeClub" items="${likeClub}">
-		<div class='smallList'><img src='${likeClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${likeClub.cbName }'data-cbtype='${likeClub.cbType }' data-cbnum='${likeClub.cbNum }'>상세보기</button><p>${likeClub.cbName }</p></div></div>
+		<div class='smallList'><img src='${likeClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${likeClub.cbName }'data-cbtype='${likeClub.cbType }' data-cbnum='${likeClub.cbNum }'>상세보기</button></div><p>${likeClub.cbName }</p></div>
 		</c:forEach>
 		</div>
 		<h3>내가 가입한 정기모임</h3>
@@ -61,7 +61,7 @@
 		<h3 id="myWaitClubH3">가입 대기중인 정기모임</h3>
 		<div id="myWaitClubList" class="list">
 		<c:forEach var="waitClub" items="${waitClub}">
-		<div class='smallList'><img src='${waitClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button><p>${waitClub.cbName }</p></div></div>
+		<div class='smallList'><img src='${waitClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${waitClub.cbName }'data-cbtype='${waitClub.cbType }' data-cbnum='${waitClub.cbNum }'>상세보기</button></div><p>${waitClub.cbName }</p></div>
 		</c:forEach>
 		</div>
 		<h3>내가 가입한 번개모임</h3>

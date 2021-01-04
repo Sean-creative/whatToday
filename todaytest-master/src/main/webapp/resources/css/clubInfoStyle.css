@@ -4,9 +4,14 @@
     font-weight: normal;
     font-style: normal;
 }
-*{
-    font-family: 'paybooc-Medium';
+
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
+
 /**border-top: 1px solid #eee;*/
 #regularInfo{
 	width: 100%;
@@ -14,6 +19,7 @@
     justify-content: center;
     margin-top: 50px;
     border-top: 1px solid #eee;
+    font-family: 'paybooc-Medium';
 }
 
 #detail{
@@ -69,7 +75,7 @@
 /*rightinfo(다혜)*/
 #rightinfo{
     width:30%;
-    height:400px;
+    height:500px;
     background: #ffffff;
     /* border:1px solid #eee; */
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -110,7 +116,7 @@
 }
 #rightinfo .contentmid {
    font-size:15px;
-   height:300px;
+   height: 500px;
     overflow-y:auto;
     line-height: 1.5;
 }
