@@ -76,7 +76,7 @@
 				<li><a href="/mypage/main" id="user"><sec:authentication property="principal.user.usrName" />님</a></li>
 				<li>
 					<div class="tooltip">
-						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 10px 5px 0px 0px; margin-top: -10px;">
+						<img id="alram" src="/resources/img/bell.png" alt="bell" style="width: 20px; height: 20px; margin: 6px 5px 0px 0px; ">
 						<div class="tooltiptext">
 							<div id="socketAlert" class="alert alert-success" role="alert"></div>
 						</div>
@@ -150,17 +150,10 @@
 		<span class="half">정기모임</span><br>
 		<p class="halfunder">즐거운 정기모임을 만나보세요!</p>
 	</div>
-<<<<<<< HEAD
-	
 
-	<div class="masmam"><a href="/regular/list">더보기 ></a></div>
-=======
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
-<<<<<<< HEAD
+	
 	<div class="masmam"><a href="">모임 더 보 기 ></a></div>
->>>>>>> master
+
 </div>
 <div id="searchresult">
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
@@ -213,9 +206,7 @@
 		<p class="halfunder">즐거운 번개모임을 만나보세요!</p>
 	</div>
 
-	<div class="masmam">
-		<a href="">전체취미보기 ></a>
-	</div>
+	
 
 	<div class="masmam"><a href="/thunder/list">모임 더 보 기 ></a></div>
 </div>
