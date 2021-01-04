@@ -8,14 +8,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-<<<<<<< HEAD
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-=======
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
->>>>>>> master
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -316,21 +316,6 @@ public class ThunderController {
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
-<<<<<<< HEAD
-
-
-
-
-	@PostMapping("/add")
-	// 메서드의 매개변수에 MultipartFile file이 추가
-	public String add(Authentication auth, ThunderVO clubVO, MultipartFile file, RedirectAttributes rttr) throws Exception {
-		log.info("/add(POST) - file : " + file);
-
-		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
-		// 저장한 뒤,
-		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
-=======
->>>>>>> master
 
 
 
@@ -376,8 +361,7 @@ public class ThunderController {
 		// 저장한 뒤,
 		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
 
-<<<<<<< HEAD
-=======
+
 		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
 		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
@@ -421,10 +405,6 @@ public class ThunderController {
 	}
 	
 	
-	
-	
-
->>>>>>> master
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
 	public String add(Authentication auth, Model model) {

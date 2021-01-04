@@ -976,8 +976,10 @@ input,select{vertical-align:middle;}
 
 #today{
 	display: flex;
+    /* margin-left: 159.600; */
+    width:1200px;
+    margin:0 auto;
     margin-bottom:70px;
-    margin-left: 159.600;
 }
 
 .todayImg{
@@ -1038,5 +1040,3 @@ input,select{vertical-align:middle;}
     width: 187px;
     padding: 10px;
 }
-
-
