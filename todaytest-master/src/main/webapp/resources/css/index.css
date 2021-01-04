@@ -745,7 +745,7 @@ input,select{vertical-align:middle;}
 #searchresult div{
 	/* flex-basis: 270px; */
 	width:270px;
-	height:370px;
+	height: 350px;
 	margin-right:40px;
 	
 }
@@ -757,6 +757,7 @@ input,select{vertical-align:middle;}
 	width:270px;
 	height:200px;
 	border-radius: 15px;
+	margin-bottom: 15px
 }
 
 .location{
@@ -768,18 +769,58 @@ input,select{vertical-align:middle;}
 	margin-top:10px;
 	font-family: 'paybooc-Bold';
 }
-
+/**searchresult**/
 .nombre{
-	width:270px;
-	height:40px;
-	margin-top:8px;
-	font-size:14px;
-	color:#2f3030;
-	font-family: 'paybooc-Medium';
-	
+	width: 270px;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    margin-bottom: 11px;
 }
 
+.topinfo{
+	font-size: 11px;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    overflow: hidden;
+    font-weight: 600;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+}
 
+.count{
+	font-size: 12px;
+    line-height: 16px;
+    color: #999;
+    padding-bottom: 10px;
+}
+
+.cbName{
+	width: 270px;
+    margin-top: 3px;
+    font-size: 15px;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    margin-bottom: 6px;
+}
+
+.meetDday{
+	font-size: 10px;
+    line-height: 16px;
+    letter-spacing: normal;
+    margin: 0px;
+    overflow: hidden;
+    font-weight: 600;
+    color: #2f3030;
+    font-family: 'paybooc-Medium';
+    background-color: #f6f6f6;
+    color: #292c34;
+    padding: 1px 10px;
+    width: 30px;
+    border-radius: 3px;;
+}
 .limitmem{
 	width:270px;
 	height:16px;
@@ -997,3 +1038,4 @@ input,select{vertical-align:middle;}
     width: 187px;
     padding: 10px;
 }
+

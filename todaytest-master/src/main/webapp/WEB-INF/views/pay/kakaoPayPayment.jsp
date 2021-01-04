@@ -85,6 +85,7 @@
 </div>
 </div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $('#kakaoPayImg').click(function () {
         // getter
@@ -107,11 +108,11 @@
         }, function (rsp) {
             console.log(rsp);
             if (rsp.success) {
-                var msg = '결제가 완료되었습니다.';
+                var msg = rsp.paid_amount +'원 충전되었습니다.';
                 msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
+                //msg += '상점 거래ID : ' + rsp.merchant_uid;
+                //msg += '결제 금액 : ' + rsp.paid_amount;
+                //msg += '카드 승인번호 : ' + rsp.apply_num;
                 $.ajax({
                     url: "/pay/complete", //충전 금액값을 보낼 url 설정
                 	type: 'POST',  
@@ -127,7 +128,7 @@
                 var msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
             }
-            alert(msg);
+            swal("결제완료!", msg, "success");
             //document.location.href="/user/mypage/home"; //alert창 확인 후 이동할 url 설정
         });
     });
