@@ -66,5 +66,7 @@ public class ClubVO {
 	
 	//CLUBBOARDCONTENT/////////////////////////////////////////////////	
 	private String cbBdContent;
+	//
+	private Long likeNum;
 
 }
