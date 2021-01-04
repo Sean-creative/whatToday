@@ -46,6 +46,12 @@
 	</nav>
 	
 	<section id="wrapInfo">
+	<h3 id="myLikeClubH3">내가 찜한 정기모임</h3>
+		<div id="myLikeClubList" class="list">
+		<c:forEach var="likeClub" items="${likeClub}">
+		<div class='smallList'><img src='${likeClub.cbFile }'/><div><button class='imgBtn detailBtn2' data-cbname ='${likeClub.cbName }'data-cbtype='${likeClub.cbType }' data-cbnum='${likeClub.cbNum }'>상세보기</button><p>${likeClub.cbName }</p></div></div>
+		</c:forEach>
+		</div>
 		<h3>내가 가입한 정기모임</h3>
 		<div id="myRegClubList" class="list">
 		</div>
@@ -208,6 +214,13 @@
 											});
 						};
 						getPrevClubList();
+						const emptyLike = function (){
+							if('${likeClub}' == '[]'){
+								$("#myLikeClubList").remove();
+								$("#myLikeClubH3").remove();
+							}
+						};
+						emptyLike();
 						const emptyWait = function (){
 							if('${waitClub}' == '[]'){
 								$("#myWaitClubList").remove();

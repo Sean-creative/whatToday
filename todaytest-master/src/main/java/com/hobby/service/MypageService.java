@@ -23,6 +23,7 @@ public interface MypageService {
 	public List<ClubVO> getPrevClubList(Long usrNum);
 	public List<ClubVO> getLeaderClubList(Long usrNum);
 	public List<ClubVO> getClubManageMemList(Long cbNum);
+	public List<ClubVO> getLikeClub(Long usrNum);
 	
 	public List<CategoryVO> getCategoryList(String catClassificationCode);
 	public List<RegionVO> getCityList();
