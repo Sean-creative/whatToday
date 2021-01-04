@@ -1,12 +1,21 @@
 package com.hobby.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+=======
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+>>>>>>> master
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +24,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,9 +117,65 @@ public class ThunderController {
 		}
 
 		model.addAttribute("joinList", joinList);
+		
+		
+		int likecheck = service.readLike(loginUser.getUsrNum(), clubVO.getCbNum());
+		log.info("/info(GET) - likecheck : " + likecheck);
+		model.addAttribute("likecheck", likecheck);
+		
 
 		return "/thunder/info";
 	}
+
+	
+	@RequestMapping("/clickLike")
+    @ResponseBody
+    public Map<String,Object> clickLike(@RequestParam Map<String,Object> commandMap){
+		log.info("/clickLike(POST) - commandMap : " + commandMap);
+		
+		
+		log.info("usrNum " + commandMap.get("usrNum"));
+        log.info("cbNum " + commandMap.get("cbNum"));
+    
+        Long usrNum = Long.parseLong((String)commandMap.get("usrNum")) ;
+        Long cbNum = Long.parseLong((String)commandMap.get("cbNum")) ;
+        
+     
+        int resultCode = 1;
+        int likecheck = 1;               
+        Map<String,Object> resultMap = new HashMap<>();
+     
+  
+        try {
+            int check = service.readLike(usrNum, cbNum);            
+            log.info("/clickLike(POST) - check : " + check);
+            if(check == -1) {
+                //처음 좋아요 누른것 likecheck=1, 좋아요 빨간색이 되야됨
+                service.insertLikeBtn(usrNum, cbNum); //좋아요 테이블 인서트                
+                resultCode = 1;
+            }
+            else if(check == 0) {
+                //좋아요 처음은 아니고 취소했다가 다시 눌렀을때 likecheck=1, 좋아요 빨간색 되야됨                
+                service.updateLikeCheck(usrNum, cbNum,check); //좋아요 테이블 업데이트
+                resultCode = 1;
+            }
+            else {
+                //좋아요 취소한거 likecheck=0, 빈하트 되야됨
+                likecheck = 0;                
+                service.updateLikeCheck(usrNum, cbNum,check);                
+                resultCode = 0;
+            }                        // 
+            resultMap.put("likecheck", likecheck);
+        } catch (Exception e) {
+        	log.info("요거 여태 문제였다고??? ");
+            log.info(e.getMessage());
+            resultCode = -1;
+        }
+        
+        resultMap.put("resultCode", resultCode);
+        //resultCode가 1이면 빨간하트 0이면 빈하트
+        return resultMap;
+    }
 
 
 
@@ -252,6 +316,7 @@ public class ThunderController {
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
+<<<<<<< HEAD
 
 
 
@@ -264,30 +329,18 @@ public class ThunderController {
 		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
 		// 저장한 뒤,
 		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
+=======
+>>>>>>> master
 
-		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
-		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
 
-		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
-			// 파일 인풋박스에 첨부된 파일이 없다면(=첨부된 파일이 이름이 없다면)
 
-			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
 
-			// file에 원본 파일 경로 + 파일명 저장
-			clubVO.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
-			clubVO.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-
-		} else { // 첨부된 파일이 없으면
-			fileName = File.separator + "img" + File.separator + "none.png";
-			// 미리 준비된 none.png파일을 대신 출력함
-
-			// file에 원본 파일 경로 + 파일명 저장
-			clubVO.setCbFile(fileName);
-			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
-			clubVO.setCbThumbImg(fileName);
-		}
+	@PostMapping("/add")
+	// 메서드의 매개변수에 MultipartFile file이 추가
+	public String add(Authentication auth, ThunderVO clubVO, RedirectAttributes rttr) throws Exception {
+		
+		
+		
 
 		CustomUser customUser = (CustomUser) auth.getPrincipal();
 		Long usrNum = customUser.getUser().getUsrNum();
@@ -312,7 +365,66 @@ public class ThunderController {
 
 		return "redirect:/thunder/list";
 	}
+	
+	
+	@PostMapping(value = "/uploadFormAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public Map<String,Object> uploadFormPost(MultipartFile file) throws Exception {
+		log.info("/uploadFormPost(POST) - file : " + file);
 
+		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
+		// 저장한 뒤,
+		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
+
+<<<<<<< HEAD
+=======
+		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
+		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
+		
+		String cbFile = null;
+		String cbThumbImg = null;
+		 Map<String,Object> resultMap = new HashMap<>();
+		 
+
+		if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+			// 파일 인풋박스에 첨부된 파일이 없다면(=첨부된 파일이 이름이 없다면)
+
+			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+
+			// file에 원본 파일 경로 + 파일명 저장
+			cbFile = File.separator + "imgUpload" + ymdPath + File.separator + fileName;
+//			clubVO.setCbFile(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			
+			
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			cbThumbImg = File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName;
+//			clubVO.setCbThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+		} else { // 첨부된 파일이 없으면
+			fileName = File.separator + "img" + File.separator + "none.png";
+			// 미리 준비된 none.png파일을 대신 출력함
+
+			// file에 원본 파일 경로 + 파일명 저장
+			cbFile = fileName;
+//			clubVO.setCbFile(fileName);
+			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
+			cbThumbImg = fileName;
+//			clubVO.setCbThumbImg(fileName);
+		}
+		
+		resultMap.put("cbFile", cbFile);
+		resultMap.put("cbThumbImg", cbThumbImg);	
+		log.info("/uploadFormPost(POST) - resultMap : " + resultMap);
+		
+		return resultMap;
+	}
+	
+	
+	
+	
+
+>>>>>>> master
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
 	public String add(Authentication auth, Model model) {
@@ -342,7 +454,7 @@ public class ThunderController {
 		// cri에 들어있는 조건 대로, club 정보를 가져온다.		
 		List<ThunderVO> thunderList = service.getListWithPaging(cri);
 		model.addAttribute("list", thunderList);
-		log.info("list(GET) - thunderList : " + thunderList);
+//		log.info("list(GET) - thunderList : " + thunderList);
 		//List에서 처음 하나만 꺼내서 확인한다. (Log.info 도배 방지)
 
 		if(thunderList.size() != 0) {

@@ -53,13 +53,13 @@
 /*rightinfo(다혜)*/
 #rightinfo{
     width:30%;
-    height:400px;
+    height:500px;
     background: #ffffff;
     /* border:1px solid #eee; */
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     margin-left:20px;
     margin-top: 5px;
-    border-radius: 20px;
+    border-radius: 20px;    
 }
 .contentup {
    display:flex;
@@ -93,7 +93,7 @@
 }
 #rightinfo .contentmid {
    font-size:15px;
-   height:300px;
+   height:500px;
     overflow-y:auto;
     line-height: 1.5;
 }
