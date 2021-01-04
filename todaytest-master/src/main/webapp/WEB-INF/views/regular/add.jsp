@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="../resources/css/clubAddStyle.css">
 <link rel="stylesheet" href="/resources/css/paymentModal.css">
 
-<div class="regubg"></div>
 <form id="register" name="register" action="/regular/add" method="post" onsubmit="return inputCheckclub();" enctype="multipart/form-data">
+<div class="regubg">
 
 	<div id="reguform">
 
@@ -153,8 +153,8 @@
    	 	 </div>
    	 	 
 	</div>		
+</div>
 </form>
-
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
