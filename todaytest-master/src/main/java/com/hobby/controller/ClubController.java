@@ -2,7 +2,9 @@ package com.hobby.controller;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,6 +35,7 @@ import com.hobby.domain.UserVO;
 import com.hobby.security.domain.CustomUser;
 import com.hobby.service.ClubService;
 import com.hobby.service.MeetingService;
+import com.hobby.service.ThunderService;
 import com.hobby.service.UserService;
 import com.hobby.utils.UploadFileUtils;
 
@@ -47,6 +51,7 @@ public class ClubController {
 	private ClubService service;
 	private MeetingService meetingservice;
 	private UserService userService;
+	private ThunderService thunderService;
 	
 //	servlet-context.xml에서 설정했던 uploadPath를 추가
 	@Resource(name = "uploadPath")
@@ -203,8 +208,66 @@ public class ClubController {
 		log.info(service.getClub(cbNum));
 
 		// 로그인한유저가 해당 모임에 대해서, 만남참석정보를 가져온다. -> 문제는 만남참석정보가 여러개다..;;
+		
+		
+		
+		int likecheck = thunderService.readLike(userVO.getUsrNum(), cbNum);
+		log.info("/info(GET) - likecheck : " + likecheck);
+		model.addAttribute("likecheck", likecheck);
 
 	}
+	
+	
+	
+	@RequestMapping("/clickLike")
+    @ResponseBody
+    public Map<String,Object> clickLike(@RequestParam Map<String,Object> commandMap){
+		log.info("/clickLike(POST) - commandMap : " + commandMap);
+		
+		
+		log.info("usrNum " + commandMap.get("usrNum"));
+        log.info("cbNum " + commandMap.get("cbNum"));
+    
+        Long usrNum = Long.parseLong((String)commandMap.get("usrNum")) ;
+        Long cbNum = Long.parseLong((String)commandMap.get("cbNum")) ;
+        
+     
+        int resultCode = 1;
+        int likecheck = 1;               
+        Map<String,Object> resultMap = new HashMap<>();
+     
+  
+        try {
+            int check = thunderService.readLike(usrNum, cbNum);            
+            log.info("/clickLike(POST) - check : " + check);
+            if(check == -1) {
+                //처음 좋아요 누른것 likecheck=1, 좋아요 빨간색이 되야됨
+            	thunderService.insertLikeBtn(usrNum, cbNum); //좋아요 테이블 인서트                
+                resultCode = 1;
+            }
+            else if(check == 0) {
+                //좋아요 처음은 아니고 취소했다가 다시 눌렀을때 likecheck=1, 좋아요 빨간색 되야됨                
+            	thunderService.updateLikeCheck(usrNum, cbNum,check); //좋아요 테이블 업데이트
+                resultCode = 1;
+            }
+            else {
+                //좋아요 취소한거 likecheck=0, 빈하트 되야됨
+                likecheck = 0;                
+                thunderService.updateLikeCheck(usrNum, cbNum,check);                
+                resultCode = 0;
+            }                        // 
+            resultMap.put("likecheck", likecheck);
+        } catch (Exception e) {
+        	log.info("요거 여태 문제였다고??? ");
+            log.info(e.getMessage());
+            resultCode = -1;
+        }
+        
+        resultMap.put("resultCode", resultCode);
+        //resultCode가 1이면 빨간하트 0이면 빈하트
+        return resultMap;
+    }
+	
 
 	// 정기모임 게시판 - 목록list
 //	@GetMapping("/board")

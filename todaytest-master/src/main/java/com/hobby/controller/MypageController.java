@@ -78,6 +78,7 @@ public class MypageController {
 			model.addAttribute("userVO", service.getUser(customUser.getUser().getUsrId()));
 			// 가입대기중인 모임
 			model.addAttribute("waitClub", service.getWaitClubList(usrNum));
+			model.addAttribute("likeClub", service.getLikeClub(usrNum));
 
 		}
 		return url;

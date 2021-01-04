@@ -40,14 +40,12 @@
 
 					<div>
 						<div style="display: inline-block; width: 300px;">
-							<label for="email">카테고리/분야*</label>
-							<select name="cbCategory" required="required" id='category'></select>
+							<label for="email">카테고리/분야*</label> <select name="cbCategory" required="required" id='category'></select>
 						</div>
 
 
 						<div style="display: inline-block; width: 300px;">
-							<label for="location">모임*</label>
-							<select name="cbSubcat" required="required" id="subcat">
+							<label for="location">모임*</label> <select name="cbSubcat" required="required" id="subcat">
 								<option value="모임 선택" selected>모임 선택
 							</select>
 						</div>
@@ -90,7 +88,7 @@
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class">모임 장소 *</label>
 							<input type="text" required="required" readonly="readonly" name='thunderDetailVO.cbPlace' id='cbPlace' placeholder="지도에서 마커를 클릭해주세요">
-						</div>						
+						</div>
 					</div>
 
 
@@ -99,8 +97,8 @@
 
 						<div id="hashTagDiv" style="display: inline-block; width: 300px;">
 							<label for="request" class="class" style="display: block;">해시태그 (최대 5개)</label>
-							<input type="hidden" value="" name="cbHashtag" id="rdTag"    />
-							<input type="text" id="tag" size="7" value="#"  />
+							<input type="hidden" value="" name="cbHashtag" id="rdTag" />
+							<input type="text" id="tag" size="7" value="#" />
 							<ul id="tag-list"></ul>
 						</div>
 
@@ -129,11 +127,26 @@
 
 
 				<hr>
+				<script>
+					var alert2 = function(msg, type) {
+						swal({
+							title : '',
+							text : msg,
+							type : "warning",
+							timer : 5000,
+							customClass : 'sweet-size',
+							showConfirmButton : true
+						});
+					}
 
+					function Alert2() {
+						alert2('다시 작성해주세요!', 'success');
+					}
+				</script>
 				<fieldset class="agreebox">
 					<div class="btn_faq">
-						<button type="submit" class="btn_faq2">번개만들기</button>
-						<button type="reset" onclick="alert('리셋되었습니다.')" class="btn_faq2">리셋 하기</button>
+						<button type="submit" class="btn_faq2" id="addButton">개설하기</button>
+						<button type="reset" onclick="Alert2();" class="btn_faq2">다시 쓰기</button>
 					</div>
 				</fieldset>
 
@@ -143,9 +156,13 @@
 				<!-- 지역 이름 정도만 컨트롤러에 보낸다. -->
 				<input type='hidden' name='cbCity'>
 				<input type='hidden' name='cbDistrict'>
-
 				<input type='hidden' name='thunderDetailVO.cbLatitude' id='cbLatitude'>
 				<input type='hidden' name='thunderDetailVO.cbLongitude' id='cbLongitude'>
+		
+		
+				<!-- 사진파일들!! -->
+				<input type='hidden' name='cbFile' id='cbFile'>
+				<input type='hidden' name='cbThumbImg' id='cbThumbImg'>
 			</form>
 
 		</div>
@@ -191,7 +208,8 @@
 
 
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
