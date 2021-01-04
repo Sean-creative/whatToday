@@ -183,7 +183,7 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and cbfinalstate
 	</select>
 	
 	<select id="getLikeClub" resultType="com.hobby.domain.ClubVO">
-		select * from clublike,club where usrNum = #{usrNum} and likecheck = 1 and clublike.cbnum  = club.cbnum
+		select club.cbFile,club.cbName,club.cbType,club.cbNum,club.cbname from clublike,club where usrNum = #{usrNum} and likecheck = 1 and clublike.cbnum  = club.cbnum and  club.cbfinalstate = '진행중'
 	</select>
 	
 
