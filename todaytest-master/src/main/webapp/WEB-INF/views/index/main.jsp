@@ -145,20 +145,17 @@
 	   <span class="half">정기모임</span><br>
 	   <p class="halfunder">즐거운 정기모임을 만나보세요!</p>
 	</div>
-	<div class="masmam"><a href="">전체취미보기 ></a></div>
+	<div class="masmam"><a href="">모임 더 보 기 ></a></div>
 </div>
 <div id="searchresult">
    <c:forEach items="${main}" var="club" varStatus="status" begin="0" end="11">
       <div>
          <a href='/regular/info?cbNum=<c:out value="${club.cbNum}" />'>
             <img src='<c:out value="${club.cbFile}" />' alt="">
-            <p class="location"><c:out value="${club.cbDistrict}" /></p>
-            <!-- 위치 -->
-            <p class="nombre"><c:out value="${club.cbName}" /></p>
-            <!--이름  -->
-            <hr style="color: #eee;">
-            <p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" />
-            </p>
+            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} 
+            <br> #${club.cbDistrict} #${club.cbName}</p>
+            <p class="nombre">${club.cbIntro}</p>
+            <p class="count">⍤ ${club.cbCurMbNum}명이 모였습니다.</p>
          </a>
       </div>
    </c:forEach>
@@ -196,21 +193,36 @@
 	   <span class="half">번개모임</span><br>
 	   <p class="halfunder">즐거운 번개모임을 만나보세요!</p>
 	</div>
-	<div class="masmam"><a href="">전체취미보기 ></a></div>
+	<div class="masmam"><a href="">모임 더 보 기 ></a></div>
 </div>
 <div id="searchresult">
    <c:forEach items="${main2}" var="club" varStatus="status" begin="0" end="11">
       <div>
          <a href='/thunder/info?cbNum=<c:out value="${club.cbNum}" />'>
             <img src='<c:out value="${club.cbFile}" />' alt="">
-            <p class="location"><c:out value="${club.cbDistrict}" /></p>
-            <p class="nombre"><c:out value="${club.cbName}" /></p>
-            <hr style="color: #eee;">
-
+            
+            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} #${club.cbDistrict}</p>
+            <p class="cbName">${club.cbName}</p>
+			
+			<c:set var="today" value="<%=new java.util.Date()%>" />
+			<fmt:formatDate var="today" value="${today}" pattern="yyyyMMdd"/>
+			<fmt:parseDate var="meetDay" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
+			<fmt:formatDate var="meetDay" value="${meetDay}" pattern="yyyyMMdd"/>
+			
+			<c:set var="cbMbNum" value = "${club.cbMbNum}" />
+			<c:set var="cbCurMbNum" value = "${club.cbCurMbNum}" />
+			
+			<p class="count">⍣ ${club.cbView}명이 보고있습니다.</p>
+			
+			<span class="meetDday">D-<c:out value="${meetDay-today}"/></span>
+       		<span class="meetDday"><c:out value="${cbMbNum-cbCurMbNum}" />명</span>
+       		<br>
+			
+			<!--  
             <fmt:parseDate var="dateString" value='${club.cbDate}' pattern="yyyy-MM-dd'T'HH:mm" />
             <p class="limitmem"><fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분" /></p>
-
-            <p class="limitmem">모집인원 : <c:out value="${club.cbCurMbNum}" /> / <c:out value="${club.cbMbNum}" /></p>
+			-->
+			
          </a>
       </div>
    </c:forEach>
@@ -422,6 +434,7 @@ console.log("Server Error");
 
       };
 
+      
 </script>
 <footer>
         <div class="canizo">
