@@ -28,7 +28,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		String msg = message.getPayload();
 		System.out.println("@@@inputMsg: " + msg);
 
-		// 입장or채팅, 모임번호, nickname, msg
+		// 개설or채팅, 모임번호, nickname, msg
 		if (msg != null) {
 			// 사용자가 메시지에 ,를 붙일 수 있음
 			// json 형태로 주고 받고 싶은데 나중에..

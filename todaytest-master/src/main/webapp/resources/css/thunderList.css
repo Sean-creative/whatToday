@@ -4,6 +4,37 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo');
 
+
+@font-face {
+	font-family: 'MaplestoryOTFBold';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'MaplestoryOTFLight';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
 * {
 	margin: 0;
 	padding: 0;
@@ -150,14 +181,32 @@ button {
 }
 
 
+#head input[type=text] {
+    width: 215px;
+    box-sizing: border-box;
+    border: 1px solid #333;
+    outline: none;
+    border-radius: 20px;
+    font-size: 14px;
+    background-color: white;
+    background-image: url(../img/search.png);
+    background-position: 5px 10px;
+    background-repeat: no-repeat;
+    padding: 8px 20px 8px 15px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-top: 10px;
+}
+
+
 /* =============날씨=============== */
 .header_in3 {
 	width: 750px;
-	height: 135px;
+	height: 125px;
 	margin: 0 auto;
 	background: rgba(255, 179, 49, 0.3);
 	border-radius: 15px;
-	padding: 10px 0 15px 0;
+	padding: 5px 0 15px 0;
 	margin-top:50px;
 }
 
@@ -209,6 +258,13 @@ button {
 	margin: 30px auto 30px;
 	border-bottom: 1px solid #eee;
 	padding-bottom: 10px;
+}
+
+#sort .half {
+	font-family: 'paybooc-Bold';	
+    text-align: center;
+    font-size: 25px;    
+    margin: 0 15px;
 }
 
 #sort ul {
@@ -268,27 +324,32 @@ button {
 	border-radius: 15px;
 }
 
+
 .location {
+	font-family: 'paybooc-Bold';
 	width: 270px;
-	height: 16px;
-	font-weight: bold;
+	height: 16px;	
 	color: #2f3030;
+	margin: 8px 0 11px 0;
 }
 
 .nombre {
+	font-family: 'paybooc-Light';
 	width: 270px;
-	height: 40px;
+	height: 30px;
 	margin-top: 4px;
 	font-size: 14px;
 	color: #2f3030
 }
 
 .limitmem {
+	font-family: 'paybooc-Light';
 	width: 270px;
 	height: 16px;
 	font-size: 14px;
 	padding-top: 4px;
 	color: #666;
+	margin: 2px 0;
 }
 
 /* #myDIV{

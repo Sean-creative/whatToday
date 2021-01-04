@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'paybooc-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family: 'paybooc-Medium';
+}
 .msger {
   display: flex;
   flex-flow: column wrap;
@@ -19,11 +28,12 @@
 
 #makeChat{
 	display: none;
+	background: #9bbbd4; /* 하늘색*/
+	
 }
 #make{
 	background: #ffaf31;
     color: #fff;
-    font-weight: bold;
     cursor: pointer;
     padding: 10px;
     border: none;
@@ -93,14 +103,15 @@
 
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
+  background: #fff;
 }
 
 .right-msg {
   flex-direction: row-reverse;
 }
 .right-msg .msg-bubble {
-  background: #ffaf31;
-  color: #fff;
+  background: #fef01b;
+  color: #000;
   border-bottom-right-radius: 0;
 }
 .right-msg .msg-img {
@@ -130,15 +141,15 @@
 }	
 .msger-send-btn {
   margin: 10px;
-  background: #ffaf31;
-  color: #fff;
+  background: #f7e600;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
 }
 .msger-send-btn:hover {
-  background: #ffaf31;
-  color: #black;
+  background: #f7e600;
+  color: #000;
 }
 
 #enter{
@@ -153,4 +164,8 @@
 }
 .form-inline{
 	border : 1px solid black;
+}
+
+#chatroom{
+	background: #9bbbd4;
 }

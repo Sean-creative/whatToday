@@ -569,30 +569,36 @@ input,select{vertical-align:middle;}
 .tooltip .tooltiptext {
   display: none;
   width: 300px;
-  height: 200px;
-  background-color: black;
+  height: 150px;
+  background-color: #ffaf31;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: 150%;
   left: 50%;
   margin-left: -152.5px;
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
-}
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent #ffaf31 transparent;
 
+}
+#socketAlert p{
+	margin: 4% 2% 0 4%;
+	white-space: nowrap;
+	overflow: hidden;
+    text-overflow:ellipsis;
+}
 /* 햄 */
 
 .dropbtnr {
@@ -921,4 +927,73 @@ input,select{vertical-align:middle;}
   .fotinf2{
     color:#fff;
     margin-top:30px;
+  }
+ 
+.todayHot{
+	margin-top:0px;	
+}
 
+#today{
+	display: flex;
+    margin-bottom:70px;
+    margin-left: 159.600;
+}
+
+.todayImg{
+    width:390px;
+    height:200px;
+    margin-right: 15px;
+    border-radius: 15px;
+    overflow:hidden;
+    position: relative;
+}
+
+
+.todayImg img{
+    width:390px;
+    height:200px;
+    margin-right: 15px;
+    border-radius: 15px;
+}
+
+.todayImg img{
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+.todayImg img:hover {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+
+
+.middle {
+  position: absolute;
+  top: 100px;
+  left: 195px;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.todayImg:hover .Imgtext{
+	opacity: 1;	
+}
+
+.Imgtext{
+	opacity:0;
+	background-color: #000;
+  	color: white;
+  	border: 2px solid #000;
+    font-size: 20px;
+    font-weight:bold;
+    text-align: center;
+    width: 187px;
+    padding: 10px;
+}

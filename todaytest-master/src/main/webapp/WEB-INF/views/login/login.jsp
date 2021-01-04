@@ -36,17 +36,14 @@
                 <div id="sns">
                     <div OnClick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=14e5f73be7a3dcdce0e0cf981f72f775&redirect_uri=http://localhost:8088/login/kakaoLogin&response_type=code'">
                         <div class="kakao"></div>
-                        <p>카카오<br>로그인</p>
                     </div>
 
                     <div OnClick="location.href='/login/naverLogin'">
                         <div class="naver"></div>
-                        <p>네이버<br>로그인</p>
                     </div>
                     <div>
                         <div class="google"></div>
                         <!-- 아직 적용 안됨 -->
-                        <p>구글<br>로그인</p>
                     </div>
                 </div>
                 <!-- <hr> -->

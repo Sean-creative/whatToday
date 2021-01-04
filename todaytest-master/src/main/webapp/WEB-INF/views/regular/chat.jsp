@@ -33,7 +33,7 @@
 						<button id="make"> + 모임 채팅방만들기 </button>
 					</div>
 					<div id = "enterChat">
-						<input type="text" id="name" class="form-inline" placeholder="${usrName }" value="${usrName }" readonly="readonly">
+						<input type="hidden" id="name" class="form-inline" placeholder="${usrName }" value="${usrName }" readonly="readonly">
 						<button id="enter"> + 채팅창 들어가기</button>
 					</div>
 					
@@ -41,8 +41,8 @@
 					</div>
 						
 					<div class="msger-inputarea">
-					<input type="text" class="msger-input" id="message" placeholder="메세지를 입력해주세요">
-					<button type="submit" class="msger-send-btn" id="send">Send</button>
+						<input type="text" class="msger-input" id="message" placeholder="메세지를 입력해주세요">
+					<button type="submit" class="msger-send-btn" id="send">전송</button>
 					</div>
 				</section>
 			</div><!-- END chatroom -->
@@ -142,6 +142,7 @@ $(document).ready(function() {
 		// 나
 		$('#chat').append('<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text" id ="mytext">'+ message+ ' </div></div></div></div>');
 		send();
+		message = "";
 	});
 	
 	function connect() {
