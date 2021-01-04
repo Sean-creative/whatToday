@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <%@include file="../includes/header.jsp"%>
+
 <link rel="stylesheet" href="../resources/css/clubInfoStyle.css">
 <style>
 /* 해시태그  */
@@ -54,7 +55,7 @@ ul li.tag-item {
                 	<ul id="tag-list"></ul>
                 	
                 	               
-                    <p class="clubb"><pre style="font-family: 'paybooc-Medium'; line-height: 30px;">${club.cbDetailContent}</pre>
+                    <p class="clubb"><pre style="font-family: 'BMHANNAAir'; line-height: 30px;">${club.cbDetailContent}</pre>
                 </div>
             </div>
 			
