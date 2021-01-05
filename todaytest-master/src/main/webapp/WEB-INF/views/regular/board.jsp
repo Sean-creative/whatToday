@@ -31,9 +31,9 @@
 					<th>작성일</th>
 					<th>조회수</th>  
 				</tr>
-				<c:forEach items="${list}" var="club">
+				<c:forEach items="${list}" var="club" varStatus="status">
 				<tr>
-					<td><c:out value="${club.cbBno}" /></td>
+					<td><c:out value="${club.rn}" /></td>
 					<td>
 					<a class='move' style="color: black;"href='<c:out value="${club.cbBno }"/>'> 
 					<c:out value="${club.cbBdTitle }" /></a>(${club.replyCount})</td>

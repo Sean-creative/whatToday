@@ -140,25 +140,32 @@
 	<select id="boardListWithPaging" resultType="com.hobby.domain.ClubVO">
 
 	<![CDATA[
-	select 
-	  	cb.cbbno,
-	    cb.cbnum,
-	    cb.cbbdwriter,
-	    cb.cbbdtitle,
-	    cb.cbbddate,
-	    NVL(cb.cbBdView, 0) cbBdView,
-	    NVL(cbr.reply_count, 0) replyCount
-	from 
-		(select /*+INDEX_DESC(clubboard) */ rownum rn, cbBno, 
-		cbNum, cbBdWriter, cbBdTitle, cbBdDate, cbBdView
-		from clubboard where rownum <= #{cri.pageNum} * #{cri.amount} and cbNum = #{cbNum}) cb
-    left outer join
-      	(select cbbno, count(cbbno) reply_count
-       	from CLUBBOARD_REPLY
-       	group by cbbno) cbr
-    	on cb.cbbno = cbr.cbbno
-    where (rn > (#{cri.pageNum} -1) * #{cri.amount}) and cbNum = #{cbNum} order by cbBno desc
-    
+	select rownum rn,
+        cbBno,
+        cbNum,
+        cbBdWriter, 
+        cbBdTitle, 
+        cbBdDate, 
+        cbBdView,
+        replyCount
+	from
+	    (select 
+	           cb.cbBno, 
+	           cb.cbNum, 
+	           cb.cbBdWriter, 
+	           cb.cbBdTitle, 
+	           cb.cbBdDate, 
+			   NVL(cb.cbBdView, 0) cbBdView,
+			   NVL(cbr.reply_count, 0) replyCount
+	    from clubboard cb
+	    left outer join
+	        (select cbbno, count(cbbno) reply_count
+	            from CLUBBOARD_REPLY
+	            group by cbbno) cbr
+	            on cb.cbbno = cbr.cbbno
+	    where cbNum = #{cbNum}
+	    order by cbbno asc)
+	order by rownum desc
 	]]>
 	</select>
 

@@ -28,7 +28,8 @@
 			 	<div class="rowget">
 				<div class="form-group">
 					<label>게시판 번호</label><br> 
-					<input type="text"class="form-control" name='cbBno' value = '<c:out value="${clubBoard.cbBno}"/>' readonly="readonly">
+					<input type="text" class="form-control" name='rn' value = '<c:out value="${clubBoard.rn}"/>' readonly="readonly">
+					<input type="hidden" class="form-control" name='cbBno' value = '<c:out value="${clubBoard.cbBno}"/>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
