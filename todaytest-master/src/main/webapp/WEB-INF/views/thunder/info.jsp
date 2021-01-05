@@ -10,7 +10,7 @@
 	href="/resources/css/thunderInfo.css">
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/kakaoMap.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
@@ -91,34 +91,37 @@
 						<!--a태그의 페이지이동 기능 무효화 및 클릭시 경고창 -->
 					</ul>
 				</div>
-
+				<!--  
+				<div class="thunderTag">
+					<ul id="tag-list"></ul>
+				</div>-->
+				
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️어떤 모임인가요?</p>
+						<p>  </p>
 					</div>
 					<div class="inforig">
-						<ul id="tag-list"></ul>
-
+						<p class="clubb">
+							<ul id="tag-list"></ul>
+						</p>
+					</div>
+				</div>
+				
+				
+				<div id="pdetail">
+					<div class="infole">
+						<p>✔️어떤 모임인가요?</p>
+					</div>
+					<div class="inforig">
 						<p class="clubb">
 							<c:out value="${clubVO.cbIntro}" />
-						<div class="inforig">
-
-							<p class="clubb">
-								<c:out
-									value="${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}" />
-							</p>
-
-							<p class="clubb">
-								<c:out value="${clubVO.cbCategory} ${clubVO.cbSubcat}" />
-							</p>
-						</div>
+						</p>
 					</div>
 				</div>
 
-
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️대기중인 회원은?</p>
+						<p>✔️대기중인 회원은?</p>
 					</div>
 					<div class="inforig">
 						<p class="clubb">👪모임 멤버 ( ${clubVO.cbCurMbnum} /
@@ -143,7 +146,7 @@
 
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️언제 모이나요?</p>
+						<p>✔️언제 모이나요?</p>
 					</div>
 					<div class="inforig">
 						<p class="clubb">
@@ -155,22 +158,36 @@
 						</p>
 					</div>
 				</div>
+				
+				<div id="pdetail">
+					<div class="infole">
+						<p>✔️신청은 언제까지?</p>
+					</div>
+					<div class="inforig">
+						<p class="clubb">
+							<fmt:parseDate var="dateString" value="${clubVO.thunderDetailVO.cbAppPeriod}" pattern="yyyy-MM-dd'T'HH:mm" />
+							<fmt:formatDate value="${dateString}" pattern="M월 d일  E'요일' a h시  m분까지!!" />
+						</p>
+					</div>
+				</div>
 
 
 				<div id="pdetail">
 					<div class="infole">
-						<p>⚡️장소는 어딘가요?</p>
+						<p>✔️장소는 어딘가요?</p>
 					</div>
 					<div class="inforig">
+						<p class="clubb">${clubVO.thunderDetailVO.cbPlace}</p><br>
 						<!-- 카카오 맵 -->
-						<div class="map_wrap" style="height: 400px;">
+						<div class="map_wrap" style="height: 400px;margin-bottom: 20px;">
 							<div id="map"></div>
 							<div id="menu_wrap" class="bg_white" style="width: 210px;">
 								<div class="option">
 									<div>
 										<form role="form" onsubmit="searchPlaces(); return false;">
 											<p class="clubb">
-												모임 장소 : <input type="text"
+												모임 장소:
+													<input type="text"
 													value='${clubVO.cbCity} ${clubVO.cbDistrict} ${clubVO.thunderDetailVO.cbPlace}'
 													id="keyword" size="15">
 											</p>
@@ -191,7 +208,7 @@
 
 
 				<button data-oper='list' class="btn btn-info" id="clubList">
-					<p class="clubb">더 많은 모임을 보려면?</p>
+					<p class="clubb" style="border-bottom: 1.5px solid #999;">더 많은 모임을 보려면?</p>
 				</button>
 			</div>
 			<!-- END leftinfo -->
@@ -219,27 +236,34 @@
 							<c:out value="${userVO.usrId}" />
 							)
 						</p>
-
-
+						
 						<div id="appDate">
+							
 							<p class="clubb">
-								<fmt:parseDate var="dateString"
-									value="${clubVO.thunderDetailVO.cbAppPeriod}"
-									pattern="yyyy-MM-dd'T'HH:mm" />
-								<fmt:formatDate value="${dateString}"
-									pattern="yyyy년 M월 d일  E'요일'" />
-								<br>
-								<fmt:formatDate value="${dateString}" pattern="a h시  m분 까지 신청" />
+								주요 활동 지역 : 종로구
 							</p>
-						</div>
+							
+							<p class="clubb">
+								만족도 : 
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star unchecked"></span>
+							</p>
+							<p class="clubb">
+								최근 모임 개설 : 14개
+							</p>
+							
+						
 
-						<br>
 
 						
 		
 
 
-
+						<div style="width: 323px;margin: 0 auto;">
+						
 
 						<!-- 로그인한유저와 모임장이 같은 사람이 아니라면 버튼을 보여줘야한다. -->
 						<c:if test="${usrNum != clubVO.cbLeaderNum}">
@@ -260,9 +284,8 @@
 						<c:if test="${usrNum eq clubVO.cbLeaderNum}">
 							<button class="btn btn-default" data-oper='modify'>수정</button>
 						</c:if>
-						<button class="btn btn-info" data-oper='list'>목록</button>
-
-
+						</div>
+					
 					</div>
 				</div>
 			</div>
