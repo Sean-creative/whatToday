@@ -139,14 +139,16 @@
               <!-- Area Chart -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">남/녀 회원비율</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">일주일간 로그인한 인원
+</h6>
                 </div>
                 <div class="card-body">
-                  <div class="chart-area">
-                    <div id="piechart" style="width: 100%; height: 100%;"></div>
+                <div class="chart-bar">
+                    <div id="columnchart_values2" style="width: 100%; height: 100%;"></div>
                   </div>
                   <hr>
-                  회원가입된 사람들의 남자/여자 비율
+                  일주일간 로그인한 인원
+
                 </div>
               </div>
               
@@ -168,15 +170,16 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">오늘 로그인한 인원</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">남/녀 회원비율</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-bar">
-                    <div id="columnchart_values2" style="width: 100%; height: 100%;"></div>
+                  
+                                    <div class="chart-area">
+                    <div id="piechart" style="width: 100%; height: 100%;"></div>
                   </div>
                   <hr>
-                  오늘 로그인한 인원
+                  회원가입된 사람들의 남자/여자 비율
                 </div>
               </div>
             </div>
@@ -248,9 +251,9 @@
 	    	} 
 	    	
 	        let data = google.visualization.arrayToDataTable([
-	          ['GENDER', 'COUNT'],
-	          ['남자',     manCnt],
-	          ['여자',   womanCnt]
+	          ['GENDER', 'COUNT',{ role: "style" }],
+	          ['남자',     manCnt,'#60c5ba'],
+	          ['여자',   womanCnt,'#ef5285']
 	        ]);
 
 	        let options = {
@@ -292,13 +295,13 @@
 	    	
 	        let data = google.visualization.arrayToDataTable([
 	          ["Element", "명", { role: "style" } ],
-	          [dateArr[6], countArr[6], "red"],
-	          [dateArr[5], countArr[5], "orange"],
-	          [dateArr[4], countArr[4], "yellow"],
-	          [dateArr[3], countArr[3], "green"],
-	          [dateArr[2], countArr[2], "blue"],
-	          [dateArr[1], countArr[1], "indigo"],
-	          [dateArr[0], countArr[0], "purple"]
+	          [dateArr[6], countArr[6], "#D1B6E1"],
+	          [dateArr[5], countArr[5], "#519D9E"],
+	          [dateArr[4], countArr[4], "#58C9B9"],
+	          [dateArr[3], countArr[3], "#9DC8C8"],
+	          [dateArr[2], countArr[2], "#D499B9"],
+	          [dateArr[1], countArr[1], "#9055A2"],
+	          [dateArr[0], countArr[0], "#2E294E"]
 	        ]);
 
 	        let view = new google.visualization.DataView(data);
@@ -319,9 +322,8 @@
 	        chart.draw(view, options);
 	        window.addEventListener('resize',drawChartBar,false);
 	    }
-	      google.charts.load("current", {packages:['corechart']});
-	      google.charts.setOnLoadCallback(drawChartBar2);
-	      function drawChartBar2() {
+	     
+/* 	      function drawChartBar2() {
 	    	  
 	    	  let memberCount;
 	    	  let cnt;
@@ -361,6 +363,43 @@
 		        }
 		        let chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values2"));
 		        chart.draw(view, options);
+		        window.addEventListener('resize',drawChartBar2,false);
+		    } */
+		    
+		      google.charts.load('current', {'packages':['line']});
+		      google.charts.setOnLoadCallback(drawChartBar2);
+
+		    function drawChartBar2() {
+
+		      var data = new google.visualization.DataTable();
+		      data.addColumn('string', '일');
+		      data.addColumn('number', '로그인한 인원');
+
+		      data.addRows([
+		        ['20/12/31',  5],
+		        ['21/01/01',  3],
+		        ['21/01/02',  5],
+		        ['21/01/03',  7],
+		        ['21/01/04',  5],
+		        ['21/01/05',  10],
+		        ['21/01/06',  5]
+		      ]);
+
+		      var options = {
+		        chart: {
+		        },
+        		width: '100%',
+        		height: '100%',
+        		vAxis: {
+	                 viewWindowMode:'explicit',
+	                 viewWindow: {
+	                   min:0
+	                 }
+	             },
+		      };
+
+		      var chart = new google.charts.Line(document.getElementById('columnchart_values2'));
+		      chart.draw(data, google.charts.Line.convertOptions(options));;
 		        window.addEventListener('resize',drawChartBar2,false);
 		    }
 	      

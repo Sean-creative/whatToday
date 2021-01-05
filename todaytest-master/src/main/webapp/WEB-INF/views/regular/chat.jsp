@@ -172,7 +172,7 @@ $(document).ready(function() {
 		let sender = arr[0];
 		let msg = arr[1];
 		console.log("sender:  " + sender);
-		$('#chat').append('<div class="msg left-msg"><div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"></div><div id = "leftMsg"><div class="msg-info-name">'
+		$('#chat').append('<div class="msg left-msg"><div class="msg-img" style="background-image: url(/resources/img/chatImg.jpg)"></div><div id = "leftMsg"><div class="msg-info-name">'
 							+ sender
 							+ '</div><div class="msg-bubble"><div class="msg-text">'
 							+ msg
