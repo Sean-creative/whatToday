@@ -105,7 +105,7 @@
 
 						<div style="display: inline-block; width: 300px;">
 							<label for="request" class="class" style="display: block;">한줄소개</label>
-							<input type="text" name='thunderDetailVO.cbIntro' id='cbIntro' size="50">
+							<input type="text" name='cbIntro' id='cbIntro' size="50">
 						</div>
 
 					</div>

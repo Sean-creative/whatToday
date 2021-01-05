@@ -248,7 +248,7 @@
 
 
 <div class="regular todayHot">
-	<div>
+	<div class="todayBar">
 		<span class="half">TODAY</span><br>
 		<p class="halfunder">오늘의 추천 취미는?</p>
 	</div>
