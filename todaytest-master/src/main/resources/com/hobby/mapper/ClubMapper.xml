@@ -177,7 +177,7 @@
 
 	<!-- 정기모임 게시판 - 조회 -->
 	<select id="read" resultType="com.hobby.domain.ClubVO">
-		select c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter
+		select rownum rn, c.cbBno, c.cbbdtitle, d.cbbdcontent, c.cbbdwriter
 		from CLUBBOARD c, CLUBBOARDCONTENT d
 		where c.cbBno = d.cbBno and c.cbBno = #{cbBno}
 	</select>
