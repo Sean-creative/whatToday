@@ -6,6 +6,7 @@ import lombok.Data;
 public class ClubVO {
 	
 	//CLUB/////////////////////////////////////////////////////////////
+	private Long rn;
 	private Long cbNum;
 	private String cbName;
 	private String cbType;

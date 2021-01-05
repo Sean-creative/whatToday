@@ -290,8 +290,15 @@ public class ClubController {
 		log.info("#list page cbNum:" + cbNum);
 		log.info("#list page :" + cri);
 
+		List<ClubVO> list = service.boardgetList(cri, cbNum);
+		
+		if (cri.getPageNum() * cri.getAmount() <= list.size()) {
+			model.addAttribute("list", list.subList((cri.getPageNum() - 1) * cri.getAmount() , cri.getPageNum() * cri.getAmount()));
+		} else {
+			model.addAttribute("list", list.subList((cri.getPageNum() - 1) * cri.getAmount() , list.size()));
+		}
+		
 		model.addAttribute("cbNum", cbNum);
-		model.addAttribute("list", service.boardgetList(cri, cbNum));
 		model.addAttribute("cbName", service.getClub(cbNum).getCbName());
 		model.addAttribute("cbThumbImg", service.getClub(cbNum).getCbThumbImg());
 		
