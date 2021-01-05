@@ -209,6 +209,7 @@
 
 				<div style="margin: 0 10px">
 					<div class="contentmid">
+						<img src="\resources\img\upload\2021\01\04\747421e8-169e-483d-b98b-9efa8db79813_zxczxc.jpg" style="width:120px; height:110px; border-radius:50px;">
 
 						<p class="clubb">
 							<c:out value="${userVO.usrName}" />
@@ -219,7 +220,6 @@
 							)
 						</p>
 
-						<img src="../resources/img/thunderHuman.png">
 
 						<div id="appDate">
 							<p class="clubb">

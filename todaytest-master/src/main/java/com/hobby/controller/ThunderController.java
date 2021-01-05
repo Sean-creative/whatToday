@@ -8,9 +8,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hobby.domain.ClubMemberVO;
 import com.hobby.domain.Criteria;
+import com.hobby.domain.MeetingVO;
 import com.hobby.domain.PageDTO;
 import com.hobby.domain.ThunderVO;
 import com.hobby.domain.UserVO;
@@ -120,6 +126,7 @@ public class ThunderController {
 
 		return "/thunder/info";
 	}
+
 	
 	@RequestMapping("/clickLike")
     @ResponseBody
@@ -354,6 +361,7 @@ public class ThunderController {
 		// 저장한 뒤,
 		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
 
+
 		String imgUploadPath = uploadPath + File.separator + "imgUpload"; // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath); // 위의 폴더를 기준으로 연월일 폴더를 생성
 		String fileName = null; // 기본 경로와 별개로 작성되는 경로 + 파일이름
@@ -397,9 +405,6 @@ public class ThunderController {
 	}
 	
 	
-	
-	
-
 	@GetMapping("/add")
 	// @로그인 안한상태에서, 개설 누르면 로그인으로 바로 보내는데, 모달창이나 경고문으로 띄워주고 보내도록 수정하기
 	public String add(Authentication auth, Model model) {

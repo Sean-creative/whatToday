@@ -119,7 +119,7 @@ ul#tag-list {
       
       
 			</div>
-			<img src="${club.cbThumbImg}" alt="">
+			<img src="${club.cbFile}" alt="">
 
 			<div id=banner>
 				<ul>
