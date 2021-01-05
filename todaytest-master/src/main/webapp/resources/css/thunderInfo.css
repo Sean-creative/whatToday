@@ -331,7 +331,9 @@
 	color: #333;
 	padding-top: 0;
 }
-
+.contentmid .clubb{
+	text-align: center;
+}
 .clubname {
 	font-size: 20px;
 	background: linear-gradient(to top, rgba(255, 175, 49, 0.7) 50%,
