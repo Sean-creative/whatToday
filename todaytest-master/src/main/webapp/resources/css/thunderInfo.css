@@ -320,13 +320,16 @@
 }
 
 /* 모임명  */
+.contentmid .clubb {
+    text-align: center;
+}
+
 .clubb {
 	/* font-family: 'paybooc-Light'; */
 	font-family: 'BMHANNAAir';
 	font-size: 20px;
 	color: #333;
 	padding-top: 0;
-	text-align: center;
 }
 
 .clubname {

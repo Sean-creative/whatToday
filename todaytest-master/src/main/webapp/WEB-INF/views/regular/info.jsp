@@ -342,33 +342,35 @@ ul#tag-list {
 			"click",
 			function(e) {
 				e.preventDefault();
-
 				let operation = $(this).data("oper");
 				console.log(operation);
 				
 				//만남 참석하기 버튼 눌렀을 때
 				if (operation === 'joinMeeting') {
-					if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석취소')
-						alert('만남 참석취소합니다');
-					else if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석')
-						alert('만남 참석합니다');
+					if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석취소') {
+// 						alert('만남 참석취소합니다');
+					}
+					else if ($("button[data-oper='joinMeeting']").text().trim() == '만남참석') {
+// 						alert('만남 참석합니다');
+					}
 	
 					formObj.attr("action","/meeting/join").attr("method", "post");
 					formObj.append("<input type='hidden' name='mtNum' value='" + $(this).val() + "'>");
 				} 
 				// 만남 추가하기 버튼 눌렀을 때
 				else if (operation === 'addMeeting') {
-					alert('만남 추가합니다');
+// 					alert('만남 추가합니다');
 					formObj.attr("action","/meeting/add");
 				}
 				// 만남 수정하기 버튼 눌렀을 때
 				else if (operation === 'modifyMeeting') {
-					alert('만남 수정합니다');
+// 					alert('만남 수정합니다');
 					formObj.attr("action", "/meeting/modify");
 					formObj.append("<input type='hidden' name='mtNum' value='" + $(this).val() + "'>");
 				}
 				formObj.submit();
 			});
+	
 	
 	
 	// 사용자의 참석상태(joinState)가 '가입승인'이라면 버튼을 활성화 해주고, 그게 아니라면 버튼을 비활성화한다.
