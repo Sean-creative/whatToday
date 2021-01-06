@@ -72,7 +72,7 @@
 		            <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} 
 		            <br> #${club.cbDistrict} #${club.cbName}</p>
 		            <p class="nombre">${club.cbIntro}</p>
-		            <p class="count">⍤ ${club.cbCurMbNum}명이 모였습니다.</p>
+		            <p class="count">${club.cbCurMbNum}명이 모였습니다.</p>
 		         </a>
 		      </div>
 		   </c:forEach>
