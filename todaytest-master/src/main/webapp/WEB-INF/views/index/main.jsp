@@ -165,7 +165,7 @@
             <p class="topinfo">#${club.cbCategory} #${club.cbSubcat} 
             <br> #${club.cbDistrict} #${club.cbName}</p>
             <p class="nombre">${club.cbIntro}</p>
-            <p class="count">⍤ ${club.cbCurMbNum}명이 모였습니다.</p>
+            <p class="count">${club.cbCurMbNum}명이 모였습니다.</p>
          </a>
       </div>
    </c:forEach>
@@ -230,7 +230,7 @@
 			<c:set var="cbMbNum" value = "${club.cbMbNum}" />
 			<c:set var="cbCurMbNum" value = "${club.cbCurMbNum}" />
 			
-			<p class="count">⍣ ${club.cbView}명이 보고있습니다.</p>
+			<p class="count">${club.cbView}명이 보고있습니다.</p>
 			
 			<span class="meetDday">D-<c:out value="${meetDay-today}"/></span>
        		<span class="meetDday"><c:out value="${cbMbNum-cbCurMbNum}" />명</span>
