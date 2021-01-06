@@ -208,7 +208,7 @@ button>img {
 					<c:set var="cbMbNum" value = "${thunderItem.cbMbnum}" />
 					<c:set var="cbCurMbNum" value = "${hunderItem.cbCurMbnum}" />
 					
-					<p class="count">⍣ ${thunderItem.cbView}명이 보고있습니다.</p>
+					<p class="count">${thunderItem.cbView}명이 보고있습니다.</p>
 					
 					<span class="meetDday">D-<c:out value="${meetDay-today}"/></span>
 		       		<span class="meetDday"><c:out value="${cbMbNum-cbCurMbNum}" />명</span>

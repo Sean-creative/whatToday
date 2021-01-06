@@ -78,7 +78,7 @@ where USRNUM = #{usrNum} and CBJOINSTATERESULT = '모임탈퇴' and cbfinalstate
 	<select id="getLeaderClubList" resultType="com.hobby.domain.ClubVO">
 		select * from CLUB
 		where 
-		CBLEADERNUM = #{usNum} and CBFINALSTATE != '폐쇄' AND CBFINALSTATE != '강제폐쇄' order by cbNum asc
+		CBLEADERNUM = #{usNum} and CBFINALSTATE != '폐쇄' AND CBFINALSTATE != '강제폐쇄' order by cbNum desc
 	</select>
 
 	<select id="getClub" resultType="com.hobby.domain.ClubVO">
