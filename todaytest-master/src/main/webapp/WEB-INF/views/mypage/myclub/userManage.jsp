@@ -165,18 +165,21 @@ $(document).ready(function() {
 				{"data": "userVO.usrBirth"},
 				{"data": "cbJoinStateUpdateDate"},
 				{"data": function (data, type, dataToSet) {
+					console.log("테이블");
 					console.log(data);
 					let str = "";
 								if(number == data.usrNum){
-									str = "모임장"
+									str = "모임장";
 								}else if(data.cbJoinStateResult == '승인대기'){
-									str = "<select name='cbJoinStateResult' id='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
+									str = "<select name='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
 									+ data.cbJoinStateResult
 									+ "</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"' value='가입승인'>가입승인</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"'  value='승인거부'>승인거부</option>";
 								}else if(data.cbJoinStateResult == '가입승인'){
-									str = "<select name='cbJoinStateResult' id='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
+									console.log("+++++++++엘스이프+++++++++++");
+									console.log(data);
+									str = "<select name='cbJoinStateResult'><option value='"+data.cbJoinStateResult+"'>"
 									+ data.cbJoinStateResult
-									+ "</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"' value='모임추방'>모임추방</option>"
+									+ "</option><option data-cbname='"+data.cbName+"' data-usrnum='"+data.usrNum+"' data-usrid='"+data.userVO.usrId+"' data-cbtype='"+data.cbType+"'data-usrname='"+data.usrName+"' data-cbnum='"+data.cbNum+"' value='모임추방'>모임추방</option>";
 								}
 								return str;
 					}	
@@ -211,10 +214,11 @@ $(document).ready(function() {
 			});
 		};
 	const changeClubMemStateMinus = function(e) {
+		console.log(e);
 		$.ajax({
 			url : "/mypage/clubmanage/changeClubMemStateMinus",
 			type : "PUT",
-			data : JSON.stringify({usrNum : e.usrnum,cbNum : e.cbnum,cbName : e.cbname,cbType : e.cbtype,cbMbStResult : e.cbJoinStateResult}),
+			data : JSON.stringify({usrNum : e.usrnum, cbNum : e.cbnum, cbName : e.cbname, cbType : e.cbtype, cbMbStResult : e.cbJoinStateResult}),
 			dataType : "json",
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
@@ -255,6 +259,7 @@ $(document).ready(function() {
 											if (socket.readyState != 1) {
 												return;
 											}
+											
 											if(socData.cbJoinStateResult == '가입승인'){
 												socket.send(socData.usrid+ "," + "["+ socData.cbtype + "]"+ socData.cbname+ "에 가입되셨습니다."); //타겟, 내용.
 											}else if(socData.cbJoinStateResult == '승인거부'){
@@ -293,12 +298,13 @@ $(document).ready(function() {
 									});
 						};
 
+
 						$(document).on("change","select[name=cbJoinStateResult]",function() {
 							let index = $("select[name=cbJoinStateResult]").index(this);
 							let status = $("select[name=cbJoinStateResult]").eq(index).val();
-							let data = $("select[name=cbJoinStateResult] option:selected").data();
+							let data = $("select[name=cbJoinStateResult] option:selected").eq(index).data();
+
 							data.cbJoinStateResult = status;
-							console.log(data);
 							  if (status == '가입승인') {
 								  swal({
 									  title: "가입승인하시겠습니까?",
@@ -317,7 +323,7 @@ $(document).ready(function() {
 									  }
 							  })
 									}
-								 else if (status == '승인거부') {
+								 if (status == '승인거부') {
 									swal({
 										  title: "승인거부하시겠습니까?",
 										  text: "거부하시면 이 회원은 모임에 가입이 불가능합니다.",
@@ -335,24 +341,24 @@ $(document).ready(function() {
 										  }
 										})
 								 }
-									 else if (status == '모임추방') {
-										swal({
-											  title: "모임에서 추방하시겠습니까?",
-											  text: "추방하시면 이 회원은 모임에 가입이 불가능합니다.",
-											  icon: "warning",
-											  buttons: true,
-											  dangerMode: true,
-											})
-											.then((willDelete) => {
-											  if (willDelete) {
-												changeClubMemStateMinus(data);
-											    }
-											   else {
-											    swal("취소하셨습니다.");
-											    table.ajax.reload(null,false);
-											  }
-										}  )
-									 }
+								if (status == '모임추방') {
+									swal({
+										  title: "모임에서 추방하시겠습니까?",
+										  text: "추방하시면 이 회원은 모임에 가입이 불가능합니다.",
+										  icon: "warning",
+										  buttons: true,
+										  dangerMode: true,
+										})
+										.then((willDelete) => {
+										  if (willDelete) {
+											changeClubMemStateMinus(data);
+										    }
+										   else {
+										    swal("취소하셨습니다.");
+										    table.ajax.reload(null,false);
+										  }
+									}  )
+								 } 
 							});
 						
 
