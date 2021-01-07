@@ -295,7 +295,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							c.cbNum = td.cbNum AND c.cbType='번개모임' AND c.cbFinalState = '진행중'
 							order by ${orderBy}	        	       		     
 				 )
-				where distance < 20 AND rownum<= #{pageNum} * #{amount}
+				where distance < 20 AND rownum          <= #{pageNum} * #{amount}
 			)				
 	 where rn > (#{pageNum}-1) * #{amount} ]]>
 	</select>
