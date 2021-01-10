@@ -179,9 +179,6 @@ public class ThunderController {
 
 
 
-
-
-
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
@@ -209,10 +206,6 @@ public class ThunderController {
 
 		// A.3 해당 모임에 대한 정보를 view단에 뿌려준다. userVO.getUsrNum()
 		model.addAttribute("clubVO", clubVO);
-
-		// 로그인한 유저와 개설자의 번호가 일치하지 않으면 list로 돌려보낸다. (사용자가 url로 장난 쳤을 떄 방지)
-//		if (loginUser.getUsrNum() != userVO.getUsrNum())
-//			return "redirect:/thunder/list";
 
 		// modify로 넘어가는 데이터 - 1.club의 정보, 2. criteria
 		return "/thunder/modify";
