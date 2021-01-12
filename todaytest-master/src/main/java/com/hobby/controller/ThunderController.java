@@ -305,7 +305,7 @@ public class ThunderController {
 		//		rttr.addAttribute("amount", cri.getAmount());
 		//		rttr.addAttribute("type" , cri.getType());
 		//		rttr.addAttribute("keyword", cri.getKeyword());
-		// PR 테스트!
+
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
@@ -350,8 +350,7 @@ public class ThunderController {
 	public Map<String,Object> uploadFormPost(MultipartFile file) throws Exception {
 		log.info("/uploadFormPost(POST) - file : " + file);
 
-		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
-		// 저장한 뒤,
+		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을 저장한 뒤,
 		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
 
 
@@ -387,7 +386,6 @@ public class ThunderController {
 //			clubVO.setCbFile(fileName);
 			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
 			cbThumbImg = fileName;
-//			clubVO.setCbThumbImg(fileName);
 		}
 		
 		resultMap.put("cbFile", cbFile);
