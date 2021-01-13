@@ -213,7 +213,7 @@ const inputCheck = function(){
 		return false;
 	}
 
-	/*값이 없어도 되지만, 길이제한은 둔다.*/
+	/*값이 없어도 되지만, 길이제한은 둔다!!.*/
 	if (hashtag.length > 30) {
 		alert("해시태그를 다시 입력해주세요.");
 		return false;

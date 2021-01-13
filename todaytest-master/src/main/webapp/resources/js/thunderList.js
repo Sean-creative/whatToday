@@ -229,7 +229,7 @@ const region = function(o, d) {
 
 	d.empty();
 
-	// change(function(){$( ':selected', o).val() => this }
+ 
 	if ($(':selected', o).val() == "서울") {
 
 		district = seoul;
