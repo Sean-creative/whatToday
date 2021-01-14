@@ -78,7 +78,7 @@ const cate = function(o, d) {
 
 	d.empty();
 
-	// change(function(){$( ':selected', o).val() => this }
+
 	if ($(':selected', o).val() == "아웃도어/여행") {
 		detailCate = outdoor;
 	} else if ($(':selected', o).val() == "문화/공연/축제") {
@@ -118,7 +118,7 @@ const dating = function(o, d) {
 	const offset = new Date().getTimezoneOffset() * 60000;
 	const today = new Date(Date.now() - offset);
 
-	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함
+	// toISOString()에서 리턴하는 'yyyy-MM-ddThh:mm:ss.sssZ'을 슬라이싱함!
 	let nowDate = today.toISOString().slice(0, 16);
 	
 	// 현재시간으로 부터 일주일 더해준 것이 maxDay
