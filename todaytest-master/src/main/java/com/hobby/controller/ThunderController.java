@@ -442,7 +442,7 @@ public class ThunderController {
 	}
 
 	@GetMapping("/gps")
-	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감
+	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감!
 	public void gps(Criteria cri, Model model) {		
 		log.info("gps(GET) - cri : " + cri);		
 		model.addAttribute("cri", cri);		

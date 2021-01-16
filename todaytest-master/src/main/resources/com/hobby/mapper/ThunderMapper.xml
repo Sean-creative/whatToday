@@ -302,7 +302,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<!-- 거리제한 둔 것 개수 세기 -->
 	<select id="getTotalCount" resultType="int">
 	<![CDATA[	select  count(*)
 				from
