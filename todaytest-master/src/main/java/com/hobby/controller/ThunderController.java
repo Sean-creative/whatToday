@@ -179,9 +179,6 @@ public class ThunderController {
 
 
 
-
-
-
 	@GetMapping("/modify")
 	public String modify(Authentication auth, @RequestParam("cbNum") Long cbNum, @ModelAttribute("cri") Criteria cri, Model model) {
 		// 로그인 체크를 해서, 로그인이 안되어 있으면 로그인 페이지로 보낸다.
@@ -209,10 +206,6 @@ public class ThunderController {
 
 		// A.3 해당 모임에 대한 정보를 view단에 뿌려준다. userVO.getUsrNum()
 		model.addAttribute("clubVO", clubVO);
-
-		// 로그인한 유저와 개설자의 번호가 일치하지 않으면 list로 돌려보낸다. (사용자가 url로 장난 쳤을 떄 방지)
-//		if (loginUser.getUsrNum() != userVO.getUsrNum())
-//			return "redirect:/thunder/list";
 
 		// modify로 넘어가는 데이터 - 1.club의 정보, 2. criteria
 		return "/thunder/modify";
@@ -312,7 +305,7 @@ public class ThunderController {
 		//		rttr.addAttribute("amount", cri.getAmount());
 		//		rttr.addAttribute("type" , cri.getType());
 		//		rttr.addAttribute("keyword", cri.getKeyword());
-		// PR 테스트!
+
 		return "redirect:/thunder/list" + cri.getListLink();
 	}
 
@@ -357,8 +350,7 @@ public class ThunderController {
 	public Map<String,Object> uploadFormPost(MultipartFile file) throws Exception {
 		log.info("/uploadFormPost(POST) - file : " + file);
 
-		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을
-		// 저장한 뒤,
+		// 파일용 인풋박스에 등록된 파일의 정보를 가져오고, UploadFileUtils.java를 통해 폴더를 생성한 후 원본 파일과 썸네일을 저장한 뒤,
 		// 이 경로를 데이터 베이스에 전하기 위해 ThunderVO에 입력(set)
 
 
@@ -394,7 +386,6 @@ public class ThunderController {
 //			clubVO.setCbFile(fileName);
 			// Thumbimg에 썸네일 파일 경로 + 썸네일 파일명 저장
 			cbThumbImg = fileName;
-//			clubVO.setCbThumbImg(fileName);
 		}
 		
 		resultMap.put("cbFile", cbFile);
@@ -451,7 +442,7 @@ public class ThunderController {
 	}
 
 	@GetMapping("/gps")
-	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감
+	//gps.jsp 가서 위도경도만 반환받고 바로 list로 다시 돌아감!
 	public void gps(Criteria cri, Model model) {		
 		log.info("gps(GET) - cri : " + cri);		
 		model.addAttribute("cri", cri);		

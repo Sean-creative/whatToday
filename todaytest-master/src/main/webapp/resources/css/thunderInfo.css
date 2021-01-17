@@ -325,6 +325,10 @@
 }
 
 /* 모임명  */
+.contentmid .clubb {
+    text-align: center;
+}
+
 .clubb {
 	/* font-family: 'paybooc-Light'; */
 	font-family: 'BMHANNAAir';
