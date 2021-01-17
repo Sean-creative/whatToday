@@ -136,10 +136,11 @@
 
 .contentup {
 	display: flex;
+	margin: 0 10px;
 }
 
 #rightinfo .contentl {
-	width: 70%;
+	width: 350px;
 	height: 70px;
 }
 
@@ -160,27 +161,31 @@
 
 #rightinfo .contentl>p {
 	line-height: 30px;
-	font-weight: bold;
-	font-size: 30px;
-	margin: 20px;
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .contentmid img {
-	margin: 10px 0 0 100px;
+	/*margin: 10px 0 0 100px;*/
 }
 
 #rightinfo .contentmid {
 	font-size: 15px;
-	height: 400px;
-	overflow-y: auto;
-	line-height: 1.5;
-	padding-left: 15px;
+    height: 400px;
+    overflow-y: auto;
+    line-height: 1.5;
+    /* padding-left: 15px; */
+    text-align: center;
 }
 
 #rightinfo #appDate {
 	width: 315px;
 	background: #ffffff;
+	/*
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	*/
 	border-radius: 20px;
 	margin: 20px 1px 0 1px;
 }
@@ -190,17 +195,17 @@
 }
 
 .contentmid button {
-	width: 70px;
-	height: 40px;
-	background: #ffaf31;
-	color: #fff;
-	border: none;
-	border-radius: 5px;
-	float: right;
-	margin-right: 10px;;
-	cursor: pointer;
-	opacity: 0.9;
-	margin: 10px 5px;
+	width: 331px;
+    height: 40px;
+    background: #ffaf31;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    /* float: right; */
+    /* margin-right: 10px; */
+    cursor: pointer;
+    opacity: 0.9;
+    margin: 10px 5px;
 }
 
 #meetingName {
@@ -316,7 +321,7 @@
 }
 
 #appDate .clubb {
-	padding: 6px 45px 6px 70px;
+	/* padding: 6px 45px 6px 70px; */
 }
 
 /* 모임명  */
@@ -325,7 +330,7 @@
 	font-family: 'BMHANNAAir';
 	font-size: 20px;
 	color: #333;
-	padding-top: 0;
+	padding-top: 4px;
 }
 .contentmid .clubb{
 	text-align: center;
@@ -516,4 +521,16 @@ ul li.tag-item {
 	display: inline-block;	
 	position: relative;
 	top: 20px;
+}
+
+/*만족도 별*/
+.checked {
+  color: orange;
+}
+.unchecked{
+  color:#ddd;
+
+}
+.thunderTag{
+	margin-top : 10px;
 }
