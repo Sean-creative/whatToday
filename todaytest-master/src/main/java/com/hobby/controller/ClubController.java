@@ -126,7 +126,7 @@ public class ClubController {
 		log.info("##/add 회원이름는 :" + userVO.getUsrName());
 		log.info("##/add 회원포인트는 :" + userVO.getUsrPoint());
 
-		return "/regular/add";
+		return "/regular/add"; 
 	}
 
 	// 정기모임 목록
